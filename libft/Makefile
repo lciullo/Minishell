@@ -37,7 +37,17 @@ C_FILES 		=	print/ft_dprintf_nb.c \
 					string/ft_calloc.c \
 					string/ft_bzero.c \
 					string/ft_strnstr.c \
-					string/ft_strjoin.c 
+					string/ft_strjoin.c \
+					\
+					list/ft_lstadd_back.c \
+					list/ft_lstadd_front.c \
+					list/ft_lstclear.c \
+					list/ft_lstdelone.c \
+					list/ft_lstiter.c \
+					list/ft_lstlast.c \
+					list/ft_lstmap.c \
+					list/ft_lstnew.c \
+					list/ft_lstsize.c
 
 HEADERS 		=	${INCLUDES}libft.h	
 
