@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:29:41 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/05 14:34:37 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/04/05 14:43:13 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,5 @@ int	main(int ac, char **av, char **env)
 	waitpid(data.pid1, NULL, 0);
 	waitpid(data.pid2, NULL, 0);
 	free_env_path(&data);
-	ft_dprintf(2, "test");
 	return (0);
 }
