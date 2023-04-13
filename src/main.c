@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 15:43:04 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/13 22:20:57 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/04/13 22:24:22 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,8 @@ int	main(int ac, char **av, char **env)
 	char	*prompt;
 	char	*line;
 	int		done;
-	// int     i;
 	
 	done = 0;
-    // i = 0;
-    // prompt = NULL;
-    // while (env[i])
-    // {
-    //  if (strncmp(env[i], "HOME=", 5) == 0)
-    //  {
-    //      prompt = env[i];
-    //      break ;
-    //  }
-    //  i++;
-    // }
-    // prompt += 5;
-
 	prompt = "doublechoc->";
 	while (done == 0)
 	{
