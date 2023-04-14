@@ -1,38 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   check_files.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/13 15:43:04 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/14 11:39:09 by lciullo          ###   ########.fr       */
+/*   Created: 2023/03/14 09:25:34 by lciullo           #+#    #+#             */
+/*   Updated: 2023/04/14 10:41:32 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **env)
+int	check_files(char *infile, char *outfile, t_pipex *data)
 {
-	(void)ac;
-	(void)av;
-	(void)env;
-	char	*prompt;
-	char	*line;
-	int		done;
-
-	done = 0;
-	prompt = "doublechoc->";
-	while (done == 0)
+	data->infile = open(infile, O_RDONLY);
+	if (data->infile < 0)
 	{
-		line = readline(prompt);
-		if (!line)
-			exit (1);
-		if (line)
-			add_history(line);
-		if (strcmp(line, "exit") == 0)
-			done = 1;
+		data->check_infile = 1;
+		perror("open");
 	}
-	free(line);
-	return 0;
+	data->outfile = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (data->outfile < 0)
+	{
+		data->check_outfile = 1;
+		perror("open");
+	}
+	return (1);
 }

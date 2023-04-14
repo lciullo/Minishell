@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_files.c                                      :+:      :+:    :+:   */
+/*   struct.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 09:25:34 by lciullo           #+#    #+#             */
-/*   Updated: 2023/03/17 15:51:57 by lciullo          ###   ########.fr       */
+/*   Created: 2023/03/14 09:29:59 by lciullo           #+#    #+#             */
+/*   Updated: 2023/04/14 10:41:32 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "minishell.h"
 
-int	check_files(char *infile, char *outfile, t_pipex *data)
+void	init_struct(t_pipex *data)
 {
-	data->infile = open(infile, O_RDONLY);
-	if (data->infile < 0)
-	{
-		data->check_infile = 1;
-		perror("open");
-	}
-	data->outfile = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (data->outfile < 0)
-	{
-		data->check_outfile = 1;
-		perror("open");
-	}
-	return (1);
+	data->pid1 = 0;
+	data->pid2 = 0;
+	data->infile = 0;
+	data->outfile = 0;
+	data->fd[0] = 0;
+	data->fd[1] = 0;
+	data->check_infile = 0;
+	data->check_outfile = 0;
+	data->paths = NULL;
+	data->env_path = NULL;
+	data->cmds_array = NULL;
+	data->cmd = NULL;
 }
