@@ -1,39 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/13 15:43:04 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/14 09:50:13 by cllovio          ###   ########.fr       */
+/*   Created: 2023/02/15 13:55:52 by lciullo           #+#    #+#             */
+/*   Updated: 2023/04/14 09:47:37 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#ifndef PIPEX_H
+# define PIPEX_H
 
-int	main(int ac, char **av, char **env)
-{
-	(void)ac;
-	(void)av;
-	(void)env;
-	
-	char	*prompt;
-	char	*line;
-	int		done;
-	
-	done = 0;
-	prompt = "doublechoc->";
-	while (done == 0)
-	{
-		line = readline(prompt);
-		if (!line)
-			exit (1);
-		if (line)
-			add_history(line);
-		if (strcmp(line, "exit") == 0)
-			done = 1;
-	}
-	free(line);
-	return 0;
-}
+# include "parsing.h"
+# include "exec.h"
+# include <sys/wait.h>
+# include <stdio.h>
+# include "../libft/headers/libft.h"
+# include <string.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+
+#endif
