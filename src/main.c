@@ -3,25 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 15:43:04 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/14 09:50:13 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/04/14 11:39:09 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "minishell.h"
 
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
 	(void)env;
-	
 	char	*prompt;
 	char	*line;
 	int		done;
-	
+
 	done = 0;
 	prompt = "doublechoc->";
 	while (done == 0)

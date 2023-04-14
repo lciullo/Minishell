@@ -6,11 +6,11 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:27:14 by lciullo           #+#    #+#             */
-/*   Updated: 2023/03/17 15:54:20 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/04/14 10:41:32 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "minishell.h"
 
 void	close_files(t_pipex *data)
 {
