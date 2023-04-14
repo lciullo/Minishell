@@ -6,33 +6,42 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 15:43:04 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/14 11:39:09 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/04/14 14:46:00 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **env)
+static	void	loop_of_prompt(void)
 {
-	(void)ac;
-	(void)av;
-	(void)env;
-	char	*prompt;
+	char	*prompt_name;
 	char	*line;
 	int		done;
 
 	done = 0;
-	prompt = "doublechoc->";
+	prompt_name = "doublechoc->";
 	while (done == 0)
 	{
-		line = readline(prompt);
+		line = readline(prompt_name);
 		if (!line)
+		{
+			free(line);
 			exit (1);
+		}
 		if (line)
 			add_history(line);
-		if (strcmp(line, "exit") == 0)
+		if (ft_strcmp(line, "exit") == 0)
 			done = 1;
+		free(line);
 	}
-	free(line);
-	return 0;
+}
+
+int	main(int ac, char **av, char **env)
+{
+
+	(void)ac;
+	(void)av;
+	(void)env;
+	loop_of_prompt();
+	return (0);
 }
