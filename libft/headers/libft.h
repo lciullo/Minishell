@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:01:44 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/14 14:07:10 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/04/14 14:53:22 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void		*ft_memmove(void *dest, const void *src, size_t len);
 void		*ft_memset(void *b, int c, size_t len);
 char		**ft_split(char const *s, char c);
 char		*ft_strchr(char *str, int c);
+int			ft_strcmp(char *s1, char *s2);
 char		*ft_strdup(const char *src);
 void		ft_striteri(char *s, void (*f)(unsigned int, char*));
 char		*ft_strjoin(char *s1, char *s2);
@@ -78,6 +79,7 @@ int			ft_toupper(int c);
 size_t		nb_words(char const *s, char c);
 
 //# ---- free functions ---- #
+
 void		free_array(char **arr);
 void		secure_free_array(char **arr, size_t line);
 

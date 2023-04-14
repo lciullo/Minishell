@@ -44,6 +44,7 @@ C_FILES 		=	print/ft_dprintf_nb.c \
 					library/ft_toupper.c\
 					library/ft_tolower.c\
 					library/ft_strchr.c\
+					library/ft_strcmp.c \
 					library/ft_strrchr.c\
 					library/ft_strncmp.c\
 					library/ft_memchr.c\
