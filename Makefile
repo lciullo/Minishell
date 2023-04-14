@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
+#    By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/15 11:03:28 by lciullo           #+#    #+#              #
-#    Updated: 2023/03/20 10:38:18 by lciullo          ###   ########.fr        #
+#    Updated: 2023/04/14 09:30:46 by cllovio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 # ---- Final executable ---- #
 
-NAME 		= pipex
+NAME 		= minishell
 
 LIBRARY 	= libft/libft.a 
 
@@ -22,7 +22,8 @@ LIBRARY 	= libft/libft.a
 
 HEAD 		= 	headers/pipex.h \
 
-SRC			= 	src/process/pipex.c \
+SRC			= 	src/main.c \
+				src/process/pipex.c \
 				src/process/exec_cmd.c \
 				src/process/struct.c \
 				src/parsing/check_files.c \
@@ -40,7 +41,7 @@ DEBUG		= no
 
 CC 			= cc
 
-CFLAGS 		= -Wall -Werror -Wextra -I headers/ 
+CFLAGS 		= -Wall -Werror -Wextra -lreadline -I headers/ 
 
 # ---- Debug Compilation flags ---- #
 
