@@ -1,24 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/15 13:55:52 by lciullo           #+#    #+#             */
-/*   Updated: 2023/03/20 11:11:06 by lciullo          ###   ########.fr       */
+/*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
+/*   Updated: 2023/04/14 09:48:06 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-
-# define PIPEX_H
-
-# include <sys/wait.h>
-
-# include <stdio.h>
-
-# include "../libft/headers/libft.h"
+#ifndef EXEC_H
+# define EXEC_H
 
 //# ======== Struct ======== #
 
