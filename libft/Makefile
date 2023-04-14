@@ -26,27 +26,48 @@ SRCS			=	${addprefix src/, ${C_FILES}}
 
 C_FILES 		=	print/ft_dprintf_nb.c \
 					print/ft_dprintf_str.c\
-					print/ft_dprintf.c \
-\
-					string/ft_libft_utils.c \
-					string/ft_split.c \
-					string/ft_free_array.c \
-					string/ft_itoa.c \
-					string/ft_strncmp.c \
-					string/ft_strchr.c \
-					string/ft_calloc.c \
-					string/ft_bzero.c \
-					string/ft_strnstr.c \
-					string/ft_strjoin.c \
+					print/ft_dprintf.c\
+					print/ft_putendl_fd.c\
 					\
-					list/ft_lstadd_back.c \
-					list/ft_lstadd_front.c \
-					list/ft_lstclear.c \
-					list/ft_lstdelone.c \
-					list/ft_lstiter.c \
-					list/ft_lstlast.c \
-					list/ft_lstmap.c \
-					list/ft_lstnew.c \
+					library/ft_isalpha.c\
+					library/ft_isdigit.c\
+					library/ft_isalnum.c\
+					library/ft_isascii.c\
+					library/ft_isprint.c\
+					library/ft_strlen.c\
+					library/ft_memset.c\
+					library/ft_bzero.c\
+					library/ft_memcpy.c\
+					library/ft_memmove.c\
+					library/ft_strlcpy.c\
+					library/ft_strlcat.c\
+					library/ft_toupper.c\
+					library/ft_tolower.c\
+					library/ft_strchr.c\
+					library/ft_strrchr.c\
+					library/ft_strncmp.c\
+					library/ft_memchr.c\
+					library/ft_memcmp.c\
+					library/ft_strnstr.c\
+					library/ft_atoi.c\
+					library/ft_calloc.c\
+					library/ft_strdup.c\
+					library/ft_substr.c\
+					library/ft_strjoin.c\
+					library/ft_strtrim.c\
+					library/ft_split.c\
+					library/ft_itoa.c\
+					library/ft_strmapi.c\
+					library/ft_striteri.c\
+					\
+					list/ft_lstadd_back.c\
+					list/ft_lstadd_front.c\
+					list/ft_lstclear.c\
+					list/ft_lstdelone.c\
+					list/ft_lstiter.c\
+					list/ft_lstlast.c\
+					list/ft_lstmap.c\
+					list/ft_lstnew.c\
 					list/ft_lstsize.c
 
 HEADERS 		=	${INCLUDES}libft.h	
