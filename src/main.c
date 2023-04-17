@@ -3,29 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 15:43:04 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/14 17:09:38 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/04/17 16:19:22 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-struct sigaction old_action;
-
-/*int sigaction(int signum, const struct sigaction *act,
-              struct sigaction *oldact);*/
-
-static void	sigint_handler(int sig_no)
+static void control_c_realod_prompt()
 {
-	(void)sig_no;
-	if (sig_no == 2)
-	{
-		ft_dprintf(1, "\n");
-		ft_dprintf(1, "doublechoc->");
-	}
-	
+	ft_dprintf(1,"\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	return	;
+}
+
+static void	display_new_line()
+{
+	ft_dprintf(1, "\n");
+	return	;
+}
+
+static	void control_backslash()
+{
+	return ;
 }
 
 static	void	loop_of_prompt(void)
@@ -38,15 +42,15 @@ static	void	loop_of_prompt(void)
 	prompt_name = "doublechoc->";
 	while (in_shell == 0)
 	{
-		struct sigaction action;
-    	memset(&action, 0, sizeof(action));
-    	action.sa_handler = &sigint_handler;
-   	 	sigaction(SIGINT, &action, &old_action);
+		signal(SIGINT, control_c_realod_prompt);
+		signal(SIGQUIT, control_backslash);
 		line = readline(prompt_name);
+		signal(SIGINT, display_new_line);
 		if (!line)
 		{
+			ft_dprintf(1, "exit"); //test \n with bash for the syntax and if we need a 
 			free(line);
-			exit (1);
+			exit (1); //builtine exit 
 		}
 		if (line)
 			add_history(line);
