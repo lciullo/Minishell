@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
+#    By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/15 11:03:28 by lciullo           #+#    #+#              #
-#    Updated: 2023/04/14 13:26:39 by lciullo          ###   ########.fr        #
+#    Updated: 2023/04/17 16:22:27 by lisa             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,8 +95,8 @@ debug:
 	
 leaks:
 	clear
-	$(MAKE) re VALGRIND=yes
-	$(LEAKS) ./minishell
+	${MAKE} re VALGRIND=yes
+	${LEAKS} ./minishell
 
 # ---- Clean rules --- #
 

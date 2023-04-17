@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 15:54:30 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/14 16:28:41 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/04/17 15:52:04 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,9 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
+
+enum {
+  ctrl_c = 2  
+};
 
 #endif
