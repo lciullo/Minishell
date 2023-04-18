@@ -3,11 +3,13 @@
 #                                                         :::      ::::::::    #
 #    sources_parsing.mk                                 :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
+#    By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 09:55:41 by lciullo           #+#    #+#              #
-#    Updated: 2023/04/14 11:18:18 by lciullo          ###   ########.fr        #
+#    Updated: 2023/04/18 13:02:49 by cllovio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC	+= 	src/main.c 
+SRC	+= 	src/main.c\
+		src/parsing/parsing.c\
+		src/parsing/utils_parsing.c
