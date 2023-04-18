@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/18 12:48:00 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/04/18 15:39:06 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,5 @@ typedef	struct s_parsing {
 void	init_structure(t_parsing *parsing);
 
 int		parsing(char **line);
+
 #endif
