@@ -24,7 +24,10 @@ DIR_OBJS		=	.objs/
 
 SRCS			=	${addprefix src/, ${C_FILES}}
 
-C_FILES 		=	print/ft_dprintf_nb.c \
+C_FILES 		=	gnl/get_next_line.c \
+					gnl/get_next_line_utils.c \
+					\
+					print/ft_dprintf_nb.c \
 					print/ft_dprintf_str.c\
 					print/ft_dprintf.c\
 					print/ft_putendl_fd.c\

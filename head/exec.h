@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/14 09:48:06 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/04/18 15:48:02 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ typedef struct s_pipex
 	char	**cmds_array;
 	char	*cmd;
 }	t_pipex;
+
+void	execution(char *line, char **env);
 
 void	init_struct(t_pipex *data);
 
