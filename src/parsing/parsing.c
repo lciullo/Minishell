@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 16:59:50 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/18 15:17:05 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/04/19 14:23:15 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 // 34 = "
 // 39 = '
-char	*replace_space(char *line)
+char	*replace_space(char *line, t_parsing *parsing)
 {
 	int		i;
 	int 	check_quote;
@@ -31,10 +31,12 @@ char	*replace_space(char *line)
 			i++;
 			while (line[i] && check_quote == 0)
 			{
-				if (line[i] == quote)
+				if (line[i] == quote && parsing->nbr_quote % 2 == 0)
 					check_quote = 1;
 				else if(line[i] == ' ')
 					line[i] = -1;
+				if (line[i] == 34 || line[i] == 39)
+					parsing->nbr_quote--;
 				i++;
 			}
 		}
@@ -47,8 +49,12 @@ void	count_separator(char **line, t_parsing *parsing)
 {
 	while(line[0][parsing->len_line])
 	{
+		if (line[0][parsing->len_line] == 34 || line[0][parsing->len_line] == 39)
+			parsing->nbr_quote++;
 		if (line[0][parsing->len_line] == '|')
 			parsing->nbr_pipe++;
+		if (line[0][parsing->len_line] == '>' || line[0][parsing->len_line] == '<')
+			parsing->nbr_redir++;
 		parsing->len_line++;
 	}
 }
@@ -83,17 +89,33 @@ char	*realloc_line(char **line, t_parsing *parsing)
 	return (new_line);
 }
 
+void	create_list(char *line, t_parsing *parsing)
+{
+	char **tab;
+	
+	(void)parsing;
+	tab =  ft_split(line, ' ');
+	if (!tab)
+		return ;
+	int	i = 0;
+	while (tab[i])
+	{
+		printf("line %d : %s\n", i, tab[i]);
+		i++;
+	}	
+}
+
 int	parsing(char **line)
 {
 	char	*new_line;
 	t_parsing	parsing;
 
 	init_structure(&parsing);
-	printf("og : %s\n", line[0]);
 	count_separator(line, &parsing);
 	new_line = realloc_line(line, &parsing);
-	new_line = replace_space(new_line);
+	new_line = replace_space(new_line, &parsing);
 	printf("new_line : %s\n", new_line);
-	printf("nbr_pipe : %d\n", parsing.nbr_pipe);
+	printf("nbr_pipe : %d\nnbr_quote : %d\nnbr_redir : %d\n", parsing.nbr_pipe, parsing.nbr_quote, parsing.nbr_redir);
+	create_list(new_line, &parsing);
 	return (0);
 }
