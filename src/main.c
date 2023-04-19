@@ -41,7 +41,6 @@ static	void	loop_of_prompt(char **env)
 			add_history(line);
 		if (ft_strcmp(line, "exit") == 0)
 			in_shell = 1;
-		printf("line: %s\n", line);
 		parsing(&line);
 		execution(line, env);
 		free(line);
