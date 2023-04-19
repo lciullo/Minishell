@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 11:16:07 by cllovio           #+#    #+#             */
-/*   Updated: 2022/11/22 14:01:47 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/04/19 08:35:32 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*tmp;
 	t_list	*new_content;
-	char	*fonction;
+	char	**fonction;
 
 	if (!(lst) || !del || !(f))
 		return (NULL);
 	new_content = NULL;
 	while (lst)
 	{
-		fonction = f(lst->content);
+		fonction = f(lst->data);
 		tmp = ft_lstnew(fonction);
 		if (!(tmp))
 		{

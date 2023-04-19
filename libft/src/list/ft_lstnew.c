@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:36:12 by cllovio           #+#    #+#             */
-/*   Updated: 2022/11/22 09:16:32 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/04/19 08:40:50 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(void *content)
+t_list	*ft_lstnew(char **cmd, int type)
 {
 	t_list	*tab;
 
+	(void)type;
 	tab = malloc(sizeof(t_list));
 	if (!(tab))
 		return (NULL);
-	tab -> content = content;
+	tab -> data = cmd;
+	tab -> type = 0;
 	tab -> next = NULL;
 	return (tab);
 }
