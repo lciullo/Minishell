@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:01:44 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/18 16:10:56 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/04/19 09:01:11 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@
 
 typedef struct s_list
 {
-	void			*content;
+	char			**data;
+	int				type;
 	struct s_list	*next;
 }	t_list;
 
@@ -44,8 +45,9 @@ void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstlast(t_list *lst);
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), \
 					void (*del)(void *));
-t_list			*ft_lstnew(void *content);
+t_list			*ft_lstnew(char **cmd, int type);
 int				ft_lstsize(t_list *lst);
+void			list_print(t_list *lst);
 
 //# ============ STRING ============ #
 //# ---- libft string functions ---- #

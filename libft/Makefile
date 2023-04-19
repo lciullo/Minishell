@@ -70,9 +70,10 @@ C_FILES 		=	gnl/get_next_line.c \
 					list/ft_lstdelone.c\
 					list/ft_lstiter.c\
 					list/ft_lstlast.c\
-					list/ft_lstmap.c\
-					list/ft_lstnew.c\
-					list/ft_lstsize.c
+					list/ft_lstnew.c \
+					list/ft_lstsize.c \
+					list/list_print.c 
+#list/ft_lstmap.c
 
 HEADERS 		=	${INCLUDES}libft.h	
 
