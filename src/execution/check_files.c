@@ -6,25 +6,60 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:25:34 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/14 10:41:32 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/04/19 11:43:27 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_files(char *infile, char *outfile, t_pipex *data)
+static	void	manage_heredoc(char *limiter)
 {
-	data->infile = open(infile, O_RDONLY);
-	if (data->infile < 0)
+	char	*line;
+	char	*tmp;
+	int		fd[2];
+
+	line = NULL;
+	tmp = "heredoc> ";
+	if (pipe(fd) == -1)
+		exit(1);
+	while (1)
 	{
-		data->check_infile = 1;
-		perror("open");
+		line = readline(tmp);
+		if (ft_strcmp(line, limiter) == 0)
+			break ;
+		write(fd[1], line, ft_strlen(line));
+		write(fd[1], "\n", 1);
+		free(line);
 	}
-	data->outfile = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (data->outfile < 0)
+	//manage the infile here
+	close(fd[1]);
+}
+
+void	loop_for_heredoc(t_list *lst, char *limiter)
+{
+	int	i;
+	int	heredoc;
+
+	i = 0;
+	heredoc = 0;
+	(void)limiter;
+	(void)lst;
+	(void)heredoc;
+	while (lst != NULL)
 	{
-		data->check_outfile = 1;
-		perror("open");
+		while (lst->data[i] != NULL)
+		{
+			if (ft_strcmp(lst->data[i], "<<") == 0)
+			{
+				ft_dprintf(1, "find it \n");
+				heredoc = 1;
+				break ;
+			}
+			else
+				i++;
+		}
+		lst = lst->next;
+		if (heredoc == 1)
+			manage_heredoc(limiter);
 	}
-	return (1);
 }
