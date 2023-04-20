@@ -6,13 +6,13 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:25:34 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/19 11:43:27 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/04/19 16:33:33 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	void	manage_heredoc(char *limiter)
+static	void	manage_heredoc(char *limiter, t_exec *files)
 {
 	char	*line;
 	char	*tmp;
@@ -31,12 +31,13 @@ static	void	manage_heredoc(char *limiter)
 		write(fd[1], "\n", 1);
 		free(line);
 	}
-	//manage the infile here
+	files->in = fd[0];
 	close(fd[1]);
 }
 
 void	loop_for_heredoc(t_list *lst, char *limiter)
 {
+	t_exec	files;
 	int	i;
 	int	heredoc;
 
@@ -60,6 +61,6 @@ void	loop_for_heredoc(t_list *lst, char *limiter)
 		}
 		lst = lst->next;
 		if (heredoc == 1)
-			manage_heredoc(limiter);
+			manage_heredoc(limiter, &files);
 	}
 }
