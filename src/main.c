@@ -33,9 +33,9 @@ static	void	loop_of_prompt(char **env)
 		signal(SIGINT, display_new_line);
 		if (!line)
 		{
-			ft_dprintf(1, "exit\n"); 
+			ft_dprintf(1, "exit\n");
 			free(line);
-			exit (1); //builtine exit 
+			exit (1);
 		}
 		if (line[0])
 			add_history(line);
