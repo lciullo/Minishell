@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:29:41 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/20 14:45:42 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/04/21 16:21:34 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 void	execution(char *line, char **env)
 {
 	t_list			*lst;
-	//t_redirection	files;
 	char			**cmds;
-	char			*limiter;
+	char			*delimiter;
 
 	lst = NULL;
 	cmds = ft_split(line, ' ');
 	lst = ft_lstnew(cmds, 0);
-	limiter = "stop";
-	loop_for_heredoc(lst, limiter);
+	delimiter = "stop";
+	loop_for_infile(&lst);
+	loop_for_heredoc(&lst, delimiter);
 	(void)env;
 }
