@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 16:59:50 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/19 14:23:15 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/04/21 14:36:24 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,42 @@ char	*realloc_line(char **line, t_parsing *parsing)
 	return (new_line);
 }
 
+void	create_list_2(char **tab, t_parsing *parsing, int *j)
+{
+	int	tab_size;
+
+	tab_size = 0;
+	(void) parsing;
+	while (tab[*j])
+	{
+		if (tab[*j][0] == '|' || tab[*j][0] == '<' || tab[*j][0] == '>')
+		{
+			if (tab_size == 0)
+			{
+				tab_size = 1;
+				*j = *j + 1;
+			}
+			break ;
+		}
+		tab_size++;
+		*j = *j + 1;
+	}
+	printf("tab_size : %d\n", tab_size);
+	printf("j : %d\n", *j);
+}
+		// if (tab[parsing->i][0] == '|' || tab[parsing->i][0] == '<' || tab[parsing->i][0] == '>' ||
+		// (tab[parsing->i][0] == '>' && tab[parsing->i][1] == '>') || (tab[parsing->i][0] == '<' && tab[parsing->i][1] == '<'))
+		// {
+		// 	if (tab_size == 0)
+		// 		tab_size = 1;
+		// 	break ;
+		// }
+		
 void	create_list(char *line, t_parsing *parsing)
 {
-	char **tab;
-	
-	(void)parsing;
+	char	**tab;
+	int		nbr_node;
+
 	tab =  ft_split(line, ' ');
 	if (!tab)
 		return ;
@@ -102,7 +133,18 @@ void	create_list(char *line, t_parsing *parsing)
 	{
 		printf("line %d : %s\n", i, tab[i]);
 		i++;
-	}	
+	}
+	nbr_node =	((parsing->nbr_pipe * 2) + 1) + (parsing->nbr_redir * 2);
+	printf("nbr_node : %d\n", nbr_node);
+	parsing->i = 0;
+	int	j;
+	j = 0;
+	while (nbr_node > 0)
+	{
+		create_list_2(tab, parsing, &j);
+		nbr_node--;
+	}
+	printf("j : %d\n", j);
 }
 
 int	parsing(char **line)

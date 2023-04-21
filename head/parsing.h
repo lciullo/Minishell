@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/19 13:25:04 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/04/21 14:02:12 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ typedef	struct s_parsing {
 	int	nbr_quote;
 	int	len_line;
 	int	nbr_redir;
+	int	i;
 }	t_parsing;
 
 enum {
-	CMD,
+	DATA,
 	INFILE,
 	OUTFILE,
 	HERE_DOC,

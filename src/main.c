@@ -24,7 +24,7 @@ static	void	loop_of_prompt(char **env)
 	int		in_shell;
 
 	in_shell = 0;
-	prompt_name = "doublechoc->";
+	prompt_name = "doublechoc-> ";
 	while (in_shell == 0)
 	{
 		signal(SIGINT, control_c_realod_prompt);
