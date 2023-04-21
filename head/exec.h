@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/19 16:18:03 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/04/20 14:45:30 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,14 @@ typedef struct s_exec
 	int		fd[2];
 	int		prev_fd;
 }	t_exec;
+
+/*typedef struct s_redirection
+{
+	int		in;
+	int		out;
+	int		check_heredoc;
+	char	*limiter;
+}	t_redirection;*/
 
 void	execution(char *line, char **env);
 

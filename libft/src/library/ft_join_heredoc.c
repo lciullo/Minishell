@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_join_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/24 09:13:37 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/20 16:17:17 by lciullo          ###   ########.fr       */
+/*   Created: 2023/04/20 17:52:54 by lciullo           #+#    #+#             */
+/*   Updated: 2023/04/21 09:02:19 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*ft_copy_join(char *s1, char *s2, char *str)
+static char	*ft_copy_join_heredoc(char *s1, char *s2, char *str)
 {
 	int	j;
 	int	i;
@@ -24,7 +24,6 @@ static char	*ft_copy_join(char *s1, char *s2, char *str)
 		str[i] = s1[i];
 		i++;
 	}
-	// str[i] == '\n'
 	while (s2[j])
 	{
 		str[i] = s2[j];
@@ -35,18 +34,18 @@ static char	*ft_copy_join(char *s1, char *s2, char *str)
 	return (str);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin_heredoc(char *s1, char *s2)
 {
 	char	*str;
 
 	if (!s1 || !s2)
 		return (NULL);
-	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1)); // +2
+	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 2));
 	if (!str)
 	{
 		free((void *)s1);
 		return (NULL);
 	}
-	str = ft_copy_join(s1, s2, str);
+	str = ft_copy_join_heredoc(s1, s2, str);
 	return (str);
 }
