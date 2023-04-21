@@ -58,6 +58,7 @@ C_FILES 		=	gnl/get_next_line.c \
 					library/ft_strdup.c\
 					library/ft_substr.c\
 					library/ft_strjoin.c\
+					library/ft_join_heredoc.c \
 					library/ft_strtrim.c\
 					library/ft_split.c\
 					library/ft_itoa.c\
