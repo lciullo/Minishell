@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:01:44 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/21 08:58:52 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/04/24 12:55:05 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstlast(t_list *lst);
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), \
 					void (*del)(void *));
-t_list			*ft_lstnew(char **cmd, int type);
+t_list			*ft_lstnew(char **token, int type);
 int				ft_lstsize(t_list *lst);
 void			list_print(t_list *lst);
-
+char	*ft_strcpy(char *dest, const char *src);
 //# ============ STRING ============ #
 //# ---- libft string functions ---- #
 int				ft_atoi(const char *str);
