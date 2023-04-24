@@ -6,60 +6,57 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 16:59:50 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/21 14:36:24 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/04/24 15:24:05 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
 
-// 34 = "
-// 39 = '
-char	*replace_space(char *line, t_parsing *parsing)
+static char	*add_space(char **line, t_parsing *parsing);
+static char	*replace_space(char *line, t_parsing *parsing);
+static void	create_list(char *line, t_parsing *parsing);
+void	create_node(char **tab, t_parsing *parsing);
+// void	create_list_2(char **tab, t_parsing *parsing, int *start)
+// {
+// 	int	tab_size;
+
+// 	tab_size = 0;
+// 	(void) parsing;
+// 	while (tab[*end])
+// 	{
+// 		if (tab[*end][0] == '|' || tab[*end][0] == '<' || tab[*end][0] == '>')
+// 		{
+// 			if (tab_size == 0)
+// 			{
+// 				tab_size = 1;
+// 				*end = *end + 1;
+// 			}
+// 			break ;
+// 		}
+// 		tab_size++;
+// 		*end = *end + 1;
+// 	}
+// 	printf("tab_size : %d\n", tab_size);
+// 	printf("end : %d\n", *end);
+// }
+
+int	parsing(char **line)
 {
-	int		i;
-	int 	check_quote;
-	char	quote;
-	
-	i = 0;
-	while(line[i])
-	{
-		if (line[i] == 34 || line[i] == 39)
-		{
-			check_quote = 0;
-			quote = line[i];
-			i++;
-			while (line[i] && check_quote == 0)
-			{
-				if (line[i] == quote && parsing->nbr_quote % 2 == 0)
-					check_quote = 1;
-				else if(line[i] == ' ')
-					line[i] = -1;
-				if (line[i] == 34 || line[i] == 39)
-					parsing->nbr_quote--;
-				i++;
-			}
-		}
-		i++;
-	}
-	return(line);
+	char	*new_line;
+	t_parsing	parsing;
+
+	init_structure(&parsing);
+	count_separator(line, &parsing);
+	printf("nbr_pipe : %d\nnbr_quote : %d\nnbr_here_doc : %d\nnbr_append : %d\nnbr_input : %d\nnbr_output : %d\nnbr_redir : %d\n", parsing.nbr_pipe, parsing.nbr_quote, parsing.nbr_here_doc, parsing.nbr_append, parsing.nbr_input, parsing.nbr_output, parsing.nbr_redir);
+	new_line = add_space(line, &parsing);
+	new_line = replace_space(new_line, &parsing);
+	printf("\nnew_line : %s\n\n", new_line);
+	create_list(new_line, &parsing);
+	return (0);
 }
 
-void	count_separator(char **line, t_parsing *parsing)
-{
-	while(line[0][parsing->len_line])
-	{
-		if (line[0][parsing->len_line] == 34 || line[0][parsing->len_line] == 39)
-			parsing->nbr_quote++;
-		if (line[0][parsing->len_line] == '|')
-			parsing->nbr_pipe++;
-		if (line[0][parsing->len_line] == '>' || line[0][parsing->len_line] == '<')
-			parsing->nbr_redir++;
-		parsing->len_line++;
-	}
-}
-
-char	*realloc_line(char **line, t_parsing *parsing)
+static char	*add_space(char **line, t_parsing *parsing)
 {
 	char 	*new_line;
 	int		i;
@@ -89,43 +86,45 @@ char	*realloc_line(char **line, t_parsing *parsing)
 	return (new_line);
 }
 
-void	create_list_2(char **tab, t_parsing *parsing, int *j)
+static char	*replace_space(char *line, t_parsing *parsing)
 {
-	int	tab_size;
-
-	tab_size = 0;
-	(void) parsing;
-	while (tab[*j])
+	int		i;
+	int 	check_quote;
+	char	quote;
+	
+	i = 0;
+	while(line[i])
 	{
-		if (tab[*j][0] == '|' || tab[*j][0] == '<' || tab[*j][0] == '>')
+		if (line[i] == 34 || line[i] == 39)
 		{
-			if (tab_size == 0)
+			check_quote = 0;
+			quote = line[i];
+			i++;
+			while (line[i] && check_quote == 0)
 			{
-				tab_size = 1;
-				*j = *j + 1;
+				if (line[i] == quote && parsing->nbr_quote % 2 == 0)
+					check_quote = 1;
+				else if(line[i] == ' ')
+					line[i] = -1;
+				if (line[i] == 34 || line[i] == 39)
+					parsing->nbr_quote--;
+				i++;
 			}
-			break ;
 		}
-		tab_size++;
-		*j = *j + 1;
+		i++;
 	}
-	printf("tab_size : %d\n", tab_size);
-	printf("j : %d\n", *j);
+	return(line);
 }
-		// if (tab[parsing->i][0] == '|' || tab[parsing->i][0] == '<' || tab[parsing->i][0] == '>' ||
-		// (tab[parsing->i][0] == '>' && tab[parsing->i][1] == '>') || (tab[parsing->i][0] == '<' && tab[parsing->i][1] == '<'))
-		// {
-		// 	if (tab_size == 0)
-		// 		tab_size = 1;
-		// 	break ;
-		// }
-		
-void	create_list(char *line, t_parsing *parsing)
+
+static void	create_list(char *line, t_parsing *parsing)
 {
 	char	**tab;
 	int		nbr_node;
-
+	//t_list	*list;
+	//t_list *new;
+	
 	tab =  ft_split(line, ' ');
+	//list = NULL;
 	if (!tab)
 		return ;
 	int	i = 0;
@@ -134,30 +133,47 @@ void	create_list(char *line, t_parsing *parsing)
 		printf("line %d : %s\n", i, tab[i]);
 		i++;
 	}
+	printf("\n");
 	nbr_node =	((parsing->nbr_pipe * 2) + 1) + (parsing->nbr_redir * 2);
 	printf("nbr_node : %d\n", nbr_node);
-	parsing->i = 0;
-	int	j;
-	j = 0;
 	while (nbr_node > 0)
 	{
-		create_list_2(tab, parsing, &j);
-		nbr_node--;
+		parsing->start = parsing->end;
+	 	create_node(tab, parsing);
+	 	//ft_lstadd_back(&list, new);
+	 	nbr_node--;
 	}
-	printf("j : %d\n", j);
+	//printf("end : %d\n", end);
 }
 
-int	parsing(char **line)
-{
-	char	*new_line;
-	t_parsing	parsing;
+void	create_node(char **tab, t_parsing *parsing)
+{	
+	//char **token;
+	// int		i;
 
-	init_structure(&parsing);
-	count_separator(line, &parsing);
-	new_line = realloc_line(line, &parsing);
-	new_line = replace_space(new_line, &parsing);
-	printf("new_line : %s\n", new_line);
-	printf("nbr_pipe : %d\nnbr_quote : %d\nnbr_redir : %d\n", parsing.nbr_pipe, parsing.nbr_quote, parsing.nbr_redir);
-	create_list(new_line, &parsing);
-	return (0);
+	// i = 0;
+	while (tab[parsing->end])
+	{
+		if (tab[parsing->end][0] == '>' || tab[parsing->end][0] == '<' || tab[parsing->end][0] == '|')
+			break ;
+		else if (tab[parsing->end - 1][0] == '>' || tab[parsing->end - 1][0] == '<')
+			break ;
+		else if (tab[parsing->end + 1][0] == '|' || tab[parsing->end + 1][0] == '>' || tab[parsing->end + 1][0] == '<')
+			break ;
+		parsing->end++;
+	}
+	// token = malloc(sizeof(char *) * (parsing->end - parsing->start + 2));
+	// if (!token)
+	// 	return ;
+	// while (parsing->end >= parsing->start)
+	// {
+	// 	ft_strcpy(token[i], tab[parsing->start]);
+	// 	i++;
+	// 	parsing->start++;
+	// }
+	printf("start : %d  | end : %d\n", parsing->start, parsing->end);
+	if (tab[parsing->end][0] == '>' || tab[parsing->end][0] == '<' || tab[parsing->end][0] == '|' || tab[parsing->end - 1][0] == '>' || tab[parsing->end - 1][0] == '<' || tab[parsing->end + 1][0] == '|' || tab[parsing->end + 1][0] == '>' || tab[parsing->end + 1][0] == '<')
+		parsing->end++;
 }
+
+//<< delimiteur < infile cat | cat "coucou le s" > outfile >> append

@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/21 14:02:12 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/04/24 13:07:14 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,14 @@
 typedef	struct s_parsing {
 	int	nbr_pipe;
 	int	nbr_quote;
+	int	nbr_here_doc;
+	int	nbr_append;
 	int	len_line;
+	int	nbr_input;
+	int nbr_output;
 	int	nbr_redir;
-	int	i;
+	int	start;
+	int	end;
 }	t_parsing;
 
 enum {
@@ -31,6 +36,7 @@ enum {
 
 /* ---- utils_parsing.c ----*/
 void	init_structure(t_parsing *parsing);
+void	count_separator(char **line, t_parsing *parsing);
 
 int		parsing(char **line);
 

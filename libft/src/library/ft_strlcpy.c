@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 13:57:42 by cllovio           #+#    #+#             */
-/*   Updated: 2022/11/21 14:39:33 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/04/24 12:54:50 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,16 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t destsize)
 		return (ft_strlen(src));
 	}
 	return (0);
+}
+char	*ft_strcpy(char *dest, const char *src)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	return (dest);
 }
