@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/24 15:37:20 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/04/24 16:56:58 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int		implement_echo(char **echo);
 int		implement_cd(char **cd);
 
 int		implement_pwd(char **pwd);
+
+int		implement_exit(char **exit);
 
 //void	init_struct(t_pipex *data);
 
