@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 09:29:41 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/24 10:52:05 by lciullo          ###   ########.fr       */
+/*   Created: 2023/04/24 10:07:54 by lciullo           #+#    #+#             */
+/*   Updated: 2023/04/24 14:39:02 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execution(char *line, char **env)
-{
-	t_list			*lst;
-	char			**cmds;
-	char			*delimiter;
 
-	lst = NULL;
-	cmds = ft_split(line, ' ');
-	lst = ft_lstnew(cmds, 0);
-	delimiter = "stop";
-	loop_for_infile(&lst);
-	loop_for_heredoc(&lst, delimiter);
-	loop_for_builtin(&lst);
-	(void)env;
+
+void	loop_for_builtin(t_list **lst)
+{
+	int		i;
+	t_list	*head;
+
+	i = 0;
+	head = *lst;
+	while (head != NULL)
+	{
+		while (head->data[i] != NULL)
+		{
+			if (ft_strcmp(head->data[i], "echo") == 0)
+				implement_echo(head->data);
+			i++;
+		}
+		head = head->next;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/21 16:21:11 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/04/24 14:40:11 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ void	execution(char *line, char **env);
 void	loop_for_heredoc(t_list **lst, char *delimiter);
 
 void	loop_for_infile(t_list **lst);
+
+
+
+void	loop_for_builtin(t_list **lst);
+
+int		implement_echo(char **echo);
 
 //void	init_struct(t_pipex *data);
 
