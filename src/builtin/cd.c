@@ -1,36 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.c                                          :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 10:07:54 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/24 15:49:31 by lciullo          ###   ########.fr       */
+/*   Created: 2023/04/24 14:59:48 by lciullo           #+#    #+#             */
+/*   Updated: 2023/04/24 15:05:17 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	loop_for_builtin(t_list **lst)
+int	implement_cd(char **cd)
 {
-	int		i;
-	t_list	*head;
-
-	i = 0;
-	head = *lst;
-	while (head != NULL)
-	{
-		while (head->data[i] != NULL)
-		{
-			if (ft_strcmp(head->data[i], "echo") == 0)
-				implement_echo(head->data);
-			else if (ft_strcmp(head->data[i], "cd") == 0)
-				implement_cd(head->data);
-			else if (ft_strcmp(head->data[i], "pwd") == 0)
-				implement_pwd(head->data);
-			i++;
-		}
-		head = head->next;
-	}
+	ft_dprintf(1, "in cd %s\n", cd[0]);
+	return (0);
 }
