@@ -40,8 +40,7 @@ static	void	loop_of_prompt(char **env)
 		if (ft_strcmp(line, "exit") == 0)
 			break ;
 		parsing(&line);
-		(void)env;
-		//execution(line, env);
+		execution(line, env);
 		free(line);
 	}
 }
