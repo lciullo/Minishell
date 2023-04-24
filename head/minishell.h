@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 15:54:30 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/24 11:38:00 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/04/24 15:50:38 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@
 # include <readline/history.h>
 # include <signal.h>
 
-extern	int	exit_status;
+extern	int	g_exit_status;
 
 #endif

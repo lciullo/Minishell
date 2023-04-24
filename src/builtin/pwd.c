@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.c                                          :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 10:07:54 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/24 15:49:31 by lciullo          ###   ########.fr       */
+/*   Created: 2023/04/24 15:35:56 by lciullo           #+#    #+#             */
+/*   Updated: 2023/04/24 16:18:16 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	loop_for_builtin(t_list **lst)
-{
-	int		i;
-	t_list	*head;
 
-	i = 0;
-	head = *lst;
-	while (head != NULL)
+int	implement_pwd(char **pwd)
+{
+	char	*current_directory_path;
+
+	(void)pwd;
+	current_directory_path = NULL;
+	current_directory_path = getcwd(NULL, 0);
+	if (!current_directory_path)
 	{
-		while (head->data[i] != NULL)
-		{
-			if (ft_strcmp(head->data[i], "echo") == 0)
-				implement_echo(head->data);
-			else if (ft_strcmp(head->data[i], "cd") == 0)
-				implement_cd(head->data);
-			else if (ft_strcmp(head->data[i], "pwd") == 0)
-				implement_pwd(head->data);
-			i++;
-		}
-		head = head->next;
+		ft_dprintf(2, "doublechoc-> : %s\n", strerror(errno));
+		return (errno);
 	}
+	ft_dprintf(1, "%s\n", current_directory_path);
+	free(current_directory_path);
+	return (0);
 }
