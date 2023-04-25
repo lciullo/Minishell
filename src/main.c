@@ -31,11 +31,11 @@ static	void	loop_of_prompt(char **env)
 	prompt_name = "doublechoc-> ";
 	while (1)
 	{
-		/*if (data.end == 1)
+		if (data.end == 1)
 		{
 			ft_dprintf(1, "exit\n");
 			break ;
-		}*/
+		}
 		signal(SIGINT, control_c_realod_prompt);
 		signal(SIGQUIT, SIG_IGN);
 		line = readline(prompt_name);
@@ -48,8 +48,9 @@ static	void	loop_of_prompt(char **env)
 		}
 		if (line[0])
 			add_history(line);
-		parsing(&line);
-		execution(line, env, &data);
+		parsing(line);
+		(void)env;
+		//execution(line, env, &data);
 		free(line);
 	}
 }
