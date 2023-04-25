@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:29:41 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/24 10:52:05 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/04/25 10:44:50 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execution(char *line, char **env)
+void	execution(char *line, char **env, t_exec *data)
 {
 	t_list			*lst;
 	char			**cmds;
@@ -24,6 +24,6 @@ void	execution(char *line, char **env)
 	delimiter = "stop";
 	loop_for_infile(&lst);
 	loop_for_heredoc(&lst, delimiter);
-	loop_for_builtin(&lst);
+	loop_for_builtin(&lst, data);
 	(void)env;
 }
