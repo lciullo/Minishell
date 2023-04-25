@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:07:54 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/24 16:49:27 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/04/25 10:44:50 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	loop_for_builtin(t_list **lst)
+void	loop_for_builtin(t_list **lst, t_exec *data)
 {
 	int		i;
 	t_list	*head;
@@ -30,7 +30,7 @@ void	loop_for_builtin(t_list **lst)
 			else if (ft_strcmp(head->data[i], "pwd") == 0)
 				implement_pwd(head->data);
 			else if (ft_strcmp(head->data[i], "exit") == 0)
-				implement_pwd(head->data);
+				implement_exit(head->data, data);
 			i++;
 		}
 		head = head->next;

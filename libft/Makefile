@@ -53,7 +53,8 @@ C_FILES 		=	gnl/get_next_line.c \
 					library/ft_memchr.c\
 					library/ft_memcmp.c\
 					library/ft_strnstr.c\
-					library/ft_atoi.c\
+					library/ft_atoi.c \
+					library/ft_atoi_long.c \
 					library/ft_calloc.c\
 					library/ft_strdup.c\
 					library/ft_substr.c\

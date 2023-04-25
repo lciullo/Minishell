@@ -17,30 +17,39 @@ static void	display_new_line(int signal)
 	ft_dprintf(1, "\n");
 }
 
+//ft_strcmp(line, "exit") == 0
+
 static	void	loop_of_prompt(char **env)
 {
 	char	*prompt_name;
 	char	*line;
+	t_exec	data;
 
+	(void)env;
+	(void)data;
+	data.end = 0;
 	prompt_name = "doublechoc-> ";
 	while (1)
 	{
+		/*if (data.end == 1)
+		{
+			ft_dprintf(1, "exit\n");
+			break ;
+		}*/
 		signal(SIGINT, control_c_realod_prompt);
 		signal(SIGQUIT, SIG_IGN);
 		line = readline(prompt_name);
 		signal(SIGINT, display_new_line);
 		if (!line)
 		{
-			ft_dprintf(1, "exit\n");
+			ft_dprintf(2, "exit\n");
 			free(line);
 			exit (1);
 		}
 		if (line[0])
 			add_history(line);
-		if (ft_strcmp(line, "exit") == 0)
-			break ;
 		parsing(&line);
-		execution(line, env);
+		execution(line, env, &data);
 		free(line);
 	}
 }
