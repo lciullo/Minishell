@@ -48,8 +48,19 @@ static	void	loop_of_prompt(char **env)
 		}
 		if (line[0])
 			add_history(line);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		parsing(line);
+		(void)env;
+		//execution(line, env, &data);
+=======
+		//parsing(&line);
+		execution(line, env, &data);
+>>>>>>> d6e367b032a70a3e5d1dccd1eb19d9fd8e74d3f9
+=======
 		parsing(&line);
 		execution(line, env, &data);
+>>>>>>> 6aa4cafd8ed0613cae9872319bc5ee979fa2a383
 		free(line);
 	}
 }
