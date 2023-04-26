@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:04:05 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/25 15:31:02 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/04/26 08:48:10 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,4 +118,16 @@ char	*add_space(char	*line, t_parsing *parsing)
 		return (NULL);
 	new_line = check_separator(line, new_line, 0, 0);
 	return (new_line);
+}
+
+void	print_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		printf("%s\n", tab[i]);
+		i++;
+	}
 }
