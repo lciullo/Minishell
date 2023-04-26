@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/24 13:07:14 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/04/26 08:48:26 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ enum {
 
 /* ---- utils_parsing.c ----*/
 void	init_structure(t_parsing *parsing);
-void	count_separator(char **line, t_parsing *parsing);
-
-int		parsing(char **line);
+void	count_separator(char *line, t_parsing *parsing);
+char	*replace_space(char *line, t_parsing *parsing);
+char	*add_space(char	*line, t_parsing *parsing);
+void	print_tab(char **tab);
+int		parsing(char *line);
 
 #endif
