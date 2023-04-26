@@ -6,14 +6,14 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 14:59:48 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/24 15:05:17 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/04/26 16:01:54 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	implement_cd(char **cd)
+int	implement_cd(char **cmd)
 {
-	ft_dprintf(1, "in cd %s\n", cd[0]);
+	ft_dprintf(1, "in cd %s\n", cmd[0]);
 	return (0);
 }
