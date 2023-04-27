@@ -6,17 +6,22 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:50:28 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/26 15:50:31 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/04/27 16:25:58 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
 static	void	init_struct(t_exec *files)
 {
 	files->infile = 0;
 	files->outfile = 0;
+}
+
+static int	loop_for_exec(char **env)
+{
+	(void)env;
+	return (0);
 }
 
 void	execution(char *line, char **env, t_exec *data)
@@ -33,7 +38,7 @@ void	execution(char *line, char **env, t_exec *data)
 	init_struct(&files);
 	loop_for_infile(&lst, &files);
 	loop_for_heredoc(&lst, delimiter);
-	loop_for_builtin(&lst, data);
+	loop_for_builtin(&lst, data, env);
+	loop_for_exec(env);
 	loop_for_outfile(&lst, &files);
-	(void)env;
 }
