@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/26 16:01:11 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/04/27 15:35:23 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef struct s_exec
 	int	end;
 }	t_exec;
 
+
+
 void	execution(char *line, char **env, t_exec *data);
 
 //# ======== Temporary ======== #
@@ -37,7 +39,9 @@ void	loop_for_outfile(t_list **lst, t_exec *files);
 
 //# ======== Builtins ======== #
 
-void	loop_for_builtin(t_list **lst, t_exec *data);
+void	loop_for_builtin(t_list **lst, t_exec *data, char **env);
+
+void	implement_env(char **env);
 
 int		implement_echo(char **cmd);
 

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:07:54 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/25 10:44:50 by lisa             ###   ########.fr       */
+/*   Updated: 2023/04/27 15:27:19 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	loop_for_builtin(t_list **lst, t_exec *data)
+void	loop_for_builtin(t_list **lst, t_exec *data, char **env)
 {
 	int		i;
 	t_list	*head;
@@ -31,6 +31,8 @@ void	loop_for_builtin(t_list **lst, t_exec *data)
 				implement_pwd(head->data);
 			else if (ft_strcmp(head->data[i], "exit") == 0)
 				implement_exit(head->data, data);
+			else if (ft_strcmp(head->data[i], "env") == 0)
+				implement_env(env);
 			i++;
 		}
 		head = head->next;
