@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:01:44 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/26 15:16:08 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/04/27 15:43:07 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@ typedef struct s_list
 	int				type;
 	struct s_list	*next;
 }	t_list;
+
+typedef struct s_lst_env
+{
+	char				*variable;
+	char				*value;
+	struct s_lst_env	*next;
+}	t_lst_env;
+
 
 //# ====================== LIBFT ====================== #
 
