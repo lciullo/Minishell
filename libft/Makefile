@@ -64,6 +64,7 @@ C_FILES 		=	gnl/get_next_line.c \
 					library/ft_split.c\
 					library/ft_itoa.c\
 					library/ft_strmapi.c\
+					library/ft_strndup.c \
 					library/ft_striteri.c\
 					\
 					list/ft_lstadd_back.c\
