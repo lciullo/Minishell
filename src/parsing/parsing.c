@@ -71,7 +71,7 @@ void	change_tab(char **tab_line)
 	}
 }
 
-void	create_triple_tab(char	 **tab, char	***prepare_list, int *i, int *start)
+// void	create_triple_tab(char	 **tab, char	***prepare_list, int *i, int *start)
 // {
 // 	int	end;
 // 	int	malloc_size;
@@ -96,7 +96,7 @@ void	create_list(char *line, t_parsing *parsing)
 	char	**tab_line;
 	//char	***prepare_list;
 	//int		i;
-	int		start;
+	//int		start;
 
 	//i = 0;
 	tab_line = ft_split(line, ' ');
@@ -104,8 +104,8 @@ void	create_list(char *line, t_parsing *parsing)
 		return ; 
 	change_tab(tab_line);
 	print_tab(tab_line);
-	start = ((parsing->nbr_pipe * 2 + 1) + (parsing->nbr_redir * 2) + 2);
-	printf("\nsize malloc: %d\n", start);
+	(void)parsing;
+	//printf("\nsize malloc: %d\n", start);
 	//prepare_list = malloc(sizeof (char **) * ((parsing->nbr_redir * 2) + (parsing->nbr_pipe * 2 + 1) + 1));
 	//if (!prepare_list)
 	//	return (NULL);
