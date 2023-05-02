@@ -2,9 +2,6 @@
 #include "minishell.h"
 #include <stdio.h>
 
-// static char	*add_space(char **line, t_parsing *parsing);
-// static char	*replace_space(char *line, t_parsing *parsing);
-// static void	create_list(char *line, t_parsing *parsing);
 void	create_list(char *line, t_parsing *parsing);
 
 int	parsing(char *line)
@@ -74,16 +71,45 @@ void	change_tab(char **tab_line)
 	}
 }
 
+void	create_triple_tab(char	 **tab, char	***prepare_list, int *i, int *start)
+// {
+// 	int	end;
+// 	int	malloc_size;
+
+// 	end = *start;
+// 	while (tab[start])
+// 	{
+// 		if (end == start && (tab[start][0] == '>' || tab[strat][0] == '<'))
+// 		{
+// 			end++;
+// 			break;
+// 		}
+// 		end++;
+// 	}
+// 	malloc_size = end - start;
+// 	if (malloc_size == 0)
+// 		malloc_size = 1;
+// }
+
 void	create_list(char *line, t_parsing *parsing)
 {
 	char	**tab_line;
+	//char	***prepare_list;
+	//int		i;
+	int		start;
 
-	(void)parsing;
+	//i = 0;
 	tab_line = ft_split(line, ' ');
 	if (!tab_line)
-		return ;
+		return ; 
 	change_tab(tab_line);
 	print_tab(tab_line);
+	start = ((parsing->nbr_pipe * 2 + 1) + (parsing->nbr_redir * 2) + 2);
+	printf("\nsize malloc: %d\n", start);
+	//prepare_list = malloc(sizeof (char **) * ((parsing->nbr_redir * 2) + (parsing->nbr_pipe * 2 + 1) + 1));
+	//if (!prepare_list)
+	//	return (NULL);
+	//create_triple_char(tab_line, prepare_list, &i, &strat);
 }
 
-//<< delimiteur < infile cat | cat "coucou le s" > outfile >> append
+//<< delimiteur < infile cat | cat "coucou le s" > outfile >> append		
