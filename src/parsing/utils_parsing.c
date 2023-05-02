@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:04:05 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/26 08:48:10 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/02 13:59:48 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,14 @@ void	init_structure(t_parsing *parsing)
 	parsing->start = 0;
 	parsing->end = 0;
 }
+int	is_white_space(char	*line, int i)
+{
+	if (line[i + 1])
+		i++;
+	while (line[i] && ((line[i] >= 9 && line[i] <= 13) || line[i] == ' '))
+		i++;
+	return (i);
+}
 
 void	count_separator(char *line, t_parsing *parsing)
 {
@@ -33,17 +41,17 @@ void	count_separator(char *line, t_parsing *parsing)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] == 34 || line[i] == 39)
+		if ((line[i] == 34 || line[i] == 39) && line[is_white_space(line, i) + 1])
 			parsing->nbr_quote++;
-		else if (line[i] == '|')
+		else if (line[is_white_space(line, i) + 1] && line[i] == '|')
 			parsing->nbr_pipe++;
-		else if (line[i] == '>' && line[i + 1] == '>'  && line[i - 1] != '>')
+		else if (line[i] == '>' && line[i + 1] == '>'  && line[i - 1] != '>' && line[is_white_space(line, i + 1) + 1])
 			parsing->nbr_append++;
-		else if (line[i] == '<' && line[i + 1] == '<'  && line[i - 1] != '<')
+		else if (line[i] == '<' && line[i + 1] == '<'  && line[i - 1] != '<' && line[is_white_space(line, i + 1) + 1])
 			parsing->nbr_here_doc++;
-		else if (line[i] == '>' && line[i + 1] != '>'  && line[i - 1] != '>')
+		else if (line[is_white_space(line, i) + 1] && line[i] == '>' && line[i + 1] != '>'  && line[i - 1] != '>')
 			parsing->nbr_output++;
-		else if (line[i] == '<' && line[i + 1] != '<'  && line[i - 1] != '<')
+		else if (line[is_white_space(line, i) + 1] && line[i] == '<' && line[i + 1] != '<'  && line[i - 1] != '<')
 			parsing->nbr_input++;
 		i++;
 	}
