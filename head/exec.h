@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/27 15:35:23 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/02 15:10:19 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ void	loop_for_outfile(t_list **lst, t_exec *files);
 
 void	loop_for_builtin(t_list **lst, t_exec *data, char **env);
 
-void	implement_env(char **env);
+int		is_builtin(t_list **lst);
+
+int		implement_env(char **env);
 
 int		implement_echo(char **cmd);
 

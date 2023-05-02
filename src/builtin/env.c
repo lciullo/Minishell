@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:12:43 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/27 17:37:05 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/02 13:13:45 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,33 +22,39 @@ static size_t	begin_of_variable(char *path)
 	return (len);
 }
 
-char	*ft_strncpy(char *dest, char *src, unsigned int n)
+static t_lst_env	*fill_list_env(char *row, t_lst_env *lst_env)
 {
-	unsigned int	i;
+	size_t		start;
+	char		*variable;
+	char		*value;
 
-	i = 0;
-	dest = malloc(sizeof(char) * n + 1);
-	while (src[i] != '\0' && i < n)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	while (i < n)
-	{
-		dest[i] = '\0';
-		i++;
-	}
-	return (dest);
+	variable = NULL;
+	value = NULL;
+	start = begin_of_variable(row);
+	if (!start)
+		return (NULL);
+	variable = ft_strndup(variable, row, start);
+	if (!variable)
+		return (NULL);
+	value = ft_strndup(value, &row[start + 1], ft_strlen(row));
+	if (!value)
+		return (free(variable), NULL);
+	ft_lstadd_back_env(&lst_env, ft_lstnew_env(variable, value));
+	return (lst_env);
 }
 
-void	implement_env(char **env)
+int	implement_env(char **env)
 {
 	size_t		row;
-	size_t		start;
-	char		*variable = NULL;
+	t_lst_env	*lst_env;
 
+	lst_env = NULL;
 	row = 0;
-	start = begin_of_variable(env[row]);
-	variable = ft_strncpy(variable, env[row], start);
+	while (env[row] != NULL)
+	{
+		lst_env = fill_list_env(env[row], lst_env);
+		row++;
+	}
+	list_print_env(lst_env);
+	return (1);
 }
-

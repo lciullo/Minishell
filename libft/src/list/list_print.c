@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:36:12 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/19 08:58:03 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/02 13:11:33 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,17 @@ void	list_print(t_list *lst)
 		lst = lst->next;
 	}
 	ft_dprintf(1, "\n");
+}
+
+
+void	list_print_env(t_lst_env *lst_env)
+{
+	t_lst_env	*copy;
+
+	copy = lst_env;
+	while (copy)
+	{
+		ft_dprintf(1, "%s=%s\n", copy->variable, copy->value);
+		copy = copy->next;
+	}
 }

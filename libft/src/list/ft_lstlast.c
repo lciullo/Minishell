@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:57:59 by cllovio           #+#    #+#             */
-/*   Updated: 2022/11/22 10:07:12 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/02 11:17:12 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@ t_list	*ft_lstlast(t_list *lst)
 	if (!lst)
 		return (NULL);
 	while (lst -> next)
+		lst = lst -> next;
+	return (lst);
+}
+
+t_lst_env	*ft_lstlast_env(t_lst_env *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst -> next != NULL)
 		lst = lst -> next;
 	return (lst);
 }

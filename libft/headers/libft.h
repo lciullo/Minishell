@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:01:44 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/27 15:43:07 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/02 12:32:59 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,27 +38,32 @@ typedef struct s_lst_env
 {
 	char				*variable;
 	char				*value;
+	int					equal;
 	struct s_lst_env	*next;
 }	t_lst_env;
-
 
 //# ====================== LIBFT ====================== #
 
 //# ============ LIST ============ #
+
 void			ft_lstadd_back(t_list **lst, t_list *new);
+void			ft_lstadd_back_env(t_lst_env **lst, t_lst_env *new);
 void			ft_lstadd_front(t_list **lst, t_list *new);
 void			ft_lstclear(t_list **lst, void (*del)(void*));
 void			ft_lstdelone(t_list *lst, void (*del)(void*));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstlast(t_list *lst);
+t_lst_env		*ft_lstlast_env(t_lst_env *lst);
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), \
 					void (*del)(void *));
 t_list			*ft_lstnew(char **token, int type);
+t_lst_env		*ft_lstnew_env(char *variable, char *value);
 int				ft_lstsize(t_list *lst);
 void			list_print(t_list *lst);
+void			list_print_env(t_lst_env *lst);
 char			*ft_strcpy(char *dest, const char *src);
-//# ============ STRING ============ #
-//# ---- libft string functions ---- #
+//# ============ LIBRARY ============ #
+
 long			ft_atoi_long(char *str);
 int				ft_atoi(const char *str);
 int				ft_isalnum(int c);
@@ -88,6 +93,7 @@ size_t			ft_strlen(const char *str);
 char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 int				ft_strncmp(char *s1, char *s2, size_t n);
 char			*ft_strnstr(const char *str, const char *search, size_t n);
+char			*ft_strndup(char *dest, char *src, unsigned int n);
 char			*ft_strrchr(const char *s, int c);
 char			*ft_strtrim(char const *s1, char const *set);
 char			*ft_substr(const char *s, unsigned int start, size_t len);
