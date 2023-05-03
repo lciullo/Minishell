@@ -73,9 +73,11 @@ void	change_tab(char **tab_line)
 void	list_2(int	*start, int *end, char **tab_line)
 {
 	int malloc_size;
-	//char **token;
+	char **token;
+	int	i;
 
 	malloc_size = 0;
+	i = 0;
 	if (tab_line[*end] == NULL)
 	{
 		*start = -1;
@@ -104,7 +106,13 @@ void	list_2(int	*start, int *end, char **tab_line)
 		*end = *end + 1;
 	}
 	printf("malloc_size : %d | start : %d | end : %d\n", malloc_size, *start, *end);
-	//token = malloc(sizeof(char *) * (malloc_size + 1));
+	token = malloc(sizeof(char *) * (malloc_size + 1));
+	if (!token)
+		return ;
+	while (*start < *end)
+	{
+		ft_str
+	}
 	
 }
 
