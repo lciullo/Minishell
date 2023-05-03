@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:04:05 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/02 13:59:48 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/03 11:44:11 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ char	*replace_space(char *line, t_parsing *parsing)
 			i++;
 			while (line[i] && check_quote == 0)
 			{
-				if (line[i] == quote && parsing->nbr_quote % 2 == 0)
+				if (line[i] == quote)
+				// && parsing->nbr_quote % 2 == 0)
 					check_quote = 1;
 				else if(line[i] == ' ')
 					line[i] = -1;

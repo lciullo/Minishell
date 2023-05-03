@@ -34,8 +34,7 @@ char	*delete_quote(char *line, int j)
 	i = 0;
 	k = 1;
 	while (k < j - 1)
-	{
-		
+	{		
 		new_line[i] = line[k];
 		i++;
 		k++; 
@@ -46,8 +45,8 @@ char	*delete_quote(char *line, int j)
 
 void	change_tab(char **tab_line)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	quote;
 	
 	i = 0;
@@ -71,45 +70,63 @@ void	change_tab(char **tab_line)
 	}
 }
 
-// void	create_triple_tab(char	 **tab, char	***prepare_list, int *i, int *start)
-// {
-// 	int	end;
-// 	int	malloc_size;
+void	list_2(int	*start, int *end, char **tab_line)
+{
+	int malloc_size;
+	//char **token;
 
-// 	end = *start;
-// 	while (tab[start])
-// 	{
-// 		if (end == start && (tab[start][0] == '>' || tab[strat][0] == '<'))
-// 		{
-// 			end++;
-// 			break;
-// 		}
-// 		end++;
-// 	}
-// 	malloc_size = end - start;
-// 	if (malloc_size == 0)
-// 		malloc_size = 1;
-// }
+	malloc_size = 0;
+	if (tab_line[*end] == NULL)
+	{
+		*start = -1;
+		return ;
+	}
+	while (tab_line[*end])
+	{
+		if ((tab_line[*end][0] == '<' || tab_line[*end][0] == '>' || tab_line[*end][0] == '|'))
+		{
+			*end = *end + 1;
+			malloc_size = 1;
+			break ;
+		}
+		else if (*end != 0 && tab_line[*end - 1] && (tab_line[*end - 1][0] == '<' || tab_line[*end - 1][0] == '>'))
+		{
+			*end = *end + 1;
+			malloc_size = 1;
+			break ;
+		}
+		else if (tab_line[*end + 1] && (tab_line[*end + 1][0] == '<' || tab_line[*end + 1][0] == '>' || tab_line[*end + 1][0] == '|'))
+		{
+			*end = *end + 1;
+			malloc_size = *end - *start;
+			break ;
+		}
+		*end = *end + 1;
+	}
+	printf("malloc_size : %d | start : %d | end : %d\n", malloc_size, *start, *end);
+	//token = malloc(sizeof(char *) * (malloc_size + 1));
+	
+}
 
 void	create_list(char *line, t_parsing *parsing)
 {
 	char	**tab_line;
-	//char	***prepare_list;
-	//int		i;
-	//int		start;
+	int		start;
+	int		end;
 
-	//i = 0;
+	start = 0;
+	end = 0;
+	(void) parsing;
 	tab_line = ft_split(line, ' ');
 	if (!tab_line)
 		return ; 
 	change_tab(tab_line);
 	print_tab(tab_line);
-	(void)parsing;
-	//printf("\nsize malloc: %d\n", start);
-	//prepare_list = malloc(sizeof (char **) * ((parsing->nbr_redir * 2) + (parsing->nbr_pipe * 2 + 1) + 1));
-	//if (!prepare_list)
-	//	return (NULL);
-	//create_triple_char(tab_line, prepare_list, &i, &strat);
+	while (start != -1)
+	{
+		start = end;
+		list_2(&start, &end, tab_line);
+	}
 }
 
 //<< delimiteur < infile cat | cat "coucou le s" > outfile >> append		
