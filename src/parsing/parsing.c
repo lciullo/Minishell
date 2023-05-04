@@ -1,24 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
+/*   Updated: 2023/05/04 15:46:58 by cllovio          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdio.h>
 
 t_list	*create_list(char *line, t_parsing *parsing);
 
 t_list	*parsing(char *line)
 {
-	
 	t_parsing	parsing;
-	char *new_line;
-	
+	char		*new_line;
+
 	(void)line;
 	init_structure(&parsing);
 	count_separator(line, &parsing);
-	//printf("nbr_pipe : %d\nnbr_quote : %d\nnbr_here_doc : %d\nnbr_append : %d\nnbr_input : %d\nnbr_output : %d\nnbr_redir : %d\n", parsing.nbr_pipe, parsing.nbr_quote, parsing.nbr_here_doc, parsing.nbr_append, parsing.nbr_input, parsing.nbr_output, parsing.nbr_redir);
-	//printf("%s\n", line);
 	new_line = replace_space(line, &parsing);
 	new_line = add_space(line, &parsing);
-	//printf("\n%s\n\n", new_line);
-	//create_list(new_line, &parsing);
 	return (create_list(new_line, &parsing));
 }
 
@@ -27,7 +32,7 @@ char	*delete_quote(char *line, int j)
 	char	*new_line;
 	int		i;
 	int		k;
-	
+
 	new_line = malloc(sizeof(char) * (j - 2 + 1));
 	if (!new_line)
 		return (NULL);
@@ -37,7 +42,7 @@ char	*delete_quote(char *line, int j)
 	{		
 		new_line[i] = line[k];
 		i++;
-		k++; 
+		k++;
 	}
 	new_line[i] = '\0';
 	return (new_line);
@@ -48,16 +53,16 @@ void	change_tab(char **tab_line)
 	int		i;
 	int		j;
 	char	quote;
-	
+
 	i = 0;
 	j = 0;
-	while(tab_line[i])
+	while (tab_line[i])
 	{
-		if(tab_line[i][0] == 34 || tab_line[i][0] == 39)
+		if (tab_line[i][0] == 34 || tab_line[i][0] == 39)
 		{
 			j = 0;
 			quote = tab_line[i][0];
-			while(tab_line[i][j])
+			while (tab_line[i][j])
 			{
 				if (tab_line[i][j] == -1)
 					tab_line[i][j] = ' ';
@@ -72,9 +77,9 @@ void	change_tab(char **tab_line)
 
 t_list	*list_2(int	*start, int *end, char **tab_line)
 {
-	int malloc_size;
-	char **token;
-	int	i;
+	int		malloc_size;
+	char	**token;
+	int		i;
 	t_list	*new;
 
 	malloc_size = 0;
@@ -82,23 +87,26 @@ t_list	*list_2(int	*start, int *end, char **tab_line)
 	if (tab_line[*end] == NULL)
 	{
 		*start = -1;
-		return NULL;
+		return (NULL);
 	}
 	while (tab_line[*end])
 	{
-		if ((tab_line[*end][0] == '<' || tab_line[*end][0] == '>' || tab_line[*end][0] == '|'))
+		if ((tab_line[*end][0] == '<' || tab_line[*end][0] == '>' \
+		|| tab_line[*end][0] == '|'))
 		{
 			*end = *end + 1;
 			malloc_size = 1;
 			break ;
 		}
-		else if (*end != 0 && tab_line[*end - 1] && (tab_line[*end - 1][0] == '<' || tab_line[*end - 1][0] == '>'))
+		else if (*end != 0 && tab_line[*end - 1] && \
+		(tab_line[*end - 1][0] == '<' || tab_line[*end - 1][0] == '>'))
 		{
 			*end = *end + 1;
 			malloc_size = 1;
 			break ;
 		}
-		else if (tab_line[*end + 1] && (tab_line[*end + 1][0] == '<' || tab_line[*end + 1][0] == '>' || tab_line[*end + 1][0] == '|'))
+		else if (tab_line[*end + 1] && (tab_line[*end + 1][0] == '<' \
+		|| tab_line[*end + 1][0] == '>' || tab_line[*end + 1][0] == '|'))
 		{
 			*end = *end + 1;
 			malloc_size = *end - *start;
@@ -106,23 +114,21 @@ t_list	*list_2(int	*start, int *end, char **tab_line)
 		}
 		*end = *end + 1;
 	}
-	//printf("malloc_size : %d | start : %d | end : %d\n", malloc_size, *start, *end);
 	token = malloc(sizeof(char *) * (malloc_size + 1));
 	if (!token)
-		return NULL;
+		return (NULL);
 	while (*start < *end)
 	{
 		token[i] = ft_strdup(tab_line[*start]);
 		if (!token)
-			return NULL;
-		//printf("token[%d] = %s\n", i, token[i]);
+			return (NULL);
 		*start = *start + 1;
 		i++;
 	}
 	token[i] = NULL;
 	new = ft_lstnew(token, -1);
 	if (!new)
-		return NULL;
+		return (NULL);
 	return (new);
 }
 
@@ -155,7 +161,8 @@ void	change_list(t_list **list)
 			temp->next->type = INFILE;
 		else if (temp->data[0][0] == '>' && temp->data[0][1] == '\0')
 			temp->next->type = OUTFILE;
-		else if (temp->type == -1 && (temp->data[0][0] != '>' || temp->data[0][0] != '<'))
+		else if (temp->type == -1 && \
+		(temp->data[0][0] != '>' || temp->data[0][0] != '<'))
 			temp->type = TOKEN;
 		temp = temp->next;
 	}
@@ -209,9 +216,8 @@ t_list	*create_list(char *line, t_parsing *parsing)
 	(void) parsing;
 	tab_line = ft_split(line, ' ');
 	if (!tab_line)
-		return (NULL); 
+		return (NULL);
 	change_tab(tab_line);
-	//print_tab(tab_line);
 	while (start != -1)
 	{
 		start = end;
@@ -220,7 +226,6 @@ t_list	*create_list(char *line, t_parsing *parsing)
 	}
 	change_list(&list);
 	del_delimiteur(&list);
-	//print_list(list);
 	return (list);
 }
 

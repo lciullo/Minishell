@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/04 13:33:38 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/04 14:42:42 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 
 # include "../libft/headers/libft.h"
 
-typedef	struct s_parsing {
+typedef struct s_parsing {
 	int	nbr_pipe;
 	int	nbr_quote;
 	int	nbr_here_doc;
 	int	nbr_append;
 	int	len_line;
 	int	nbr_input;
-	int nbr_output;
+	int	nbr_output;
 	int	nbr_redir;
 	int	start;
 	int	end;

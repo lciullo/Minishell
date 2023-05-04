@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 13:57:42 by cllovio           #+#    #+#             */
-/*   Updated: 2023/04/24 12:54:50 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/04 14:45:20 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t destsize)
 	}
 	return (0);
 }
+
 char	*ft_strcpy(char *dest, const char *src)
 {
 	unsigned int	i;

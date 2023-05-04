@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:36:12 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/04 10:37:36 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/04 14:46:21 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_list	*ft_lstnew(char **token, int type)
 	tab -> next = NULL;
 	return (tab);
 }
-
 
 t_lst_env	*ft_lstnew_env(char *variable, char *value)
 {
