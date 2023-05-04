@@ -22,6 +22,7 @@ static	void	loop_of_prompt(char **env)
 	char	*prompt_name;
 	char	*line;
 	t_exec	data;
+	t_list	*list;
 
 	(void)env;
 	(void)data;
@@ -46,8 +47,10 @@ static	void	loop_of_prompt(char **env)
 		}
 		if (line[0])
 			add_history(line);
-		parsing(line);
-		execution(line, env, &data);
+		list = parsing(line);
+		print_list(list);
+		(void)env;
+		//execution(line, env, &data);
 		free(line);
 	}
 }

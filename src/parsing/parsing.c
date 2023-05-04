@@ -2,9 +2,9 @@
 #include "minishell.h"
 #include <stdio.h>
 
-void	create_list(char *line, t_parsing *parsing);
+t_list	*create_list(char *line, t_parsing *parsing);
 
-int	parsing(char *line)
+t_list	*parsing(char *line)
 {
 	
 	t_parsing	parsing;
@@ -13,13 +13,13 @@ int	parsing(char *line)
 	(void)line;
 	init_structure(&parsing);
 	count_separator(line, &parsing);
-	printf("nbr_pipe : %d\nnbr_quote : %d\nnbr_here_doc : %d\nnbr_append : %d\nnbr_input : %d\nnbr_output : %d\nnbr_redir : %d\n", parsing.nbr_pipe, parsing.nbr_quote, parsing.nbr_here_doc, parsing.nbr_append, parsing.nbr_input, parsing.nbr_output, parsing.nbr_redir);
-	printf("%s\n", line);
+	//printf("nbr_pipe : %d\nnbr_quote : %d\nnbr_here_doc : %d\nnbr_append : %d\nnbr_input : %d\nnbr_output : %d\nnbr_redir : %d\n", parsing.nbr_pipe, parsing.nbr_quote, parsing.nbr_here_doc, parsing.nbr_append, parsing.nbr_input, parsing.nbr_output, parsing.nbr_redir);
+	//printf("%s\n", line);
 	new_line = replace_space(line, &parsing);
 	new_line = add_space(line, &parsing);
-	printf("\n%s\n\n", new_line);
-	create_list(new_line, &parsing);
-	return (0);
+	//printf("\n%s\n\n", new_line);
+	//create_list(new_line, &parsing);
+	return (create_list(new_line, &parsing));
 }
 
 char	*delete_quote(char *line, int j)
@@ -34,8 +34,7 @@ char	*delete_quote(char *line, int j)
 	i = 0;
 	k = 1;
 	while (k < j - 1)
-	{
-		
+	{		
 		new_line[i] = line[k];
 		i++;
 		k++; 
@@ -46,8 +45,8 @@ char	*delete_quote(char *line, int j)
 
 void	change_tab(char **tab_line)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	quote;
 	
 	i = 0;
@@ -71,45 +70,158 @@ void	change_tab(char **tab_line)
 	}
 }
 
-// void	create_triple_tab(char	 **tab, char	***prepare_list, int *i, int *start)
-// {
-// 	int	end;
-// 	int	malloc_size;
+t_list	*list_2(int	*start, int *end, char **tab_line)
+{
+	int malloc_size;
+	char **token;
+	int	i;
+	t_list	*new;
 
-// 	end = *start;
-// 	while (tab[start])
-// 	{
-// 		if (end == start && (tab[start][0] == '>' || tab[strat][0] == '<'))
-// 		{
-// 			end++;
-// 			break;
-// 		}
-// 		end++;
-// 	}
-// 	malloc_size = end - start;
-// 	if (malloc_size == 0)
-// 		malloc_size = 1;
-// }
+	malloc_size = 0;
+	i = 0;
+	if (tab_line[*end] == NULL)
+	{
+		*start = -1;
+		return NULL;
+	}
+	while (tab_line[*end])
+	{
+		if ((tab_line[*end][0] == '<' || tab_line[*end][0] == '>' || tab_line[*end][0] == '|'))
+		{
+			*end = *end + 1;
+			malloc_size = 1;
+			break ;
+		}
+		else if (*end != 0 && tab_line[*end - 1] && (tab_line[*end - 1][0] == '<' || tab_line[*end - 1][0] == '>'))
+		{
+			*end = *end + 1;
+			malloc_size = 1;
+			break ;
+		}
+		else if (tab_line[*end + 1] && (tab_line[*end + 1][0] == '<' || tab_line[*end + 1][0] == '>' || tab_line[*end + 1][0] == '|'))
+		{
+			*end = *end + 1;
+			malloc_size = *end - *start;
+			break ;
+		}
+		*end = *end + 1;
+	}
+	//printf("malloc_size : %d | start : %d | end : %d\n", malloc_size, *start, *end);
+	token = malloc(sizeof(char *) * (malloc_size + 1));
+	if (!token)
+		return NULL;
+	while (*start < *end)
+	{
+		token[i] = ft_strdup(tab_line[*start]);
+		if (!token)
+			return NULL;
+		//printf("token[%d] = %s\n", i, token[i]);
+		*start = *start + 1;
+		i++;
+	}
+	token[i] = NULL;
+	new = ft_lstnew(token, -1);
+	if (!new)
+		return NULL;
+	return (new);
+}
 
-void	create_list(char *line, t_parsing *parsing)
+void	print_list(t_list	*a)
+{
+	printf(" data        | type\n");
+	printf("-------------------\n");
+	while (a)
+	{
+		print_tab(a->data);
+		printf("%d\n", a->type);
+		if (a->next != NULL)
+			printf("------------------\n");
+		a = a->next;
+	}
+}
+
+void	change_list(t_list **list)
+{
+	t_list	*temp;
+
+	temp = (*list);
+	while (temp)
+	{
+		if (temp->data[0][0] == '>' && temp->data[0][1] == '>')
+			temp->next->type = APPEND;
+		else if (temp->data[0][0] == '<' && temp->data[0][1] == '<')
+			temp->next->type = HERE_DOC;
+		else if (temp->data[0][0] == '<' && temp->data[0][1] == '\0')
+			temp->next->type = INFILE;
+		else if (temp->data[0][0] == '>' && temp->data[0][1] == '\0')
+			temp->next->type = OUTFILE;
+		else if (temp->type == -1 && (temp->data[0][0] != '>' || temp->data[0][0] != '<'))
+			temp->type = TOKEN;
+		temp = temp->next;
+	}
+}
+
+void	del_delimiteur(t_list **list)
+{
+	t_list	*copy;
+	t_list	*temp;
+	t_list	*del;
+	int		i;
+
+	copy = (*list);
+	del = NULL;
+	i = 0;
+	while (copy->next)
+	{
+		if (i == 0 && copy->type == -1)
+		{
+			del = copy;
+			free(del->data);
+			free(del);
+			(*list) = (*list)->next;
+		}
+		if (copy->next->type == -1)
+		{
+			del = copy;
+			temp = copy->next->next;
+			free(del->next->data);
+			free(del->next);
+			del->next = temp;
+			copy = del;
+		}
+		else
+			copy = copy->next;
+		i++;
+	}
+}
+
+t_list	*create_list(char *line, t_parsing *parsing)
 {
 	char	**tab_line;
-	//char	***prepare_list;
-	//int		i;
-	//int		start;
+	int		start;
+	int		end;
+	t_list	*list;
+	t_list	*new;
 
-	//i = 0;
+	start = 0;
+	end = 0;
+	list = NULL;
+	(void) parsing;
 	tab_line = ft_split(line, ' ');
 	if (!tab_line)
-		return ; 
+		return (NULL); 
 	change_tab(tab_line);
-	print_tab(tab_line);
-	(void)parsing;
-	//printf("\nsize malloc: %d\n", start);
-	//prepare_list = malloc(sizeof (char **) * ((parsing->nbr_redir * 2) + (parsing->nbr_pipe * 2 + 1) + 1));
-	//if (!prepare_list)
-	//	return (NULL);
-	//create_triple_char(tab_line, prepare_list, &i, &strat);
+	//print_tab(tab_line);
+	while (start != -1)
+	{
+		start = end;
+		new = list_2(&start, &end, tab_line);
+		ft_lstadd_back(&list, new);
+	}
+	change_list(&list);
+	del_delimiteur(&list);
+	//print_list(list);
+	return (list);
 }
 
 //<< delimiteur < infile cat | cat "coucou le s" > outfile >> append		
