@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:36:12 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/02 12:36:30 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/04 10:37:36 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_list	*ft_lstnew(char **token, int type)
 	if (!(tab))
 		return (NULL);
 	tab -> data = token;
-	tab -> type = 0;
+	tab -> type = type;
 	tab -> next = NULL;
 	return (tab);
 }

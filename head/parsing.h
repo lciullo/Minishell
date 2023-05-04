@@ -6,12 +6,14 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/02 15:19:33 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/04 13:33:38 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
+
+# include "../libft/headers/libft.h"
 
 typedef	struct s_parsing {
 	int	nbr_pipe;
@@ -40,6 +42,7 @@ void	count_separator(char *line, t_parsing *parsing);
 char	*replace_space(char *line, t_parsing *parsing);
 char	*add_space(char	*line, t_parsing *parsing);
 void	print_tab(char **tab);
-int		parsing(char *line);
+t_list	*parsing(char *line);
+void	print_list(t_list	*a);
 
 #endif

@@ -2,9 +2,9 @@
 #include "minishell.h"
 #include <stdio.h>
 
-void	create_list(char *line, t_parsing *parsing);
+t_list	*create_list(char *line, t_parsing *parsing);
 
-int	parsing(char *line)
+t_list	*parsing(char *line)
 {
 	
 	t_parsing	parsing;
@@ -18,8 +18,8 @@ int	parsing(char *line)
 	new_line = replace_space(line, &parsing);
 	new_line = add_space(line, &parsing);
 	//printf("\n%s\n\n", new_line);
-	create_list(new_line, &parsing);
-	return (0);
+	//create_list(new_line, &parsing);
+	return (create_list(new_line, &parsing));
 }
 
 char	*delete_quote(char *line, int j)
@@ -120,11 +120,12 @@ t_list	*list_2(int	*start, int *end, char **tab_line)
 		i++;
 	}
 	token[i] = NULL;
-	new = ft_lstnew(token, 0);
+	new = ft_lstnew(token, -1);
 	if (!new)
 		return NULL;
 	return (new);
 }
+
 void	print_list(t_list	*a)
 {
 	printf(" data        | type\n");
@@ -132,7 +133,6 @@ void	print_list(t_list	*a)
 	while (a)
 	{
 		print_tab(a->data);
-		printf(" | ");
 		printf("%d\n", a->type);
 		if (a->next != NULL)
 			printf("------------------\n");
@@ -145,7 +145,7 @@ void	change_list(t_list **list)
 	t_list	*temp;
 
 	temp = (*list);
-	while (temp->next)
+	while (temp)
 	{
 		if (temp->data[0][0] == '>' && temp->data[0][1] == '>')
 			temp->next->type = APPEND;
@@ -155,12 +155,47 @@ void	change_list(t_list **list)
 			temp->next->type = INFILE;
 		else if (temp->data[0][0] == '>' && temp->data[0][1] == '\0')
 			temp->next->type = OUTFILE;
+		else if (temp->type == -1 && (temp->data[0][0] != '>' || temp->data[0][0] != '<'))
+			temp->type = TOKEN;
 		temp = temp->next;
 	}
-	*list = temp;
 }
 
-void	create_list(char *line, t_parsing *parsing)
+void	del_delimiteur(t_list **list)
+{
+	t_list	*copy;
+	t_list	*temp;
+	t_list	*del;
+	int		i;
+
+	copy = (*list);
+	del = NULL;
+	i = 0;
+	while (copy->next)
+	{
+		if (i == 0 && copy->type == -1)
+		{
+			del = copy;
+			free(del->data);
+			free(del);
+			(*list) = (*list)->next;
+		}
+		if (copy->next->type == -1)
+		{
+			del = copy;
+			temp = copy->next->next;
+			free(del->next->data);
+			free(del->next);
+			del->next = temp;
+			copy = del;
+		}
+		else
+			copy = copy->next;
+		i++;
+	}
+}
+
+t_list	*create_list(char *line, t_parsing *parsing)
 {
 	char	**tab_line;
 	int		start;
@@ -174,7 +209,7 @@ void	create_list(char *line, t_parsing *parsing)
 	(void) parsing;
 	tab_line = ft_split(line, ' ');
 	if (!tab_line)
-		return ; 
+		return (NULL); 
 	change_tab(tab_line);
 	//print_tab(tab_line);
 	while (start != -1)
@@ -184,7 +219,9 @@ void	create_list(char *line, t_parsing *parsing)
 		ft_lstadd_back(&list, new);
 	}
 	change_list(&list);
-	print_list(list);
+	del_delimiteur(&list);
+	//print_list(list);
+	return (list);
 }
 
 //<< delimiteur < infile cat | cat "coucou le s" > outfile >> append		
