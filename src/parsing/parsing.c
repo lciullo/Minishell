@@ -6,25 +6,28 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/04 15:46:58 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/05 16:54:47 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_list	*create_list(char *line, t_parsing *parsing);
+int	is_white_space(char	*line, int i);
 
 t_list	*parsing(char *line)
 {
 	t_parsing	parsing;
+	t_list		*list;
 	char		*new_line;
 
-	(void)line;
+	list = NULL;
 	init_structure(&parsing);
 	count_separator(line, &parsing);
 	new_line = replace_space(line, &parsing);
 	new_line = add_space(line, &parsing);
-	return (create_list(new_line, &parsing));
+	list = create_list(new_line, &parsing);
+	return (list);
 }
 
 char	*delete_quote(char *line, int j)
@@ -120,12 +123,12 @@ t_list	*list_2(int	*start, int *end, char **tab_line)
 	while (*start < *end)
 	{
 		token[i] = ft_strdup(tab_line[*start]);
-		if (!token)
+		if (!token[i])
 			return (NULL);
 		*start = *start + 1;
 		i++;
 	}
-	token[i] = NULL;
+	//token[i] = NULL;
 	new = ft_lstnew(token, -1);
 	if (!new)
 		return (NULL);
@@ -161,6 +164,8 @@ void	change_list(t_list **list)
 			temp->next->type = INFILE;
 		else if (temp->data[0][0] == '>' && temp->data[0][1] == '\0')
 			temp->next->type = OUTFILE;
+		else if (temp->data[0][0] == '|')
+			temp->type = PIPE;
 		else if (temp->type == -1 && \
 		(temp->data[0][0] != '>' || temp->data[0][0] != '<'))
 			temp->type = TOKEN;
@@ -171,14 +176,14 @@ void	change_list(t_list **list)
 void	del_delimiteur(t_list **list)
 {
 	t_list	*copy;
-	t_list	*temp;
+	//t_list	*temp;
 	t_list	*del;
 	int		i;
 
-	copy = (*list);
 	del = NULL;
 	i = 0;
-	while (copy->next)
+	copy = (*list);
+	while (copy)
 	{
 		if (i == 0 && copy->type == -1)
 		{
@@ -187,19 +192,20 @@ void	del_delimiteur(t_list **list)
 			free(del);
 			(*list) = (*list)->next;
 		}
-		if (copy->next->type == -1)
-		{
-			del = copy;
-			temp = copy->next->next;
-			free(del->next->data);
-			free(del->next);
-			del->next = temp;
-			copy = del;
-		}
+		// if (copy->next->type == -1)
+		// {
+		// 	del = copy;
+		// 	temp = copy->next->next;
+		// 	free(del->next->data);
+		// 	free(del->next);
+		// 	del->next = temp;
+		// 	copy = del;
+		// }
 		else
 			copy = copy->next;
 		i++;
 	}
+	(*list) = copy;
 }
 
 t_list	*create_list(char *line, t_parsing *parsing)
@@ -225,7 +231,8 @@ t_list	*create_list(char *line, t_parsing *parsing)
 		ft_lstadd_back(&list, new);
 	}
 	change_list(&list);
-	del_delimiteur(&list);
+	if ((parsing->nbr_pipe + parsing->nbr_redir) != 0)
+		del_delimiteur(&list);
 	return (list);
 }
 

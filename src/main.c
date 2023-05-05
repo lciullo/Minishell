@@ -24,9 +24,8 @@ static	void	loop_of_prompt(char **env)
 	t_exec	data;
 	t_list	*list;
 
-	(void)env;
-	(void)data;
 	data.end = 0;
+	list = NULL;
 	prompt_name = "doublechoc-> ";
 	while (1)
 	{
@@ -48,7 +47,8 @@ static	void	loop_of_prompt(char **env)
 		if (line[0])
 			add_history(line);
 		list = parsing(line);
-		list_print(list);
+		//list_print(list);
+		(void)list;
 		(void)env;
 		//execution(line, env, &data);
 		free(line);
