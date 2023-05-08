@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:04:05 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/04 15:57:32 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/05 17:02:47 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	count_separator(char *line, t_parsing *parsing)
 		else if (line[is_white_space(line, i) + 1] && line[i] == '|')
 			parsing->nbr_pipe++;
 		else if (line[i] == '>' && line[i + 1] == '>' \
-		&& line[i - 1] != '>' && line[is_white_space(line, i + 1) + 1])
+		&& line[is_white_space(line, i + 1) + 1])
 			parsing->nbr_append++;
 		else if (line[i] == '<' && line[i + 1] == '<' \
 		&& line[i - 1] != '<' && line[is_white_space(line, i + 1) + 1])

@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/04 14:42:42 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/05 16:11:49 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ enum {
 	OUTFILE,
 	HERE_DOC,
 	APPEND,
+	PIPE,
+	BUILTIN,
 };
 
 /* ---- utils_parsing.c ----*/
