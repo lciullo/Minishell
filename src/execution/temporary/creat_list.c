@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:54:55 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/09 14:37:47 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/09 18:00:15 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,26 @@ Pipe = 3
 void	tmp_lst(t_list **lst)
 {
 	char			**infile;
-	//char			**outfile;
+	char			**outfile;
 	char			**cmd1;
-	char			**cmd2;
+	char			**pipe;
 	char			**cmd3;
+	char			**pipe1;
+	char			**cmd4;
 
 	infile = ft_split("< infile", ' ');
-	//outfile = ft_split("> test", ' ');*/
 	cmd1 = ft_split("cat Makefile", ' ');
-	cmd2 = ft_split("|", ' ');
+	pipe = ft_split("|", ' ');
 	cmd3 = ft_split("rev", ' ');
+	outfile = ft_split("> test", ' ');
+	pipe1 = ft_split("|", ' ');
+	cmd4 = ft_split("pwd", ' ');
 	ft_lstadd_back(lst, ft_lstnew(infile, 0));
 	ft_lstadd_back(lst, ft_lstnew(cmd1, 1));
-	ft_lstadd_back(lst, ft_lstnew(cmd2, 3));
+	ft_lstadd_back(lst, ft_lstnew(pipe, 3));
 	ft_lstadd_back(lst, ft_lstnew(cmd3, 1));
-	/*ft_lstadd_back(lst, ft_lstnew(outfile, 2));*/
+	ft_lstadd_back(lst, ft_lstnew(outfile, 2));
+	ft_lstadd_back(lst, ft_lstnew(pipe1, 3));
+	ft_lstadd_back(lst, ft_lstnew(cmd4, 1));
 	return ;
 }

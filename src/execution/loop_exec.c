@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:50:28 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/09 15:39:28 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/09 18:50:05 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ Infile = 0
 Token = 1
 Outfile = 2
 Pipe = 3
-*/
+
 
 static	int	sort_token_and_builtin(char **token, t_exec *data, char **env)
 {
@@ -33,13 +33,13 @@ static	int	sort_token_and_builtin(char **token, t_exec *data, char **env)
 	}
 	return (0);
 }
-
+*/
 static	int	get_next_pipe(t_list **lst)
 {
-	int	index;
+	int		index;
 
 	index = 0;
-	while (*lst && (*lst)->type != 3)
+	while (*lst != NULL && (*lst)->type != 3)
 	{
 		index++;
 		*lst = (*lst)->next;
@@ -60,24 +60,34 @@ static	t_list	*lst_increment(t_list **lst, int index)
 	return (*lst);
 }
 
-static int	loop_for_token(t_list **lst, t_exec	*data, char **env)
+static	void	exec_pipe_by_(t_list *lst)
 {
-	t_list	*copy;
-	int		index;
+	while (lst != NULL && lst->type != 3)
+	{
+		lst = lst->next;
+	}
+}
+
+static int	loop_pipe_by_pipe(t_list *lst, t_exec	*data, char **env)
+{
+	int	index;
 
 	index = 0;
-	copy = *lst;
 	(void)env;
 	(void)data;
-	while (copy != NULL)
+	while (lst != NULL)
 	{
-		index = get_next_pipe(&copy);
+		
+		first_block(lst);
+		index = get_next_pipe(&lst);
 		//infile 
 		//outfile
 		//execution 
-		copy = lst_increment(&copy, index);
+		//loop_for_infile(lst, data);
+		//loop_for_outfile(lst, data);
+		in_exec_print_list(lst);
+		lst = lst_increment(&lst, index);
 	}
-	ft_lstclear(lst, free);
 	return (0);
 }
 
@@ -91,8 +101,7 @@ void	execution(char *line, char **env, t_exec *data)
 	tmp_lst(&lst);
 	//delimiter = "stop";
 	init_struct(data);
-	/*loop_for_infile(&lst, data);
-	loop_for_outfile(&lst, data);
-	loop_for_heredoc(&lst, delimiter);*/
-	loop_for_token(&lst, data, env);
+	//loop_for_heredoc(&lst, delimiter);
+	loop_pipe_by_pipe(lst, data, env);
+	ft_lstclear(&lst, free);
 }
