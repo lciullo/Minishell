@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:01:44 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/03 13:54:18 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/09 14:29:55 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ t_lst_env		*ft_lstnew_env(char *variable, char *value);
 int				ft_lstsize(t_list *lst);
 void			list_print(t_list *lst);
 void			list_print_env(t_lst_env *lst);
+void			in_exec_print_list(t_list *lst);
 char			*ft_strcpy(char *dest, const char *src);
 //# ============ LIBRARY ============ #
 

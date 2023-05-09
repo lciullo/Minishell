@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/09 11:19:04 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/09 11:43:29 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static t_list	*list_2(int	*start, int *end, char **tab_line);
 static void		find_malloc_size(char ** tab_line, int *end, int *start, int *malloc_size);
 static void		fill_tab(char **tab_line, char **tokn, int  *start, int *end);
-static void		del_delimiteur(t_list **list);
+//static void		del_delimiteur(t_list **list);
 t_list	*create_list(char *line, t_parsing *parsing)
 {
 	char	**tab_line;
@@ -41,8 +41,8 @@ t_list	*create_list(char *line, t_parsing *parsing)
 	}
 	change_list(&list);
 	free_array(tab_line);
-	if ((parsing->nbr_pipe + parsing->nbr_redir) != 0)
-		del_delimiteur(&list);
+	/*if ((parsing->nbr_pipe + parsing->nbr_redir) != 0)
+		del_delimiteur(&list);*/
 	return (list);
 }
 
