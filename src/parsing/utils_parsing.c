@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:04:05 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/05 17:02:47 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/09 10:17:06 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,129 +35,74 @@ int	is_white_space(char	*line, int i)
 	return (i);
 }
 
-void	count_separator(char *line, t_parsing *parsing)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if ((line[i] == 34 || line[i] == 39) \
-		&& line[is_white_space(line, i) + 1])
-			parsing->nbr_quote++;
-		else if (line[is_white_space(line, i) + 1] && line[i] == '|')
-			parsing->nbr_pipe++;
-		else if (line[i] == '>' && line[i + 1] == '>' \
-		&& line[is_white_space(line, i + 1) + 1])
-			parsing->nbr_append++;
-		else if (line[i] == '<' && line[i + 1] == '<' \
-		&& line[i - 1] != '<' && line[is_white_space(line, i + 1) + 1])
-			parsing->nbr_here_doc++;
-		else if (line[is_white_space(line, i) + 1] && \
-		line[i] == '>' && line[i + 1] != '>' && line[i - 1] != '>')
-			parsing->nbr_output++;
-		else if (line[is_white_space(line, i) + 1] && \
-		line[i] == '<' && line[i + 1] != '<' && line[i - 1] != '<')
-			parsing->nbr_input++;
-		i++;
-	}
-	parsing->len_line = i;
-	parsing->nbr_redir = parsing->nbr_here_doc + \
-	parsing->nbr_output + parsing->nbr_append + parsing->nbr_input;
-}
-
-char	*replace_space(char *line, t_parsing *parsing)
+void	change_tab(char **tab_line)
 {
 	int		i;
-	int		check_quote;
+	int		j;
 	char	quote;
 
 	i = 0;
-	while (line[i++])
+	j = 0;
+	while (tab_line[i])
 	{
-		if (line[i] == 34 || line[i] == 39)
+		if (tab_line[i][0] == 34 || tab_line[i][0] == 39)
 		{
-			check_quote = 0;
-			quote = line[i];
-			i++;
-			while (line[i] && check_quote == 0)
+			j = 0;
+			quote = tab_line[i][0];
+			while (tab_line[i][j])
 			{
-				if (line[i] == quote)
-					check_quote = 1;
-				else if (line[i] == ' ')
-					line[i] = -1;
-				if (line[i] == 34 || line[i] == 39)
-					parsing->nbr_quote--;
-				i++;
+				if (tab_line[i][j] == -1)
+					tab_line[i][j] = ' ';
+				j++;
 			}
+			if (tab_line[i][j - 1] == quote)
+				tab_line[i] = delete_quote(tab_line[i], j);
 		}
-	}
-	return (line);
-}
-// && parsing->nbr_quote % 2 == 0)
-
-char	*check_separator(char *line, char*new_line, int i, int j)
-{
-	while (line[i])
-	{
-		if ((line[i] == '>' && line[i + 1] == '>' && line[i - 1] != '>') \
-		|| (line[i] == '<' && line[i + 1] == '<' && line[i - 1] != '<'))
-		{
-			new_line[j++] = ' ';
-			new_line[j++] = line[i++];
-			new_line[j++] = line[i];
-			new_line[j] = ' ';	
-		}
-		else if (line[i] == '|' || (line[i] == '>' && \
-		line[i + 1] != '>' && line[i - 1] != '>') \
-		|| (line[i] == '<' && line[i + 1] != '<' && line[i - 1] != '<'))
-		{
-			new_line[j++] = ' ';
-			new_line[j++] = line[i];
-			new_line[j] = ' ';		
-		}
-		else
-			new_line[j] = line[i];
-		j++;
 		i++;
 	}
-	new_line[j] = '\0';
-	return (new_line);
 }
 
-char	*add_space(char	*line, t_parsing *parsing)
+void	change_list(t_list **list)
+{
+	t_list	*temp;
+
+	temp = (*list);
+	while (temp)
+	{
+		if (temp->data[0][0] == '>' && temp->data[0][1] == '>')
+			temp->next->type = APPEND;
+		else if (temp->data[0][0] == '<' && temp->data[0][1] == '<')
+			temp->next->type = HERE_DOC;
+		else if (temp->data[0][0] == '<' && temp->data[0][1] == '\0')
+			temp->next->type = INFILE;
+		else if (temp->data[0][0] == '>' && temp->data[0][1] == '\0')
+			temp->next->type = OUTFILE;
+		else if (temp->data[0][0] == '|')
+			temp->type = PIPE;
+		else if (temp->type == -1 && \
+		(temp->data[0][0] != '>' || temp->data[0][0] != '<'))
+			temp->type = TOKEN;
+		temp = temp->next;
+	}
+}
+
+char	*delete_quote(char *line, int j)
 {
 	char	*new_line;
+	int		i;
+	int		k;
 
-	new_line = malloc(sizeof(char) * (parsing->len_line + \
-	((parsing->nbr_pipe * 2 + parsing->nbr_redir * 2)) + 1));
+	new_line = malloc(sizeof(char) * (j - 2 + 1));
 	if (!new_line)
 		return (NULL);
-	new_line = check_separator(line, new_line, 0, 0);
-	return (new_line);
-}
-
-void	print_tab(char **tab)
-{
-	int	i;
-
 	i = 0;
-	while (tab[i])
-	{
-		printf("%s | ", tab[i]);
+	k = 1;
+	while (k < j - 1)
+	{		
+		new_line[i] = line[k];
 		i++;
+		k++;
 	}
-}
-
-void	list_print(t_list *lst)
-{
-	while (lst)
-	{
-		print_tab(lst->data);
-		printf("\n");
-		printf("%d\n", lst->type);
-		//ft_dprintf(1, "%d\n", lst->type);
-		lst = lst->next;
-	}
-	ft_dprintf(1, "\n");
+	new_line[i] = '\0';
+	return (new_line);
 }
