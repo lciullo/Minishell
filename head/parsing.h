@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/05 16:11:49 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/09 10:26:17 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,22 @@ enum {
 	BUILTIN,
 };
 
+/* ---- parsing.c ----*/
+t_list	*parsing(char *line);
+
 /* ---- utils_parsing.c ----*/
 void	init_structure(t_parsing *parsing);
-void	count_separator(char *line, t_parsing *parsing);
-char	*replace_space(char *line, t_parsing *parsing);
-char	*add_space(char	*line, t_parsing *parsing);
-void	print_tab(char **tab);
-t_list	*parsing(char *line);
+int		is_white_space(char	*line, int i);
+void	change_tab(char **tab_line);
+void	change_list(t_list **list);
+char	*delete_quote(char *line, int j);
+
+/* ---- list.c ----*/
+t_list	*create_list(char *line, t_parsing *parsing);
+
+/* ---- print.c ----*/
 void	print_list(t_list	*a);
+void	print_tab(char **tab);
+void	list_print(t_list *lst);
 
 #endif

@@ -66,6 +66,7 @@ C_data 		=	gnl/get_next_line.c \
 					library/ft_strmapi.c\
 					library/ft_strndup.c \
 					library/ft_striteri.c\
+					library/ft_free_array.c\
 					\
 					list/ft_lstadd_back.c\
 					list/ft_lstadd_front.c\
