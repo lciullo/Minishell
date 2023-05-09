@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 11:14:34 by cllovio           #+#    #+#             */
-/*   Updated: 2022/11/22 16:30:10 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/09 15:06:34 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void*))
 	{
 		temp = *lst;
 		*lst = (*lst)->next;
-		ft_lstdelone(temp, del);
+		free_array(temp->data);
+		free(temp);
 	}
 }
