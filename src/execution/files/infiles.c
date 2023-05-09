@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   files.c                                            :+:      :+:    :+:   */
+/*   data.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,18 +12,18 @@
 
 #include "minishell.h"
 
-static	void	is_infile_open(t_exec *files)
+static	void	is_infile_open(t_exec *data)
 {
-	if (files->infile > 2)
-		close(files->infile);
+	if (data->infile > 2)
+		close(data->infile);
 }
 
-static	void	manage_infile(char *infile, t_exec *files)
+static	void	manage_infile(char *infile, t_exec *data)
 {
 
-	is_infile_open(files);
-	files->infile = open(infile, O_RDONLY, 0644);
-	if (files->infile == -1)
+	is_infile_open(data);
+	data->infile = open(infile, O_RDONLY, 0644);
+	if (data->infile == -1)
 		perror("open infile");
 }
 
@@ -39,7 +39,7 @@ static	void	manage_infile(char *infile, t_exec *files)
 	}
 }*/
 
-void	loop_for_infile(t_list **lst, t_exec *files)
+void	loop_for_infile(t_list **lst, t_exec *data)
 {
 	int		i;
 	t_list	*head;
@@ -54,7 +54,7 @@ void	loop_for_infile(t_list **lst, t_exec *files)
 			if (ft_strcmp(head->data[i], "<") == 0)
 			{
 				i++;
-				manage_infile(head->data[i], files);
+				manage_infile(head->data[i], data);
 				break ;
 			}
 			else

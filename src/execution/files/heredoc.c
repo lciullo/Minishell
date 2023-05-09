@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:25:34 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/21 16:20:40 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/09 10:26:00 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static	void	loop_in_child_heredoc(t_exec *heredoc, int *fd, char *delimiter)
 		write(fd[1], "\n", 1);
 	}
 	free(line);
-	//files->in = fd[0];
+	//data->in = fd[0];
 	close(fd[1]);
 	//expand
 	exit(1);

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   outfiles.c                                         :+:      :+:    :+:   */
+/*   outdata.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,18 +12,18 @@
 
 #include "minishell.h"
 
-static	void	is_outfile_open(t_exec *files)
+static	void	is_outfile_open(t_exec *data)
 {
-	if (files->outfile > 2)
-		close(files->outfile);
+	if (data->outfile > 2)
+		close(data->outfile);
 }
 
-static	void	manage_outfile(char *outfile, t_exec *files)
+static	void	manage_outfile(char *outfile, t_exec *data)
 {
 
-	is_outfile_open(files);
-	files->outfile = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (files->outfile == -1)
+	is_outfile_open(data);
+	data->outfile = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (data->outfile == -1)
 		perror("open outfile");
 }
 
@@ -39,7 +39,7 @@ static	void	manage_outfile(char *outfile, t_exec *files)
 	}
 }*/
 
-void	loop_for_outfile(t_list **lst, t_exec *files)
+void	loop_for_outfile(t_list **lst, t_exec *data)
 {
 	int		i;
 	t_list	*head;
@@ -54,7 +54,7 @@ void	loop_for_outfile(t_list **lst, t_exec *files)
 			if (ft_strcmp(head->data[i], ">") == 0)
 			{
 				i++;
-				manage_outfile(head->data[i], files);
+				manage_outfile(head->data[i], data);
 				break ;
 			}
 			else

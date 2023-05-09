@@ -16,15 +16,15 @@
 
 NAME			=	libft.a
 
-# ---- Directories and path files ---- #
+# ---- Directories and path data ---- #
 
 INCLUDES		=	headers/
 
 DIR_OBJS		=	.objs/
 
-SRCS			=	${addprefix src/, ${C_FILES}}
+SRCS			=	${addprefix src/, ${C_data}}
 
-C_FILES 		=	gnl/get_next_line.c \
+C_data 		=	gnl/get_next_line.c \
 					gnl/get_next_line_utils.c \
 					\
 					print/ft_dprintf_nb.c \
