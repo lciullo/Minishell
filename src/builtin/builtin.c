@@ -6,64 +6,41 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:07:54 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/02 15:10:14 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/09 10:23:54 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	loop_for_builtin(t_list **lst, t_exec *data, char **env)
+void	loop_for_builtin(char **token, t_exec *data, char **env)
 {
-	int		i;
-	t_list	*head;
-
-	i = 0;
-	head = *lst;
-	while (head != NULL)
-	{
-		while (head->data[i] != NULL)
-		{
-			if (ft_strcmp(head->data[i], "echo") == 0)
-				implement_echo(head->data);
-			else if (ft_strcmp(head->data[i], "cd") == 0)
-				implement_cd(head->data);
-			else if (ft_strcmp(head->data[i], "pwd") == 0)
-				implement_pwd(head->data);
-			else if (ft_strcmp(head->data[i], "exit") == 0)
-				implement_exit(head->data, data);
-			else if (ft_strcmp(head->data[i], "env") == 0)
-				implement_env(env);
-			i++;
-		}
-		head = head->next;
-	}
+	if (!token[0])
+		return ;
+	if (ft_strcmp(token[0], "echo") == 0)
+		implement_echo(token);
+	else if (ft_strcmp(token[0], "cd") == 0)
+		implement_cd(token);
+	else if (ft_strcmp(token[0], "pwd") == 0)
+		implement_pwd(token);
+	else if (ft_strcmp(token[0], "exit") == 0)
+		implement_exit(token, data);
+	else if (ft_strcmp(token[0], "env") == 0)
+		implement_env(env);
 }
 
-
-int	is_builtin(t_list **lst)
+int	is_builtin(char **token)
 {
-	int		i;
-	t_list	*head;
-
-	i = 0;
-	head = *lst;
-	while (head != NULL)
-	{
-		while (head->data[i] != NULL)
-		{
-			if (ft_strcmp(head->data[i], "echo") == 0)
-				return (1);
-			else if (ft_strcmp(head->data[i], "cd") == 0)
-				return (1);
-			else if (ft_strcmp(head->data[i], "pwd") == 0)
-				return (1);
-			else if (ft_strcmp(head->data[i], "exit") == 0)
-				return (1);
-			else if (ft_strcmp(head->data[i], "env") == 0)
-				return (1);
-			i++;
-		}
-		head = head->next;
-	}
+	if (!token[0])
+		return (0);
+	if (ft_strcmp(token[0], "echo") == 0)
+		return (1);
+	else if (ft_strcmp(token[0], "cd") == 0)
+		return (1);
+	else if (ft_strcmp(token[0], "pwd") == 0)
+		return (1);
+	else if (ft_strcmp(token[0], "exit") == 0)
+		return (1);
+	else if (ft_strcmp(token[0], "env") == 0)
+		return (1);
 	return (0);
 }
