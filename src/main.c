@@ -47,8 +47,8 @@ static	void	loop_of_prompt(char **env)
 		if (line[0])
 			add_history(line);
 		list = parsing(line);
-		list_print(list);
-		(void)list;
+		//list_print(list);
+		//(void)env;
 		execution(line, env, &data);
 		free(line);
 		ft_lstclear(&list, free);
