@@ -6,14 +6,16 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/05 16:54:47 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/09 10:17:00 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*create_list(char *line, t_parsing *parsing);
-int	is_white_space(char	*line, int i);
+static void	count_separator(char *line, t_parsing *parsing);
+static char	*replace_space(char *line, t_parsing *parsing);
+static char	*add_space(char	*line, t_parsing *parsing);
+static char	*check_separator(char *line, char*new_line, int i, int j);
 
 t_list	*parsing(char *line)
 {
@@ -30,210 +32,106 @@ t_list	*parsing(char *line)
 	return (list);
 }
 
-char	*delete_quote(char *line, int j)
+static void	count_separator(char *line, t_parsing *parsing)
 {
-	char	*new_line;
-	int		i;
-	int		k;
+	int	i;
 
-	new_line = malloc(sizeof(char) * (j - 2 + 1));
-	if (!new_line)
-		return (NULL);
 	i = 0;
-	k = 1;
-	while (k < j - 1)
-	{		
-		new_line[i] = line[k];
+	while (line[i])
+	{
+		if ((line[i] == 34 || line[i] == 39) \
+		&& line[is_white_space(line, i) + 1])
+			parsing->nbr_quote++;
+		else if (line[is_white_space(line, i) + 1] && line[i] == '|')
+			parsing->nbr_pipe++;
+		else if (line[i] == '>' && line[i + 1] == '>' \
+		&& line[is_white_space(line, i + 1) + 1])
+			parsing->nbr_append++;
+		else if (line[i] == '<' && line[i + 1] == '<' \
+		&& line[i - 1] != '<' && line[is_white_space(line, i + 1) + 1])
+			parsing->nbr_here_doc++;
+		else if (line[is_white_space(line, i) + 1] && \
+		line[i] == '>' && line[i + 1] != '>' && line[i - 1] != '>')
+			parsing->nbr_output++;
+		else if (line[is_white_space(line, i) + 1] && \
+		line[i] == '<' && line[i + 1] != '<' && line[i - 1] != '<')
+			parsing->nbr_input++;
 		i++;
-		k++;
 	}
-	new_line[i] = '\0';
-	return (new_line);
+	parsing->len_line = i;
+	parsing->nbr_redir = parsing->nbr_here_doc + \
+	parsing->nbr_output + parsing->nbr_append + parsing->nbr_input;
 }
 
-void	change_tab(char **tab_line)
+static char	*replace_space(char *line, t_parsing *parsing)
 {
 	int		i;
-	int		j;
+	int		check_quote;
 	char	quote;
 
 	i = 0;
-	j = 0;
-	while (tab_line[i])
+	while (line[i++])
 	{
-		if (tab_line[i][0] == 34 || tab_line[i][0] == 39)
+		if (line[i] == 34 || line[i] == 39)
 		{
-			j = 0;
-			quote = tab_line[i][0];
-			while (tab_line[i][j])
+			check_quote = 0;
+			quote = line[i];
+			i++;
+			while (line[i] && check_quote == 0)
 			{
-				if (tab_line[i][j] == -1)
-					tab_line[i][j] = ' ';
-				j++;
+				if (line[i] == quote)
+					check_quote = 1;
+				else if (line[i] == ' ')
+					line[i] = -1;
+				if (line[i] == 34 || line[i] == 39)
+					parsing->nbr_quote--;
+				i++;
 			}
-			if (tab_line[i][j - 1] == quote)
-				tab_line[i] = delete_quote(tab_line[i], j);
 		}
-		i++;
 	}
+	return (line);
 }
+// && parsing->nbr_quote % 2 == 0)
 
-t_list	*list_2(int	*start, int *end, char **tab_line)
+static char	*add_space(char	*line, t_parsing *parsing)
 {
-	int		malloc_size;
-	char	**token;
-	int		i;
-	t_list	*new;
+	char	*new_line;
 
-	malloc_size = 0;
-	i = 0;
-	if (tab_line[*end] == NULL)
-	{
-		*start = -1;
+	new_line = malloc(sizeof(char) * (parsing->len_line + \
+	((parsing->nbr_pipe * 2 + parsing->nbr_redir * 2)) + 1));
+	if (!new_line)
 		return (NULL);
-	}
-	while (tab_line[*end])
-	{
-		if ((tab_line[*end][0] == '<' || tab_line[*end][0] == '>' \
-		|| tab_line[*end][0] == '|'))
-		{
-			*end = *end + 1;
-			malloc_size = 1;
-			break ;
-		}
-		else if (*end != 0 && tab_line[*end - 1] && \
-		(tab_line[*end - 1][0] == '<' || tab_line[*end - 1][0] == '>'))
-		{
-			*end = *end + 1;
-			malloc_size = 1;
-			break ;
-		}
-		else if (tab_line[*end + 1] && (tab_line[*end + 1][0] == '<' \
-		|| tab_line[*end + 1][0] == '>' || tab_line[*end + 1][0] == '|'))
-		{
-			*end = *end + 1;
-			malloc_size = *end - *start;
-			break ;
-		}
-		*end = *end + 1;
-	}
-	token = malloc(sizeof(char *) * (malloc_size + 1));
-	if (!token)
-		return (NULL);
-	while (*start < *end)
-	{
-		token[i] = ft_strdup(tab_line[*start]);
-		if (!token[i])
-			return (NULL);
-		*start = *start + 1;
-		i++;
-	}
-	//token[i] = NULL;
-	new = ft_lstnew(token, -1);
-	if (!new)
-		return (NULL);
-	return (new);
+	new_line = check_separator(line, new_line, 0, 0);
+	return (new_line);
 }
 
-void	print_list(t_list	*a)
+static char	*check_separator(char *line, char*new_line, int i, int j)
 {
-	printf(" data        | type\n");
-	printf("-------------------\n");
-	while (a)
+	while (line[i])
 	{
-		print_tab(a->data);
-		printf("%d\n", a->type);
-		if (a->next != NULL)
-			printf("------------------\n");
-		a = a->next;
-	}
-}
-
-void	change_list(t_list **list)
-{
-	t_list	*temp;
-
-	temp = (*list);
-	while (temp)
-	{
-		if (temp->data[0][0] == '>' && temp->data[0][1] == '>')
-			temp->next->type = APPEND;
-		else if (temp->data[0][0] == '<' && temp->data[0][1] == '<')
-			temp->next->type = HERE_DOC;
-		else if (temp->data[0][0] == '<' && temp->data[0][1] == '\0')
-			temp->next->type = INFILE;
-		else if (temp->data[0][0] == '>' && temp->data[0][1] == '\0')
-			temp->next->type = OUTFILE;
-		else if (temp->data[0][0] == '|')
-			temp->type = PIPE;
-		else if (temp->type == -1 && \
-		(temp->data[0][0] != '>' || temp->data[0][0] != '<'))
-			temp->type = TOKEN;
-		temp = temp->next;
-	}
-}
-
-void	del_delimiteur(t_list **list)
-{
-	t_list	*copy;
-	//t_list	*temp;
-	t_list	*del;
-	int		i;
-
-	del = NULL;
-	i = 0;
-	copy = (*list);
-	while (copy)
-	{
-		if (i == 0 && copy->type == -1)
+		if ((line[i] == '>' && line[i + 1] == '>' && line[i - 1] != '>') \
+		|| (line[i] == '<' && line[i + 1] == '<' && line[i - 1] != '<'))
 		{
-			del = copy;
-			free(del->data);
-			free(del);
-			(*list) = (*list)->next;
+			new_line[j++] = ' ';
+			new_line[j++] = line[i++];
+			new_line[j++] = line[i];
+			new_line[j] = ' ';	
 		}
-		// if (copy->next->type == -1)
-		// {
-		// 	del = copy;
-		// 	temp = copy->next->next;
-		// 	free(del->next->data);
-		// 	free(del->next);
-		// 	del->next = temp;
-		// 	copy = del;
-		// }
+		else if (line[i] == '|' || (line[i] == '>' && \
+		line[i + 1] != '>' && line[i - 1] != '>') \
+		|| (line[i] == '<' && line[i + 1] != '<' && line[i - 1] != '<'))
+		{
+			new_line[j++] = ' ';
+			new_line[j++] = line[i];
+			new_line[j] = ' ';		
+		}
 		else
-			copy = copy->next;
+			new_line[j] = line[i];
+		j++;
 		i++;
 	}
-	(*list) = copy;
-}
-
-t_list	*create_list(char *line, t_parsing *parsing)
-{
-	char	**tab_line;
-	int		start;
-	int		end;
-	t_list	*list;
-	t_list	*new;
-
-	start = 0;
-	end = 0;
-	list = NULL;
-	(void) parsing;
-	tab_line = ft_split(line, ' ');
-	if (!tab_line)
-		return (NULL);
-	change_tab(tab_line);
-	while (start != -1)
-	{
-		start = end;
-		new = list_2(&start, &end, tab_line);
-		ft_lstadd_back(&list, new);
-	}
-	change_list(&list);
-	if ((parsing->nbr_pipe + parsing->nbr_redir) != 0)
-		del_delimiteur(&list);
-	return (list);
+	new_line[j] = '\0';
+	return (new_line);
 }
 
 //<< delimiteur < infile cat | cat "coucou le s" > outfile >> append		

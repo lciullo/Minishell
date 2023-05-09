@@ -1,0 +1,5 @@
+.objs
+*.o
+*.a
+a.out
+minishell
