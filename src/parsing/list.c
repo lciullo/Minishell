@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/09 11:43:29 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/10 08:31:30 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 static t_list	*list_2(int	*start, int *end, char **tab_line);
 static void		find_malloc_size(char ** tab_line, int *end, int *start, int *malloc_size);
 static void		fill_tab(char **tab_line, char **tokn, int  *start, int *end);
-//static void		del_delimiteur(t_list **list);
+static void		del_delimiteur(t_list **list);
+
+
 t_list	*create_list(char *line, t_parsing *parsing)
 {
 	char	**tab_line;
@@ -96,6 +98,8 @@ static void	find_malloc_size(char ** tab_line, int *end, int *start, int *malloc
 		}
 		*end = *end + 1;
 	}
+	if (*malloc_size == 0) 
+		*malloc_size = (*end - *start) + 1;
 }
 
 static void	fill_tab(char **tab_line, char **token, int  *start, int *end)
@@ -114,41 +118,20 @@ static void	fill_tab(char **tab_line, char **token, int  *start, int *end)
 	token[i] = NULL;
 }
 
-// static void	del_delimiteur(t_list **list)
-// {
-// 	t_list	*copy;
-// 	t_list	*temp;
-// 	t_list	*del;
-// 	int		i;
-// 	del = NULL;
-// 	i = 0;
-// 	copy = (*list);
-// 	while (copy)
-// 	{
-// 		// if (i == 0 && copy->type == -1)
-// 		// {
-// 		// 	del = copy;
-// 		// 	free(del->data);
-// 		// 	free(del);
-// 		// 	(*list) = (*list)->next;
-// 		// }
-// 		if (copy->next && copy->next->type == -1)
-// 		{
-
-// 			temp = copy->next->next;
-// 			del = copy->next;
-// 			copy->next = temp;
-// 			del->next = NULL;
-// 			// del = copy;
-// 			// temp = copy->next->next;
-// 			free(del->next->data);
-// 			free(del->next);
-// 			// del->next = temp;
-// 			// copy = del;
-// 		}
-// 		else
-// 			copy = copy->next;
-// 		i++;
-// 	}
-// 	(*list) = copy;
-// }
+static void	del_delimiteur(t_list **list)
+{
+	t_list	*copy;
+	
+	if (*list == NULL || list == NULL)
+		return ;
+	copy = (*list);
+	if (copy->type == -1)
+	{
+		*list = copy->next;
+		free(copy->data);
+		free(copy);
+		del_delimiteur(list);
+	}
+	copy = *list;
+	del_delimiteur(&copy->next);
+}
