@@ -51,7 +51,7 @@ static void	core_of_program(char	*line, char **env, t_exec *data)
 
 	list = NULL;
 	list = parsing(line);
-	execution(line, env, data);
+	execution(list, env, data);
 	free(line);
 	ft_lstclear(&list, free);
 }
