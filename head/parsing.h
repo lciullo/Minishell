@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/09 10:26:17 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/10 08:44:14 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "../libft/headers/libft.h"
 
-typedef struct s_parsing {
+typedef struct s_data {
 	int	nbr_pipe;
 	int	nbr_quote;
 	int	nbr_here_doc;
@@ -26,7 +26,7 @@ typedef struct s_parsing {
 	int	nbr_redir;
 	int	start;
 	int	end;
-}	t_parsing;
+}	t_data;
 
 enum {
 	TOKEN,
@@ -42,14 +42,14 @@ enum {
 t_list	*parsing(char *line);
 
 /* ---- utils_parsing.c ----*/
-void	init_structure(t_parsing *parsing);
+void	init_structure(t_data *data);
 int		is_white_space(char	*line, int i);
 void	change_tab(char **tab_line);
 void	change_list(t_list **list);
 char	*delete_quote(char *line, int j);
 
 /* ---- list.c ----*/
-t_list	*create_list(char *line, t_parsing *parsing);
+t_list	*create_list(char *line, t_data *data);
 
 /* ---- print.c ----*/
 void	print_list(t_list	*a);
