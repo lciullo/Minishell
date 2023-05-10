@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/10 10:51:11 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/10 11:33:34 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,11 @@ void	execution(t_list *t_list, char **env, t_exec *data);
 
 int		one_builtin_exec(char **token, t_exec *data, char **env);
 
-//# ======================= TEMPORARY ======================= #
+//# === Loop many pipe === #
 
-void	tmp_lst(t_list **lst);
+int		loop_pipe_by_pipe(t_list *list, t_exec	*data, char **env);
+
+//# ======================= MANAGEMENT FILES ======================= #
 
 void	loop_for_heredoc(t_list **list, char *delimiter);
 
