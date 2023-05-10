@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/09 10:59:09 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/10 10:42:32 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	init_struct(t_exec *data);
 
 //# ======================= EXECUTION ======================= #
 
-void	execution(char *line, char **env, t_exec *data);
+void	execution(t_list *t_list, char **env, t_exec *data);
 
 //# === One builtin execution  === #
 
