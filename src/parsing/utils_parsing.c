@@ -6,11 +6,13 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:04:05 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/10 08:43:32 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/10 16:07:56 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static bool	is_builtins(char	*cmd);
 
 void	init_structure(t_data *data)
 {
@@ -81,11 +83,32 @@ void	change_list(t_list **list)
 			temp->next->type = OUTFILE;
 		else if (temp->data[0][0] == '|')
 			temp->type = PIPE;
+		else if (temp->type == -1 && is_builtins(temp->data[0]) == true)
+			temp->type = BUILTIN;
 		else if (temp->type == -1 && \
 		(temp->data[0][0] != '>' || temp->data[0][0] != '<'))
 			temp->type = TOKEN;
 		temp = temp->next;
 	}
+}
+
+static bool	is_builtins(char *cmd)
+{
+	if (ft_strcmp(cmd, "echo") == 0)
+		return (true);
+	else if (ft_strcmp(cmd, "cd") == 0)
+		return (true);
+	else if (ft_strcmp(cmd, "pwd") == 0)
+		return	(true);
+	else if (ft_strcmp(cmd, "export") == 0)
+		return (true);
+	else if (ft_strcmp(cmd, "unset") == 0)
+		return (true);
+	else if (ft_strcmp(cmd, "env") == 0)
+		return (true);
+	else if (ft_strcmp(cmd, "exit") == 0)
+		return (true);
+	return (false);
 }
 
 char	*delete_quote(char *line, int j)
@@ -108,8 +131,3 @@ char	*delete_quote(char *line, int j)
 	new_line[i] = '\0';
 	return (new_line);
 }
-
-// void	free_all(t_data *data)
-// {
-	
-// }

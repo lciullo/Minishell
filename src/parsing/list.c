@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/10 10:44:31 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/10 14:45:29 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ t_list	*create_list(char *line, t_data *data)
 	list = NULL;
 	(void) data;
 	tab_line = ft_split(line, ' ');
-	if (!tab_line)
-		return (free(line), NULL);
 	free(line);
+	if (!tab_line)
+		return (NULL);
 	change_tab(tab_line);
 	while (start != -1)
 	{
@@ -63,11 +63,11 @@ static t_list	*list_2(int	*start, int *end, char **tab_line)
 	find_malloc_size(tab_line, end, start, &malloc_size);
 	token = malloc(sizeof(char *) * (malloc_size + 1));
 	if (!token)
-		return (NULL);
+		return (free_array(tab_line), NULL);
 	fill_tab(tab_line, token, start, end);
 	new = ft_lstnew(token, -1);
 	if (!new)
-		return (NULL);
+	 	return (NULL);
 	return (new);
 }
 

@@ -48,10 +48,14 @@ static	void	loop_of_prompt(char **env, char *prompt_name, t_exec *data)
 static void	core_of_program(char	*line, char **env, t_exec *data)
 {
 	t_list	*list;
+	t_data	data_parsing;
 
 	list = NULL;
-	list = parsing(line);
-	execution(list, env, data);
+	list = parsing(line, &data_parsing);
+	//print_list(list);
+	(void)env;
+	(void)data;
+	//execution(list, env, data);
 	free(line);
 	ft_lstclear(&list, free);
 }

@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/10 08:44:14 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/10 16:33:04 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ enum {
 };
 
 /* ---- parsing.c ----*/
-t_list	*parsing(char *line);
+t_list	*parsing(char *line, t_data *data);
 
 /* ---- utils_parsing.c ----*/
 void	init_structure(t_data *data);
