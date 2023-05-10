@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/10 10:00:59 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/10 08:41:39 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void		fill_tab(char **tab_line, char **tokn, int  *start, int *end);
 static void		del_delimiteur(t_list **list);
 
 
-t_list	*create_list(char *line, t_parsing *parsing)
+t_list	*create_list(char *line, t_data *data)
 {
 	char	**tab_line;
 	int		start;
@@ -29,7 +29,7 @@ t_list	*create_list(char *line, t_parsing *parsing)
 	start = 0;
 	end = 0;
 	list = NULL;
-	(void) parsing;
+	(void) data;
 	tab_line = ft_split(line, ' ');
 	if (!tab_line)
 		return (free(line), NULL);
