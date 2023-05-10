@@ -51,12 +51,7 @@ static void	core_of_program(char	*line, char **env, t_exec *data)
 
 	list = NULL;
 	list = parsing(line);
-<<<<<<< HEAD
-	(void)env;
-	//execution(line, env, data);
-=======
 	execution(list, env, data);
->>>>>>> a783587a3d7ba5ed86c5fdae0e8ca6f751a66824
 	free(line);
 	ft_lstclear(&list, free);
 }
