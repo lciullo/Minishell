@@ -20,24 +20,11 @@ static	void	is_outfile_open(t_exec *data)
 
 static	void	manage_outfile(char *outfile, t_exec *data)
 {
-
 	is_outfile_open(data);
 	data->outfile = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (data->outfile == -1)
 		perror("open outfile");
 }
-
-/*static void	print_array(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i] != NULL)
-	{
-		ft_dprintf(1, "array[i] %s\n", array[i]);
-		i++;
-	}
-}*/
 
 void	loop_for_outfile(t_list **list, t_exec *data)
 {
@@ -48,7 +35,6 @@ void	loop_for_outfile(t_list **list, t_exec *data)
 	copy = *list;
 	while (copy != NULL)
 	{
-		//print_array(copy->data);
 		i = 0;
 		while (copy->data[i] != NULL)
 		{

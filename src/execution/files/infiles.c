@@ -20,50 +20,18 @@ static	void	is_infile_open(t_exec *data)
 
 static	void	manage_infile(char *infile, t_exec *data)
 {
-
 	is_infile_open(data);
 	data->infile = open(infile, O_RDONLY, 0644);
 	if (data->infile == -1)
 		perror("open infile");
 }
 
-/*static void	print_array(char **array)
+void	loop_for_infile(t_list *list, t_exec *data)
 {
-	int	i;
-
-	i = 0;
-	while (array[i] != NULL)
+	while (list != NULL && list->type != PIPE)
 	{
-		ft_dprintf(1, "array[i] %s\n", array[i]);
-		i++;
-	}
-}*/
-
-void	loop_for_infile(t_list **list, t_exec *data)
-{
-	int		i;
-	t_list	*copy;
-
-	i = 0;
-	copy = *list;
-	while (copy != NULL)
-	{
-		//print_array(copy->data);
-		i = 0;
-		while (copy->data[i] != NULL)
-		{
-			if (ft_strcmp(copy->data[i], "<") == 0)
-			{
-				i++;
-				manage_infile(copy->data[i], data);
-				break ;
-			}
-			else
-				i++;
-		}
-		copy = copy->next;
+		if (list->type == INFILE)
+			manage_infile(list->data[0], data);
+		list = list->next;
 	}
 }
-
-
-
