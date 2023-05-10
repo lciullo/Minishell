@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:01:44 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/09 14:29:55 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/09 17:17:05 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,12 @@ t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), \
 t_list			*ft_lstnew(char **token, int type);
 t_lst_env		*ft_lstnew_env(char *variable, char *value);
 int				ft_lstsize(t_list *lst);
+//=====================		VOIR SI ON LE GARDE =============//
 void			list_print(t_list *lst);
 void			list_print_env(t_lst_env *lst);
+void			print_utile_pipe(t_list *lst, int index);
 void			in_exec_print_list(t_list *lst);
+//=====================		VOIR SI ON LE GARDE =============//
 char			*ft_strcpy(char *dest, const char *src);
 //# ============ LIBRARY ============ #
 
