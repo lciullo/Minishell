@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:50:28 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/10 09:57:29 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/10 10:30:30 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,11 @@ static int	loop_pipe_by_pipe(t_list *lst, t_exec	*data, char **env)
 	return (0);
 }
 
-void	execution(char *line, char **env, t_exec *data)
+void	execution(t_list *lst, char **env, t_exec *data)
 {
-	t_list			*lst;
 	//char			*delimiter;
 
 	(void)line;
-	lst = NULL;
-	tmp_lst(&lst);
 	//delimiter = "stop";
 	init_struct(data);
 	//loop_for_heredoc(&lst, delimiter);
