@@ -42,25 +42,26 @@ static	void	manage_infile(char *infile, t_exec *data)
 void	loop_for_infile(t_list **lst, t_exec *data)
 {
 	int		i;
-	t_list	*head;
+	t_list	*copy;
 
 	i = 0;
-	head = *lst;
-	while (head != NULL)
+	copy = *lst;
+	while (copy != NULL)
 	{
-		//print_array(head->data);
-		while (head->data[i] != NULL)
+		//print_array(copy->data);
+		i = 0;
+		while (copy->data[i] != NULL)
 		{
-			if (ft_strcmp(head->data[i], "<") == 0)
+			if (ft_strcmp(copy->data[i], "<") == 0)
 			{
 				i++;
-				manage_infile(head->data[i], data);
+				manage_infile(copy->data[i], data);
 				break ;
 			}
 			else
 				i++;
 		}
-		head = head->next;
+		copy = copy->next;
 	}
 }
 

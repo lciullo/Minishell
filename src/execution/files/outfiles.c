@@ -42,24 +42,26 @@ static	void	manage_outfile(char *outfile, t_exec *data)
 void	loop_for_outfile(t_list **lst, t_exec *data)
 {
 	int		i;
-	t_list	*head;
+	t_list	*copy;
 
 	i = 0;
-	head = *lst;
-	while (head != NULL)
+	copy = *lst;
+	while (copy != NULL)
 	{
-		//print_array(head->data);
-		while (head->data[i] != NULL)
+		//print_array(copy->data);
+		i = 0;
+		while (copy->data[i] != NULL)
 		{
-			if (ft_strcmp(head->data[i], ">") == 0)
+			if (ft_strcmp(copy->data[i], ">") == 0)
 			{
 				i++;
-				manage_outfile(head->data[i], data);
+				ft_dprintf(1, "%s\n", copy->data[i]);
+				manage_outfile(copy->data[i], data);
 				break ;
 			}
 			else
 				i++;
 		}
-		head = head->next;
+		copy = copy->next;
 	}
 }
