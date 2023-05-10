@@ -53,9 +53,8 @@ static void	core_of_program(char	*line, char **env, t_exec *data)
 	list = NULL;
 	list = parsing(line, &data_parsing);
 	//print_list(list);
-	(void)env;
 	(void)data;
-	//execution(list, env, data);
+	execution(list, env, data);
 	free(line);
 	ft_lstclear(&list, free);
 }

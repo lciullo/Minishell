@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/10 13:29:34 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/10 16:44:54 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	loop_for_heredoc(t_list **list, char *delimiter);
 
 void	loop_for_infile(t_list *list, t_exec *data);
 
-void	loop_for_outfile(t_list **list, t_exec *data);
+void	loop_for_outfile(t_list *list, t_exec *data);
 
 //# ======================= BUILTINS ======================= #
 

@@ -26,28 +26,12 @@ static	void	manage_outfile(char *outfile, t_exec *data)
 		perror("open outfile");
 }
 
-void	loop_for_outfile(t_list **list, t_exec *data)
+void	loop_for_outfile(t_list *list, t_exec *data)
 {
-	int		i;
-	t_list	*copy;
-
-	i = 0;
-	copy = *list;
-	while (copy != NULL)
+	while (list != NULL && list->type != PIPE)
 	{
-		i = 0;
-		while (copy->data[i] != NULL)
-		{
-			if (ft_strcmp(copy->data[i], ">") == 0)
-			{
-				i++;
-				ft_dprintf(1, "%s\n", copy->data[i]);
-				manage_outfile(copy->data[i], data);
-				break ;
-			}
-			else
-				i++;
-		}
-		copy = copy->next;
+		if (list->type == OUTFILE)
+			manage_outfile(list->data[0], data);
+		list = list->next;
 	}
 }
