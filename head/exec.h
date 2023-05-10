@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/10 10:42:32 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/10 10:51:11 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ int		one_builtin_exec(char **token, t_exec *data, char **env);
 
 void	tmp_lst(t_list **lst);
 
-void	loop_for_heredoc(t_list **lst, char *delimiter);
+void	loop_for_heredoc(t_list **list, char *delimiter);
 
-void	loop_for_infile(t_list **lst, t_exec *data);
+void	loop_for_infile(t_list **list, t_exec *data);
 
-void	loop_for_outfile(t_list **lst, t_exec *data);
+void	loop_for_outfile(t_list **list, t_exec *data);
 
 //# ======================= BUILTINS ======================= #
 

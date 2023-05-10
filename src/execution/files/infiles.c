@@ -39,13 +39,13 @@ static	void	manage_infile(char *infile, t_exec *data)
 	}
 }*/
 
-void	loop_for_infile(t_list **lst, t_exec *data)
+void	loop_for_infile(t_list **list, t_exec *data)
 {
 	int		i;
 	t_list	*copy;
 
 	i = 0;
-	copy = *lst;
+	copy = *list;
 	while (copy != NULL)
 	{
 		//print_array(copy->data);

@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:50:28 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/10 10:42:51 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/10 11:12:00 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static	int	get_next_pipe(t_list **list)
 	int		index;
 
 	index = 0;
-	while (*list != NULL && (*list)->type != 3)
+	while (*list != NULL && (*list)->type != PIPE)
 	{
 		index++;
 		*list = (*list)->next;
@@ -83,6 +83,7 @@ static int	loop_pipe_by_pipe(t_list *list, t_exec	*data, char **env)
 
 void	execution(t_list *list, char **env, t_exec *data)
 {
+	
 	//char			*delimiter;
 	//delimiter = "stop";
 	init_struct(data);
