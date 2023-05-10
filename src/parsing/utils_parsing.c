@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:04:05 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/09 10:17:06 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/09 13:14:23 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,12 @@ void	init_structure(t_parsing *parsing)
 
 int	is_white_space(char	*line, int i)
 {
-	if (line[i + 1])
+	if (line[i + 1] && ((line[i + 1] >= 9 && line[i + 1] <= 13) || line[i + 1] == ' '))
+	{
 		i++;
-	while (line[i] && ((line[i] >= 9 && line[i] <= 13) || line[i] == ' '))
-		i++;
+		while (line[i] && ((line[i] >= 9 && line[i] <= 13) || line[i] == ' '))
+			i++;
+	}
 	return (i);
 }
 

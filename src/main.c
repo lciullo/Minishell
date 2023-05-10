@@ -46,12 +46,11 @@ static	void	loop_of_prompt(char **env)
 		}
 		if (line[0])
 			add_history(line);
-		//list = parsing(line);
+		list = parsing(line);
 		//list_print(list);
-		(void)list;
 		execution(line, env, &data);
 		free(line);
-		//ft_lstclear(&list, free);
+		ft_lstclear(&list, free);
 	}
 }
 
