@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:25:34 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/09 10:26:00 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/10 10:50:44 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,14 @@ static	void	manage_heredoc(char *delimiter)
 	return ;
 }
 
-void	loop_for_heredoc(t_list **lst, char *delimiter)
+void	loop_for_heredoc(t_list **list, char *delimiter)
 {
 	int		i;
 	t_list	*head;
 
 	i = 0;
 	(void)delimiter;
-	head = *lst;
+	head = *list;
 	while (head != NULL)
 	{
 		while (head->data[i] != NULL)
