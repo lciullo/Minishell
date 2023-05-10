@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:50:28 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/10 10:30:30 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/10 10:42:51 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,59 +35,57 @@ Pipe = 3
 // 	return (0);
 // }
 
-static	int	get_next_pipe(t_list **lst)
+static	int	get_next_pipe(t_list **list)
 {
 	int		index;
 
 	index = 0;
-	while (*lst != NULL && (*lst)->type != 3)
+	while (*list != NULL && (*list)->type != 3)
 	{
 		index++;
-		*lst = (*lst)->next;
+		*list = (*list)->next;
 	}
 	return (index);
 }
 
-static	t_list	*lst_increment(t_list *lst, int index)
+static	t_list	*list_increment(t_list *list, int index)
 {
 	int	i;
 
 	i = 0;
-	while (lst != NULL && i < index)
+	while (list != NULL && i < index)
 	{
-		lst = lst->next;
+		list = list->next;
 		i++;
 	}
-	return (lst);
+	return (list);
 }
 
 
-static int	loop_pipe_by_pipe(t_list *lst, t_exec	*data, char **env)
+static int	loop_pipe_by_pipe(t_list *list, t_exec	*data, char **env)
 {
 	int	index;
 
 	index = 0;
 	(void)env;
 	(void)data;
-	while (lst != NULL)
+	while (list != NULL)
 	{
-		//loop_for_infile(lst, data);
-		//loop_for_outfile(lst, data);
-		//in_exec_print_list(lst);
-		in_exec_print_list(lst);
-		index = get_next_pipe(&lst);
-		lst = lst_increment(lst, index);
+		//loop_for_infile(list, data);
+		//loop_for_outfile(list, data);
+		//in_exec_print_list(list);
+		in_exec_print_list(list);
+		index = get_next_pipe(&list);
+		list = list_increment(list, index);
 	}
 	return (0);
 }
 
-void	execution(t_list *lst, char **env, t_exec *data)
+void	execution(t_list *list, char **env, t_exec *data)
 {
 	//char			*delimiter;
-
-	(void)line;
 	//delimiter = "stop";
 	init_struct(data);
-	//loop_for_heredoc(&lst, delimiter);
-	loop_pipe_by_pipe(lst, data, env);
+	//loop_for_heredoc(&list, delimiter);
+	loop_pipe_by_pipe(list, data, env);
 }

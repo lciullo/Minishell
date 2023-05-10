@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/10 08:41:39 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/10 10:44:31 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_list	*create_list(char *line, t_data *data)
 	}
 	change_list(&list);
 	free_array(tab_line);
-	if ((parsing->nbr_pipe + parsing->nbr_redir) != 0)
+	if ((data->nbr_pipe + data->nbr_redir) != 0)
 		del_delimiteur(&list);
 	return (list);
 }
