@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/10 11:10:19 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/10 11:18:56 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_list	*parsing(char *line)
 	replace_space(line, &data);
 	new_line = add_space(line, &data);
 	if (!new_line)
-		return NULL; 
+		return (NULL); 
 	list = create_list(new_line, &data);
 	return (list);
 }
