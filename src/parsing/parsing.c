@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/10 16:32:47 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/11 13:12:23 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	replace_space(char *line, t_data *data);
 static char	*add_space(char	*line, t_data *data);
 static char	*check_separator(char *line, char*new_line, int i, int j);
 
+
 t_list	*parsing(char *line, t_data *data)
 {
 	t_list		*list;
@@ -25,10 +26,10 @@ t_list	*parsing(char *line, t_data *data)
 	list = NULL;
 	init_structure(data);
 	count_separator(line, data);
-	replace_space(line, data);
 	new_line = add_space(line, data);
 	if (!new_line)
-		return (NULL); 
+		return (NULL);
+	replace_space(new_line, data); 
 	list = create_list(new_line, data);
 	if (!list)
 		return (NULL);

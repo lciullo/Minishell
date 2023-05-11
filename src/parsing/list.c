@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/10 14:45:29 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/11 17:20:48 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static t_list	*list_2(int	*start, int *end, char **tab_line);
 static void		find_malloc_size(char ** tab_line, int *end, int *start, int *malloc_size);
 static void		fill_tab(char **tab_line, char **tokn, int  *start, int *end);
 static void		del_delimiteur(t_list **list);
-
+static char **change_order(char **tab);
+static void	change_order_2(char **new_tab, char **tab, int start, int end, int *i);
 
 t_list	*create_list(char *line, t_data *data)
 {
@@ -34,7 +35,9 @@ t_list	*create_list(char *line, t_data *data)
 	free(line);
 	if (!tab_line)
 		return (NULL);
+	tab_line = change_order(tab_line);
 	change_tab(tab_line);
+	//print_tab(tab_line);
 	while (start != -1)
 	{
 		start = end;
@@ -46,6 +49,71 @@ t_list	*create_list(char *line, t_data *data)
 	if ((data->nbr_pipe + data->nbr_redir) != 0)
 		del_delimiteur(&list);
 	return (list);
+}
+
+static char **change_order(char **tab)
+{
+	int		tab_size;
+	char	**new_tab;
+	int		end;
+	int		start;
+
+	tab_size = 0;
+	end = 0;
+	start = 0;
+	int	i = 0;
+	while (tab[tab_size])
+		tab_size++;
+	new_tab = malloc(sizeof(char *) * (tab_size + 1));
+	while (tab[end])
+	{
+		if (tab[end][0] == '|' || tab[end + 1] == NULL)
+		{
+			change_order_2(new_tab, tab, start, end, &i);
+			start = end + 1;
+		}
+		end++;
+	}
+	new_tab[end] = NULL;
+	print_tab(new_tab);
+	return (new_tab);
+}
+
+static void	change_order_2(char **new_tab, char **tab, int start, int end, int *i)
+{
+	int	start_b;
+		
+	start_b = start;
+	printf("start : %d end : %d\n", start, end);
+	while (start < end)
+	{
+		if (tab[start][0] == '<' || tab[start][0] == '>')
+		{
+			new_tab[*i] = ft_strdup(tab[start]);
+			*i = *i + 1;
+			start++;
+			new_tab[*i] = ft_strdup(tab[start]);
+			*i = *i + 1;
+		}
+		start++;
+	}
+	//new_tab[*i] = NULL;
+	start = start_b;
+	printf("%d\n\n", start);
+	while (start <= end)
+	{
+		// printf("%s\n", tab[start]);
+		// printf("%d\n", *i);
+		if (tab[start][0] == '<' || tab[start][0] == '>' || tab[start - 1][0] == '<' || tab[start - 1][0] == '>')
+			start++;
+		else
+		{
+			new_tab[*i] = ft_strdup(tab[start]);
+	 		*i = *i + 1;
+			start++;
+		}
+	}
+	//tab[start - 1][0] != '>' || tab[start - 1][0] != '<'
 }
 
 static t_list	*list_2(int	*start, int *end, char **tab_line)
