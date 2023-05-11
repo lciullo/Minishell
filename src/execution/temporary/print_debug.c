@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.c                                           :+:      :+:    :+:   */
+/*   print_debug.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 09:29:59 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/11 16:50:34 by lciullo          ###   ########.fr       */
+/*   Created: 2023/05/11 11:47:56 by lciullo           #+#    #+#             */
+/*   Updated: 2023/05/11 11:49:59 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	int	get_nb_commands(t_list *list)
+void	exec_print_list(t_list *lst)
 {
-	int	nb_cmds;
+	int	i;
 
-	nb_cmds = 0;
-	while (list != NULL)
+	i = 0;
+	ft_dprintf(1, "IN PRINT LIST\n");
+	ft_dprintf(1, "===============================\n");
+	while (lst != NULL && lst->type != PIPE)
 	{
-		if (list->type == TOKEN || list->type == BUILTIN)
-			nb_cmds++;
-		list = list->next;
+		i = 0;
+		while (lst->data[i] != NULL)
+		{
+			ft_dprintf(1, "row[%s]\n", lst->data[i]);
+			i++;
+		}
+		lst = lst->next;
 	}
-	return (nb_cmds);
-}
-
-void	init_struct(t_list *list, t_exec *data)
-{
-	data->infile = 0;
-	data->outfile = 0;
-	data->expand = 0;
-	data->nb_cmds = get_nb_commands(list);
-	data->cmd_with_path = NULL;
-	data->cmd = NULL;
-	data->paths = NULL;
-	data->env_path = NULL;
+	ft_dprintf(1, "===============================\n");
 }

@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:50:28 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/10 15:39:03 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/11 16:42:28 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,18 @@ static	int	sort_token_and_builtin(char **token, t_exec *data, char **env)
  	return (0);
 }*/
 
-void	execution(t_list *list, char **env, t_exec *data)
+static void	sort_token(t_list *list, t_data *parsing, t_exec *data, char **env)
 {
-	init_struct(data);
-	loop_pipe_by_pipe(list, data, env);
+	if (data->nb_cmds >= 1)
+	{
+		get_path_env(data, env);
+		loop_pipe_by_pipe(list, parsing, data, env);
+	}
+	return ;
+}
+
+void	execution(t_list *list, char **env, t_data *parsing, t_exec *data)
+{
+	init_struct(list, data);
+	sort_token(list, parsing, data, env);
 }
