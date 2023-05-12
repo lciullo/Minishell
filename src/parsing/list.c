@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/11 17:20:48 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/12 13:01:30 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static t_list	*list_2(int	*start, int *end, char **tab_line);
 static void		find_malloc_size(char ** tab_line, int *end, int *start, int *malloc_size);
 static void		fill_tab(char **tab_line, char **tokn, int  *start, int *end);
 static void		del_delimiteur(t_list **list);
-static char **change_order(char **tab);
-static void	change_order_2(char **new_tab, char **tab, int start, int end, int *i);
+static char 	**change_order(char **tab);
+static void		change_order_2(char **new_tab, char **tab, int start, int end, int *i);
 
 t_list	*create_list(char *line, t_data *data)
 {
@@ -37,7 +37,6 @@ t_list	*create_list(char *line, t_data *data)
 		return (NULL);
 	tab_line = change_order(tab_line);
 	change_tab(tab_line);
-	//print_tab(tab_line);
 	while (start != -1)
 	{
 		start = end;
@@ -75,7 +74,7 @@ static char **change_order(char **tab)
 		end++;
 	}
 	new_tab[end] = NULL;
-	print_tab(new_tab);
+	free_array(tab);
 	return (new_tab);
 }
 
@@ -84,7 +83,6 @@ static void	change_order_2(char **new_tab, char **tab, int start, int end, int *
 	int	start_b;
 		
 	start_b = start;
-	printf("start : %d end : %d\n", start, end);
 	while (start < end)
 	{
 		if (tab[start][0] == '<' || tab[start][0] == '>')
@@ -97,13 +95,9 @@ static void	change_order_2(char **new_tab, char **tab, int start, int end, int *
 		}
 		start++;
 	}
-	//new_tab[*i] = NULL;
 	start = start_b;
-	printf("%d\n\n", start);
 	while (start <= end)
 	{
-		// printf("%s\n", tab[start]);
-		// printf("%d\n", *i);
 		if (tab[start][0] == '<' || tab[start][0] == '>' || tab[start - 1][0] == '<' || tab[start - 1][0] == '>')
 			start++;
 		else
@@ -113,7 +107,6 @@ static void	change_order_2(char **new_tab, char **tab, int start, int end, int *
 			start++;
 		}
 	}
-	//tab[start - 1][0] != '>' || tab[start - 1][0] != '<'
 }
 
 static t_list	*list_2(int	*start, int *end, char **tab_line)

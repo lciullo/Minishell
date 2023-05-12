@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/11 13:12:23 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/12 14:04:45 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ static void	count_separator(char *line, t_data *data)
 			data->nbr_append++;
 		else if (line[i] == '<' && line[i + 1] == '<')
 			data->nbr_here_doc++;
-		else if (line[i] == '>' && line[i + 1] != '>' && line[i - 1] != '>')
+		else if (line[i] == '>' && line[i + 1] != '>')
 			data->nbr_output++;
-		else if (line[i] == '<' && line[i + 1] != '<' && line[i - 1] != '<')
+		else if (line[i] == '<' && line[i + 1] != '<')
 			data->nbr_input++;
 		i++;
 	}
