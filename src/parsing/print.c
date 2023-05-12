@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:45 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/09 10:10:57 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/11 16:18:54 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	print_tab(char **tab)
 	i = 0;
 	while (tab[i])
 	{
-		printf("%s | ", tab[i]);
+		printf("%s\n", tab[i]);
 		i++;
 	}
 }
