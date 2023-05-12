@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/11 16:50:12 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/12 14:30:16 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct s_exec
 }	t_exec;
 
 void	init_struct(t_list *list, t_exec *data);
+
+//# ======================= BOOLEAN ======================= #
 
 //# ======================= EXECUTION ======================= #
 
@@ -61,7 +63,7 @@ char	*check_cmd_acess(char **paths, char *cmd);
 
 void	loop_for_heredoc(t_list **list, char *delimiter);
 
-void	loop_for_infile(t_list *list, t_exec *data);
+int		loop_for_infile(t_list *list, t_exec *data);
 
 void	loop_for_outfile(t_list *list, t_exec *data);
 

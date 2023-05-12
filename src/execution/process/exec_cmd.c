@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:29:59 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/11 17:09:18 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/12 14:31:21 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ static char	**token(t_list *list)
 static void	dupe_test(t_exec *data)
 {
 	if (dup2(data->infile, STDIN_FILENO) == -1)
-		exit(1);
+		return ;
 	if (dup2(data->outfile, STDOUT_FILENO) == -1)
-		exit(1);
+		return ;
 }
 
 int	execution_core(t_list *list, t_data *parsing, t_exec *data, char **env)
@@ -57,13 +57,14 @@ int	execution_core(t_list *list, t_data *parsing, t_exec *data, char **env)
 	if (pid == 0)
 	{
 		close(fd[0]);
-		loop_for_infile(list, data);
+		if (loop_for_infile(list, data) == -1)
+			return (-1);
 		loop_for_outfile(list, data);
 		dupe_test(data);
 		get_command(list, data);
 		data->cmd_with_path = check_cmd_acess(data->env_path, data->cmd);
 		if (!data->cmd_with_path)
-			exit (1);
+			return (-1);
 		execve(data->cmd_with_path, token(list), env);
 	}
 	else

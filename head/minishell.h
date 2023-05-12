@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 15:54:30 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/10 16:00:18 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/12 09:43:43 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,12 @@
 # include <stdio.h>
 # include "../libft/headers/libft.h"
 # include <string.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
 # include <errno.h>
 # include <stdbool.h>
-
-//enlever avant correction
-# include <stdio.h>
 
 extern int	g_exit_status;
 
