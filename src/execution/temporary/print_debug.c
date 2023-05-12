@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   creat_list.c                                       :+:      :+:    :+:   */
+/*   print_debug.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/09 10:54:55 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/10 10:17:08 by lciullo          ###   ########.fr       */
+/*   Created: 2023/05/11 11:47:56 by lciullo           #+#    #+#             */
+/*   Updated: 2023/05/11 11:49:59 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-===============
-Type
-===============
-Infile = 0
-Token = 1
-Outfile = 2
-Pipe = 3
-*/
-
-
 #include "minishell.h"
 
-void	tmp_lst(t_list **lst)
+void	exec_print_list(t_list *lst)
 {
-	char			**infile;
+	int	i;
 
-	infile = ft_split("< infile", ' ');
-	ft_lstadd_back(lst, ft_lstnew(infile, 0));
-	return ;
+	i = 0;
+	ft_dprintf(1, "IN PRINT LIST\n");
+	ft_dprintf(1, "===============================\n");
+	while (lst != NULL && lst->type != PIPE)
+	{
+		i = 0;
+		while (lst->data[i] != NULL)
+		{
+			ft_dprintf(1, "row[%s]\n", lst->data[i]);
+			i++;
+		}
+		lst = lst->next;
+	}
+	ft_dprintf(1, "===============================\n");
 }
