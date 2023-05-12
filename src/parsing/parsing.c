@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/12 14:04:45 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/12 17:07:28 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void	count_separator(char *line, t_data *data);
 static void	replace_space(char *line, t_data *data);
 static char	*add_space(char	*line, t_data *data);
 static char	*check_separator(char *line, char*new_line, int i, int j);
-
 
 t_list	*parsing(char *line, t_data *data)
 {
@@ -29,7 +28,7 @@ t_list	*parsing(char *line, t_data *data)
 	new_line = add_space(line, data);
 	if (!new_line)
 		return (NULL);
-	replace_space(new_line, data); 
+	replace_space(new_line, data);
 	list = create_list(new_line, data);
 	if (!list)
 		return (NULL);
@@ -113,7 +112,7 @@ static char	*check_separator(char *line, char*new_line, int i, int j)
 			new_line[j++] = ' ';
 			new_line[j++] = line[i++];
 			new_line[j++] = line[i];
-			new_line[j] = ' ';	
+			new_line[j] = ' ';
 		}
 		else if (line[i] == '|' || (line[i] == '>' && \
 		line[i + 1] != '>' && line[i - 1] != '>') \
@@ -121,7 +120,7 @@ static char	*check_separator(char *line, char*new_line, int i, int j)
 		{
 			new_line[j++] = ' ';
 			new_line[j++] = line[i];
-			new_line[j] = ' ';		
+			new_line[j] = ' ';
 		}
 		else
 			new_line[j] = line[i];
