@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/12 14:30:16 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/15 15:25:39 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,16 @@
 
 typedef struct s_exec
 {
+	int		i;
 	int		end;
 	int		infile;
 	int		outfile;
 	int		expand;
 	int		nb_cmds;
+	int		fd[2];
+	int		prev_fd;
+	int		infile_opened;
+	int		outfile_opened;
 	char	*cmd_with_path;
 	char	*cmd;
 	char	*paths;
@@ -33,6 +38,12 @@ typedef struct s_exec
 void	init_struct(t_list *list, t_exec *data);
 
 //# ======================= BOOLEAN ======================= #
+
+enum
+{
+	true = 1,
+	false = 0,
+};
 
 //# ======================= EXECUTION ======================= #
 
@@ -55,6 +66,10 @@ int		loop_pipe_by_pipe(t_list *list, t_data *parsing, \
 
 int		get_path_env(t_exec *data, char **env);
 
+//# --- Dup files ---#
+
+int		dup_files(t_exec *data);
+
 //# --- Check access ---#
 
 char	*check_cmd_acess(char **paths, char *cmd);
@@ -65,7 +80,7 @@ void	loop_for_heredoc(t_list **list, char *delimiter);
 
 int		loop_for_infile(t_list *list, t_exec *data);
 
-void	loop_for_outfile(t_list *list, t_exec *data);
+int		loop_for_outfile(t_list *list, t_exec *data);
 
 //# ======================= BUILTINS ======================= #
 

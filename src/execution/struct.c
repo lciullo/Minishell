@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:29:59 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/11 16:50:34 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/15 15:38:56 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,16 @@ static	int	get_nb_commands(t_list *list)
 
 void	init_struct(t_list *list, t_exec *data)
 {
+	data->i = 1;
 	data->infile = 0;
-	data->outfile = 0;
+	data->outfile = 1;
 	data->expand = 0;
 	data->nb_cmds = get_nb_commands(list);
+	data->fd[0] = 0;
+	data->fd[1] = 1;
+	data->prev_fd = 0;
+	data->infile_opened = 0;
+	data->outfile_opened = 1;
 	data->cmd_with_path = NULL;
 	data->cmd = NULL;
 	data->paths = NULL;

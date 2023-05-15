@@ -18,20 +18,32 @@ static	void	is_outfile_open(t_exec *data)
 		close(data->outfile);
 }
 
-static	void	manage_outfile(char *outfile, t_exec *data)
+static	int	manage_outfile(char *outfile, t_exec *data)
 {
 	is_outfile_open(data);
 	data->outfile = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (data->outfile == -1)
+	{	
+		data->outfile_opened = false;
 		perror("open outfile");
+		return (-1);
+	}
+	else
+		data->outfile_opened = true;
+	return (0);
 }
 
-void	loop_for_outfile(t_list *list, t_exec *data)
+int	loop_for_outfile(t_list *list, t_exec *data)
 {
+	data->outfile = 1;
 	while (list != NULL && list->type != PIPE)
 	{
 		if (list->type == OUTFILE)
-			manage_outfile(list->data[0], data);
+		{
+			if (manage_outfile(list->data[0], data) == -1)
+				return (-1);
+		}
 		list = list->next;
 	}
+	return (0);
 }
