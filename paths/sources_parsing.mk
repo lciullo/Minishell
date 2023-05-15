@@ -6,7 +6,7 @@
 #    By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 09:55:41 by lciullo           #+#    #+#              #
-#    Updated: 2023/05/09 10:27:20 by cllovio          ###   ########.fr        #
+#    Updated: 2023/05/15 11:45:03 by cllovio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,4 +14,5 @@ SRC	+= 	src/main.c\
 		src/parsing/parsing.c\
 		src/parsing/utils_parsing.c\
 		src/parsing/list.c\
-		src/parsing/print.c
+		src/parsing/print.c\
+		src/parsing/check_error.c

@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/10 16:33:04 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/15 11:45:19 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,7 @@ t_list	*create_list(char *line, t_data *data);
 void	print_list(t_list	*a);
 void	print_tab(char **tab);
 void	list_print(t_list *lst);
+
+int	check_error(char *line, t_data *data);
 
 #endif

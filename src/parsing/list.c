@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/12 17:02:31 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/15 11:06:20 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void		change_order_redir(char **new_tab, char **tab, int start, \
 				int end, int *i);
 static void		change_order_token(char **new_tab, char **tab, int start, \
 				int end, int *i);
+//int				check_redir(t_list **list);
 
 t_list	*create_list(char *line, t_data *data)
 {
@@ -69,11 +70,13 @@ static char	**change_order(char **tab)
 	while (tab[tab_size])
 		tab_size++;
 	new_tab = malloc(sizeof(char *) * (tab_size + 1));
+	if (!new_tab)
+		return (NULL);
 	while (tab[end])
 	{
 		if (tab[end][0] == '|' || tab[end + 1] == NULL)
 		{
-			change_order_2(new_tab, tab, start, end, &i);
+			change_order_redir(new_tab, tab, start, end, &i);
 			start = end + 1;
 		}
 		end++;
@@ -101,7 +104,7 @@ int start, int end, int *i)
 		}
 		start++;
 	}
-	change_order_token(new_tab, tab, start_b, end, *i);
+	change_order_token(new_tab, tab, start_b, end, i);
 }
 
 static void	change_order_token(char **new_tab, char **tab, \
@@ -109,8 +112,9 @@ int start, int end, int *i)
 {
 	while (start <= end)
 	{
-		if (tab[start][0] == '<' || tab[start][0] == '>' \
-		|| tab[start - 1][0] == '<' || tab[start - 1][0] == '>')
+		if (tab[start][0] == '<' || tab[start][0] == '>')
+			start++;
+		if (start > 0 && (tab[start - 1][0] == '<' || tab[start - 1][0] == '>'))
 			start++;
 		else
 		{
