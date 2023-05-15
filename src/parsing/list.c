@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/12 13:01:30 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/15 15:28:58 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,9 @@ static void	change_order_2(char **new_tab, char **tab, int start, int end, int *
 	start = start_b;
 	while (start <= end)
 	{
-		if (tab[start][0] == '<' || tab[start][0] == '>' || tab[start - 1][0] == '<' || tab[start - 1][0] == '>')
+		if (tab[start][0] == '<' || tab[start][0] == '>')
+			start++;
+		if (start > 0 && (tab[start - 1][0] == '<' || tab[start - 1][0] == '>'))
 			start++;
 		else
 		{
