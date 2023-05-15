@@ -24,14 +24,18 @@ static	int	manage_infile(char *infile, t_exec *data)
 	data->infile = open(infile, O_RDONLY, 0644);
 	if (data->infile == -1)
 	{
+		data->infile_opened = false;
 		perror("open infile");
 		return (-1);
 	}
+	else
+		data->infile_opened = true;
 	return (0);
 }
 
 int	loop_for_infile(t_list *list, t_exec *data)
 {
+	data->infile = 0;
 	while (list != NULL && list->type != PIPE)
 	{
 		if (list->type == INFILE)
