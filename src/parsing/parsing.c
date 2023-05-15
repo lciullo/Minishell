@@ -6,17 +6,16 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/12 14:04:45 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/15 16:37:53 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	count_separator(char *line, t_data *data);
+//static void	count_separator(char *line, t_data *data);
 static void	replace_space(char *line, t_data *data);
 static char	*add_space(char	*line, t_data *data);
 static char	*check_separator(char *line, char*new_line, int i, int j);
-
 
 t_list	*parsing(char *line, t_data *data)
 {
@@ -25,41 +24,16 @@ t_list	*parsing(char *line, t_data *data)
 
 	list = NULL;
 	init_structure(data);
-	count_separator(line, data);
+	if (check_error(line, data) == 1)
+		return (NULL);
 	new_line = add_space(line, data);
 	if (!new_line)
-		return (NULL);
-	replace_space(new_line, data); 
+	 	return (NULL);
+	replace_space(new_line, data);
 	list = create_list(new_line, data);
 	if (!list)
 		return (NULL);
 	return (list);
-}
-
-static void	count_separator(char *line, t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (line[i] != '\0')
-	{
-		if ((line[i] == 34 || line[i] == 39))
-			data->nbr_quote++;
-		else if (line[i] == '|')
-			data->nbr_pipe++;
-		else if (line[i] == '>' && line[i + 1] == '>')
-			data->nbr_append++;
-		else if (line[i] == '<' && line[i + 1] == '<')
-			data->nbr_here_doc++;
-		else if (line[i] == '>' && line[i + 1] != '>')
-			data->nbr_output++;
-		else if (line[i] == '<' && line[i + 1] != '<')
-			data->nbr_input++;
-		i++;
-	}
-	data->len_line = i;
-	data->nbr_redir = data->nbr_here_doc + \
-	data->nbr_output + data->nbr_append + data->nbr_input;
 }
 
 static void	replace_space(char *line, t_data *data)
@@ -89,7 +63,7 @@ static void	replace_space(char *line, t_data *data)
 		}
 	}
 }
-// && data->nbr_quote % 2 == 0)
+//&& data->nbr_quote % 2 == 0)
 
 static char	*add_space(char	*line, t_data *data)
 {
@@ -107,21 +81,20 @@ static char	*check_separator(char *line, char*new_line, int i, int j)
 {
 	while (line[i])
 	{
-		if ((line[i] == '>' && line[i + 1] == '>' && line[i - 1] != '>') \
+		if ((line[i] == '>' && line[i + 1] == '>') \
 		|| (line[i] == '<' && line[i + 1] == '<'))
 		{
 			new_line[j++] = ' ';
 			new_line[j++] = line[i++];
 			new_line[j++] = line[i];
-			new_line[j] = ' ';	
+			new_line[j] = ' ';
 		}
 		else if (line[i] == '|' || (line[i] == '>' && \
-		line[i + 1] != '>' && line[i - 1] != '>') \
-		|| (line[i] == '<' && line[i + 1] != '<' && line[i - 1] != '<'))
+		line[i + 1] != '>') || (line[i] == '<' && line[i + 1] != '<'))
 		{
 			new_line[j++] = ' ';
 			new_line[j++] = line[i];
-			new_line[j] = ' ';		
+			new_line[j] = ' ';
 		}
 		else
 			new_line[j] = line[i];
