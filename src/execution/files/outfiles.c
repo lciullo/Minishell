@@ -24,18 +24,14 @@ static	int	manage_outfile(char *outfile, t_exec *data)
 	data->outfile = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (data->outfile == -1)
 	{	
-		data->outfile_opened = false;
 		perror("open outfile");
 		return (-1);
 	}
-	else
-		data->outfile_opened = true;
 	return (0);
 }
 
 int	loop_for_outfile(t_list *list, t_exec *data)
 {
-	data->outfile = 1;
 	while (list != NULL && list->type != PIPE)
 	{
 		if (list->type == OUTFILE)

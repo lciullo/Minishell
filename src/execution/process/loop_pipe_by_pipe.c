@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 11:30:04 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/16 09:18:34 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/16 14:49:43 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	loop_pipe_by_pipe(t_list *list, t_data *parsing, t_exec	*data, char **env)
 
 	index = 0;
 	(void)parsing;
+	data->old_fd[0] = STDIN_FILENO;
+	data->new_fd[1] = STDOUT_FILENO;
 	while (list != NULL)
 	{
 		execution_core(list, data, env);
@@ -61,5 +63,6 @@ int	loop_pipe_by_pipe(t_list *list, t_data *parsing, t_exec	*data, char **env)
 		list = list_increment(&list, index + 1);
 	}
 	wait_pids(data);
+	data->index = 0;
 	return (0);
 }

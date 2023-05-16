@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:29:59 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/16 09:13:08 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/16 15:07:28 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,18 @@ static void	allocated_pids_array(t_exec *data)
 
 void	init_struct(t_list *list, t_exec *data)
 {
-	data->i = 1;
+	data->i = 0;
+	data->index = 0;
 	data->infile = 0;
 	data->outfile = 1;
 	data->expand = 0;
+	data->old_fd[0] = 0;
+	data->old_fd[1] = 0;
+	data->new_fd[0] = 0;
+	data->new_fd[1] = 0;
 	data->nb_cmds = get_nb_commands(list);
 	allocated_pids_array(data);
-	data->fd[0] = 0;
-	data->fd[1] = 1;
 	data->prev_fd = 0;
-	data->infile_opened = 0;
-	data->outfile_opened = 1;
 	data->cmd_with_path = NULL;
 	data->cmd = NULL;
 	data->paths = NULL;

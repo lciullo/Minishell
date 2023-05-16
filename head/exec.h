@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/16 09:13:36 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/16 14:47:23 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 typedef struct s_exec
 {
+	int		index;
 	int		i;
 	int		end;
 	int		infile;
@@ -26,10 +27,9 @@ typedef struct s_exec
 	int		expand;
 	int		nb_cmds;
 	pid_t	*pids;
-	int		fd[2];
+	int		new_fd[2];
+	int		old_fd[2];
 	int		prev_fd;
-	int		infile_opened;
-	int		outfile_opened;
 	char	*cmd_with_path;
 	char	*cmd;
 	char	*paths;
@@ -39,12 +39,6 @@ typedef struct s_exec
 void	init_struct(t_list *list, t_exec *data);
 
 //# ======================= BOOLEAN ======================= #
-
-enum
-{
-	true = 1,
-	false = 0,
-};
 
 //# ======================= EXECUTION ======================= #
 
