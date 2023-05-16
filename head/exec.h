@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/15 15:25:39 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/16 09:13:36 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_exec
 	int		outfile;
 	int		expand;
 	int		nb_cmds;
+	pid_t	*pids;
 	int		fd[2];
 	int		prev_fd;
 	int		infile_opened;
@@ -49,7 +50,7 @@ enum
 
 void	execution(t_list *t_list, char **env, t_data *parsing, t_exec *data);
 
-int		execution_core(t_list *list, t_data *parsing, t_exec *data, char **env);
+int		execution_core(t_list *list, t_exec *data, char **env);
 
 //# === One builtin execution  === #
 

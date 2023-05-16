@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:29:59 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/15 15:38:56 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/16 09:13:08 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ static	int	get_nb_commands(t_list *list)
 	return (nb_cmds);
 }
 
+static void	allocated_pids_array(t_exec *data)
+{
+	data->pids = ft_calloc(data->nb_cmds, sizeof(pid_t));
+}
+
 void	init_struct(t_list *list, t_exec *data)
 {
 	data->i = 1;
@@ -33,6 +38,7 @@ void	init_struct(t_list *list, t_exec *data)
 	data->outfile = 1;
 	data->expand = 0;
 	data->nb_cmds = get_nb_commands(list);
+	allocated_pids_array(data);
 	data->fd[0] = 0;
 	data->fd[1] = 1;
 	data->prev_fd = 0;

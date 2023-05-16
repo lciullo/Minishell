@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:29:59 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/15 15:32:56 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/16 09:26:44 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	get_command(t_list *list, t_exec *data)
 			data->cmd = list->data[0];
 		list = list->next;
 	}
+	ft_dprintf(2, "%s\n", data->cmd);
 }
 
 static char	**token(t_list *list)
@@ -33,28 +34,29 @@ static char	**token(t_list *list)
 	return (NULL);
 }
 
-int	execution_core(t_list *list, t_data *parsing, t_exec *data, char **env)
+int	execution_core(t_list *list, t_exec *data, char **env)
 {
-	int		pid;
-	(void)parsing;
+	int	index;
 
-	pid = 0;
+	index = 0;
 	if (data->i != data->nb_cmds)
 		pipe(data->fd);
-	pid = fork();
-	if (pid == 0)
+	data->pids[index] = fork();
+	if (data->pids[index] == 0)
 	{
 		loop_for_infile(list, data);
 		loop_for_outfile(list, data);
 		dup_files(data);
+		close(data->prev_fd);
 		get_command(list, data);
 		data->cmd_with_path = check_cmd_acess(data->env_path, data->cmd);
-		if (!data->cmd_with_path)
-			return (-1);
 		execve(data->cmd_with_path, token(list), env);
+		return (1);
 	}
 	close(data->fd[1]);
 	data->prev_fd = data->fd[0];
+	close(data->fd[0]);
 	data->i++;
+	index++;
 	return (0);
 }
