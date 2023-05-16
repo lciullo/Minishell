@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/15 11:06:20 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/16 11:45:04 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void		change_order_redir(char **new_tab, char **tab, int start, \
 				int end, int *i);
 static void		change_order_token(char **new_tab, char **tab, int start, \
 				int end, int *i);
-//int				check_redir(t_list **list);
+
 
 t_list	*create_list(char *line, t_data *data)
 {
