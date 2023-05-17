@@ -6,9 +6,9 @@
 #    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 09:55:33 by lciullo           #+#    #+#              #
-#    Updated: 2023/04/14 11:25:03 by lciullo          ###   ########.fr        #
+#    Updated: 2023/05/17 08:38:49 by lciullo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-HEAD	+= 	head/parsing.h \
-			head/minishell.h
+HEAD	+= 	header/parsing.h \
+			header/minishell.h
