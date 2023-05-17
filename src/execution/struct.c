@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:29:59 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/15 15:38:56 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/17 11:06:01 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,40 @@ static	int	get_nb_commands(t_list *list)
 	return (nb_cmds);
 }
 
+static	int	get_nb_builtin(t_list *list)
+{
+	int	nb_builtin;
+
+	nb_builtin = 0;
+	while (list != NULL)
+	{
+		if (list->type == BUILTIN)
+			nb_builtin++;
+		list = list->next;
+	}
+	return (nb_builtin);
+}
+
+static void	allocated_pids_array(t_exec *data)
+{
+	data->pids = ft_calloc(data->nb_cmds, sizeof(pid_t));
+}
+
 void	init_struct(t_list *list, t_exec *data)
 {
-	data->i = 1;
+	data->i = 0;
+	data->index = 0;
 	data->infile = 0;
 	data->outfile = 1;
 	data->expand = 0;
+	data->old_fd[0] = 0;
+	data->old_fd[1] = 0;
+	data->new_fd[0] = 0;
+	data->new_fd[1] = 0;
 	data->nb_cmds = get_nb_commands(list);
-	data->fd[0] = 0;
-	data->fd[1] = 1;
+	data->nb_builtin = get_nb_builtin(list);
+	allocated_pids_array(data);
 	data->prev_fd = 0;
-	data->infile_opened = 0;
-	data->outfile_opened = 1;
 	data->cmd_with_path = NULL;
 	data->cmd = NULL;
 	data->paths = NULL;

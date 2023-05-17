@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+         #
+#    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/15 11:03:28 by lciullo           #+#    #+#              #
-#    Updated: 2023/04/18 13:00:37 by cllovio          ###   ########.fr        #
+#    Updated: 2023/05/17 08:38:26 by lciullo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ NAME 			= minishell
 
 DIR_LIB 		= libft
 
-DIR_HEAD 		= 	head/
+DIR_HEAD 		= 	header/
 
 DIR_OBJS 		=	.objs
 
