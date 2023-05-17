@@ -6,18 +6,23 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/15 15:28:58 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/15 11:06:20 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static t_list	*list_2(int	*start, int *end, char **tab_line);
-static void		find_malloc_size(char ** tab_line, int *end, int *start, int *malloc_size);
-static void		fill_tab(char **tab_line, char **tokn, int  *start, int *end);
+static void		find_malloc_size(char **tab_line, int *end, int *start, \
+				int *malloc_size);
+static void		fill_tab(char **tab_line, char **token, int *start, int *end);
 static void		del_delimiteur(t_list **list);
-static char 	**change_order(char **tab);
-static void		change_order_2(char **new_tab, char **tab, int start, int end, int *i);
+static char		**change_order(char **tab);
+static void		change_order_redir(char **new_tab, char **tab, int start, \
+				int end, int *i);
+static void		change_order_token(char **new_tab, char **tab, int start, \
+				int end, int *i);
+//int				check_redir(t_list **list);
 
 t_list	*create_list(char *line, t_data *data)
 {
@@ -50,25 +55,28 @@ t_list	*create_list(char *line, t_data *data)
 	return (list);
 }
 
-static char **change_order(char **tab)
+static char	**change_order(char **tab)
 {
 	int		tab_size;
 	char	**new_tab;
 	int		end;
 	int		start;
+	int		i;
 
 	tab_size = 0;
 	end = 0;
 	start = 0;
-	int	i = 0;
+	i = 0;
 	while (tab[tab_size])
 		tab_size++;
 	new_tab = malloc(sizeof(char *) * (tab_size + 1));
+	if (!new_tab)
+		return (NULL);
 	while (tab[end])
 	{
 		if (tab[end][0] == '|' || tab[end + 1] == NULL)
 		{
-			change_order_2(new_tab, tab, start, end, &i);
+			change_order_redir(new_tab, tab, start, end, &i);
 			start = end + 1;
 		}
 		end++;
@@ -78,10 +86,11 @@ static char **change_order(char **tab)
 	return (new_tab);
 }
 
-static void	change_order_2(char **new_tab, char **tab, int start, int end, int *i)
+static void	change_order_redir(char **new_tab, char **tab, \
+int start, int end, int *i)
 {
 	int	start_b;
-		
+
 	start_b = start;
 	while (start < end)
 	{
@@ -95,7 +104,12 @@ static void	change_order_2(char **new_tab, char **tab, int start, int end, int *
 		}
 		start++;
 	}
-	start = start_b;
+	change_order_token(new_tab, tab, start_b, end, i);
+}
+
+static void	change_order_token(char **new_tab, char **tab, \
+int start, int end, int *i)
+{
 	while (start <= end)
 	{
 		if (tab[start][0] == '<' || tab[start][0] == '>')
@@ -105,7 +119,7 @@ static void	change_order_2(char **new_tab, char **tab, int start, int end, int *
 		else
 		{
 			new_tab[*i] = ft_strdup(tab[start]);
-	 		*i = *i + 1;
+			*i = *i + 1;
 			start++;
 		}
 	}
@@ -130,30 +144,29 @@ static t_list	*list_2(int	*start, int *end, char **tab_line)
 	fill_tab(tab_line, token, start, end);
 	new = ft_lstnew(token, -1);
 	if (!new)
-	 	return (NULL);
+		return (NULL);
 	return (new);
 }
 
-static void	find_malloc_size(char ** tab_line, int *end, int *start, int *malloc_size)
+static void	find_malloc_size(char **tab, int *end, int *start, int *malloc_size)
 {
-	while (tab_line[*end])
+	while (tab[*end])
 	{
-		if ((tab_line[*end][0] == '<' || tab_line[*end][0] == '>' \
-		|| tab_line[*end][0] == '|'))
+		if ((tab[*end][0] == '<' || tab[*end][0] == '>' || tab[*end][0] == '|'))
 		{
 			*end = *end + 1;
 			*malloc_size = 1;
 			break ;
 		}
-		else if (*end != 0 && tab_line[*end - 1] && \
-		(tab_line[*end - 1][0] == '<' || tab_line[*end - 1][0] == '>'))
+		else if (*end != 0 && tab[*end - 1] && \
+		(tab[*end - 1][0] == '<' || tab[*end - 1][0] == '>'))
 		{
 			*end = *end + 1;
 			*malloc_size = 1;
 			break ;
 		}
-		else if (tab_line[*end + 1] && (tab_line[*end + 1][0] == '<' \
-		|| tab_line[*end + 1][0] == '>' || tab_line[*end + 1][0] == '|'))
+		else if (tab[*end + 1] && (tab[*end + 1][0] == '<' \
+		|| tab[*end + 1][0] == '>' || tab[*end + 1][0] == '|'))
 		{
 			*end = *end + 1;
 			*malloc_size = *end - *start;
@@ -161,11 +174,11 @@ static void	find_malloc_size(char ** tab_line, int *end, int *start, int *malloc
 		}
 		*end = *end + 1;
 	}
-	if (*malloc_size == 0) 
+	if (*malloc_size == 0)
 		*malloc_size = (*end - *start) + 1;
 }
 
-static void	fill_tab(char **tab_line, char **token, int  *start, int *end)
+static void	fill_tab(char **tab_line, char **token, int *start, int *end)
 {
 	int	i;
 
@@ -184,7 +197,7 @@ static void	fill_tab(char **tab_line, char **token, int  *start, int *end)
 static void	del_delimiteur(t_list **list)
 {
 	t_list	*copy;
-	
+
 	if (*list == NULL || list == NULL)
 		return ;
 	copy = (*list);
