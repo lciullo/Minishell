@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/16 14:47:23 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/17 11:23:37 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_exec
 	int		outfile;
 	int		expand;
 	int		nb_cmds;
+	int		nb_builtin;
 	pid_t	*pids;
 	int		new_fd[2];
 	int		old_fd[2];
@@ -48,6 +49,8 @@ int		execution_core(t_list *list, t_exec *data, char **env);
 
 //# === One builtin execution  === #
 
+void	get_builtin_and_exec(t_list *list, t_exec *data, char **env);
+
 int		one_builtin_exec(char **token, t_exec *data, char **env);
 
 //# === Loop many pipe === #
@@ -61,9 +64,11 @@ int		loop_pipe_by_pipe(t_list *list, t_data *parsing, \
 
 int		get_path_env(t_exec *data, char **env);
 
-//# --- Dup files ---#
+//# --- Dup files and close ---#
 
 int		dup_files(t_exec *data);
+
+void	ft_close(int fd);
 
 //# --- Check access ---#
 
