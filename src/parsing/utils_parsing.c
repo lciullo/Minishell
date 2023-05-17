@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:04:05 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/16 16:44:32 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/17 10:33:56 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,77 @@ static bool	is_builtins(char *cmd)
 	return (false);
 }
 
-char	*delete_quote(char *line, int j)
+char	*delete_quote(char *line, int len)
 {
-	char	*new_line;
+	int		i;
+	char	quote;
+	char	nbr_quote;
+	char	*new_s;
+	
+	i = 0;
+	nbr_quote = 0;
+	new_s = NULL;
+	while (line[i])
+	{
+		if (line[i] == '\'' || line[i] == '\"')
+		{
+			quote = line[i];
+			i++;
+			nbr_quote++;
+			while (line[i])
+			{
+				if (line[i] == quote)
+				{
+					i++;
+					break ;
+				}
+				i++;
+			}
+		}
+		else
+			i++;
+	}
+	ft_dprintf(2, "len : %d\nnbr_quote : %d\nmalloc_size : %d\n", len, nbr_quote, (len - (nbr_quote * 2)));
+	new_s = malloc(sizeof(char) * (len - (nbr_quote * 1) + 1));
+	if (!new_s)
+		return (NULL);
+	i = 0;
+	int	j = 0;
+	while (line[i])
+	{
+		if (line[i] == '\'' || line[i] == '\"')
+		{
+			quote = line[i];
+			i++;
+			nbr_quote++;
+			while (line[i])
+			{
+				if (line[i] == quote)
+				{
+					i++;
+					break ;
+				}
+				else
+				{
+					new_s[j] = line[i];
+					i++;
+					j++;
+				}
+			}
+		}
+		else
+		{
+			new_s[j] = line[i]; 
+			i++;
+			j++;
+		}
+	}
+	new_s[j] = '\0';
+	return (new_s);
+}
+
+
+/*char	*new_line;
 	int		i;
 	int		k;
 
@@ -130,5 +198,4 @@ char	*delete_quote(char *line, int j)
 		k++;
 	}
 	new_line[i] = '\0';
-	return (new_line);
-}
+	return (new_line);*/

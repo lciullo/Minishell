@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:20 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/16 13:59:39 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/17 10:38:13 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int		check_quote_2(char *line, int *i, char quote);
 
 int	check_error(char *line, t_data *data)
 {
-	//quote needs to be checked first
 	if (check_quote(line) == 1)
 		return (1);
 	if (check_redir(line, data) == 1)
@@ -55,9 +54,8 @@ int	check_quote_2(char *line, int *i, char quote)
 	quote_nbr = 0;
 	while (line[*i])
 	{
-		if (line[*i] == '\\' && line[*i + 1] != '\'')
+		if (quote == '\"' && line[*i] == '\\' && line[*i + 1] != '\'')
 			*i = *i + 2;
-			
 		else if (line[*i] == quote)
 		{
 			quote_nbr++;
