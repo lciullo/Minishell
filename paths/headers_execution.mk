@@ -6,8 +6,8 @@
 #    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 09:55:35 by lciullo           #+#    #+#              #
-#    Updated: 2023/04/14 11:25:07 by lciullo          ###   ########.fr        #
+#    Updated: 2023/05/17 08:38:42 by lciullo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-HEAD	= head/exec.h
+HEAD	= header/exec.h

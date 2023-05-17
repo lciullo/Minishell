@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/15 15:25:39 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/17 11:23:37 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,18 @@
 
 typedef struct s_exec
 {
+	int		index;
 	int		i;
 	int		end;
 	int		infile;
 	int		outfile;
 	int		expand;
 	int		nb_cmds;
-	int		fd[2];
+	int		nb_builtin;
+	pid_t	*pids;
+	int		new_fd[2];
+	int		old_fd[2];
 	int		prev_fd;
-	int		infile_opened;
-	int		outfile_opened;
 	char	*cmd_with_path;
 	char	*cmd;
 	char	*paths;
@@ -39,19 +41,15 @@ void	init_struct(t_list *list, t_exec *data);
 
 //# ======================= BOOLEAN ======================= #
 
-enum
-{
-	true = 1,
-	false = 0,
-};
-
 //# ======================= EXECUTION ======================= #
 
 void	execution(t_list *t_list, char **env, t_data *parsing, t_exec *data);
 
-int		execution_core(t_list *list, t_data *parsing, t_exec *data, char **env);
+int		execution_core(t_list *list, t_exec *data, char **env);
 
 //# === One builtin execution  === #
+
+void	get_builtin_and_exec(t_list *list, t_exec *data, char **env);
 
 int		one_builtin_exec(char **token, t_exec *data, char **env);
 
@@ -66,9 +64,11 @@ int		loop_pipe_by_pipe(t_list *list, t_data *parsing, \
 
 int		get_path_env(t_exec *data, char **env);
 
-//# --- Dup files ---#
+//# --- Dup files and close ---#
 
 int		dup_files(t_exec *data);
+
+void	ft_close(int fd);
 
 //# --- Check access ---#
 
