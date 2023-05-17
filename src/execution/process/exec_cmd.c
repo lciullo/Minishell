@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:29:59 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/17 09:53:54 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/17 12:52:45 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	execution_core(t_list *list, t_exec *data, char **env)
 		data->cmd_with_path = check_cmd_acess(data->env_path, data->cmd);
 		if (!data->cmd_with_path)
 		{	
-			perror("command");
+			ft_dprintf(2, "%s: command not found\n", data->cmd);
 			exit(1);
 		}
 		execve(data->cmd_with_path, token(list), env);
