@@ -1,0 +1,11 @@
+header
+ignore_readline_reachable.txt
+indir
+infile
+libft
+Makefile
+minishell
+outdir
+outfile
+paths
+src

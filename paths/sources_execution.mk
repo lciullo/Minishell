@@ -6,16 +6,16 @@
 #    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 09:55:39 by lciullo           #+#    #+#              #
-#    Updated: 2023/05/17 09:42:02 by lciullo          ###   ########.fr        #
+#    Updated: 2023/05/17 15:47:29 by lciullo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC	=																	\
-		src/execution/loop_exec.c 										\
+		src/execution/execution.c 										\
 		src/execution/struct.c											\
 		src/execution/temporary/print_debug.c							\
 		src/execution/process/one_builtin_exec.c						\
-		src/execution/process/loop_pipe_by_pipe.c						\
+		src/execution/process/loop_list.c								\
 		src/execution/files/infiles.c									\
 		src/execution/files/outfiles.c									\
 		src/execution/files/heredoc.c									\

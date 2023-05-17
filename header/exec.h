@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/17 11:23:37 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/17 15:49:00 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ int		one_builtin_exec(char **token, t_exec *data, char **env);
 
 //# === Loop many pipe === #
 
-int		loop_pipe_by_pipe(t_list *list, t_data *parsing, \
-									t_exec	*data, char **env);
+int		loop_pipe_by_pipe(t_list *list, t_exec	*data, char **env);
 
 //# === Execute token  === #
 
