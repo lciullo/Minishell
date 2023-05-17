@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:20 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/17 10:38:13 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/17 16:19:52 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	check_error(char *line, t_data *data)
 
 int	check_quote(char *line)
 {
-	int	i;
-	char quote;
+	int		i;
+	char	quote;
 
 	i = 0;
 	while (line[i])
@@ -70,7 +70,7 @@ int	check_quote_2(char *line, int *i, char quote)
 int	check_redir(char *line, t_data *data)
 {
 	int	i;
-	
+
 	i = 0;
 	while (line[i])
 	{
@@ -83,50 +83,11 @@ int	check_redir(char *line, t_data *data)
 			if (skip_redir(line, &i, line[i], data) > 2)
 				return (ft_dprintf(2, "syntax error\n"), 1);
 		}
-		else 
+		else
 			i++;
 	}
 	data->len_line = i;
 	data->nbr_redir = data->nbr_here_doc + \
 	data->nbr_output + data->nbr_append + data->nbr_input;
 	return (0);
-}
-
-void	skip_quote(char *line, int *i, char quote)
-{
-	*i = *i + 1;
-	while (line[*i])
-	{
-		if (*i > 1 && line[*i] == quote && line[*i - 1] == '\\')
-			*i = *i + 1;
-		else if (line[*i] == quote)
-			break;
-		else
-			*i = *i + 1;
-	}
-}
-
-int	skip_redir(char *line, int *i, char redir, t_data *data)
-{
-	int	len;
-
-	len = 0;
-	if (line[*i] && line[*i + 1] && line[*i] == '<' && line[*i + 1] == '>')
-		return (3);
-	while (line[*i] && line[*i] == redir)
-	{
-		*i = *i + 1;
-		len++;
-	}
-	if (line[*i] == '\0')
-		len = 3;
-	if (len == 1 && redir == '<')
-		data->nbr_input++;
-	if (len == 1 && redir == '>')
-		data->nbr_output++;
-	if (len == 2 && redir == '<')
-		data->nbr_here_doc++;
-	if (len == 2 && redir == '>')
-		data->nbr_append++;
-	return (len);
 }

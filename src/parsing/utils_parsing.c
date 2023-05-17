@@ -6,13 +6,13 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:04:05 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/17 13:51:09 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/17 15:46:03 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	is_builtins(char	*cmd);
+static bool	is_builtins(char *cmd);
 
 void	init_structure(t_data *data)
 {
@@ -26,18 +26,6 @@ void	init_structure(t_data *data)
 	data->nbr_redir = 0;
 	data->start = 0;
 	data->end = 0;
-}
-
-int	is_white_space(char	*line, int i)
-{
-	if (line[i + 1] && ((line[i + 1] >= 9 && line[i + 1] <= 13) \
-	|| line[i + 1] == ' '))
-	{
-		i++;
-		while (line[i] && ((line[i] >= 9 && line[i] <= 13) || line[i] == ' '))
-			i++;
-	}
-	return (i);
 }
 
 void	change_tab(char **tab_line)
@@ -67,32 +55,6 @@ void	change_tab(char **tab_line)
 	}
 }
 
-void	change_list(t_list **list)
-{
-	t_list	*temp;
-
-	temp = (*list);
-	while (temp)
-	{
-		if (temp->data[0][0] == '>' && temp->data[0][1] == '>')
-			temp->next->type = APPEND;
-		else if (temp->data[0][0] == '<' && temp->data[0][1] == '<')
-			temp->next->type = HERE_DOC;
-		else if (temp->data[0][0] == '<' && temp->data[0][1] == '\0')
-			temp->next->type = INFILE;
-		else if (temp->data[0][0] == '>' && temp->data[0][1] == '\0')
-			temp->next->type = OUTFILE;
-		else if (temp->data[0][0] == '|')
-			temp->type = PIPE;
-		else if (temp->type == -1 && is_builtins(temp->data[0]) == true)
-			temp->type = BUILTIN;
-		else if (temp->type == -1 && \
-		(temp->data[0][0] != '>' || temp->data[0][0] != '<'))
-			temp->type = TOKEN;
-		temp = temp->next;
-	}
-}
-
 static bool	is_builtins(char *cmd)
 {
 	if (ft_strcmp(cmd, "echo") == 0)
@@ -111,76 +73,6 @@ static bool	is_builtins(char *cmd)
 		return (true);
 	return (false);
 }
-
-char	*delete_quote(char *line, int len)
-{
-	int		i;
-	char	quote;
-	char	nbr_quote;
-	char	*new_s;
-	
-	i = 0;
-	nbr_quote = 0;
-	new_s = NULL;
-	while (line[i])
-	{
-		if (line[i] == '\'' || line[i] == '\"')
-		{
-			quote = line[i];
-			i++;
-			nbr_quote++;
-			while (line[i])
-			{
-				if (line[i] == quote)
-				{
-					i++;
-					break ;
-				}
-				i++;
-			}
-		}
-		else
-			i++;
-	}
-	ft_dprintf(2, "len : %d\nnbr_quote : %d\nmalloc_size : %d\n", len, nbr_quote, (len - (nbr_quote * 2)));
-	new_s = malloc(sizeof(char) * (len - (nbr_quote * 1) + 1));
-	if (!new_s)
-		return (NULL);
-	i = 0;
-	int	j = 0;
-	while (line[i])
-	{
-		if (line[i] == '\'' || line[i] == '\"')
-		{
-			quote = line[i];
-			i++;
-			nbr_quote++;
-			while (line[i])
-			{
-				if (line[i] == quote)
-				{
-					i++;
-					break ;
-				}
-				else
-				{
-					new_s[j] = line[i];
-					i++;
-					j++;
-				}
-			}
-		}
-		else
-		{
-			new_s[j] = line[i]; 
-			i++;
-			j++;
-		}
-	}
-	new_s[j] = '\0';
-	return (new_s);
-}
-
 
 /*char	*new_line;
 	int		i;

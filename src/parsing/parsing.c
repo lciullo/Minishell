@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/16 13:42:56 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/17 16:17:22 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_list	*parsing(char *line, t_data *data)
 		return (NULL);
 	new_line = add_space(line, data);
 	if (!new_line)
-	 	return (NULL);
+		return (NULL);
 	replace_space(new_line, data);
 	list = create_list(new_line, data);
 	if (!list)
