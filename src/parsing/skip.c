@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:45:38 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/17 16:18:33 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/18 12:02:32 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,24 @@ void	skip_quote(char *line, int *i, char quote)
 	}
 }
 
-int	is_white_space(char	*line, int i)
+int	skip_white_space(char	*line)
 {
-	if (line[i + 1] && ((line[i + 1] >= 9 && line[i + 1] <= 13) \
-	|| line[i + 1] == ' '))
-	{
+	int	i;
+
+	i = 0;
+	while (line[i] && ((line[i] >= 9 && line[i] <= 13) || line[i] == ' '))
 		i++;
-		while (line[i] && ((line[i] >= 9 && line[i] <= 13) || line[i] == ' '))
-			i++;
-	}
-	return (i);
+	if (line[i] == '\0')
+		return (1);
+	return (0);
 }
 
+int	skip_white_space_2(char	*line, int i)
+{
+	while (line[i] && ((line[i] >= 9 && line[i] <= 13) || line[i] == ' '))
+		i++;
+	return (i);
+}
 int	skip_redir(char *line, int *i, char redir, t_data *data)
 {
 	int	len;

@@ -6,22 +6,11 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/17 15:47:36 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/18 11:41:54 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static t_list	*list_2(int	*start, int *end, char **tab_line);
-static void		find_malloc_size(char **tab_line, int *end, int *start, \
-				int *malloc_size);
-static void		fill_tab(char **tab_line, char **token, int *start, int *end);
-static void		del_delimiteur(t_list **list);
-static char		**change_order(char **tab);
-static void		change_order_redir(char **new_tab, char **tab, int start, \
-				int end, int *i);
-static void		change_order_token(char **new_tab, char **tab, int start, \
-				int end, int *i);
 
 t_list	*create_list(char *line, t_data *data)
 {
@@ -44,17 +33,18 @@ t_list	*create_list(char *line, t_data *data)
 	while (start != -1)
 	{
 		start = end;
-		new = list_2(&start, &end, tab_line);
+		new = create_node(&start, &end, tab_line);
 		ft_lstadd_back(&list, new);
 	}
 	change_list(&list);
+	is_there_a_quote(&list);
 	free_array(tab_line);
 	if ((data->nbr_pipe + data->nbr_redir) != 0)
 		del_delimiteur(&list);
 	return (list);
 }
 
-static t_list	*list_2(int	*start, int *end, char **tab_line)
+t_list	*create_node(int *start, int *end, char **tab_line)
 {
 	int		malloc_size;
 	char	**token;
@@ -77,7 +67,7 @@ static t_list	*list_2(int	*start, int *end, char **tab_line)
 	return (new);
 }
 
-static void	find_malloc_size(char **tab, int *end, int *start, int *malloc_size)
+void	find_malloc_size(char **tab, int *end, int *start, int *malloc_size)
 {
 	while (tab[*end])
 	{
@@ -107,7 +97,7 @@ static void	find_malloc_size(char **tab, int *end, int *start, int *malloc_size)
 		*malloc_size = (*end - *start) + 1;
 }
 
-static void	fill_tab(char **tab_line, char **token, int *start, int *end)
+void	fill_tab(char **tab_line, char **token, int *start, int *end)
 {
 	int	i;
 
@@ -123,7 +113,7 @@ static void	fill_tab(char **tab_line, char **token, int *start, int *end)
 	token[i] = NULL;
 }
 
-static void	del_delimiteur(t_list **list)
+void	del_delimiteur(t_list **list)
 {
 	t_list	*copy;
 
