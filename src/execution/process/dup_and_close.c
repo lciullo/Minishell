@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:34:32 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/17 16:44:57 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/18 16:18:19 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ int	dup_files(t_exec *data)
 	{
 		if (dup2(data->outfile, STDOUT_FILENO) == -1)
 		{
-				ft_close(data->new_fd[0]);
-				ft_close(data->infile);
-				ft_close(data->old_fd[0]);
-				exit(1);
+			ft_close(data->new_fd[0]);
+			ft_close(data->infile);
+			ft_close(data->old_fd[0]);
+			exit(1);
 		}
 		close(data->outfile);
 		ft_close(data->new_fd[1]);
