@@ -6,21 +6,26 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:20 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/17 16:19:52 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/21 16:04:02 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		check_redir(char *line, t_data *data);
-void	skip_quote(char *line, int *i, char quote);
-int		skip_redir(char *line, int *i, char redir, t_data *data);
-int		check_quote(char *line);
-int		check_quote_2(char *line, int *i, char quote);
-
 int	check_error(char *line, t_data *data)
 {
+	int	i;
+
+	if (skip_white_space(line) == 1)
+	 	return (1);
+	i = skip_white_space_2(line, 0);
+	if ((line[i] == ':' && line[skip_white_space_2(line, i + 1)] == '\0') || \
+	(line[i] == '!' && line[skip_white_space_2(line, i + 1)] == '\0') || \
+	(line[i] == '#' && line[skip_white_space_2(line, i + 1)] == '\0'))
+		return (1);
 	if (check_quote(line) == 1)
+		return (1);
+	if (check_pipe(line) == 1)
 		return (1);
 	if (check_redir(line, data) == 1)
 		return (1);
@@ -38,7 +43,7 @@ int	check_quote(char *line)
 		if (line[i] == '\'' || line[i] == '\"')
 		{
 			quote = line[i];
-			if (check_quote_2(line, &i, quote) == 1)
+			if (nbr_quote(line, &i, quote) == 1)
 				return (ft_dprintf(2, "syntax error\n"), 1);
 		}
 		else if (line[i] != '\0')
@@ -47,7 +52,7 @@ int	check_quote(char *line)
 	return (0);
 }
 
-int	check_quote_2(char *line, int *i, char quote)
+int	nbr_quote(char *line, int *i, char quote)
 {
 	int	quote_nbr;
 
@@ -67,6 +72,23 @@ int	check_quote_2(char *line, int *i, char quote)
 	return (quote_nbr % 2);
 }
 
+int	check_pipe(char	*line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (i == 0 && line[i] == '|')
+			return (ft_dprintf(2, "syntax error\n"), 1);
+		if (line[i] == '|' && (line[skip_white_space_2(line, i + 1)] == '\0' \
+		|| line[skip_white_space_2(line, i + 1)] == '|'))
+			return (ft_dprintf(2, "syntax error\n"), 1);
+		i++;
+	}
+	return (0);
+}
+
 int	check_redir(char *line, t_data *data)
 {
 	int	i;
@@ -81,6 +103,8 @@ int	check_redir(char *line, t_data *data)
 		if (line[i] && (line[i] == '<' || line[i] == '>'))
 		{
 			if (skip_redir(line, &i, line[i], data) > 2)
+				return (ft_dprintf(2, "syntax error\n"), 1);
+			if (line[skip_white_space_2(line, i + 1)] == '\0')
 				return (ft_dprintf(2, "syntax error\n"), 1);
 		}
 		else

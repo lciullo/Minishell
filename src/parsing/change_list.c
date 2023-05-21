@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:43:33 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/17 16:20:51 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/18 11:36:04 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,38 @@ void	change_list(t_list **list)
 		temp = temp->next;
 	}
 }
+void	is_there_a_quote(t_list **list)
+{
+	t_list	*temp;
+	int		row;
+	int		i;
+	
+	temp = (*list);
+	while (temp)
+	{
+		if (temp->type == TOKEN || temp->type == BUILTIN)
+		{
+			row = 0;
+			while(temp->data[row])
+			{
+				i = 0;
+				while(temp->data[row][i])
+				{
+					if (temp->data[row][i] == '\'' || temp->data[row][i] == '\"')
+					{
+						temp->data[row] = delete_quote(temp->data[row]);
+						break ;				
+					}
+					i++;
+				}
+				row++;
+			}
+		}
+		temp = temp->next;	
+	}
+}
 
-char	*delete_quote(char *line, int len)
+char	*delete_quote(char *line)
 {
 	int		i;
 	int		j;
@@ -69,8 +99,7 @@ char	*delete_quote(char *line, int len)
 		else
 			i++;
 	}
-	ft_dprintf(2, "len : %d\nnbr_quote : %d\nmalloc_size : %d\n", len, nbr_quote, (len - (nbr_quote * 2)));
-	new_s = malloc(sizeof(char) * (len - (nbr_quote * 1) + 1));
+	new_s = malloc(sizeof(char) * (ft_strlen(line) - (nbr_quote * 1) + 1));
 	if (!new_s)
 		return (NULL);
 	i = 0;
@@ -105,10 +134,11 @@ char	*delete_quote(char *line, int len)
 		}
 	}
 	new_s[j] = '\0';
+	free(line);
 	return (new_s);
 }
 
-static char	**change_order(char **tab)
+char	**change_order(char **tab)
 {
 	int		tab_size;
 	char	**new_tab;
@@ -139,7 +169,7 @@ static char	**change_order(char **tab)
 	return (new_tab);
 }
 
-static void	change_order_redir(char **new_tab, char **tab, \
+void	change_order_redir(char **new_tab, char **tab, \
 int start, int end, int *i)
 {
 	int	start_b;
@@ -160,7 +190,7 @@ int start, int end, int *i)
 	change_order_token(new_tab, tab, start_b, end, i);
 }
 
-static void	change_order_token(char **new_tab, char **tab, \
+void	change_order_token(char **new_tab, char **tab, \
 int start, int end, int *i)
 {
 	while (start <= end)

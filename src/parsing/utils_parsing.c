@@ -6,13 +6,11 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:04:05 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/17 15:46:03 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/18 10:50:33 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static bool	is_builtins(char *cmd);
 
 void	init_structure(t_data *data)
 {
@@ -32,7 +30,7 @@ void	change_tab(char **tab_line)
 {
 	int		i;
 	int		j;
-	char	quote;
+	//char	quote;
 
 	i = 0;
 	j = 0;
@@ -41,21 +39,21 @@ void	change_tab(char **tab_line)
 		if (tab_line[i][0] == 34 || tab_line[i][0] == 39)
 		{
 			j = 0;
-			quote = tab_line[i][0];
+			//quote = tab_line[i][0];
 			while (tab_line[i][j])
 			{
 				if (tab_line[i][j] == -1)
 					tab_line[i][j] = ' ';
 				j++;
 			}
-			if (tab_line[i][j - 1] == quote)
-				tab_line[i] = delete_quote(tab_line[i], j);
+			// if (tab_line[i][j - 1] == quote)
+			// 	tab_line[i] = delete_quote(tab_line[i], j);
 		}
 		i++;
 	}
 }
 
-static bool	is_builtins(char *cmd)
+bool	is_builtins(char *cmd)
 {
 	if (ft_strcmp(cmd, "echo") == 0)
 		return (true);
