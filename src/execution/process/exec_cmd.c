@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:29:59 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/17 16:54:38 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/22 13:05:02 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ static int	execute_token(t_list *list, t_exec *data, char **env)
 	return (0);
 }
 
-int	execution_core(t_list *list, t_exec *data, char **env)
+int	execution_core(t_list *list, t_exec *data, char **env, t_env *lst_env)
 {
+	(void)lst_env;
 	if (data->i != data->nb_cmds - 1)
 		pipe(data->new_fd);
 	else

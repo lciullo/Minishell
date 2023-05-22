@@ -6,16 +6,16 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:36:12 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/10 14:10:35 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/22 13:01:21 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 
-void	list_print_env(t_lst_env *lst_env)
+void	list_print_env(t_env *lst_env)
 {
-	t_lst_env	*copy;
+	t_env	*copy;
 
 	copy = lst_env;
 	while (copy)

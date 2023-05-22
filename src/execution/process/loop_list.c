@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:46:51 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/17 16:20:44 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/22 13:02:40 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static	int	wait_pids(t_exec *data)
 	return (0);
 }
 
-int	loop_pipe_by_pipe(t_list *list, t_exec	*data, char **env)
+int	loop_pipe_by_pipe(t_list *list, t_exec	*data, char **env, t_env *lst_env)
 {
 	int	index;
 
@@ -57,7 +57,7 @@ int	loop_pipe_by_pipe(t_list *list, t_exec	*data, char **env)
 	data->new_fd[1] = STDOUT_FILENO;
 	while (list != NULL)
 	{
-		execution_core(list, data, env);
+		execution_core(list, data, env, lst_env);
 		index = get_next_pipe(list);
 		list = list_increment(&list, index + 1);
 	}

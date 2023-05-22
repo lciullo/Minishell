@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:12:43 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/18 17:33:44 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/22 13:12:52 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static size_t	begin_of_name(char *path)
 	return (len);
 }
 
-static t_lst_env	*fill_list_env(char *row, t_lst_env *lst_env)
+static t_env	*fill_list_env(char *row, t_env *lst_env)
 {
 	size_t		start;
 	char		*name;
@@ -43,10 +43,10 @@ static t_lst_env	*fill_list_env(char *row, t_lst_env *lst_env)
 	return (lst_env);
 }
 
-int	implement_env(char **env)
+t_env	*creat_env(char **env)
 {
 	size_t		row;
-	t_lst_env	*lst_env;
+	t_env		*lst_env;
 
 	lst_env = NULL;
 	row = 0;
@@ -55,6 +55,11 @@ int	implement_env(char **env)
 		lst_env = fill_list_env(env[row], lst_env);
 		row++;
 	}
+	return (lst_env);
+}
+
+int	implement_env(t_env *lst_env)
+{
 	list_print_env(lst_env);
 	return (1);
 }

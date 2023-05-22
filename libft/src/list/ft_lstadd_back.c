@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 11:10:29 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/02 11:09:31 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/22 13:01:21 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 	}
 }
 
-void	ft_lstadd_back_env(t_lst_env **lst, t_lst_env *new)
+void	ft_lstadd_back_env(t_env **lst, t_env *new)
 {
-	t_lst_env	*last;
+	t_env	*last;
 
 	if (new)
 	{
