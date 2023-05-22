@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:29:59 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/17 12:52:45 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/17 16:54:38 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,32 @@ static char	**token(t_list *list)
 	return (NULL);
 }
 
+
+static int	execute_token(t_list *list, t_exec *data, char **env)
+{
+	if (loop_for_infile(list, data) == -1)
+	{
+		puts("loop for infile");
+		exit(1);
+	}
+	if (loop_for_outfile(list, data) == -1)
+	{
+		ft_close(data->new_fd[0]);
+		exit(1);
+	}
+	dup_files(data);
+	get_command(list, data);
+	data->cmd_with_path = check_cmd_acess(data->env_path, data->cmd);
+	if (!data->cmd_with_path)
+	{	
+		ft_dprintf(2, "%s: command not found\n", data->cmd);
+		exit(1);
+	}
+	execve(data->cmd_with_path, token(list), env);
+	perror("execve");
+	return (0);
+}
+
 int	execution_core(t_list *list, t_exec *data, char **env)
 {
 	if (data->i != data->nb_cmds - 1)
@@ -42,20 +68,7 @@ int	execution_core(t_list *list, t_exec *data, char **env)
 	data->pids[data->index] = fork();
 	if (data->pids[data->index] == 0)
 	{
-		if (loop_for_infile(list, data) == -1)
-			exit(1);
-		if (loop_for_outfile(list, data) == -1)
-			exit(1);
-		dup_files(data);
-		get_command(list, data);
-		data->cmd_with_path = check_cmd_acess(data->env_path, data->cmd);
-		if (!data->cmd_with_path)
-		{	
-			ft_dprintf(2, "%s: command not found\n", data->cmd);
-			exit(1);
-		}
-		execve(data->cmd_with_path, token(list), env);
-		perror("execve");
+		execute_token(list, data, env);
 		exit (1);
 	}
 	ft_close(data->old_fd[0]);

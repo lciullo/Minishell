@@ -55,8 +55,6 @@ static void	core_of_program(char	*line, char **env, t_exec *data)
 	if (list == NULL)
 		return ;
 	// print_list(list);
-	// (void)env;
-	// (void)data;
 	execution(list, env, &data_parsing, data);
 	free(line);
 	ft_lstclear(&list, free);

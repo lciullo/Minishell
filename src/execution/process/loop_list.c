@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop_pipe_by_pipe.c                                :+:      :+:    :+:   */
+/*   loop_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/10 11:30:04 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/16 14:49:43 by lciullo          ###   ########.fr       */
+/*   Created: 2023/05/17 15:46:51 by lciullo           #+#    #+#             */
+/*   Updated: 2023/05/17 16:20:44 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,11 @@ static	int	wait_pids(t_exec *data)
 	return (0);
 }
 
-int	loop_pipe_by_pipe(t_list *list, t_data *parsing, t_exec	*data, char **env)
+int	loop_pipe_by_pipe(t_list *list, t_exec	*data, char **env)
 {
 	int	index;
 
 	index = 0;
-	(void)parsing;
 	data->old_fd[0] = STDIN_FILENO;
 	data->new_fd[1] = STDOUT_FILENO;
 	while (list != NULL)
