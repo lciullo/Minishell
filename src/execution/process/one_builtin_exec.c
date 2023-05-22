@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:40:57 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/17 11:24:00 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/22 13:06:55 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,19 @@ static	int	dup_for_one_builtin(t_exec *data)
 	return (0);
 }
 
-int	one_builtin_exec(char **token, t_exec *data, char **env)
+int	one_builtin_exec(char **token, t_exec *data, t_env *lst_env)
 {
 	dup_for_one_builtin(data);
-	loop_for_builtin(token, data, env);
+	loop_for_builtin(token, data, lst_env);
 	return (0);
 }
 
-void	get_builtin_and_exec(t_list *list, t_exec *data, char **env)
+void	get_builtin_and_exec(t_list *list, t_exec *data, t_env *lst_env)
 {
 	while (list != NULL)
 	{
 		if (list->type == BUILTIN)
-			one_builtin_exec(list->data, data, env);
+			one_builtin_exec(list->data, data, lst_env);
 		list = list->next;
 	}
 }
