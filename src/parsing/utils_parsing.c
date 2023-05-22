@@ -6,13 +6,11 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:04:05 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/12 17:08:57 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/18 10:50:33 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static bool	is_builtins(char	*cmd);
 
 void	init_structure(t_data *data)
 {
@@ -28,23 +26,11 @@ void	init_structure(t_data *data)
 	data->end = 0;
 }
 
-int	is_white_space(char	*line, int i)
-{
-	if (line[i + 1] && ((line[i + 1] >= 9 && line[i + 1] <= 13) \
-	|| line[i + 1] == ' '))
-	{
-		i++;
-		while (line[i] && ((line[i] >= 9 && line[i] <= 13) || line[i] == ' '))
-			i++;
-	}
-	return (i);
-}
-
 void	change_tab(char **tab_line)
 {
 	int		i;
 	int		j;
-	char	quote;
+	//char	quote;
 
 	i = 0;
 	j = 0;
@@ -53,47 +39,21 @@ void	change_tab(char **tab_line)
 		if (tab_line[i][0] == 34 || tab_line[i][0] == 39)
 		{
 			j = 0;
-			quote = tab_line[i][0];
+			//quote = tab_line[i][0];
 			while (tab_line[i][j])
 			{
 				if (tab_line[i][j] == -1)
 					tab_line[i][j] = ' ';
 				j++;
 			}
-			if (tab_line[i][j - 1] == quote)
-				tab_line[i] = delete_quote(tab_line[i], j);
+			// if (tab_line[i][j - 1] == quote)
+			// 	tab_line[i] = delete_quote(tab_line[i], j);
 		}
 		i++;
 	}
 }
 
-void	change_list(t_list **list)
-{
-	t_list	*temp;
-
-	temp = (*list);
-	while (temp)
-	{
-		if (temp->data[0][0] == '>' && temp->data[0][1] == '>')
-			temp->next->type = APPEND;
-		else if (temp->data[0][0] == '<' && temp->data[0][1] == '<')
-			temp->next->type = HERE_DOC;
-		else if (temp->data[0][0] == '<' && temp->data[0][1] == '\0')
-			temp->next->type = INFILE;
-		else if (temp->data[0][0] == '>' && temp->data[0][1] == '\0')
-			temp->next->type = OUTFILE;
-		else if (temp->data[0][0] == '|')
-			temp->type = PIPE;
-		else if (temp->type == -1 && is_builtins(temp->data[0]) == true)
-			temp->type = BUILTIN;
-		else if (temp->type == -1 && \
-		(temp->data[0][0] != '>' || temp->data[0][0] != '<'))
-			temp->type = TOKEN;
-		temp = temp->next;
-	}
-}
-
-static bool	is_builtins(char *cmd)
+bool	is_builtins(char *cmd)
 {
 	if (ft_strcmp(cmd, "echo") == 0)
 		return (true);
@@ -112,9 +72,7 @@ static bool	is_builtins(char *cmd)
 	return (false);
 }
 
-char	*delete_quote(char *line, int j)
-{
-	char	*new_line;
+/*char	*new_line;
 	int		i;
 	int		k;
 
@@ -130,5 +88,4 @@ char	*delete_quote(char *line, int j)
 		k++;
 	}
 	new_line[i] = '\0';
-	return (new_line);
-}
+	return (new_line);*/

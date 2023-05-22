@@ -6,16 +6,11 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/15 16:37:53 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/18 10:20:26 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//static void	count_separator(char *line, t_data *data);
-static void	replace_space(char *line, t_data *data);
-static char	*add_space(char	*line, t_data *data);
-static char	*check_separator(char *line, char*new_line, int i, int j);
 
 t_list	*parsing(char *line, t_data *data)
 {
@@ -28,7 +23,7 @@ t_list	*parsing(char *line, t_data *data)
 		return (NULL);
 	new_line = add_space(line, data);
 	if (!new_line)
-	 	return (NULL);
+		return (NULL);
 	replace_space(new_line, data);
 	list = create_list(new_line, data);
 	if (!list)
@@ -36,7 +31,7 @@ t_list	*parsing(char *line, t_data *data)
 	return (list);
 }
 
-static void	replace_space(char *line, t_data *data)
+void	replace_space(char *line, t_data *data)
 {
 	int		i;
 	int		check_quote;
@@ -65,7 +60,7 @@ static void	replace_space(char *line, t_data *data)
 }
 //&& data->nbr_quote % 2 == 0)
 
-static char	*add_space(char	*line, t_data *data)
+char	*add_space(char	*line, t_data *data)
 {
 	char	*new_line;
 
@@ -77,7 +72,8 @@ static char	*add_space(char	*line, t_data *data)
 	return (new_line);
 }
 
-static char	*check_separator(char *line, char*new_line, int i, int j)
+//skip quote b
+char	*check_separator(char *line, char*new_line, int i, int j)
 {
 	while (line[i])
 	{
