@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:25:34 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/23 13:24:43 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/23 17:44:04 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static	void	loop_in_child_heredoc(t_exec *data, int *fd, char *delimiter)
 
 	line = NULL;
 	data->expand = 1;
+	close(fd[0]);
 	while (1)
 	{
 		signal(SIGINT, heredoc_ctr_c);
@@ -47,11 +48,10 @@ static	void	loop_in_child_heredoc(t_exec *data, int *fd, char *delimiter)
 			printf("\n");
 	}
 	close(fd[1]);
-	data->infile = fd[0];
 	exit(1);
 }
 
-static	int	manage_heredoc(char *delimiter, t_exec *data)
+static	int	manage_heredoc(char **delimiter, t_exec *data)
 {
 	int		fd[2];
 
@@ -60,9 +60,12 @@ static	int	manage_heredoc(char *delimiter, t_exec *data)
 		exit(1);
 	data->pid_heredoc = fork();
 	if (data->pid_heredoc == 0)
-		loop_in_child_heredoc(data, fd, delimiter);
-	close(fd[0]);
+		loop_in_child_heredoc(data, fd, *delimiter);
+	close(fd[1]);
 	waitpid(data->pid_heredoc, NULL, 0);
+	free(*delimiter);
+	*delimiter = ft_itoa(fd[0]);
+	//close fd[0]
 	return (0);
 }
 
@@ -75,7 +78,7 @@ void	loop_for_heredoc(t_list *list, t_exec *data)
 	{
 		if (copy->type == HERE_DOC)
 		{
-			manage_heredoc(copy->data[0], data);
+			manage_heredoc(&copy->data[0], data);
 		}
 		copy = copy->next;
 	}

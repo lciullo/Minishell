@@ -39,6 +39,10 @@ int	loop_for_infile(t_list *list, t_exec *data)
 			if (manage_infile(list->data[0], data) == -1)
 				return (-1);
 		}
+		if (list->type == HERE_DOC)
+		{
+			data->infile = ft_atoi(list->data[0]);
+		}
 		list = list->next;
 	}
 	return (0);

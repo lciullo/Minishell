@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:29:59 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/23 13:11:36 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/23 17:49:16 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	execution_core(t_list *list, t_exec *data, char **env, t_env *lst_env)
 	}
 	ft_close(data->old_fd[0]);
 	ft_close(data->new_fd[1]);
+	//ft_close(data->infile); repasser sur tout les heredoc et les close
 	data->old_fd[0] = data->new_fd[0];
 	data->old_fd[1] = data->new_fd[1];
 	data->i++;
