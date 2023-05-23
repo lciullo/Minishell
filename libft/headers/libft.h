@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:01:44 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/09 17:17:05 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/22 15:10:28 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
-
 # define LIBFT_H
 
 # include <stdlib.h>
@@ -75,7 +74,7 @@ void			ft_bzero(void *s, size_t n);
 void			*ft_calloc(size_t nb_elements, size_t size);
 int				ft_isalnum(int c);
 int				ft_isalpha(int c);
-int				ft_isascii(int c);
+int				ft_isascii(char *line);
 int				ft_isdigit(int c);
 int				ft_isprint(int c);
 char			*ft_itoa(int n);

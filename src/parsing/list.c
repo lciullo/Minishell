@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/18 11:41:54 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/22 15:20:00 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_list	*create_list(char *line, t_data *data)
 		ft_lstadd_back(&list, new);
 	}
 	change_list(&list);
+	//expand(&list);
 	is_there_a_quote(&list);
 	free_array(tab_line);
 	if ((data->nbr_pipe + data->nbr_redir) != 0)

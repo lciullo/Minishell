@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/21 15:47:33 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/22 11:12:35 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_data {
 	int	nbr_input;
 	int	nbr_output;
 	int	nbr_redir;
+	int	nbr_export;
 	int	start;
 	int	end;
 }	t_data;
@@ -37,6 +38,7 @@ enum {
 	APPEND,
 	PIPE,
 	BUILTIN,
+	EXPORT,
 };
 
 /* ---- change_list.c ----*/
