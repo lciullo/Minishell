@@ -54,11 +54,10 @@ static void	core_of_program(char	*line, char **env, t_exec *data)
 	list = NULL;
 	lst_env = NULL;
 	lst_env = creat_env(env);
-	list_print_env(lst_env);
 	list = parsing(line, &data_parsing);
 	if (list == NULL)
 		return ;
-	// print_list(list);
+	//print_list(list);
 	execution(list, env, &data_parsing, data, lst_env);
 	free(line);
 	ft_lstclear(&list, free);
