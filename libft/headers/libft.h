@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:01:44 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/22 15:10:28 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/23 09:13:50 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,28 +39,28 @@ typedef struct s_lst_env
 	char				*value;
 	int					equal;
 	struct s_lst_env	*next;
-}	t_lst_env;
+}	t_env;
 
 //# ====================== LIBFT ====================== #
 
 //# ============ LIST ============ #
 
 void			ft_lstadd_back(t_list **lst, t_list *new);
-void			ft_lstadd_back_env(t_lst_env **lst, t_lst_env *new);
+void			ft_lstadd_back_env(t_env **lst, t_env *new);
 void			ft_lstadd_front(t_list **lst, t_list *new);
 void			ft_lstclear(t_list **lst, void (*del)(void*));
 void			ft_lstdelone(t_list *lst, void (*del)(void*));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstlast(t_list *lst);
-t_lst_env		*ft_lstlast_env(t_lst_env *lst);
+t_env		*ft_lstlast_env(t_env *lst);
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), \
 					void (*del)(void *));
 t_list			*ft_lstnew(char **token, int type);
-t_lst_env		*ft_lstnew_env(char *variable, char *value);
+t_env		*ft_lstnew_env(char *variable, char *value);
 int				ft_lstsize(t_list *lst);
 //=====================		VOIR SI ON LE GARDE =============//
 void			list_print(t_list *lst);
-void			list_print_env(t_lst_env *lst);
+void			list_print_env(t_env *lst);
 void			print_utile_pipe(t_list *lst, int index);
 void			in_exec_print_list(t_list *lst);
 //=====================		VOIR SI ON LE GARDE =============//
