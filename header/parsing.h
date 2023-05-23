@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/22 11:12:35 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/23 09:29:38 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,14 @@ int		nbr_quote(char *line, int *i, char quote);
 int		check_redir(char *line, t_data *data);
 
 /* ---- list.c ----*/
-t_list	*create_list(char *line, t_data *data);
+t_list	*create_list(char *line, t_data *data, t_env **lst_env);
 t_list	*create_node(int	*start, int *end, char **tab_line);
 void	find_malloc_size(char **tab, int *end, int *start, int *malloc_size);
 void	fill_tab(char **tab_line, char **token, int *start, int *end);
 void	del_delimiteur(t_list **list);
 
 /* ---- parsing.c ----*/
-t_list	*parsing(char *line, t_data *data);
+t_list	*parsing(char *line, t_data *data, t_env **lst_env);
 void	replace_space(char *line, t_data *data);
 char	*add_space(char	*line, t_data *data);
 char	*check_separator(char *line, char*new_line, int i, int j);
@@ -87,4 +87,6 @@ void	init_structure(t_data *data);
 void	change_tab(char **tab_line);
 bool	is_builtins(char *cmd);
 
+
+void	expand(char **tab, t_env **lst_env);
 #endif
