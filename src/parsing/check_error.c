@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:20 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/24 16:32:29 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/24 16:43:38 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,16 @@ int	check_error(char *line, t_data *data)
 int	check_quote(char *line)
 {
 	int		i;
-	char	quote;
 
 	i = 0;
 	while (line[i])
 	{
 		if (line[i] == '\'' || line[i] == '\"')
 		{
-			quote = line[i];
-			if (nbr_quote(line, &i, quote) == 1)
+			if (nbr_quote(line, &i, line[i]) == 1)
 				return (ft_dprintf(2, "syntax error\n"), 1);
 		}
-		else if (line[i] != '\0')
+		if (line[i] != '\0')
 			i++;
 	}
 	return (0);
@@ -56,18 +54,19 @@ int	nbr_quote(char *line, int *i, char quote)
 {
 	int	quote_nbr;
 
-	quote_nbr = 0;
+	quote_nbr = 1;
+	*i = *i + 1;
 	while (line[*i])
 	{
 		if (quote == '\"' && line[*i] == '\\' && line[*i + 1] != '\'')
 			*i = *i + 2;
+		else if (line[*i] != quote)
+			*i = *i + 1;
 		else if (line[*i] == quote)
 		{
-			quote_nbr++;
-			*i = *i + 1;
+			quote_nbr ++;
+			break ;
 		}
-		else
-			*i = *i + 1;
 	}
 	return (quote_nbr % 2);
 }
