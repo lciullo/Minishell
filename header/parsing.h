@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/24 11:19:28 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/24 14:59:35 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,5 @@ void	change_tab(char **tab_line);
 bool	is_builtins(char *cmd);
 
 
-void	expand(char *line, t_env **lst_env);
+char	*expand(char *line, t_env **lst_env);
 #endif
