@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:50:28 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/25 14:40:15 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/25 15:36:46 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ static int	sort_cmd(t_list *list, t_data *parsing, t_exec *data, char **env, t_e
 void	execution(t_list *list, char **env, t_data *parsing, t_exec *data, t_env *lst_env)
 {
 	init_struct(list, data);
-	loop_for_heredoc(list, data);
+	loop_for_heredoc(list, data, &lst_env);
 	sort_cmd(list, parsing, data, env, lst_env);
 }

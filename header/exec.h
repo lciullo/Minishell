@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/25 14:36:54 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/25 15:37:33 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char		*check_cmd_acess(char **paths, char *cmd);
 
 //# ======================= MANAGEMENT FILES ======================= #
 
-void		loop_for_heredoc(t_list *list, t_exec *data);
+void		loop_for_heredoc(t_list *list, t_exec *data,t_env **lst_env);
 
 int			loop_for_infile(t_list *list, t_exec *data);
 
