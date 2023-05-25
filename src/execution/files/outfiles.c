@@ -20,10 +20,15 @@ static	void	is_outfile_open(t_exec *data)
 
 static	int	manage_outfile(char *outfile, t_exec *data)
 {
+	puts("manage outfile");
 	is_outfile_open(data);
 	data->outfile = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (data->outfile == -1)
 	{	
+		puts("open issu");
+		ft_close(data->infile);
+		ft_close(data->new_fd[0]);
+		ft_close(data->new_fd[1]);
 		perror("open outfile");
 		return (-1);
 	}

@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:29:59 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/17 11:06:01 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/25 14:36:27 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,14 @@ void	init_struct(t_list *list, t_exec *data)
 	data->old_fd[1] = 0;
 	data->new_fd[0] = 0;
 	data->new_fd[1] = 0;
+	data->in_dir = 0;
+	data->out_dir = 0; 
 	data->nb_cmds = get_nb_commands(list);
 	data->nb_builtin = get_nb_builtin(list);
 	allocated_pids_array(data);
 	data->prev_fd = 0;
+	data->save_stdin = dup(0);
+	data->save_stdout = dup(1);
 	data->cmd_with_path = NULL;
 	data->cmd = NULL;
 	data->paths = NULL;

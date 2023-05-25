@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:25:34 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/10 10:50:44 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/24 16:19:02 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void	heredoc_ctr_c(int signal)
 {
 	(void)signal;
-	//penser a free
 	exit(1);
 }
 
@@ -25,75 +24,61 @@ static void	new_line(int signal)
 	ft_dprintf(1, "\n");
 }
 
-static	void	loop_in_child_heredoc(t_exec *heredoc, int *fd, char *delimiter)
+static	void	loop_in_child_heredoc(t_exec *data, int *fd, char *delimiter)
 {
 	char	*line;
 
 	line = NULL;
-	heredoc->expand = 1;
+	data->expand = 1;
+	close(fd[0]);
 	while (1)
 	{
 		signal(SIGINT, heredoc_ctr_c);
-		line = readline("heredoc>");
 		signal(SIGINT, new_line);
-		//if !line break
-		if (ft_strcmp(line, delimiter) == 0)
-			break ;
-		/*strjoin line puis strjoin \n"*/
-		write(fd[1], line, ft_strlen(line));
-		write(fd[1], "\n", 1);
+		line = readline("heredoc> ");
+		if (line)
+		{
+			if (!ft_strcmp(line, delimiter))
+				break ;
+			write(fd[1], line, ft_strlen(line));
+			write(fd[1], "\n", 1);
+			free(line);
+		}
+		else
+			printf("\n");
 	}
-	free(line);
-	//data->in = fd[0];
 	close(fd[1]);
-	//expand
 	exit(1);
 }
 
-static	void	manage_heredoc(char *delimiter)
+static	int	manage_heredoc(char **delimiter, t_exec *data)
 {
-	int		pid;
 	int		fd[2];
-	t_exec	heredoc;
 
-	pid = 0;
-	heredoc.expand = 0;
-	(void)delimiter;
-	/*if (ft_strchr(delimiter, -''') || ft_strchr(delimiter, -'"'))
-	{
-		heredoc->expand = 1;
-		//trim delimiter
-	}*/
+	data->expand = 0;
 	if (pipe(fd) == -1)
 		exit(1);
-	pid = fork();
-	if (pid == 0)
-		loop_in_child_heredoc(&heredoc, fd, delimiter);
-	else
-		waitpid(pid, NULL, 0);
-	return ;
+	data->pid_heredoc = fork();
+	if (data->pid_heredoc == 0)
+		loop_in_child_heredoc(data, fd, *delimiter);
+	close(fd[1]);
+	waitpid(data->pid_heredoc, NULL, 0);
+	free(*delimiter);
+	*delimiter = ft_itoa(fd[0]);
+	return (0);
 }
 
-void	loop_for_heredoc(t_list **list, char *delimiter)
+void	loop_for_heredoc(t_list *list, t_exec *data)
 {
-	int		i;
-	t_list	*head;
+	t_list	*copy;
 
-	i = 0;
-	(void)delimiter;
-	head = *list;
-	while (head != NULL)
+	copy = list;
+	while (copy != NULL)
 	{
-		while (head->data[i] != NULL)
+		if (copy->type == HERE_DOC)
 		{
-			if (ft_strcmp(head->data[i], "<<") == 0)
-			{
-				manage_heredoc(delimiter);
-				break ;
-			}
-			else
-				i++;
+			manage_heredoc(&copy->data[0], data);
 		}
-		head = head->next;
+		copy = copy->next;
 	}
 }
