@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:04:05 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/23 11:28:06 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/25 14:45:34 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	init_structure(t_data *data)
 	data->nbr_here_doc = 0;
 	data->nbr_append = 0;
 	data->len_line = 0;
-	data->nbr_input = 0;
-	data->nbr_output = 0;
+	data->nbr_infile = 0;
+	data->nbr_outfile = 0;
 	data->nbr_redir = 0;
 	data->start = 0;
 	data->end = 0;

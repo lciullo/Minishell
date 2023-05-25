@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/24 14:59:35 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/25 14:45:28 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ typedef struct s_data {
 	int	nbr_here_doc;
 	int	nbr_append;
 	int	len_line;
-	int	nbr_input;
-	int	nbr_output;
+	int	nbr_infile;
+	int	nbr_outfile;
 	int	nbr_redir;
 	int	nbr_export;
 	int	start;
@@ -87,6 +87,7 @@ void	init_structure(t_data *data);
 void	change_tab(char **tab_line);
 bool	is_builtins(char *cmd);
 
-
+char	**ft_split_parsing(char const *s);
+bool	is_white_space(char	c);
 char	*expand(char *line, t_env **lst_env);
 #endif
