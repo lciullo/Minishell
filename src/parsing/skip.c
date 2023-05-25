@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:45:38 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/21 15:47:20 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/25 14:45:32 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ int	skip_redir(char *line, int *i, char redir, t_data *data)
 	if (line[*i] == '\0')
 		len = 3;
 	if (len == 1 && redir == '<')
-		data->nbr_input++;
+		data->nbr_infile++;
 	if (len == 1 && redir == '>')
-		data->nbr_output++;
+		data->nbr_outfile++;
 	if (len == 2 && redir == '<')
 		data->nbr_here_doc++;
 	if (len == 2 && redir == '>')

@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:25:34 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/23 17:44:04 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/24 16:19:02 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ static	int	manage_heredoc(char **delimiter, t_exec *data)
 	waitpid(data->pid_heredoc, NULL, 0);
 	free(*delimiter);
 	*delimiter = ft_itoa(fd[0]);
-	//close fd[0]
 	return (0);
 }
 

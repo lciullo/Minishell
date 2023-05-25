@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/21 15:47:33 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/25 14:45:28 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ typedef struct s_data {
 	int	nbr_here_doc;
 	int	nbr_append;
 	int	len_line;
-	int	nbr_input;
-	int	nbr_output;
+	int	nbr_infile;
+	int	nbr_outfile;
 	int	nbr_redir;
+	int	nbr_export;
 	int	start;
 	int	end;
 }	t_data;
@@ -37,6 +38,7 @@ enum {
 	APPEND,
 	PIPE,
 	BUILTIN,
+	EXPORT,
 };
 
 /* ---- change_list.c ----*/
@@ -57,14 +59,14 @@ int		nbr_quote(char *line, int *i, char quote);
 int		check_redir(char *line, t_data *data);
 
 /* ---- list.c ----*/
-t_list	*create_list(char *line, t_data *data);
+t_list	*create_list(char *line, t_data *data, t_env **lst_env);
 t_list	*create_node(int	*start, int *end, char **tab_line);
 void	find_malloc_size(char **tab, int *end, int *start, int *malloc_size);
 void	fill_tab(char **tab_line, char **token, int *start, int *end);
 void	del_delimiteur(t_list **list);
 
 /* ---- parsing.c ----*/
-t_list	*parsing(char *line, t_data *data);
+t_list	*parsing(char *line, t_data *data, t_env **lst_env);
 void	replace_space(char *line, t_data *data);
 char	*add_space(char	*line, t_data *data);
 char	*check_separator(char *line, char*new_line, int i, int j);
@@ -85,4 +87,7 @@ void	init_structure(t_data *data);
 void	change_tab(char **tab_line);
 bool	is_builtins(char *cmd);
 
+char	**ft_split_parsing(char const *s);
+bool	is_white_space(char	c);
+char	*expand(char *line, t_env **lst_env);
 #endif

@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/23 13:03:01 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/25 14:36:54 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,15 @@ typedef struct s_exec
 	int		end;
 	int		infile;
 	int		outfile;
+	int		in_dir;
+	int		out_dir;
 	int		expand;
 	int		nb_cmds;
 	int		nb_builtin;
 	pid_t	*pids;
 	pid_t	pid_heredoc;
+	int		save_stdin;
+	int		save_stdout;
 	int		new_fd[2];
 	int		old_fd[2];
 	int		prev_fd;

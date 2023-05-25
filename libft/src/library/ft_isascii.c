@@ -3,19 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:09:53 by cllovio           #+#    #+#             */
-/*   Updated: 2022/11/22 16:21:01 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/22 14:12:09 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isascii(int c)
+int	ft_isascii(char *line)
 {
-	if (c >= 0 && c <= 127)
-		return (1);
-	else
-		return (0);
+	int	i;
+	
+	while (line[i])
+	{
+		if ((line[i] >= 0 && line[i] < 127) || line[i] == 127)
+			i++;
+		else
+			return (0);
+	}
+	return (1);
 }
+
