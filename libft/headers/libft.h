@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:01:44 by lciullo           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/05/22 18:03:55 by lciullo          ###   ########.fr       */
-=======
-/*   Updated: 2023/05/23 09:13:50 by cllovio          ###   ########.fr       */
->>>>>>> 7da49c132ccddc7046da3808595872ba5d686039
+/*   Updated: 2023/05/25 15:30:20 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +18,7 @@
 # include <stdarg.h>
 # include <fcntl.h>
 # include <stdint.h>
+# include <stddef.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:20:07 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/25 14:22:12 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/25 15:32:19 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	*check_var(char *name_var, t_env **lst_env, char *new_line)
 {
 	while (*lst_env)
 	{
-		if (ft_strcmp(name_var, (*lst_env)->variable) == 0)
+		if (ft_strcmp(name_var, (*lst_env)->name) == 0)
 		{
 			new_line = ft_strjoin(new_line, (*lst_env)->value);
 			return (new_line);

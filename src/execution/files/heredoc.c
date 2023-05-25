@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:25:34 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/24 16:19:02 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/25 15:56:01 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	new_line(int signal)
 	ft_dprintf(1, "\n");
 }
 
-static	void	loop_in_child_heredoc(t_exec *data, int *fd, char *delimiter)
+static	void	loop_in_child_heredoc(t_exec *data, int *fd, char *delimiter, t_env **lst_env)
 {
 	char	*line;
 
@@ -40,6 +40,8 @@ static	void	loop_in_child_heredoc(t_exec *data, int *fd, char *delimiter)
 		{
 			if (!ft_strcmp(line, delimiter))
 				break ;
+			if (ft_strcmp(line, "$"))
+				line = expand(line, lst_env);
 			write(fd[1], line, ft_strlen(line));
 			write(fd[1], "\n", 1);
 			free(line);
@@ -51,7 +53,7 @@ static	void	loop_in_child_heredoc(t_exec *data, int *fd, char *delimiter)
 	exit(1);
 }
 
-static	int	manage_heredoc(char **delimiter, t_exec *data)
+static	int	manage_heredoc(char **delimiter, t_exec *data, t_env **lst_env)
 {
 	int		fd[2];
 
@@ -60,7 +62,7 @@ static	int	manage_heredoc(char **delimiter, t_exec *data)
 		exit(1);
 	data->pid_heredoc = fork();
 	if (data->pid_heredoc == 0)
-		loop_in_child_heredoc(data, fd, *delimiter);
+		loop_in_child_heredoc(data, fd, *delimiter, lst_env);
 	close(fd[1]);
 	waitpid(data->pid_heredoc, NULL, 0);
 	free(*delimiter);
@@ -68,7 +70,7 @@ static	int	manage_heredoc(char **delimiter, t_exec *data)
 	return (0);
 }
 
-void	loop_for_heredoc(t_list *list, t_exec *data)
+void	loop_for_heredoc(t_list *list, t_exec *data,t_env **lst_env)
 {
 	t_list	*copy;
 
@@ -77,7 +79,7 @@ void	loop_for_heredoc(t_list *list, t_exec *data)
 	{
 		if (copy->type == HERE_DOC)
 		{
-			manage_heredoc(&copy->data[0], data);
+			manage_heredoc(&copy->data[0], data, lst_env);
 		}
 		copy = copy->next;
 	}

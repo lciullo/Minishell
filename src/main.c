@@ -56,18 +56,10 @@ static void	core_of_program(char	*line, char **env, t_exec *data)
 	if (ft_isascii(line) == 0)
 		return ;
 	lst_env = creat_env(env);
-<<<<<<< HEAD
-	list = parsing(line, &data_parsing);
-	if (list == NULL)
-		return ;
-=======
 	//list_print_env(lst_env);
 	list = parsing(line, &data_parsing, &lst_env);
 	if (list == NULL)
 		return ;
-	//(void)env;
-	//(void)data;
->>>>>>> 7da49c132ccddc7046da3808595872ba5d686039
 	//print_list(list);
 	execution(list, env, &data_parsing, data, lst_env);
 	free(line);
