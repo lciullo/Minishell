@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:20:07 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/24 16:18:46 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/25 14:22:12 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ char	*expand(char *line, t_env **lst_env)
 			new_line = get_var_quote(line, &i, lst_env, new_line, &start);
 		if (line[i] == '\'')
 		{
-			printf("coucou");
 			skip_quote(line, &i, line[i]);
 			if (line[i] == '\'')
 				i++;
@@ -50,7 +49,6 @@ char	*expand(char *line, t_env **lst_env)
 	}
 	if (line[start])
 		new_line = ft_strjoin_b(new_line, line, start, i);
-	//ft_dprintf(2, "new_line : %s\n", new_line);
 	free(line);
 	return (new_line);
 }
@@ -87,8 +85,7 @@ char	*get_var(char *line, int *i, t_env **lst_env, char *new_line)
 	if (line[*i] == '$')
 		*i = *i + 1;
 	start = *i;
-	while (line[*i] && line[*i] != '$' && line[*i] != '\"' && line[*i] != '\'' \
-	&& ((line[*i] <= 9 && line[*i] >= 13) || line[*i] != ' '))
+	while (line[*i] && line[*i] != '$' && is_white_space(line[*i]) == false)
 		*i = *i + 1;
 	name_var = malloc(sizeof(char) * ((*i - start) + 1));
 	if (!(name_var))
@@ -101,7 +98,6 @@ char	*get_var(char *line, int *i, t_env **lst_env, char *new_line)
 	}
 	name_var[j] = '\0';
 	new_line = check_var(name_var, lst_env, new_line);
-	//ft_dprintf(2, "%s\n", name_var);
 	free(name_var);
 	return (new_line);
 }
@@ -113,7 +109,6 @@ char	*check_var(char *name_var, t_env **lst_env, char *new_line)
 		if (ft_strcmp(name_var, (*lst_env)->variable) == 0)
 		{
 			new_line = ft_strjoin(new_line, (*lst_env)->value);
-			//ft_dprintf(2, "%s\n", (*lst_env)->value);
 			return (new_line);
 		}
 		(*lst_env) = (*lst_env)->next;

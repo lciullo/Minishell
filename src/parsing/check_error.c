@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:20 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/24 16:43:38 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/25 14:45:30 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,6 @@ int	check_redir(char *line, t_data *data)
 	}
 	data->len_line = i;
 	data->nbr_redir = data->nbr_here_doc + \
-	data->nbr_output + data->nbr_append + data->nbr_input;
+	data->nbr_outfile + data->nbr_append + data->nbr_infile;
 	return (0);
 }

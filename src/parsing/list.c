@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/24 15:02:28 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/25 13:53:45 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ t_list	*create_list(char *line, t_data *data, t_env **lst_env)
 	end = 0;
 	list = NULL;
 	line = expand(line, lst_env);
-	tab_line = ft_split(line, ' ');
+	tab_line = ft_split_parsing(line); 
+	//ft_split(line, ' ');
 	free(line);
 	if (!tab_line)
 		return (NULL);
