@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:46:51 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/24 13:37:49 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/26 10:46:55 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,15 @@ int	loop_pipe_by_pipe(t_list *list, t_exec	*data, char **env, t_env *lst_env)
 		index = get_next_pipe(list);
 		list = list_increment(&list, index + 1);
 	}
+	if (data->in_dir > 1)
+			ft_close(data->infile);
+		else
+			ft_close(data->old_fd[0]);
+		if (data->out_dir > 1)
+			ft_close(data->outfile);
+		else
+			ft_close(data->new_fd[1]);
+	ft_close(data->new_fd[0]);
 	wait_pids(data);
 	data->index = 0;
 	return (0);

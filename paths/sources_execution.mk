@@ -6,7 +6,7 @@
 #    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 09:55:39 by lciullo           #+#    #+#              #
-#    Updated: 2023/05/22 14:23:28 by lciullo          ###   ########.fr        #
+#    Updated: 2023/05/26 14:03:08 by lciullo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRC	=																	\
 		src/execution/files/outfiles.c									\
 		src/execution/files/heredoc.c									\
 		src/execution/paths/get_path_env.c 								\
-		src/execution/process/dup_and_close.c 							\
+		src/execution/process/dup_files.c 								\
+		src/execution/process/close_files.c 							\
 		src/execution/process/exec_cmd.c								\
 		src/execution/process/free_and_close.c							\
 		src/builtin/builtin.c 											\
