@@ -22,6 +22,7 @@ static	int	manage_infile(char *infile, t_exec *data)
 {
 	is_infile_open(data);
 	data->infile = open(infile, O_RDONLY, 0644);
+	data->in_dir++;
 	if (data->infile == -1)
 	{
 		perror("open infile");
@@ -42,6 +43,7 @@ int	loop_for_infile(t_list *list, t_exec *data)
 		if (list->type == HERE_DOC)
 		{
 			data->infile = ft_atoi(list->data[0]);
+			data->in_dir++;
 		}
 		list = list->next;
 	}

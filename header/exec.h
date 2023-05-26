@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/25 15:37:33 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/26 16:11:39 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ typedef struct s_exec
 	int		nb_builtin;
 	pid_t	*pids;
 	pid_t	pid_heredoc;
-	int		save_stdin;
-	int		save_stdout;
+	int		fd[2];
 	int		new_fd[2];
 	int		old_fd[2];
 	int		prev_fd;
@@ -69,11 +68,15 @@ int			loop_pipe_by_pipe(t_list *list, t_exec	*data, char **env, t_env *lst_env);
 
 int			get_path_env(t_exec *data, char **env);
 
-//# --- Dup files and close ---#
+//# --- Dup files ---#
 
 int			dup_files(t_exec *data);
 
+//# --- Close ---#
+
 void		ft_close(int fd);
+
+void		close_cmd_not_found(t_exec *data);
 
 //# --- Check access ---#
 

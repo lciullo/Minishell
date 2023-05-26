@@ -1,29 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isascii.c                                       :+:      :+:    :+:   */
+/*   close_files.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 15:09:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/26 13:52:09 by cllovio          ###   ########.fr       */
+/*   Created: 2023/05/26 13:58:37 by lciullo           #+#    #+#             */
+/*   Updated: 2023/05/26 14:11:51 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_isascii(char *line)
+void	ft_close(int fd)
 {
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if ((line[i] >= 0 && line[i] < 127) || line[i] == 127)
-			i++;
-		else
-			return (0);
-	}
-	return (1);
+	if (fd > 2)
+		close(fd);
 }
 
+void	close_cmd_not_found(t_exec *data)
+{
+	if (data->in_dir > 1)
+		close(data->infile);
+	else
+	{
+		close(data->old_fd[0]);
+		close(data->new_fd[0]);
+		close(data->infile);
+	}
+	if (data->out_dir > 1)
+		close(data->outfile);
+	else
+	{
+		close(data->new_fd[1]);
+		close(data->old_fd[1]);
+		close(data->outfile);
+	}
+	ft_close(data->infile);
+}
