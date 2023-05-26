@@ -6,13 +6,13 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/25 13:53:45 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/26 16:09:19 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*create_list(char *line, t_data *data, t_env **lst_env)
+t_list	*create_list(char *line, t_data *data)
 {
 	char	**tab_line;
 	int		start;
@@ -23,15 +23,12 @@ t_list	*create_list(char *line, t_data *data, t_env **lst_env)
 	start = 0;
 	end = 0;
 	list = NULL;
-	line = expand(line, lst_env);
 	tab_line = ft_split_parsing(line); 
-	//ft_split(line, ' ');
 	free(line);
 	if (!tab_line)
 		return (NULL);
 	tab_line = change_order(tab_line);
 	change_tab(tab_line);
-	//print_tab(tab_line);
 	while (start != -1)
 	{
 		start = end;

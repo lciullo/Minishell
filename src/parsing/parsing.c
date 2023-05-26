@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/23 13:12:51 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/26 16:09:28 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@ t_list	*parsing(char *line, t_data *data, t_env **lst_env)
 	new_line = add_space(line, data);
 	if (!new_line)
 		return (NULL);
+	new_line = expand(new_line, lst_env);
+	if (!new_line)
+		return (NULL);
 	replace_space(new_line, data);
-	//ft_dprintf(1, "%s\n", new_line);
-	list = create_list(new_line, data, lst_env);
+	list = create_list(new_line, data);
 	if (!list)
 		return (NULL);
 	return (list);
@@ -46,25 +48,23 @@ void	replace_space(char *line, t_data *data)
 			check_quote = 0;
 			quote = line[i];
 			i++;
-			while (line[i] && check_quote == 0)
+			while (line[i++] && check_quote == 0)
 			{
 				if (line[i] == quote)
 				{
 					check_quote = 1;
-					break;
+					break ;
 				}
 				else if (line[i] == ' ')
 					line[i] = -1;
 				if (line[i] == '\'' || line[i] == '\"')
 					data->nbr_quote--;
-				i++;
 			}
 		}
 		if (line[i])
 			i++;
 	}
 }
-//&& data->nbr_quote % 2 == 0)
 
 char	*add_space(char	*line, t_data *data)
 {
@@ -82,7 +82,7 @@ char	*add_space(char	*line, t_data *data)
 char	*check_separator(char *line, char*new_line, int i, int j)
 {
 	char	quote;
-	
+
 	while (line[i])
 	{
 		if (line[i] == '\'' || line[i] == '\"')

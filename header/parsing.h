@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/25 14:45:28 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/26 16:09:45 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		nbr_quote(char *line, int *i, char quote);
 int		check_redir(char *line, t_data *data);
 
 /* ---- list.c ----*/
-t_list	*create_list(char *line, t_data *data, t_env **lst_env);
+t_list	*create_list(char *line, t_data *data);
 t_list	*create_node(int	*start, int *end, char **tab_line);
 void	find_malloc_size(char **tab, int *end, int *start, int *malloc_size);
 void	fill_tab(char **tab_line, char **token, int *start, int *end);
