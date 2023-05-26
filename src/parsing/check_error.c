@@ -6,28 +6,23 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:20 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/26 15:21:46 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/26 17:41:15 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_error(char *line, t_data *data)
+//ajouter un check de tout les caractere qui ne sont pas a gerer 
+//pour mettre un syntax error [{()}]\\;&^%#@*,:
+int	check_error(t_data *data)
 {
-	int	i;
-
-	if (skip_white_space(line) == 1)
+	if (skip_white_space(data->line) == 1)
 		return (1);
-	i = skip_white_space_2(line, 0);
-	if ((line[i] == ':' && line[skip_white_space_2(line, i + 1)] == '\0') || \
-	(line[i] == '!' && line[skip_white_space_2(line, i + 1)] == '\0') || \
-	(line[i] == '#' && line[skip_white_space_2(line, i + 1)] == '\0'))
+	if (check_quote(data->line) == 1)
 		return (1);
-	if (check_quote(line) == 1)
+	if (check_pipe(data->line) == 1)
 		return (1);
-	if (check_pipe(line) == 1)
-		return (1);
-	if (check_redir(line, data) == 1)
+	if (check_redir(data->line, data) == 1)
 		return (1);
 	return (0);
 }
@@ -58,9 +53,7 @@ int	nbr_quote(char *line, int *i, char quote)
 	*i = *i + 1;
 	while (line[*i])
 	{
-		if (quote == '\"' && line[*i] == '\\' && line[*i + 1] != '\'')
-			*i = *i + 2;
-		else if (line[*i] != quote)
+		if (line[*i] != quote)
 			*i = *i + 1;
 		else if (line[*i] == quote)
 		{

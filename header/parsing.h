@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/26 16:09:45 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/26 16:53:25 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,19 @@
 # include <stdbool.h>
 
 typedef struct s_data {
-	int	nbr_pipe;
-	int	nbr_quote;
-	int	nbr_here_doc;
-	int	nbr_append;
-	int	len_line;
-	int	nbr_infile;
-	int	nbr_outfile;
-	int	nbr_redir;
-	int	nbr_export;
-	int	start;
-	int	end;
+	t_env	**lst_env;
+	char	*line;
+	int		nbr_pipe;
+	int		nbr_quote;
+	int		nbr_here_doc;
+	int		nbr_append;
+	int		len_line;
+	int		nbr_infile;
+	int		nbr_outfile;
+	int		nbr_redir;
+	int		nbr_export;
+	int		start;
+	int		end;
 }	t_data;
 
 enum {
@@ -52,7 +54,7 @@ void	change_order_token(char **new_tab, char **tab, \
 		int start, int end, int *i);
 
 /* ---- check_error.c ----*/
-int		check_error(char *line, t_data *data);
+int		check_error(t_data *data);
 int		check_quote(char *line);
 int		check_pipe(char	*line);
 int		nbr_quote(char *line, int *i, char quote);
@@ -67,7 +69,7 @@ void	del_delimiteur(t_list **list);
 
 /* ---- parsing.c ----*/
 t_list	*parsing(char *line, t_data *data, t_env **lst_env);
-void	replace_space(char *line, t_data *data);
+void	replace_space(char *line, t_data *data, int i);
 char	*add_space(char	*line, t_data *data);
 char	*check_separator(char *line, char*new_line, int i, int j);
 
@@ -90,4 +92,5 @@ bool	is_builtins(char *cmd);
 char	**ft_split_parsing(char const *s);
 bool	is_white_space(char	c);
 char	*expand(char *line, t_env **lst_env);
+char	*change_line(char *line, t_data *data, t_env **lst_env);
 #endif
