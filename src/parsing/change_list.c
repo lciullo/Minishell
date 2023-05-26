@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:43:33 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/25 14:24:00 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/26 15:24:39 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,34 +37,36 @@ void	change_list(t_list **list)
 		temp = temp->next;
 	}
 }
+
 void	is_there_a_quote(t_list **list)
 {
 	t_list	*temp;
 	int		row;
 	int		i;
-	
+
 	temp = (*list);
 	while (temp)
 	{
 		if (temp->type == TOKEN || temp->type == BUILTIN)
 		{
 			row = 0;
-			while(temp->data[row])
+			while (temp->data[row])
 			{
 				i = 0;
-				while(temp->data[row][i])
+				while (temp->data[row][i])
 				{
-					if (temp->data[row][i] == '\'' || temp->data[row][i] == '\"')
+					if (temp->data[row][i] == '\'' || \
+					temp->data[row][i] == '\"')
 					{
 						temp->data[row] = delete_quote(temp->data[row]);
-						break ;				
+						break ;
 					}
 					i++;
 				}
 				row++;
 			}
 		}
-		temp = temp->next;	
+		temp = temp->next;
 	}
 }
 

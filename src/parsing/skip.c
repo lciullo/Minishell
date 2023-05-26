@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:45:38 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/25 14:45:32 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/26 15:24:58 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	skip_white_space_2(char	*line, int i)
 		i++;
 	return (i);
 }
+
 int	skip_redir(char *line, int *i, char redir, t_data *data)
 {
 	int	len;
