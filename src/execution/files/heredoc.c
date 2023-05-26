@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:25:34 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/26 16:12:48 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/26 16:46:02 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ static	void	loop_in_child_heredoc(t_exec *data, int *fd, char *delimiter, t_env 
 			if (!ft_strcmp(line, delimiter))
 				break ;
 			if (ft_strcmp(line, "$"))
+			{
 				line = expand(line, lst_env);
+			}
 			write(fd[1], line, ft_strlen(line));
 			write(fd[1], "\n", 1);
 			free(line);
@@ -67,11 +69,10 @@ static	int	manage_heredoc(char **delimiter, t_exec *data, t_env **lst_env)
 	waitpid(data->pid_heredoc, NULL, 0);
 	free(*delimiter);
 	*delimiter = ft_itoa(fd[0]);
-	ft_close(fd[0]);
 	return (0);
 }
 
-void	loop_for_heredoc(t_list *list, t_exec *data,t_env **lst_env)
+void	loop_for_heredoc(t_list *list, t_exec *data, t_env **lst_env)
 {
 	t_list	*copy;
 

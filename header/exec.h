@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/26 16:11:39 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/26 16:43:38 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct s_exec
 	int		nb_builtin;
 	pid_t	*pids;
 	pid_t	pid_heredoc;
-	int		fd[2];
 	int		new_fd[2];
 	int		old_fd[2];
 	int		prev_fd;
@@ -84,7 +83,7 @@ char		*check_cmd_acess(char **paths, char *cmd);
 
 //# ======================= MANAGEMENT FILES ======================= #
 
-void		loop_for_heredoc(t_list *list, t_exec *data,t_env **lst_env);
+void		loop_for_heredoc(t_list *list, t_exec *data, t_env **lst_env);
 
 int			loop_for_infile(t_list *list, t_exec *data);
 
