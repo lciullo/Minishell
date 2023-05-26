@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:20 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/25 14:45:30 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/26 15:21:46 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_error(char *line, t_data *data)
 	int	i;
 
 	if (skip_white_space(line) == 1)
-	 	return (1);
+		return (1);
 	i = skip_white_space_2(line, 0);
 	if ((line[i] == ':' && line[skip_white_space_2(line, i + 1)] == '\0') || \
 	(line[i] == '!' && line[skip_white_space_2(line, i + 1)] == '\0') || \

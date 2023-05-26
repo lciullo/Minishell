@@ -1,29 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isascii.c                                       :+:      :+:    :+:   */
+/*   change_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 15:09:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/26 13:52:09 by cllovio          ###   ########.fr       */
+/*   Created: 2023/05/26 16:08:31 by cllovio           #+#    #+#             */
+/*   Updated: 2023/05/26 16:08:32 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "libft.h"
-
-int	ft_isascii(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if ((line[i] >= 0 && line[i] < 127) || line[i] == 127)
-			i++;
-		else
-			return (0);
-	}
-	return (1);
-}
 
