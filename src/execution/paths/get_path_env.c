@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:21:28 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/23 10:28:45 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/26 17:11:01 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*check_cmd_acess(char **paths, char *cmd)
 			return (free(join_slash), NULL);
 		free(join_slash);
 		if (access(cmd_with_path, X_OK) == 0)
-			return (cmd_with_path);
+			return (cmd_with_path); //rappeler
 		free(cmd_with_path);
 		row++;
 	}
