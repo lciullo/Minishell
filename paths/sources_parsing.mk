@@ -6,7 +6,7 @@
 #    By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 09:55:41 by lciullo           #+#    #+#              #
-#    Updated: 2023/05/26 16:42:26 by cllovio          ###   ########.fr        #
+#    Updated: 2023/05/29 18:29:04 by cllovio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,4 +20,5 @@ SRC	+= 	src/main.c\
 		src/parsing/skip.c\
 		src/parsing/expand.c\
 		src/parsing/split_parsing.c\
-		src/parsing/change_line.c
+		src/parsing/change_line.c\
+		src/parsing/utils_split.c
