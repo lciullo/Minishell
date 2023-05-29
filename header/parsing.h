@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/29 15:33:15 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/29 18:26:04 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,7 @@ void	del_delimiteur(t_list **list);
 
 /* ---- parsing.c ----*/
 t_list	*parsing(char *line, t_data *data, t_env **lst_env);
-void	replace_space(char *line, t_data *data, int i);
-char	*add_space(char	*line, t_data *data);
-char	*check_separator(char *line, char*new_line, int i, int j);
+//void	replace_space(char *line, t_data *data, int i);
 
 /* ---- print.c ----*/
 void	print_list(t_list	*a);
@@ -92,4 +90,9 @@ char	**ft_split_parsing(char *s);
 bool	is_white_space(char	c);
 char	*expand(char *line, t_env **lst_env);
 char	*change_line(t_data *data);
+bool	is_white_space(char c);
+bool	check_character(char c, int type);
+void	check_separator(char *line, int *i, int *nb_words);
+void	*ft_free_parsing(char **tab, int j);
+
 #endif
