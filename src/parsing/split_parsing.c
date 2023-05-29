@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:43:32 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/26 14:44:17 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/29 15:45:43 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	is_white_space(char c)
 	return (false);
 }
 
-static int	ft_count_words_parsing(char const *s)
+static int	ft_count_words_parsing(char *s)
 {
 	int	i;
 	int	nb_words;
@@ -32,14 +32,27 @@ static int	ft_count_words_parsing(char const *s)
 		is_valid = 0;
 		while (s[i] && is_white_space(s[i]) == true)
 			i++;
-		while (s[i] && is_white_space(s[i]) == false)
+		if (s[i] && (s[i] == '|' || s[i] == '<' || s[i] == '>'))
+		{
+			nb_words++;
+			i++;
+			if (s[i] == '<' || s[i] == '>')
+				i++;
+		}
+		if (s[i] == '\''  || s[i] == '\"')
+		{
+			skip_quote(s, &i, s[i]);
+			nb_words++;
+		}
+		while (s[i] && is_white_space(s[i]) == false && s[i] != '>' && s[i] != '<' && s[i] != '|' && s[i] != '\'' && s[i] != '\"')
 		{
 			is_valid = 1;
 			i++;
 		}
-		if ((s[i] == 0 || is_white_space(s[i]) == true) && is_valid)
+		if ((s[i] == 0 || is_white_space(s[i]) == true || s[i] == '>' || s[i] == '<' || s[i] == '|') && is_valid)
 			nb_words++;
 	}
+	ft_dprintf(2, "nb_words : %d\n", nb_words);
 	return (nb_words);
 }
 
@@ -57,7 +70,7 @@ static void	*ft_free_parsing(char **tab, int j)
 	return (NULL);
 }
 
-static char	**ft_sp_parsing(char const *s, char **tab)
+static char	**ft_sp_parsing(char *s, char **tab)
 {
 	size_t		i;
 	size_t		j;
@@ -67,10 +80,28 @@ static char	**ft_sp_parsing(char const *s, char **tab)
 	j = 0;
 	while (s[i])
 	{
+		if (s[i] == '|')
+		{
+			tab[j] = ft_substr(s, i, 1);
+			i++;
+			j++;
+		}
+		if (s[i] && (s[i] == '>' || s[i] == '<'))
+		{
+			if (s[i + 1] && (s[i + 1] == '>' || s[i + 1] == '<'))
+			{
+				tab[j] = ft_substr(s, i, 2);
+				i++;
+			}
+			else
+				tab[j] = ft_substr(s, i, 1);
+			i++;
+			j++;
+		}
 		if (is_white_space(s[i]) == false)
 		{
 			start = i;
-			while (s[i] && is_white_space(s[i]) == false)
+			while (s[i] && is_white_space(s[i]) == false && s[i] != '>' && s[i] != '<' && s[i] != '|')
 				i++;
 			tab[j] = ft_substr(s, start, i - start);
 			if (!(tab[j]))
@@ -81,17 +112,16 @@ static char	**ft_sp_parsing(char const *s, char **tab)
 			i++;
 	}
 	tab[j] = NULL;
+	print_tab(tab);
 	return (tab);
 }
 
-char	**ft_split_parsing(char const *s)
+char	**ft_split_parsing(char *s)
 {
 	char		**tab;
 
-	if (!s)
-		return (NULL);
 	tab = malloc(sizeof(char *) * (ft_count_words_parsing(s) + 1));
-	if (!(tab))
+	if (!(tab) || !(s))
 		return (NULL);
 	return (ft_sp_parsing(s, tab));
 }
