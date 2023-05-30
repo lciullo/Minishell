@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:04:05 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/25 14:45:34 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/30 14:20:24 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,12 @@ void	init_structure(t_data *data)
 	data->end = 0;
 }
 
-void	change_tab(char **tab_line)
+void	change_tab(char **tab_line, int i)
 {
-	int		i;
 	int		j;
 	char	quote;
 
-	i = 0;
-	while (tab_line[i])
+	while (tab_line[i++])
 	{
 		j = 0;
 		while (tab_line[i][j])
@@ -53,7 +51,6 @@ void	change_tab(char **tab_line)
 			if (tab_line[i][j] != '\0')
 				j++;
 		}
-		i++;
 	}
 }
 

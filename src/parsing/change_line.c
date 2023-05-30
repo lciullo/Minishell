@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:08:31 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/26 18:01:44 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/30 13:57:49 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,6 @@ char	*check_separator(char *line, char*new_line, int i, int j)
 	return (new_line);
 }
 
-	quote = line[i];
-	new_line[j++] = line[i++];
-	while (line[i])
-	{
-		if (line[i] == quote)
-			break ;
-		else
-			new_line[j++] = line[i++];
-	}
-	
 void	replace_space(char *line, t_data *data, int i)
 {
 	int		check_quote;

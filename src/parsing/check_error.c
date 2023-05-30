@@ -6,25 +6,29 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:20 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/26 17:41:15 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/30 14:19:29 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//ajouter un check de tout les caractere qui ne sont pas a gerer 
-//pour mettre un syntax error [{()}]\\;&^%#@*,:
-int	check_error(t_data *data)
+bool	check_char(char *line)
 {
-	if (skip_white_space(data->line) == 1)
-		return (1);
-	if (check_quote(data->line) == 1)
-		return (1);
-	if (check_pipe(data->line) == 1)
-		return (1);
-	if (check_redir(data->line, data) == 1)
-		return (1);
-	return (0);
+	int	i;
+
+	while (line[i])
+	{
+		if (line[i] == '\'' || line[i] == '\"')
+			skip_quote(line, &i, line[i]);
+		if (line[i] == '!' || line[i] == '[' || line[i] == '{' \
+		|| line[i] == '(' || line[i] == ')' || line[i] == '}' \
+		|| line[i] == ']' || line[i] == '\\' || line[i] == ';' \
+		|| line[i] == '&' || line[i] == '^' || line[i] == '%' \
+		|| line[i] == '#' || line[i] == '@' || line[i] == '*')
+			return (false);
+		i++;
+	}
+	return (true);
 }
 
 int	check_quote(char *line)

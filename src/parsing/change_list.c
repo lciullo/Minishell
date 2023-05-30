@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:43:33 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/26 17:11:22 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/30 14:39:30 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,33 +75,10 @@ char	*delete_quote(char *line)
 	int		i;
 	int		j;
 	char	quote;
-	char	nbr_quote;
 	char	*new_s;
 
-	i = 0;
-	nbr_quote = 0;
 	new_s = NULL;
-	while (line[i])
-	{
-		if (line[i] == '\'' || line[i] == '\"')
-		{
-			quote = line[i];
-			i++;
-			nbr_quote++;
-			while (line[i])
-			{
-				if (line[i] == quote)
-				{
-					i++;
-					break ;
-				}
-				i++;
-			}
-		}
-		else
-			i++;
-	}
-	new_s = malloc(sizeof(char) * (ft_strlen(line) - (nbr_quote * 1) + 1));
+	new_s = malloc(sizeof(char) * (ft_strlen(line) - (count_quote(line) * 1) + 1));
 	if (!new_s)
 		return (NULL);
 	i = 0;
@@ -112,7 +89,6 @@ char	*delete_quote(char *line)
 		{
 			quote = line[i];
 			i++;
-			nbr_quote++;
 			while (line[i])
 			{
 				if (line[i] == quote)
@@ -140,72 +116,33 @@ char	*delete_quote(char *line)
 	return (new_s);
 }
 
-char	**change_order(char **tab)
+int	count_quote(char *line)
 {
-	int		tab_size;
-	char	**new_tab;
-	int		end;
-	int		start;
 	int		i;
+	int		nbr_quote;
+	char	quote;
 
-	tab_size = 0;
-	end = 0;
-	start = 0;
 	i = 0;
-	while (tab[tab_size])
-		tab_size++;
-	new_tab = malloc(sizeof(char *) * (tab_size + 1));
-	if (!new_tab)
-		return (NULL);
-	while (tab[end])
+	nbr_quote = 0;
+	while (line[i])
 	{
-		if (tab[end][0] == '|' || tab[end + 1] == NULL)
+		if (line[i] == '\'' || line[i] == '\"')
 		{
-			change_order_redir(new_tab, tab, start, end, &i);
-			start = end + 1;
+			quote = line[i];
+			i++;
+			nbr_quote++;
+			while (line[i])
+			{
+				if (line[i] == quote)
+				{
+					i++;
+					break ;
+				}
+				i++;
+			}
 		}
-		end++;
-	}
-	new_tab[end] = NULL;
-	free_array(tab);
-	return (new_tab);
-}
-
-void	change_order_redir(char **new_tab, char **tab, \
-int start, int end, int *i)
-{
-	int	start_b;
-
-	start_b = start;
-	while (start < end)
-	{
-		if (tab[start][0] == '<' || tab[start][0] == '>')
-		{
-			new_tab[*i] = ft_strdup(tab[start]);
-			*i = *i + 1;
-			start++;
-			new_tab[*i] = ft_strdup(tab[start]);
-			*i = *i + 1;
-		}
-		start++;
-	}
-	change_order_token(new_tab, tab, start_b, end, i);
-}
-
-void	change_order_token(char **new_tab, char **tab, \
-int start, int end, int *i)
-{
-	while (start <= end)
-	{
-		if (tab[start][0] == '<' || tab[start][0] == '>')
-			start++;
-		if (start > 0 && (tab[start - 1][0] == '<' || tab[start - 1][0] == '>'))
-			start++;
 		else
-		{
-			new_tab[*i] = ft_strdup(tab[start]);
-			*i = *i + 1;
-			start++;
-		}
+			i++;
 	}
+	return (nbr_quote);
 }

@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:20:07 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/26 17:04:21 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/30 14:21:25 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ char	*get_var(char *line, int *i, t_env **lst_env, char *new_line)
 	return (new_line);
 }
 
+//leaks
 char	*check_var(char *name_var, t_env **lst_env, char *new_line)
 {
 	while (*lst_env)
@@ -145,6 +146,7 @@ char	*ft_strjoin_b(char*s1, char *s2, int start, int i)
 		k++;
 		start++;
 	}
+	free(s1);
 	new_s[k] = '\0';
 	return (new_s);
 }

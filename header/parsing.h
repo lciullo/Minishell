@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/26 16:53:25 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/30 14:20:37 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,12 @@ int		skip_redir(char *line, int *i, char redir, t_data *data);
 
 /* ---- utils_parsing.c ----*/
 void	init_structure(t_data *data);
-void	change_tab(char **tab_line);
+void	change_tab(char **tab_line, int i);
 bool	is_builtins(char *cmd);
 
 char	**ft_split_parsing(char const *s);
 bool	is_white_space(char	c);
 char	*expand(char *line, t_env **lst_env);
-char	*change_line(char *line, t_data *data, t_env **lst_env);
+char	*change_line(t_data *data);
+bool	check_char(char *line);
 #endif
