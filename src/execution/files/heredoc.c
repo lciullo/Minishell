@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:25:34 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/26 14:16:46 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/30 15:51:19 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,33 +55,45 @@ static	void	loop_in_child_heredoc(t_exec *data, int *fd, char *delimiter, t_env 
 	exit(1);
 }
 
-static	int	manage_heredoc(char **delimiter, t_exec *data, t_env **lst_env)
+static void add_to_tab(int *fd_heredoc, int fd)
 {
-	int		fd[2];
+	int	i;
 
+	i = 0;
+	while (fd_heredoc[i] == 0)
+	{
+		i++;
+	}
+	fd_heredoc[i] = fd;
+}
+
+static	int	manage_heredoc(char **delimiter, t_exec *data, t_env **lst_env, int fd[2])
+{
 	data->expand = 0;
 	if (pipe(fd) == -1)
 		exit(1);
 	data->pid_heredoc = fork();
 	if (data->pid_heredoc == 0)
 		loop_in_child_heredoc(data, fd, *delimiter, lst_env);
-	close(fd[1]);
-	waitpid(data->pid_heredoc, NULL, 0);
+	ft_close(fd[1]);
 	free(*delimiter);
 	*delimiter = ft_itoa(fd[0]);
+	add_to_tab(data->fd_heredoc, fd[0]);
+	waitpid(data->pid_heredoc, NULL, 0);
 	return (0);
 }
 
-void	loop_for_heredoc(t_list *list, t_exec *data,t_env **lst_env)
+void	loop_for_heredoc(t_list *list, t_exec *data, t_env **lst_env)
 {
 	t_list	*copy;
+	int		fd[2];
 
 	copy = list;
 	while (copy != NULL)
 	{
 		if (copy->type == HERE_DOC)
 		{
-			manage_heredoc(&copy->data[0], data, lst_env);
+			manage_heredoc(&copy->data[0], data, lst_env, fd);
 		}
 		copy = copy->next;
 	}

@@ -48,13 +48,13 @@ static	void	loop_of_prompt(char **env, char *prompt_name, t_exec *data)
 static void	core_of_program(char	*line, char **env, t_exec *data)
 {
 	t_list		*list;
-	t_env	*lst_env;
+	t_env		*lst_env;
 	t_data		data_parsing;
 
 	list = NULL;
 	lst_env = NULL;
 	if (ft_isascii(line) == 0)
-		return ;
+		exit(1);
 	lst_env = creat_env(env);
 	//list_print_env(lst_env);
 	list = parsing(line, &data_parsing, &lst_env);
@@ -63,6 +63,7 @@ static void	core_of_program(char	*line, char **env, t_exec *data)
 	//print_list(list);
 	execution(list, env, &data_parsing, data, lst_env);
 	free(line);
+	ft_lstclear_env(&lst_env, free);
 	ft_lstclear(&list, free);
 }
 

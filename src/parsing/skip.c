@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:45:38 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/26 17:45:04 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/29 15:32:42 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void	skip_quote(char *line, int *i, char quote)
 	while (line[*i])
 	{
 		if (line[*i] == quote)
+		{
+			*i = *i + 1;
 			break ;
+		}
 		else
 			*i = *i + 1;
 	}
