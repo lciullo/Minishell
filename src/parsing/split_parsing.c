@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:43:32 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/29 18:52:01 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/30 09:05:06 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	ft_count_words_parsing(char *s)
 		check_character(s[i], 1)) && is_valid)
 			nb_words++;
 	}
-	printf("nb_words : %d\n", nb_words);
+	//printf("nb_words : %d\n", nb_words);
 	return (nb_words);
 }
 

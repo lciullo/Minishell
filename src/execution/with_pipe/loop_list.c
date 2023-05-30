@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:46:51 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/26 10:46:55 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/30 11:22:56 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static	int	wait_pids(t_exec *data)
 	while (i < data->nb_cmds)
 	{
 		waitpid(data->pids[i], NULL, 0);
+		ft_close(data->new_fd[0]);
 		i++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:29:59 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/26 16:45:08 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/30 15:50:16 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,30 @@ static	int	get_nb_builtin(t_list *list)
 	return (nb_builtin);
 }
 
+static	int	get_nb_heredoc(t_list *list)
+{
+	int	nb_heredoc;
+
+	nb_heredoc = 0;
+	while (list != NULL)
+	{
+		if (list->type == HERE_DOC)
+			nb_heredoc++;
+		list = list->next;
+	}
+	return (nb_heredoc);
+}
+
 static void	allocated_pids_array(t_exec *data)
 {
 	data->pids = ft_calloc(data->nb_cmds, sizeof(pid_t));
+}
+
+void	free_struct(t_exec *data)
+{
+	free_array(data->env_path);
+	free(data->cmd_with_path);
+	free(data->pids);
 }
 
 void	init_struct(t_list *list, t_exec *data)
@@ -61,6 +82,7 @@ void	init_struct(t_list *list, t_exec *data)
 	data->nb_cmds = get_nb_commands(list);
 	data->nb_builtin = get_nb_builtin(list);
 	allocated_pids_array(data);
+	data->fd_heredoc = ft_calloc(get_nb_heredoc(list), sizeof(int));
 	data->prev_fd = 0;
 	data->cmd_with_path = NULL;
 	data->cmd = NULL;

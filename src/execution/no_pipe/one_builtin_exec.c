@@ -6,13 +6,13 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:40:57 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/26 17:55:08 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/30 09:03:38 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	int	dup_for_one_builtin(t_exec *data)
+/*static	int	dup_for_one_builtin(t_exec *data)
 {
 	if (data->infile > 2)
 	{
@@ -61,7 +61,7 @@ static	int	to_fork(char **token)
 	else if (ft_strcmp(token[0], "env") == 0)
 		return (0);
 	return (0);
-}
+}*/
 
 int	one_builtin_exec(t_list *list, char **token, t_exec *data, t_env *lst_env)
 {
@@ -69,9 +69,11 @@ int	one_builtin_exec(t_list *list, char **token, t_exec *data, t_env *lst_env)
 	{	
 		if (dup_for_one_builtin(data) == -1)
 			return (-1);
-	}*/
+	}
+	(void)list;
 	if (to_fork(token) == 1)
-		fork_builtin(token, data, lst_env);
+		fork_builtin(token, data, lst_env);*/
+	(void)list;
 	loop_for_builtin(token, data, lst_env);
 	return (0);
 }

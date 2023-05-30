@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:50:28 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/26 16:51:34 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/30 15:52:08 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	sort_cmd(t_list *list, t_data *parsing, t_exec *data, char **env, t_e
 	return (0);
 }
 
-static int	close_for_heredoc(t_list *list)
+int	close_for_heredoc(t_list *list)
 {
 	while (list != NULL)
 	{
@@ -46,10 +46,40 @@ static int	close_for_heredoc(t_list *list)
 	return (0);
 }
 
+static	int	nb_heredoc(t_list *list)
+{
+	int	nb_heredoc;
+
+	nb_heredoc = 0;
+	while (list != NULL)
+	{
+		if (list->type == HERE_DOC)
+			nb_heredoc++;
+		list = list->next;
+	}
+	return (nb_heredoc);
+}
+
+void	close_tab(t_exec *data, t_list *list)
+{
+	int	i;
+
+	i = 0;
+	while (i < nb_heredoc(list))
+	{
+		ft_close(data->fd_heredoc[i]);
+		i++;
+	}
+}
+
+/*cat << stop | cat Makefile | ls | cat << stop*/
+
 void	execution(t_list *list, char **env, t_data *parsing, t_exec *data, t_env *lst_env)
 {
 	init_struct(list, data);
 	loop_for_heredoc(list, data, &lst_env);
+	//close_for_heredoc(list); est ce que je peux close au fur et a mesure sans tout casser 
 	sort_cmd(list, parsing, data, env, lst_env);
 	close_for_heredoc(list);
+	free_struct(data);
 }

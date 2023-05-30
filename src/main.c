@@ -63,6 +63,7 @@ static void	core_of_program(char	*line, char **env, t_exec *data)
 	//print_list(list);
 	execution(list, env, &data_parsing, data, lst_env);
 	free(line);
+	ft_lstclear_env(&lst_env, free);
 	ft_lstclear(&list, free);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/26 16:43:38 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/30 15:49:44 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_exec
 	int		expand;
 	int		nb_cmds;
 	int		nb_builtin;
+	int		*fd_heredoc;
 	pid_t	*pids;
 	pid_t	pid_heredoc;
 	int		new_fd[2];
@@ -42,6 +43,8 @@ typedef struct s_exec
 
 void		init_struct(t_list *list, t_exec *data);
 
+void		free_struct(t_exec *data);
+
 //# ======================= BOOLEAN ======================= #
 
 //# ======================= EXECUTION ======================= #
@@ -51,11 +54,9 @@ void		execution(t_list *t_list, char **env, t_data *parsing, \
 
 int			execution_core(t_list *list, t_exec *data, char **env, t_env *lst_env);
 
-//# === One builtin execution  === #
+//# ==================== With Pipe =================== #
 
-void		get_builtin_and_exec(t_list *list, t_exec *data, t_env *lst_env);
-
-int			one_builtin_exec(char **token, t_exec *data, t_env *lst_env);
+int			launch_exec(t_exec *data, t_list *list, t_env *lst_env, char **env);
 
 //# === Loop many pipe === #
 
@@ -77,9 +78,21 @@ void		ft_close(int fd);
 
 void		close_cmd_not_found(t_exec *data);
 
+int			close_for_heredoc(t_list *list);
+
+void		close_tab(t_exec *data, t_list *list);
+
 //# --- Check access ---#
 
 char		*check_cmd_acess(char **paths, char *cmd);
+
+//# ==================== Without Pipe =================== #
+
+//# === One builtin execution  === #
+
+void		get_builtin_and_exec(t_list *list, t_exec *data, t_env *lst_env);
+
+int			one_builtin_exec(t_list *list, char **token, t_exec *data, t_env *lst_env);
 
 //# ======================= MANAGEMENT FILES ======================= #
 
@@ -114,5 +127,21 @@ int			implement_export(char **token, t_exec *data, t_env *lst_env);
 //# --- Print debug --- #
 
 void		exec_print_list(t_list *lst);
+
+//# ======================= FREE AND CLOSE ======================= #
+
+//# --- Dup issu --- #
+
+void		clear_dup_issu(t_exec *data, t_list *list, t_env *lst_env);
+
+//# --- Command not found --- #
+
+void		clear_cmd_not_found(t_exec *data, t_list *list, t_env *lst_env);
+
+//# --- Files issu --- #
+
+void		clear_files_issu(t_exec *data, t_list *list, t_env *lst_env);
+
+void		clear_execve_issu(t_exec *data, t_list *list, t_env *lst_env);
 
 #endif
