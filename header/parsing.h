@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/26 16:09:45 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/29 18:26:04 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,18 @@
 # include <stdbool.h>
 
 typedef struct s_data {
-	int	nbr_pipe;
-	int	nbr_quote;
-	int	nbr_here_doc;
-	int	nbr_append;
-	int	len_line;
-	int	nbr_infile;
-	int	nbr_outfile;
-	int	nbr_redir;
-	int	nbr_export;
-	int	start;
-	int	end;
+	t_env	**lst_env;
+	char	*line;
+	int		nbr_pipe;
+	int		nbr_quote;
+	int		nbr_here_doc;
+	int		nbr_append;
+	int		nbr_infile;
+	int		nbr_outfile;
+	int		nbr_redir;
+	int		nbr_export;
+	int		start;
+	int		end;
 }	t_data;
 
 enum {
@@ -52,11 +53,11 @@ void	change_order_token(char **new_tab, char **tab, \
 		int start, int end, int *i);
 
 /* ---- check_error.c ----*/
-int		check_error(char *line, t_data *data);
-int		check_quote(char *line);
-int		check_pipe(char	*line);
+bool	check_error(t_data *data);
+bool	check_quote(char *line);
+bool	check_pipe(char	*line);
 int		nbr_quote(char *line, int *i, char quote);
-int		check_redir(char *line, t_data *data);
+bool	check_redir(char *line, t_data *data);
 
 /* ---- list.c ----*/
 t_list	*create_list(char *line, t_data *data);
@@ -67,9 +68,7 @@ void	del_delimiteur(t_list **list);
 
 /* ---- parsing.c ----*/
 t_list	*parsing(char *line, t_data *data, t_env **lst_env);
-void	replace_space(char *line, t_data *data);
-char	*add_space(char	*line, t_data *data);
-char	*check_separator(char *line, char*new_line, int i, int j);
+//void	replace_space(char *line, t_data *data, int i);
 
 /* ---- print.c ----*/
 void	print_list(t_list	*a);
@@ -87,7 +86,13 @@ void	init_structure(t_data *data);
 void	change_tab(char **tab_line);
 bool	is_builtins(char *cmd);
 
-char	**ft_split_parsing(char const *s);
+char	**ft_split_parsing(char *s);
 bool	is_white_space(char	c);
 char	*expand(char *line, t_env **lst_env);
+char	*change_line(t_data *data);
+bool	is_white_space(char c);
+bool	check_character(char c, int type);
+void	check_separator(char *line, int *i, int *nb_words);
+void	*ft_free_parsing(char **tab, int j);
+
 #endif

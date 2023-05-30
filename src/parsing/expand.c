@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:20:07 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/26 15:20:54 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/29 15:20:43 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,7 @@ char	*expand(char *line, t_env **lst_env)
 		if (line[i] == '\"')
 			new_line = get_var_quote(line, &i, lst_env, new_line, &start);
 		if (line[i] == '\'')
-		{
 			skip_quote(line, &i, line[i]);
-			if (line[i] == '\'')
-				i++;
-		}
 		if (line[i] == '$')
 		{
 			new_line = ft_strjoin_b(new_line, line, start, i);
@@ -51,8 +47,6 @@ char	*expand(char *line, t_env **lst_env)
 	}
 	if (line[start])
 		new_line = ft_strjoin_b(new_line, line, start, i);
-	free(line);
-	ft_dprintf(2, "line : %s\n", new_line);
 	return (new_line);
 }
 
@@ -67,10 +61,8 @@ char	*get_var_quote(char *line, int *i, t_env **lst_env, \
 			break ;
 		if (line[*i] == '$')
 		{
-			ft_dprintf(2, "start : %d i : %i\n", *start, *i);
 			new_line = ft_strjoin_b(new_line, line, *start, *i);
 			new_line = get_var(line, i, lst_env, new_line);
-			ft_dprintf(2, "start : %d i : %i\n", *start, *i);
 			*start = *i;
 		}
 		else if (line[*i])
