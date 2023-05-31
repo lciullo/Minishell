@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/30 15:49:44 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/30 16:02:35 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_exec
 	int		expand;
 	int		nb_cmds;
 	int		nb_builtin;
+	int		nb_heredoc;
 	int		*fd_heredoc;
 	pid_t	*pids;
 	pid_t	pid_heredoc;
@@ -80,7 +81,7 @@ void		close_cmd_not_found(t_exec *data);
 
 int			close_for_heredoc(t_list *list);
 
-void		close_tab(t_exec *data, t_list *list);
+void		close_tab(t_exec *data);
 
 //# --- Check access ---#
 

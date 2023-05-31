@@ -31,6 +31,19 @@ static	int	manage_infile(char *infile, t_exec *data)
 	return (0);
 }
 
+void	in_zero_fd(t_exec *data, int fd)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->nb_heredoc)
+	{
+		if (data->fd_heredoc[i] == fd)
+			data->fd_heredoc[i] = 0;
+		i++;
+	}
+}
+
 int	loop_for_infile(t_list *list, t_exec *data)
 {
 	while (list != NULL && list->type != PIPE)
@@ -42,7 +55,9 @@ int	loop_for_infile(t_list *list, t_exec *data)
 		}
 		if (list->type == HERE_DOC)
 		{
+			is_infile_open(data);
 			data->infile = ft_atoi(list->data[0]);
+			in_zero_fd(data, ft_atoi(list->data[0]));
 			data->in_dir++;
 		}
 		list = list->next;

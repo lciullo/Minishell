@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:29:59 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/30 15:50:16 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/30 16:01:10 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,9 @@ void	init_struct(t_list *list, t_exec *data)
 	data->out_dir = 0;
 	data->nb_cmds = get_nb_commands(list);
 	data->nb_builtin = get_nb_builtin(list);
+	data->nb_heredoc = get_nb_heredoc(list);
 	allocated_pids_array(data);
-	data->fd_heredoc = ft_calloc(get_nb_heredoc(list), sizeof(int));
+	data->fd_heredoc = ft_calloc(data->nb_heredoc, sizeof(int));
 	data->prev_fd = 0;
 	data->cmd_with_path = NULL;
 	data->cmd = NULL;

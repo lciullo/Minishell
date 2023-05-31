@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:02:50 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/30 14:46:05 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/30 18:25:23 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ static int	execution_of_token(t_exec *data, t_list *list, t_env *lst_env, char *
 	if (!data->cmd_with_path)
 	{
 		clear_cmd_not_found(data, list, lst_env);
+		close_tab(data);
 		exit(1);
 	}
+	close_tab(data);
 	execve(data->cmd_with_path, get_token(list), env);
 	clear_execve_issu(data, list, lst_env);
 	return (0);
@@ -54,6 +56,14 @@ int	launch_exec(t_exec *data, t_list *list, t_env *lst_env, char **env)
 {
 
 	if (is_token(list, data) == 1)
+	{
 		execution_of_token(data, list, lst_env, env);
+		exit(1);
+	}
+	else
+	{
+		close(data->outfile);
+		exit(1);
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:25:34 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/30 15:51:19 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/30 16:02:50 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static	void	loop_in_child_heredoc(t_exec *data, int *fd, char *delimiter, t_env 
 	line = NULL;
 	data->expand = 1;
 	close(fd[0]);
+	close_tab(data);
 	while (1)
 	{
 		signal(SIGINT, heredoc_ctr_c);
@@ -60,7 +61,7 @@ static void add_to_tab(int *fd_heredoc, int fd)
 	int	i;
 
 	i = 0;
-	while (fd_heredoc[i] == 0)
+	while (fd_heredoc[i] != 0)
 	{
 		i++;
 	}
