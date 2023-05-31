@@ -28,7 +28,7 @@ static	int	manage_outfile(char *outfile, t_exec *data)
 		ft_close(data->infile);
 		ft_close(data->new_fd[0]);
 		ft_close(data->new_fd[1]);
-		perror("open outfile");
+		perror("Open outfile issu");
 		return (-1);
 	}
 	return (0);

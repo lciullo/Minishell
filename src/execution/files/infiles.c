@@ -25,7 +25,7 @@ static	int	manage_infile(char *infile, t_exec *data)
 	data->in_dir++;
 	if (data->infile == -1)
 	{
-		perror("open infile");
+		perror("Open infile issu");
 		return (-1);
 	}
 	return (0);

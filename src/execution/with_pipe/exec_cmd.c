@@ -6,53 +6,68 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:29:59 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/30 16:47:25 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/31 16:36:38 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	execute_token(t_list *list, t_exec *data, char **env, t_env *lst_env)
+static int	execute_token(t_list *list, t_exec *data, char **env, t_env *lst)
 {
 	if (loop_for_infile(list, data) == -1)
 	{
-		clear_files_issu(data, list, lst_env);
-		exit (1);
+		ft_close(data->old_fd[0]);
+		ft_close(data->new_fd[1]);
+		ft_close(data->new_fd[0]);
+		ft_close(data->outfile);
+		ft_close(data->infile);
+		ft_close(data->old_fd[1]);
+		close_tab(data);
+		free_struct(data);
+		ft_lstclear(&list, free);
+		ft_lstclear_env(&lst, free);
+		exit(1);
 	}
 	if (loop_for_outfile(list, data) == -1)
 	{
-		clear_files_issu(data, list, lst_env);
 		exit(1);
 	}
 	if (dup_files(data) == -1)
 	{
-		clear_dup_issu(data, list, lst_env);
+		clear_dup_issue(data, list, lst);
 		exit (1);
 	}
 	ft_close(data->infile);
-	launch_exec(data, list, lst_env, env);
+	launch_exec(data, list, lst, env);
 	return (0);
 }
 
-int	execution_core(t_list *list, t_exec *data, char **env, t_env *lst_env)
+static	void	switch_and_close_fds(t_exec *data)
 {
-	if (data->i != data->nb_cmds - 1)
+	ft_close(data->new_fd[1]);
+	ft_close(data->old_fd[0]);
+	data->old_fd[0] = data->new_fd[0];
+	data->old_fd[1] = data->new_fd[1];
+	return ;
+}
+
+int	execution_core(t_list *list, t_exec *data, char **env, t_env *lst)
+{
+	if (data->exec_progress != data->nb_cmds - 1)
 	{
 		pipe(data->new_fd);
 	}
 	else
 		data->new_fd[1] = STDOUT_FILENO;
-	data->pids[data->index] = fork();
-	if (data->pids[data->index] == 0)
+	data->pids[data->nb_pids] = fork();
+	if (data->pids[data->nb_pids] == 0)
 	{
-		execute_token(list, data, env, lst_env);
+		if (execute_token(list, data, env, lst) == -1)
+			return (-1);
 		exit (1);
 	}
-	ft_close(data->new_fd[1]);
-	ft_close(data->old_fd[0]);
-	data->old_fd[0] = data->new_fd[0];
-	data->old_fd[1] = data->new_fd[1];
-	data->i++;
-	data->index++;
+	switch_and_close_fds(data);
+	data->exec_progress++;
+	data->nb_pids++;
 	return (0);
 }

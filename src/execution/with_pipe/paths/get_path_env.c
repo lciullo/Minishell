@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:21:28 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/26 17:11:01 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/31 14:37:12 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,29 @@ char	*check_cmd_acess(char **paths, char *cmd)
 	}
 	return (NULL);
 }
+/*Voir si on doit free ca
+static void	env_paths_issue(t_exec *data)
+{
+	if (data->pids)
+		free(data->pids);
+	if (data->pids)
+		free(data->fd_heredoc);
+}*/
 
 int	get_path_env(t_exec *data, char **env)
 {
 	data->paths = find_path(env);
 	if (!data->paths)
 	{
-		ft_putstr_fd("environment path not found\n", 2);
+		//doit on le free ?
+		perror("Environment path not found");
 		return (-1);
 	}
 	data->env_path = ft_split(data->paths, ':');
 	if (!data->env_path)
 	{
-		ft_putstr_fd("environment path not found\n", 2);
+		//doit on le free ?
+		perror("issue in split to find environnement");
 		return (-1);
 	}
 	return (0);

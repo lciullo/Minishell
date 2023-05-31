@@ -1,23 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   change_line.c                                      :+:      :+:    :+:   */
+/*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/26 16:08:31 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/31 08:35:18 by lciullo          ###   ########.fr       */
+/*   Created: 2023/05/31 08:41:08 by lciullo           #+#    #+#             */
+/*   Updated: 2023/05/31 13:12:23 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*change_line(t_data *data)
+void	add_to_tab(int *fd_heredoc, int fd)
 {
-	char	*new_line;
+	int	i;
 
-	new_line = expand(data->line, data->lst);
-	if (!new_line)
-		return (NULL);
-	return (new_line);
+	i = 0;
+	while (fd_heredoc[i] != 0)
+	{
+		i++;
+	}
+	fd_heredoc[i] = fd;
+}
+
+void	heredoc_ctr_c(int signal)
+{
+	(void)signal;
+	exit(1);
+}
+
+void	heredoc_new_line(int signal)
+{
+	(void)signal;
+	ft_dprintf(1, "\n");
 }

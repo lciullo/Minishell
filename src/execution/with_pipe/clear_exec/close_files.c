@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 13:58:37 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/30 10:08:04 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/31 16:44:15 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,22 @@ void	close_cmd_not_found(t_exec *data)
 		close(data->outfile);
 	}
 	ft_close(data->infile);
+}
+
+void	close_between_commands(t_exec *data)
+{
+	if (data->in_dir > 1)
+		ft_close(data->infile);
+	else
+		ft_close(data->old_fd[0]);
+	if (data->out_dir > 1)
+		ft_close(data->outfile);
+	else
+		ft_close(data->new_fd[1]);
+	ft_close(data->new_fd[0]);
+}
+
+void	close_all_fds(t_exec *data)
+{
+	
 }

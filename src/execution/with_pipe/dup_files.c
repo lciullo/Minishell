@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:34:32 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/30 19:07:22 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/31 17:03:21 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ static int	dup_outfiles(t_exec *data)
 
 int	dup_files(t_exec *data)
 {
-	
 	if (dup_infiles(data) == -1)
 		return (-1);
 	if (dup_outfiles(data) == -1)
