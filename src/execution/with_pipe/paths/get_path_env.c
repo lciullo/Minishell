@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:21:28 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/31 14:37:12 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/01 18:31:37 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,30 @@ static char	*find_path(char **env)
 	return (path);
 }
 
+/* Voir si je dois access en plus et si on ajoute des modes
+static int check_informations_file(char *cmd)
+{
+	struct stat info;
+	
+	if (!cmd)
+		ft_dprintf(2, "This is an empty command\n", cmd);
+		return (-1);
+	if (stat(cmd, &info) == 0)
+	{
+		if (S_ISDIR(info.st_mode))
+		{
+			ft_dprintf(2, "%s, is a directory\n", cmd);
+			return (-1);
+		}
+		if (!(info.st_mode & S_IXUSR))
+		{
+			ft_dprintf(2, "minishell: %s: Permission denied\n", cmd);
+			return (-1);
+		}
+	}
+	return (0);	
+}*/
+
 char	*check_cmd_acess(char **paths, char *cmd)
 {
 	char	*join_slash;
@@ -40,7 +64,9 @@ char	*check_cmd_acess(char **paths, char *cmd)
 	row = 0;
 	join_slash = NULL;
 	cmd_with_path = NULL;
-	if (cmd != NULL && access(cmd, X_OK | F_OK) == 0) //appeler acess dans une autre fonction
+	if (cmd[0] == ' ' && cmd[1] == '\0')
+		return (NULL);
+	if (cmd != NULL && access(cmd, X_OK | F_OK) == 0)
 		return (cmd);
 	while (paths[row])
 	{
@@ -72,7 +98,6 @@ int	get_path_env(t_exec *data, char **env)
 	data->paths = find_path(env);
 	if (!data->paths)
 	{
-		//doit on le free ?
 		perror("Environment path not found");
 		return (-1);
 	}

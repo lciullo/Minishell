@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:29:59 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/31 16:36:38 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/01 17:28:21 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,13 @@
 static int	execute_token(t_list *list, t_exec *data, char **env, t_env *lst)
 {
 	if (loop_for_infile(list, data) == -1)
-	{
-		ft_close(data->old_fd[0]);
-		ft_close(data->new_fd[1]);
-		ft_close(data->new_fd[0]);
-		ft_close(data->outfile);
-		ft_close(data->infile);
-		ft_close(data->old_fd[1]);
-		close_tab(data);
-		free_struct(data);
-		ft_lstclear(&list, free);
-		ft_lstclear_env(&lst, free);
+	{	
+		clear_exec_files_issu(list, lst, data);
 		exit(1);
 	}
 	if (loop_for_outfile(list, data) == -1)
 	{
+		clear_exec_files_issu(list, lst, data);
 		exit(1);
 	}
 	if (dup_files(data) == -1)
@@ -53,7 +45,7 @@ static	void	switch_and_close_fds(t_exec *data)
 
 int	execution_core(t_list *list, t_exec *data, char **env, t_env *lst)
 {
-	if (data->exec_progress != data->nb_cmds - 1)
+	if (data->exec_progress != data->nb_block - 1)
 	{
 		pipe(data->new_fd);
 	}

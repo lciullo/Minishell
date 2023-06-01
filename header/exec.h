@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/31 16:08:18 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/01 18:12:07 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ typedef struct s_exec
 	int		in_dir;
 	int		out_dir;
 	int		expand;
-	int		nb_cmds;
+	int		nb_block;
+	int		nb_cmd;
 	int		nb_builtin;
 	int		nb_heredoc;
 	int		*fd_heredoc;
@@ -35,7 +36,6 @@ typedef struct s_exec
 	pid_t	pid_heredoc;
 	int		new_fd[2];
 	int		old_fd[2];
-	int		prev_fd;
 	char	*cmd_with_path;
 	char	*cmd;
 	char	*paths;
@@ -90,6 +90,10 @@ void		close_cmd_not_found(t_exec *data);
 
 void		clear_execve_issue(t_exec *data, t_list *list, t_env *lst);
 
+//# --- Files issue --- #
+
+void		clear_exec_files_issu(t_list *list,t_env *lst, t_exec *data);
+
 //# === Clear between commands and when they are issues  === #
 
 //# --- Close ---#
@@ -97,6 +101,8 @@ void		clear_execve_issue(t_exec *data, t_list *list, t_env *lst);
 void		ft_close(int fd);
 
 void		close_between_commands(t_exec *data);
+
+void		close_all_fds(t_exec *data);
 
 //# --- Dup issue --- #
 
@@ -140,8 +146,6 @@ void		pipe_heredoc_issue(t_exec *data);
 int			loop_for_infile(t_list *list, t_exec *data);
 
 int			loop_for_outfile(t_list *list, t_exec *data);
-
-//# === Clear files  === #
 
 //# ======================= BUILTINS ======================= #
 

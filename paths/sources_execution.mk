@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    sources_execution.mk                               :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
+#    By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 09:55:39 by lciullo           #+#    #+#              #
-#    Updated: 2023/05/31 13:55:10 by lciullo          ###   ########.fr        #
+#    Updated: 2023/06/01 18:12:49 by lisa             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRC	=																	\
 		src/execution/with_pipe/clear_exec/close_files.c 				\
 		src/execution/with_pipe/exec_cmd.c								\
 		src/execution/with_pipe/clear_exec/free_exec.c					\
+		src/execution/with_pipe/clear_exec/clear_files.c				\
 		src/execution/with_pipe/launch_exec.c							\
 		src/builtin/builtin.c 											\
 		src/builtin/echo.c												\

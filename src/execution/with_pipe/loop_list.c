@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:46:51 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/31 15:26:38 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/01 17:28:21 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static	int	wait_pids(t_exec *data)
 	int	i;
 
 	i = 0;
-	while (i < data->nb_cmds)
+	while (i < data->nb_block)
 	{
 		waitpid(data->pids[i], NULL, 0);
 		ft_close(data->new_fd[0]);

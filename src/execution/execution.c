@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:50:28 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/31 13:31:40 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/01 18:11:47 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,16 @@
 
 static int	sort_cmd(t_list *list, t_data *parsing, t_exec *data, char **env, t_env *lst)
 {
-	if (data->nb_cmds == 1 && parsing->nbr_pipe == 0 && data->nb_builtin == 1)
+	if (data->nb_block == 1 && parsing->nbr_pipe == 0 && data->nb_builtin == 1)
 	{
 		if (loop_for_infile(list, data) == -1)
 			return (-1);
 		if (loop_for_outfile(list, data) == -1)
 			return (-1);
 		get_builtin_and_exec(list, data, lst);
-		ft_close(data->infile);
-		ft_close(data->outfile);
+		return (0);
 	}
-	if (data->nb_cmds >= 1)
+	else if (data->nb_block >= 1)
 	{
 		if (get_path_env(data, env) == -1)
 			return (-1);
@@ -41,8 +40,11 @@ int	execution(t_list *list, char **env, t_data *parsing, t_exec *data, t_env *ls
 		perror("Malloc failed in structure initialisation");
 		return (-1);
 	}
-	if (loop_for_heredoc(list, data, &lst) == -1)
+	if (parsing->nbr_here_doc >= 1)
+	{
+		if (loop_for_heredoc(list, data, &lst) == -1)
 		return (-1);
+	}
 	if (sort_cmd(list, parsing, data, env, lst) == -1)
 		return (-1);
 	close_for_heredoc(list);
