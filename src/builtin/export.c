@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:52:54 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/22 18:20:42 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/31 08:35:18 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //void	del_smallest(t_env **list, char *tmp_1);
 
-/*int	print_export(t_env **lst_env)
+/*int	print_export(t_env **lst)
 {
 	t_env 	*temp;
 	t_env	*head;
@@ -24,7 +24,7 @@
 	int		i;
 
 	(void)tmp_2;
-	temp = (*lst_env);
+	temp = (*lst);
 	nbr_node = 0;
 	i = 0;
 	while (temp)
@@ -32,9 +32,9 @@
 		nbr_node++;
 		temp = temp->next;
 	}
-	temp = (*lst_env);
-	tmp_1 = ft_strdup((*lst_env)->name);
-	tmp_2 = ft_strdup((*lst_env)->value);
+	temp = (*lst);
+	tmp_1 = ft_strdup((*lst)->name);
+	tmp_2 = ft_strdup((*lst)->value);
 	head = temp;
 	(void)head;
 	while (i < nbr_node)
@@ -138,16 +138,16 @@ void	sort_in_alphabetic_order(t_env *lst)
 	lst = head;
 	list_print_env(lst);
 }
-int	print_export(t_env *lst_env)
+int	print_export(t_env *lst)
 {
-	sort_in_alphabetic_order(lst_env);
+	sort_in_alphabetic_order(lst);
 	return (0);
 }
 
-int	implement_export(char **token, t_exec *data, t_env *lst_env)
+int	implement_export(char **token, t_exec *data, t_env *lst)
 {
 	(void)data;
 	if (!token[1])
-		print_export(lst_env);
+		print_export(lst);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/29 18:26:04 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/01 17:32:12 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdbool.h>
 
 typedef struct s_data {
-	t_env	**lst_env;
+	t_env	**lst;
 	char	*line;
 	int		nbr_pipe;
 	int		nbr_quote;
@@ -67,7 +67,7 @@ void	fill_tab(char **tab_line, char **token, int *start, int *end);
 void	del_delimiteur(t_list **list);
 
 /* ---- parsing.c ----*/
-t_list	*parsing(char *line, t_data *data, t_env **lst_env);
+t_list	*parsing(char *line, t_data *data, t_env **lst);
 //void	replace_space(char *line, t_data *data, int i);
 
 /* ---- print.c ----*/
@@ -88,7 +88,7 @@ bool	is_builtins(char *cmd);
 
 char	**ft_split_parsing(char *s);
 bool	is_white_space(char	c);
-char	*expand(char *line, t_env **lst_env);
+char	*expand(char *line, t_env **lst);
 char	*change_line(t_data *data);
 bool	is_white_space(char c);
 bool	check_character(char c, int type);

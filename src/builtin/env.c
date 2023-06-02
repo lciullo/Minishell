@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:12:43 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/22 13:12:52 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/31 08:35:18 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static size_t	begin_of_name(char *path)
 	return (len);
 }
 
-static t_env	*fill_list_env(char *row, t_env *lst_env)
+static t_env	*fill_list_env(char *row, t_env *lst)
 {
 	size_t		start;
 	char		*name;
@@ -39,27 +39,27 @@ static t_env	*fill_list_env(char *row, t_env *lst_env)
 	value = ft_strndup(value, &row[start + 1], ft_strlen(row));
 	if (!value)
 		return (free(name), NULL);
-	ft_lstadd_back_env(&lst_env, ft_lstnew_env(name, value));
-	return (lst_env);
+	ft_lstadd_back_env(&lst, ft_lstnew_env(name, value));
+	return (lst);
 }
 
 t_env	*creat_env(char **env)
 {
 	size_t		row;
-	t_env		*lst_env;
+	t_env		*lst;
 
-	lst_env = NULL;
+	lst = NULL;
 	row = 0;
 	while (env[row] != NULL)
 	{
-		lst_env = fill_list_env(env[row], lst_env);
+		lst = fill_list_env(env[row], lst);
 		row++;
 	}
-	return (lst_env);
+	return (lst);
 }
 
-int	implement_env(t_env *lst_env)
+int	implement_env(t_env *lst)
 {
-	list_print_env(lst_env);
+	list_print_env(lst);
 	return (1);
 }
