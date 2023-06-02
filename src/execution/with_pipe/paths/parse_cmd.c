@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 11:17:09 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/02 12:42:46 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/02 17:43:19 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	is_path(char *cmd)
 	return (-1);
 }
 
-char	*check_cmd_acess(char **paths, char *cmd)
+char	*check_cmd_access(char **paths, char *cmd)
 {
 	char	*join_slash;
 	char	*cmd_with_path;
