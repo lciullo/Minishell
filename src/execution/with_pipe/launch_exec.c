@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:02:50 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/01 18:04:14 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/02 14:55:48 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,11 @@ static int	execution_of_token(t_exec *data, t_list *list, t_env *lst, char **env
 		exit(1);
 	}
 	close_tab(data);
-	execve(data->cmd_with_path, get_token(list), env);
-	clear_execve_issue(data, list, lst);
+	if (data->cmd_with_path != NULL && is_executable(data->cmd_with_path) == 0)
+	{
+		execve(data->cmd_with_path, get_token(list), env);
+		clear_execve_issue(data, list, lst);
+	}
 	return (0);
 }
 
@@ -93,6 +96,8 @@ int	launch_exec(t_exec *data, t_list *list, t_env *lst, char **env)
 		ft_lstclear_env(&lst, free);
 		free_struct(data);
 		close_all_fds(data);
+		close(data->outfile);
+		close(data->infile);
 		exit(1);
 	}
 	close(data->outfile);

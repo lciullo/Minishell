@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/01 18:12:07 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/02 11:18:57 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void		free_struct(t_exec *data);
 //# ======================= EXECUTION ======================= #
 
 int			execution(t_list *t_list, char **env, t_data *parsing, \
-						t_exec *data, t_env	*lst);
+						t_exec *data, t_env *lst);
 
 int			execution_core(t_list *list, t_exec *data, char **env, t_env *lst);
 
@@ -66,17 +66,23 @@ int			loop_pipe_by_pipe(t_list *list, t_exec	*data, char **env, \
 
 //# ============== Execute token =============== #
 
+//# === Little parsing of execution === # 
+
 //# --- Find path in environnement ---#
 
 int			get_path_env(t_exec *data, char **env);
 
-//# --- Dup files ---#
-
-int			dup_files(t_exec *data);
-
 //# --- Check access ---#
 
 char		*check_cmd_acess(char **paths, char *cmd);
+
+//# --- Check if is executable ---#
+
+int			is_executable(char *cmd);
+
+//# --- Dup files ---#
+
+int			dup_files(t_exec *data);
 
 //# === Clear token  === #
 
@@ -92,7 +98,7 @@ void		clear_execve_issue(t_exec *data, t_list *list, t_env *lst);
 
 //# --- Files issue --- #
 
-void		clear_exec_files_issu(t_list *list,t_env *lst, t_exec *data);
+void		clear_exec_files_issu(t_list *list, t_env *lst, t_exec *data);
 
 //# === Clear between commands and when they are issues  === #
 

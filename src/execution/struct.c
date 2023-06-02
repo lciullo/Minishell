@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   struct.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:29:59 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/01 18:00:23 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/02 15:53:05 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int 	get_nb_total_of_cmd(t_list *list)
+static int	get_nb_total_of_cmd(t_list *list)
 {
-	int nb_cmd;
+	int	nb_cmd;
 
 	nb_cmd = 0;
 	while (list != NULL)

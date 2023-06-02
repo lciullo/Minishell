@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:50:28 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/01 18:11:47 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/02 15:50:29 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	execution(t_list *list, char **env, t_data *parsing, t_exec *data, t_env *ls
 	if (parsing->nbr_here_doc >= 1)
 	{
 		if (loop_for_heredoc(list, data, &lst) == -1)
-		return (-1);
+			return (-1);
 	}
 	if (sort_cmd(list, parsing, data, env, lst) == -1)
 		return (-1);
