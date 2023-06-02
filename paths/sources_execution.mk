@@ -6,7 +6,7 @@
 #    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 09:55:39 by lciullo           #+#    #+#              #
-#    Updated: 2023/06/02 15:21:43 by lciullo          ###   ########.fr        #
+#    Updated: 2023/06/02 17:08:31 by lciullo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRC	=																	\
 		src/execution/no_pipe/one_builtin_exec.c						\
 		src/execution/with_pipe/loop_list.c								\
 		src/execution/with_pipe/launch_exec.c							\
-		src/execution/with_pipe/exec_cmd.c								\
+		src/execution/with_pipe/begin_exec.c							\
 		src/execution/with_pipe/paths/parse_cmd.c						\
 		src/execution/with_pipe/dup_files.c 							\
 		src/execution/clear_exec/close_files.c 							\

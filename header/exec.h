@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/02 11:18:57 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/02 17:47:32 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int			get_path_env(t_exec *data, char **env);
 
 //# --- Check access ---#
 
-char		*check_cmd_acess(char **paths, char *cmd);
+char		*check_cmd_access(char **paths, char *cmd);
 
 //# --- Check if is executable ---#
 
@@ -95,6 +95,10 @@ void		close_cmd_not_found(t_exec *data);
 //# --- Execve issue --- #
 
 void		clear_execve_issue(t_exec *data, t_list *list, t_env *lst);
+
+//# --- Clear builtin execution --- #
+
+void		clear_builtin_exec(t_exec *data, t_list *list, t_env *lst);
 
 //# --- Files issue --- #
 

@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:29:59 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/02 15:53:05 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/02 16:48:33 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	free_struct(t_exec *data)
 		free(data->fd_heredoc);
 }
 
-int	init_struct(t_list *list, t_exec *data, t_data *parsing)
+static	int	initialize_integers(t_list *list, t_exec *data, t_data *parsing)
 {
 	data->exec_progress = 0;
 	data->nb_pids = 0;
@@ -78,6 +78,13 @@ int	init_struct(t_list *list, t_exec *data, t_data *parsing)
 		free(data->pids);
 		return (-1);
 	}
+	return (0);
+}
+
+int	init_struct(t_list *list, t_exec *data, t_data *parsing)
+{
+	if (initialize_integers(list, data, parsing) == -1)
+		return (-1);
 	data->cmd_with_path = NULL;
 	data->cmd = NULL;
 	data->paths = NULL;
