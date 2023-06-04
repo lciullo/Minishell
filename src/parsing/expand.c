@@ -6,12 +6,13 @@
 /*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:20:07 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/04 12:21:54 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/04 12:25:10 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//test
 char	*ft_strjoin_b(char*s1, char *s2, int start, int i);
 char	*get_var_quote(char *line, int *i, t_env **lst, \
 		char *new_line, int *start);
