@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:09:53 by cllovio           #+#    #+#             */
 /*   Updated: 2023/05/26 13:52:09 by cllovio          ###   ########.fr       */
@@ -15,7 +15,7 @@
 int	ft_isascii(char *line)
 {
 	int	i;
-	
+
 	i = 0;
 	while (line[i])
 	{

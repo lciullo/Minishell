@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:04:05 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/30 14:20:24 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/04 12:22:29 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	init_structure(t_data *data)
 	data->nbr_quote = 0;
 	data->nbr_here_doc = 0;
 	data->nbr_append = 0;
-	data->len_line = 0;
 	data->nbr_infile = 0;
 	data->nbr_outfile = 0;
 	data->nbr_redir = 0;

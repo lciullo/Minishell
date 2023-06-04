@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:01:44 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/26 16:05:00 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/05/31 08:35:18 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
-typedef struct s_lst_env
+typedef struct s_lst
 {
 	char				*name;
 	char				*value;
 	int					equal;
-	struct s_lst_env	*next;
+	struct s_lst	*next;
 }	t_env;
 
 
@@ -57,6 +57,7 @@ void			ft_lstadd_back(t_list **lst, t_list *new);
 void			ft_lstadd_back_env(t_env **lst, t_env *new);
 void			ft_lstadd_front(t_list **lst, t_list *new);
 void			ft_lstclear(t_list **lst, void (*del)(void*));
+void			ft_lstclear_env(t_env **lst, void (*del)(void*));
 void			ft_lstdelone(t_list *lst, void (*del)(void*));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstlast(t_list *lst);

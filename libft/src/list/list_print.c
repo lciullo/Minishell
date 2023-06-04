@@ -6,18 +6,18 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:36:12 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/22 14:15:31 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/05/31 08:35:18 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 
-void	list_print_env(t_env *lst_env)
+void	list_print_env(t_env *lst)
 {
 	t_env	*copy;
 
-	copy = lst_env;
+	copy = lst;
 	while (copy)
 	{
 		ft_dprintf(1, "%s=%s\n", copy->name, copy->value);

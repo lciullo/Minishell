@@ -22,12 +22,26 @@ static	int	manage_infile(char *infile, t_exec *data)
 {
 	is_infile_open(data);
 	data->infile = open(infile, O_RDONLY, 0644);
+	data->in_dir++;
 	if (data->infile == -1)
 	{
-		perror("open infile");
+		perror("Open infile issu");
 		return (-1);
 	}
 	return (0);
+}
+
+void	in_zero_fd(t_exec *data, int fd)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->nb_heredoc)
+	{
+		if (data->fd_heredoc[i] == fd)
+			data->fd_heredoc[i] = 0;
+		i++;
+	}
 }
 
 int	loop_for_infile(t_list *list, t_exec *data)
@@ -41,7 +55,10 @@ int	loop_for_infile(t_list *list, t_exec *data)
 		}
 		if (list->type == HERE_DOC)
 		{
+			is_infile_open(data);
 			data->infile = ft_atoi(list->data[0]);
+			in_zero_fd(data, ft_atoi(list->data[0]));
+			data->in_dir++;
 		}
 		list = list->next;
 	}

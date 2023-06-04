@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:20:07 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/30 14:21:25 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/04 12:21:54 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 char	*ft_strjoin_b(char*s1, char *s2, int start, int i);
-char	*get_var_quote(char *line, int *i, t_env **lst_env, \
+char	*get_var_quote(char *line, int *i, t_env **lst, \
 		char *new_line, int *start);
-char	*get_var(char *line, int *i, t_env **lst_env, char *new_line);
-char	*check_var(char *name_var, t_env **lst_env, char *new_line);
+char	*get_var(char *line, int *i, t_env **lst, char *new_line);
+char	*check_var(char *name_var, t_env **lst, char *new_line);
 
-char	*expand(char *line, t_env **lst_env)
+char	*expand(char *line, t_env **lst)
 {
 	int		i;
 	int		start;
@@ -33,17 +33,13 @@ char	*expand(char *line, t_env **lst_env)
 	while (line[i])
 	{
 		if (line[i] == '\"')
-			new_line = get_var_quote(line, &i, lst_env, new_line, &start);
+			new_line = get_var_quote(line, &i, lst, new_line, &start);
 		if (line[i] == '\'')
-		{
 			skip_quote(line, &i, line[i]);
-			if (line[i] == '\'')
-				i++;
-		}
 		if (line[i] == '$')
 		{
 			new_line = ft_strjoin_b(new_line, line, start, i);
-			new_line = get_var(line, &i, lst_env, new_line);
+			new_line = get_var(line, &i, lst, new_line);
 			start = i;
 		}
 		else if (line[i])
@@ -51,11 +47,10 @@ char	*expand(char *line, t_env **lst_env)
 	}
 	if (line[start])
 		new_line = ft_strjoin_b(new_line, line, start, i);
-	free(line);
 	return (new_line);
 }
 
-char	*get_var_quote(char *line, int *i, t_env **lst_env, \
+char	*get_var_quote(char *line, int *i, t_env **lst, \
 		char *new_line, int *start)
 {
 	if (line[*i] == '\"')
@@ -67,7 +62,7 @@ char	*get_var_quote(char *line, int *i, t_env **lst_env, \
 		if (line[*i] == '$')
 		{
 			new_line = ft_strjoin_b(new_line, line, *start, *i);
-			new_line = get_var(line, i, lst_env, new_line);
+			new_line = get_var(line, i, lst, new_line);
 			*start = *i;
 		}
 		else if (line[*i])
@@ -78,7 +73,7 @@ char	*get_var_quote(char *line, int *i, t_env **lst_env, \
 	return (new_line);
 }
 
-char	*get_var(char *line, int *i, t_env **lst_env, char *new_line)
+char	*get_var(char *line, int *i, t_env **lst, char *new_line)
 {
 	int		start;
 	int		j;
@@ -101,22 +96,21 @@ char	*get_var(char *line, int *i, t_env **lst_env, char *new_line)
 		start++;
 	}
 	name_var[j] = '\0';
-	new_line = check_var(name_var, lst_env, new_line);
+	new_line = check_var(name_var, lst, new_line);
 	free(name_var);
 	return (new_line);
 }
 
-//leaks
-char	*check_var(char *name_var, t_env **lst_env, char *new_line)
+char	*check_var(char *name_var, t_env **lst, char *new_line)
 {
-	while (*lst_env)
+	while (*lst)
 	{
-		if (ft_strcmp(name_var, (*lst_env)->name) == 0)
+		if (ft_strcmp(name_var, (*lst)->name) == 0)
 		{
-			new_line = ft_strjoin(new_line, (*lst_env)->value);
+			new_line = ft_strjoin(new_line, (*lst)->value);
 			return (new_line);
 		}
-		(*lst_env) = (*lst_env)->next;
+		(*lst) = (*lst)->next;
 	}
 	return (new_line);
 }
