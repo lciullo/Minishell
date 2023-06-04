@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/04 12:42:09 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/04 15:21:59 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ typedef struct s_data {
 	int		nbr_quote;
 	int		nbr_here_doc;
 	int		nbr_append;
+	int		len_line;
 	int		nbr_infile;
 	int		nbr_outfile;
 	int		nbr_redir;
 	int		nbr_export;
 	int		start;
-	int		len_line;
 	int		end;
 }	t_data;
 
@@ -54,11 +54,11 @@ void	change_order_token(char **new_tab, char **tab, \
 		int start, int end, int *i);
 
 /* ---- check_error.c ----*/
-bool	check_error(t_data *data);
-bool	check_quote(char *line);
-bool	check_pipe(char	*line);
+int		check_error(t_data *data);
+int		check_quote(char *line);
+int		check_pipe(char	*line);
 int		nbr_quote(char *line, int *i, char quote);
-bool	check_redir(char *line, t_data *data);
+int		check_redir(char *line, t_data *data);
 
 /* ---- list.c ----*/
 t_list	*create_list(char *line, t_data *data);
@@ -86,16 +86,12 @@ int		skip_redir(char *line, int *i, char redir, t_data *data);
 
 /* ---- utils_parsing.c ----*/
 void	init_structure(t_data *data);
-void	change_tab(char **tab_line, int i);
+void	change_tab(char **tab_line);
 bool	is_builtins(char *cmd);
 
-char	**ft_split_parsing(char *s);
+char	**ft_split_parsing(char const *s);
 bool	is_white_space(char	c);
 char	*expand(char *line, t_env **lst_env);
 char	*change_line(t_data *data);
-bool	is_white_space(char c);
-bool	check_character(char c, int type);
-void	*ft_free_parsing(char **tab, int j);
-int		count_quote(char *line);
-void	check_sep(char *line, int *i, int *nb_words);
+bool	check_char(char *line);
 #endif

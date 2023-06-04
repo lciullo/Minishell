@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:43:33 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/30 14:39:30 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/04 16:31:04 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,33 @@ char	*delete_quote(char *line)
 	int		i;
 	int		j;
 	char	quote;
+	char	nbr_quote;
 	char	*new_s;
 
+	i = 0;
+	nbr_quote = 0;
 	new_s = NULL;
-	new_s = malloc(sizeof(char) * (ft_strlen(line) - (count_quote(line) * 1) + 1));
+	while (line[i])
+	{
+		if (line[i] == '\'' || line[i] == '\"')
+		{
+			quote = line[i];
+			i++;
+			nbr_quote++;
+			while (line[i])
+			{
+				if (line[i] == quote)
+				{
+					i++;
+					break ;
+				}
+				i++;
+			}
+		}
+		else
+			i++;
+	}
+	new_s = malloc(sizeof(char) * (ft_strlen(line) - (nbr_quote * 1) + 1));
 	if (!new_s)
 		return (NULL);
 	i = 0;
@@ -89,6 +112,7 @@ char	*delete_quote(char *line)
 		{
 			quote = line[i];
 			i++;
+			nbr_quote++;
 			while (line[i])
 			{
 				if (line[i] == quote)
@@ -114,35 +138,4 @@ char	*delete_quote(char *line)
 	new_s[j] = '\0';
 	free(line);
 	return (new_s);
-}
-
-int	count_quote(char *line)
-{
-	int		i;
-	int		nbr_quote;
-	char	quote;
-
-	i = 0;
-	nbr_quote = 0;
-	while (line[i])
-	{
-		if (line[i] == '\'' || line[i] == '\"')
-		{
-			quote = line[i];
-			i++;
-			nbr_quote++;
-			while (line[i])
-			{
-				if (line[i] == quote)
-				{
-					i++;
-					break ;
-				}
-				i++;
-			}
-		}
-		else
-			i++;
-	}
-	return (nbr_quote);
 }

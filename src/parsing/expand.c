@@ -6,13 +6,12 @@
 /*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:20:07 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/04 12:32:56 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/04 15:11:37 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//test
 char	*ft_strjoin_b(char*s1, char *s2, int start, int i);
 char	*get_var_quote(char *line, int *i, t_env **lst_env, \
 		char *new_line, int *start);
@@ -36,7 +35,11 @@ char	*expand(char *line, t_env **lst_env)
 		if (line[i] == '\"')
 			new_line = get_var_quote(line, &i, lst_env, new_line, &start);
 		if (line[i] == '\'')
+		{
 			skip_quote(line, &i, line[i]);
+			if (line[i] == '\'')
+				i++;
+		}
 		if (line[i] == '$')
 		{
 			new_line = ft_strjoin_b(new_line, line, start, i);
@@ -48,6 +51,7 @@ char	*expand(char *line, t_env **lst_env)
 	}
 	if (line[start])
 		new_line = ft_strjoin_b(new_line, line, start, i);
+	free(line);
 	return (new_line);
 }
 
@@ -141,7 +145,6 @@ char	*ft_strjoin_b(char*s1, char *s2, int start, int i)
 		k++;
 		start++;
 	}
-	free(s1);
 	new_s[k] = '\0';
 	return (new_s);
 }

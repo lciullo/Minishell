@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:08:31 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/04 12:19:24 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/04 15:10:03 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	*change_line(t_data *data)
 	replace_space(new_line, data, 0);
 	return (new_line);
 }
+
 char	*add_space(char	*line, t_data *data)
 {
 	char	*new_line;

@@ -6,18 +6,11 @@
 /*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 15:51:27 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/04 12:39:07 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/04 16:31:38 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-bool	is_white_space(char c)
-{
-	if ((c >= 9 && c <= 13) || c == ' ')
-		return (true);
-	return (false);
-}
 
 bool	check_character(char c, int type)
 {

@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/04 12:36:48 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/04 15:12:01 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ t_list	*create_list(char *line, t_data *data)
 	start = 0;
 	end = 0;
 	list = NULL;
-	tab_line = ft_split_parsing(line);
+	tab_line = ft_split_parsing(line); 
 	free(line);
 	if (!tab_line)
 		return (NULL);
 	tab_line = change_order(tab_line);
-	change_tab(tab_line, 0);
+	change_tab(tab_line);
 	while (start != -1)
 	{
 		start = end;
