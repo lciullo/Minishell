@@ -6,24 +6,23 @@
 /*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:20 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/04 12:21:14 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/04 12:44:36 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	check_wrong_character(char *line);
+bool	check_wrong_character(char *line, t_data *data);
 
 //ajouter un check de tout les caractere qui ne sont pas a gerer 
 //pour mettre un syntax error [{()}]\\;&^%#@*,:
-bool	check_wrong_character(char *line);
-
+bool	check_error(t_data *data)
 {
 	if (skip_white_space(data->line) == 1)
 		return (false);
 	if (check_quote(data->line) == false)
 		return (false);
-	if (check_wrong_character(data->line) == false)
+	if (check_wrong_character(data->line, data) == false)
 	 	return (false);
 	if (check_pipe(data->line) == false)
 		return (false);
@@ -33,7 +32,7 @@ bool	check_wrong_character(char *line);
 }
 
 
-bool	check_wrong_character(char *line)
+bool	check_wrong_character(char *line, t_data *data)
 {
 	int	i;
 
@@ -51,6 +50,7 @@ bool	check_wrong_character(char *line)
 		if (line[i])
 			i++;
 	}
+	data->len_line = i;
 	return (true);
 }
 

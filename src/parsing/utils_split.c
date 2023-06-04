@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 15:51:27 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/29 18:52:14 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/04 12:39:07 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ bool	check_character(char c, int type)
 	return (false);
 }
 
-void	check_separator(char *line, int *i, int *nb_words)
+void	check_sep(char *line, int *i, int *nb_words)
 {
 	if (line[*i] && (line[*i] == '|' || line[*i] == '<' || line[*i] == '>'))
 	{

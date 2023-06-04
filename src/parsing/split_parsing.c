@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:43:32 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/30 09:05:06 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/04 12:41:29 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	ft_count_words_parsing(char *s)
 		is_valid = 0;
 		while (s[i] && is_white_space(s[i]) == true)
 			i++;
-		check_separator(s, &i, &nb_words);
+		check_sep(s, &i, &nb_words);
 		while (s[i] && is_white_space(s[i]) == false \
 		&& check_character(s[i], 0))
 		{
@@ -95,6 +95,7 @@ char	*split_separator(char *line, size_t *i)
 {
 	char	*row;
 
+	row = NULL;
 	if (line[*i] == '|')
 	{
 		row = ft_substr(line, *i, 1);

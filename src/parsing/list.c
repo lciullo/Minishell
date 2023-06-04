@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/30 14:39:03 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/04 12:36:48 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_list	*create_list(char *line, t_data *data)
 	if (!tab_line)
 		return (NULL);
 	tab_line = change_order(tab_line);
-	change_tab(tab_lin, 0);
+	change_tab(tab_line, 0);
 	while (start != -1)
 	{
 		start = end;

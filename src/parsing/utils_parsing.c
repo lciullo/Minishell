@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:04:05 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/04 12:22:29 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/04 12:42:20 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	init_structure(t_data *data)
 	data->nbr_redir = 0;
 	data->start = 0;
 	data->end = 0;
+	data->len_line = 0;
 }
 
 void	change_tab(char **tab_line, int i)
