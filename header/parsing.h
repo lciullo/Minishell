@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/05 12:52:00 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/05 16:26:46 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,9 @@ enum {
 
 /* ---- change_list.c ----*/
 void	change_list(t_list **list);
-void	is_there_a_quote(t_list **list);
+void	parse_line_for_quote(t_list **list);
 char	*delete_quote(char *line);
-char	**change_order(char **tab);
-void	change_order_redir(char **new_tab, char **tab, \
-		int start, int end, int *i);
-void	change_order_token(char **new_tab, char **tab, \
-		int start, int end, int *i);
+char	**change_order(char **tab, t_data *data);
 
 /* ---- check_error.c ----*/
 int		check_error(t_data *data);

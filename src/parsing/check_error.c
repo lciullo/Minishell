@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:20 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/04 15:11:10 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/05 13:27:51 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	check_error(t_data *data)
 	if (check_pipe(data->line) == 1)
 		return (1);
 	if (check_redir(data->line, data) == 1)
+		return (1);
+	if (data->nbr_pipe >= 3333)
 		return (1);
 	return (0);
 }

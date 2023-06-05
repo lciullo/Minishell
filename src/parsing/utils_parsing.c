@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:04:05 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/04 15:16:10 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/05 15:14:04 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	reput_space(char **tab_line, int *i, int *j);
 
 void	init_structure(t_data *data)
 {
@@ -30,7 +32,6 @@ void	change_tab(char **tab_line)
 {
 	int		i;
 	int		j;
-	char	quote;
 
 	i = 0;
 	while (tab_line[i])
@@ -39,21 +40,27 @@ void	change_tab(char **tab_line)
 		while (tab_line[i][j])
 		{
 			if (tab_line[i][j] == '\'' || tab_line[i][j] == '\"')
-			{
-				quote = tab_line[i][j++];
-				while (tab_line[i][j])
-				{
-					if (tab_line[i][j] == quote)
-						break ;
-					if (tab_line[i][j] == -1)
-						tab_line[i][j] = ' ';
-					j++;
-				}
-			}
+				reput_space(tab_line, &i, &j);
 			if (tab_line[i][j] != '\0')
 				j++;
 		}
 		i++;
+	}
+}
+
+void	reput_space(char **tab_line, int *i, int *j)
+{
+	char	quote;
+
+	quote = tab_line[*i][*j];
+	*j = *j + 1;
+	while (tab_line[*i][*j])
+	{
+		if (tab_line[*i][*j] == quote)
+			break ;
+		if (tab_line[*i][*j] == -1)
+			tab_line[*i][*j] = ' ';
+		*j = *j + 1;
 	}
 }
 

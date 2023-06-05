@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   change_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:43:33 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/04 16:31:04 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/05 16:27:47 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	copy_quote_content(char *new_s, char *line, int *i, int *j);
+int		get_nbr_quote(char *line);
+void	is_there_a_quote(char *row);
+char	*delete_quote(char *row);
+int		get_nbr_quote(char *row);
+void	copy_quote_content(char *new_s, char *row, int *i, int *j);
 
 void	change_list(t_list **list)
 {
@@ -38,104 +45,119 @@ void	change_list(t_list **list)
 	}
 }
 
-void	is_there_a_quote(t_list **list)
+void	parse_line_for_quote(t_list **list)
 {
 	t_list	*temp;
-	int		row;
-	int		i;
+	int		r;
 
 	temp = (*list);
 	while (temp)
 	{
 		if (temp->type == TOKEN || temp->type == BUILTIN)
 		{
-			row = 0;
-			while (temp->data[row])
+			r = 0;
+			while (temp->data[r])
 			{
-				i = 0;
-				while (temp->data[row][i])
-				{
-					if (temp->data[row][i] == '\'' || \
-					temp->data[row][i] == '\"')
-					{
-						temp->data[row] = delete_quote(temp->data[row]);
-						break ;
-					}
-					i++;
-				}
-				row++;
+				temp->data[r] = is_there_quote(temp->data[r]);
+				r++;
 			}
 		}
 		temp = temp->next;
 	}
 }
 
-char	*delete_quote(char *line)
+void	is_there_a_quote(char *row)
+{
+	int	i;
+
+	i = 0;
+	while (row[i])
+	{
+		if (row[i] == '\'' || row[i] == '\"')
+		{
+			row = delete_quote(row);
+			break ;
+		}
+		i++;
+	}
+	return (row);
+}
+
+char	*delete_quote(char *row)
 {
 	int		i;
 	int		j;
-	char	quote;
-	char	nbr_quote;
 	char	*new_s;
 
-	i = 0;
-	nbr_quote = 0;
-	new_s = NULL;
-	while (line[i])
-	{
-		if (line[i] == '\'' || line[i] == '\"')
-		{
-			quote = line[i];
-			i++;
-			nbr_quote++;
-			while (line[i])
-			{
-				if (line[i] == quote)
-				{
-					i++;
-					break ;
-				}
-				i++;
-			}
-		}
-		else
-			i++;
-	}
-	new_s = malloc(sizeof(char) * (ft_strlen(line) - (nbr_quote * 1) + 1));
+	new_s = malloc(sizeof(char) * \
+			(ft_strlen(row) - (get_nbr_quote(row) * 1) + 1));
 	if (!new_s)
 		return (NULL);
 	i = 0;
 	j = 0;
-	while (line[i])
+	while (row[i])
 	{
-		if (line[i] == '\'' || line[i] == '\"')
-		{
-			quote = line[i];
-			i++;
-			nbr_quote++;
-			while (line[i])
-			{
-				if (line[i] == quote)
-				{
-					i++;
-					break ;
-				}
-				else
-				{
-					new_s[j] = line[i];
-					i++;
-					j++;
-				}
-			}
-		}
+		if (row[i] == '\'' || row[i] == '\"')
+			copy_quote_content(new_s, row, &i, &j);
 		else
 		{
-			new_s[j] = line[i];
+			new_s[j] = row[i];
 			i++;
 			j++;
 		}
 	}
 	new_s[j] = '\0';
-	free(line);
+	free(row);
 	return (new_s);
+}
+
+int	get_nbr_quote(char *row)
+{
+	int		nbr_quote;
+	int		i;
+	char	quote;
+
+	nbr_quote = 0;
+	i = 0;
+	while (row[i])
+	{
+		if (row[i] == '\'' || row[i] == '\"')
+		{
+			quote = row[i++];
+			nbr_quote++;
+			while (row[i++])
+			{
+				if (row[i] == quote)
+				{
+					i++;
+					break ;
+				}
+			}
+		}
+		else
+			i++;
+	}
+	return (nbr_quote);
+}
+
+void	copy_quote_content(char *new_s, char *row, int *i, int *j)
+{
+	char	quote;
+
+	quote = row[*i];
+	*i = *i + 1;
+	while (row[*i])
+	{
+		if (row[*i] == quote)
+		{
+			*i = *i + 1;
+			break ;
+		}
+		else
+		{
+			new_s[*j] = row[*i];
+			*i = *i + 1;
+			*j = *j + 1;
+		}
+	}
 }
