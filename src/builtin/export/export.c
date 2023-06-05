@@ -6,10 +6,11 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:52:54 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/05 10:54:54 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/05 16:10:06 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*on ne regarde que token de 1*/
 
 #include "minishell.h"
 
@@ -17,7 +18,6 @@ void	swap_nodes(t_env *current_node, t_env *next_node)
 {
 	char	*name;
 	char	*value;
-
 
 	name = NULL;
 	value = NULL;
@@ -54,7 +54,7 @@ void	sort_in_alphabetic_order(t_env *head)
 		}
 		end = tmp;
 	}
-	list_print_env(head);
+	list_print_export(head);
 }
 
 int	print_export(t_env *lst)
@@ -65,8 +65,18 @@ int	print_export(t_env *lst)
 
 int	implement_export(char **token, t_exec *data, t_env *lst)
 {
+	char	*name;
+	char	*value;
+
+	name = NULL;
+	value = NULL;
 	(void)data;
 	if (!token[1])
 		print_export(lst);
+	else if (token[1])
+	{
+		name = get_name_variable(token[1]);
+		manage_export(token, data, lst);
+	}
 	return (0);
 }

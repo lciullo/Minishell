@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/02 17:47:32 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/05 16:12:30 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,19 @@ int			implement_pwd(char **cmd);
 
 int			implement_exit(char **cmd, t_exec *data);
 
+//# --- Environnement--- #
+
+int			implement_env(t_env *lst);
+
+size_t		begin_of_name(char *path);
+
+//# --- Export --- #
+
 int			implement_export(char **token, t_exec *data, t_env *lst);
+
+int			manage_export(char **token, t_exec *data, t_env *lst);
+
+char		*get_name_variable(char *row);
 
 //# ======================= TEMPORARY ======================= #
 

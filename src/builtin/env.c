@@ -6,18 +6,18 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:12:43 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/31 08:35:18 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/05 16:05:41 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static size_t	begin_of_name(char *path)
+size_t	begin_of_name(char *path)
 {
 	size_t	len;
 
 	len = 0;
-	while (path[len] != '=')
+	while (path[len] != '=' && path[len] != '\0')
 		len++;
 	return (len);
 }

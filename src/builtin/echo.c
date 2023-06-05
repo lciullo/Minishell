@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 14:37:22 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/01 15:19:11 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/05 13:37:09 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	implement_echo(char **cmd)
 
 	i = 1;
 	option = 0;
-	if (!cmd)
+	if (!cmd[1] && cmd[0])
 	{
 		ft_dprintf(1, "\n");
 		return (0);

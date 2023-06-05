@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 15:54:30 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/02 11:22:42 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/05 16:38:01 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,11 @@
 
 
 extern int	g_exit_status;
+
+enum {
+	FAILLURE=-1,
+	SUCCESS=0,
+	PLUS=1,
+};
 
 #endif
