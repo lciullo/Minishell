@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/04 15:21:59 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/05 11:18:53 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ typedef struct s_data {
 	int		start;
 	int		end;
 }	t_data;
+
+typedef	struct s_expand {
+	t_env	**env;
+	char	*line;
+	char	*new_line;
+}	t_expand;
 
 enum {
 	TOKEN,

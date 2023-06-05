@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    sources_parsing.mk                                 :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+         #
+#    By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 09:55:41 by lciullo           #+#    #+#              #
-#    Updated: 2023/06/04 12:45:11 by cllovio          ###   ########.fr        #
+#    Updated: 2023/06/05 10:00:58 by cllovio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,4 +22,5 @@ SRC	+= 	src/main.c\
 		src/parsing/split_parsing.c\
 		src/parsing/change_line.c\
 		src/parsing/utils_split.c\
-		src/parsing/change_order.c
+		src/parsing/change_order.c\
+		src/parsing/add_space.c

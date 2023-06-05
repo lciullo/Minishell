@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/04 15:12:17 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/05 10:56:02 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_list	*parsing(char *line, t_data *data, t_env **lst_env)
 
 	list = NULL;
 	data->lst_env = lst_env;
-	data->line = line; 
+	data->line = line;
 	init_structure(data);
 	if (check_error(data) == 1)
 		return (NULL);
@@ -31,4 +31,3 @@ t_list	*parsing(char *line, t_data *data, t_env **lst_env)
 		return (NULL);
 	return (list);
 }
-
