@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   change_order.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:22:13 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/05 15:02:40 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/05 20:15:24 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	change_order_redir(char **tab, char **new_tab, t_data *data, int *i);
-int		get_tab_size(char **tab);
-void	change_order_token(char **tab, char **new_tab, t_data *data, int *i);
+static int	get_tab_size(char **tab);
+static void	change_order_redir(char **tab, char **new_tab, t_data *data, int *i);
+static void	change_order_token(char **tab, char **new_tab, t_data *data, int *i);
 
 char	**change_order(char **tab, t_data *data)
 {
@@ -36,7 +36,7 @@ char	**change_order(char **tab, t_data *data)
 	return (new_tab);
 }
 
-int	get_tab_size(char **tab)
+static int	get_tab_size(char **tab)
 {
 	int	tab_size;
 
@@ -46,7 +46,7 @@ int	get_tab_size(char **tab)
 	return (tab_size);
 }
 
-void	change_order_redir(char **tab, char **new_tab, t_data *data, int *i)
+static void	change_order_redir(char **tab, char **new_tab, t_data *data, int *i)
 {
 	int	start_b;
 
@@ -67,7 +67,7 @@ void	change_order_redir(char **tab, char **new_tab, t_data *data, int *i)
 	change_order_token(tab, new_tab, data, i);
 }
 
-void	change_order_token(char **tab, char **new_tab, t_data *data, int *i)
+static void	change_order_token(char **tab, char **new_tab, t_data *data, int *i)
 {
 	while (data->start <= data->end)
 	{

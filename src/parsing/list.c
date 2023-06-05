@@ -3,18 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/05 16:29:10 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/05 20:18:47 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*create_list(char *line, t_data *data)
+static t_list	*create_node(int *start, int *end, char **tab_line);
+static int	find_malloc_size(char **tab, int *end, int start);
+static void	fill_tab(char **tab_line, char **token, int *start, int *end);
+static void	del_delimiteur(t_list **list);
+
+t_list	*create_list(t_data *data, char **tab_line)
 {
-	char	**tab_line;
 	int		start;
 	int		end;
 	t_list	*list;
@@ -23,12 +27,6 @@ t_list	*create_list(char *line, t_data *data)
 	start = 0;
 	end = 0;
 	list = NULL;
-	tab_line = ft_split_parsing(line);
-	free(line);
-	if (!tab_line)
-		return (NULL);
-	tab_line = change_order(tab_line, data);
-	change_tab(tab_line);
 	while (start != -1)
 	{
 		start = end;
@@ -43,20 +41,17 @@ t_list	*create_list(char *line, t_data *data)
 	return (list);
 }
 
-t_list	*create_node(int *start, int *end, char **tab_line)
+static t_list	*create_node(int *start, int *end, char **tab_line)
 {
-	int		malloc_size;
 	char	**token;
 	t_list	*new;
 
-	malloc_size = 0;
 	if (tab_line[*end] == NULL)
 	{
 		*start = -1;
 		return (NULL);
 	}
-	find_malloc_size(tab_line, end, start, &malloc_size);
-	token = malloc(sizeof(char *) * (malloc_size + 1));
+	token = malloc(sizeof(char *) * (find_malloc_size(tab_line, end, *start) + 1));
 	if (!token)
 		return (free_array(tab_line), NULL);
 	fill_tab(tab_line, token, start, end);
@@ -66,37 +61,36 @@ t_list	*create_node(int *start, int *end, char **tab_line)
 	return (new);
 }
 
-void	find_malloc_size(char **tab, int *end, int *start, int *malloc_size)
+static int	find_malloc_size(char **tab, int *end, int start)
 {
+	int	malloc_size;
+
+	malloc_size = 0;
 	while (tab[*end])
 	{
-		if ((tab[*end][0] == '<' || tab[*end][0] == '>' || tab[*end][0] == '|'))
+		if ((tab[*end][0] == '<' || tab[*end][0] == '>' || tab[*end][0] == '|') || \
+		(*end != 0 &&  tab[*end - 1] && (tab[*end - 1][0] == '<' || \
+		tab[*end - 1][0] == '>')))
 		{
 			*end = *end + 1;
-			*malloc_size = 1;
-			break ;
-		}
-		else if (*end != 0 && tab[*end - 1] && \
-		(tab[*end - 1][0] == '<' || tab[*end - 1][0] == '>'))
-		{
-			*end = *end + 1;
-			*malloc_size = 1;
+			malloc_size = 1;
 			break ;
 		}
 		else if (tab[*end + 1] && (tab[*end + 1][0] == '<' \
 		|| tab[*end + 1][0] == '>' || tab[*end + 1][0] == '|'))
 		{
 			*end = *end + 1;
-			*malloc_size = *end - *start;
+			malloc_size = *end - start;
 			break ;
 		}
 		*end = *end + 1;
 	}
-	if (*malloc_size == 0)
-		*malloc_size = (*end - *start) + 1;
+	if (malloc_size == 0)
+		malloc_size = (*end - start) + 1;
+	return (malloc_size);
 }
 
-void	fill_tab(char **tab_line, char **token, int *start, int *end)
+static void	fill_tab(char **tab_line, char **token, int *start, int *end)
 {
 	int	i;
 
@@ -112,7 +106,7 @@ void	fill_tab(char **tab_line, char **token, int *start, int *end)
 	token[i] = NULL;
 }
 
-void	del_delimiteur(t_list **list)
+static void	del_delimiteur(t_list **list)
 {
 	t_list	*copy;
 

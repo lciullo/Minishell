@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   change_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:08:31 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/05 09:10:11 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/05 20:06:04 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	replace_space(char *line, t_data *data, int i);
 
 char	*change_line(t_data *data)
 {
@@ -26,7 +28,7 @@ char	*change_line(t_data *data)
 	return (new_line);
 }
 
-void	replace_space(char *line, t_data *data, int i)
+static void	replace_space(char *line, t_data *data, int i)
 {
 	int		check_quote;
 	char	quote;

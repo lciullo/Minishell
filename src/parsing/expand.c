@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:20:07 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/05 12:52:40 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/05 20:08:18 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_var(t_expand *utils, int *i);
-void	handle_double_quotes(t_expand *utils, int *i, int *start);
-void	handle_single_quote(t_expand *utils, int *i);
-void	handle_dollar_sign(t_expand *utils, int *i, int *start);
+static void	handle_double_quotes(t_expand *utils, int *i, int *start);
+static void	handle_single_quote(t_expand *utils, int *i);
+static void	handle_dollar_sign(t_expand *utils, int *i, int *start);
+static char	*get_var(t_expand *utils, int *i);
 
 char	*expand(char *line, t_env **lst_env)
 {
@@ -46,7 +46,7 @@ char	*expand(char *line, t_env **lst_env)
 	return (free(line), utils.new_line);
 }
 
-void	handle_double_quotes(t_expand *utils, int *i, int *start)
+static void	handle_double_quotes(t_expand *utils, int *i, int *start)
 {
 	if (utils->line[*i] == '\"')
 		*i = *i + 1;
@@ -63,21 +63,21 @@ void	handle_double_quotes(t_expand *utils, int *i, int *start)
 		*i = *i + 1;
 }
 
-void	handle_single_quote(t_expand *utils, int *i)
+static void	handle_single_quote(t_expand *utils, int *i)
 {
 	skip_quote(utils->line, i, utils->line[*i]);
 	if (utils->line[*i] == '\'')
 		*i = *i + 1;
 }
 
-void	handle_dollar_sign(t_expand *utils, int *i, int *start)
+static void	handle_dollar_sign(t_expand *utils, int *i, int *start)
 {
 	utils->new_line = ft_strjoin_b(utils->new_line, utils->line, *start, *i);
 	utils->new_line = get_var(utils, i);
 	*start = *i;
 }
 
-char	*get_var(t_expand *utils, int *i)
+static char	*get_var(t_expand *utils, int *i)
 {
 	int		start;
 	int		j;

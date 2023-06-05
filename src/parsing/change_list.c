@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:43:33 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/05 16:27:47 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/05 20:20:00 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	copy_quote_content(char *new_s, char *line, int *i, int *j);
 int		get_nbr_quote(char *line);
-void	is_there_a_quote(char *row);
+char	*is_there_a_quote(char *row);
 char	*delete_quote(char *row);
 int		get_nbr_quote(char *row);
 void	copy_quote_content(char *new_s, char *row, int *i, int *j);
@@ -58,106 +58,10 @@ void	parse_line_for_quote(t_list **list)
 			r = 0;
 			while (temp->data[r])
 			{
-				temp->data[r] = is_there_quote(temp->data[r]);
+				temp->data[r] = is_there_a_quote(temp->data[r]);
 				r++;
 			}
 		}
 		temp = temp->next;
-	}
-}
-
-void	is_there_a_quote(char *row)
-{
-	int	i;
-
-	i = 0;
-	while (row[i])
-	{
-		if (row[i] == '\'' || row[i] == '\"')
-		{
-			row = delete_quote(row);
-			break ;
-		}
-		i++;
-	}
-	return (row);
-}
-
-char	*delete_quote(char *row)
-{
-	int		i;
-	int		j;
-	char	*new_s;
-
-	new_s = malloc(sizeof(char) * \
-			(ft_strlen(row) - (get_nbr_quote(row) * 1) + 1));
-	if (!new_s)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (row[i])
-	{
-		if (row[i] == '\'' || row[i] == '\"')
-			copy_quote_content(new_s, row, &i, &j);
-		else
-		{
-			new_s[j] = row[i];
-			i++;
-			j++;
-		}
-	}
-	new_s[j] = '\0';
-	free(row);
-	return (new_s);
-}
-
-int	get_nbr_quote(char *row)
-{
-	int		nbr_quote;
-	int		i;
-	char	quote;
-
-	nbr_quote = 0;
-	i = 0;
-	while (row[i])
-	{
-		if (row[i] == '\'' || row[i] == '\"')
-		{
-			quote = row[i++];
-			nbr_quote++;
-			while (row[i++])
-			{
-				if (row[i] == quote)
-				{
-					i++;
-					break ;
-				}
-			}
-		}
-		else
-			i++;
-	}
-	return (nbr_quote);
-}
-
-void	copy_quote_content(char *new_s, char *row, int *i, int *j)
-{
-	char	quote;
-
-	quote = row[*i];
-	*i = *i + 1;
-	while (row[*i])
-	{
-		if (row[*i] == quote)
-		{
-			*i = *i + 1;
-			break ;
-		}
-		else
-		{
-			new_s[*j] = row[*i];
-			*i = *i + 1;
-			*j = *j + 1;
-		}
 	}
 }
