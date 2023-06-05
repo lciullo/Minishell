@@ -6,16 +6,14 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:20:07 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/05 11:56:47 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/05 12:52:40 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_strjoin_b(char*s1, char *s2, int start, int i);
 char	*get_var(t_expand *utils, int *i);
-char	*check_var(char *name_var, t_env **lst_env, char *new_line);
-void 	handle_double_quotes(t_expand *utils, int *i, int *start);
+void	handle_double_quotes(t_expand *utils, int *i, int *start);
 void	handle_single_quote(t_expand *utils, int *i);
 void	handle_dollar_sign(t_expand *utils, int *i, int *start);
 
@@ -25,7 +23,7 @@ char	*expand(char *line, t_env **lst_env)
 	int			start;
 	t_expand	utils;
 
-	i =
+	i = 0;
 	start = 0;
 	utils.line = line;
 	utils.env = lst_env;
@@ -48,10 +46,10 @@ char	*expand(char *line, t_env **lst_env)
 	return (free(line), utils.new_line);
 }
 
-void handle_double_quotes(t_expand *utils, int *i, int *start)
+void	handle_double_quotes(t_expand *utils, int *i, int *start)
 {
 	if (utils->line[*i] == '\"')
-			*i = *i + 1;
+		*i = *i + 1;
 	while (utils->line[*i])
 	{	
 		if (utils->line[*i] == '\"')
@@ -89,8 +87,9 @@ char	*get_var(t_expand *utils, int *i)
 	if (utils->line[*i] == '$')
 		*i = *i + 1;
 	start = *i;
-	while (utils->line[*i] && utils->line[*i] != '$' && is_white_space(utils->line[*i]) == false \
-	&& utils->line[*i] != '\"' && utils->line[*i] != '\'')
+	while (utils->line[*i] && utils->line[*i] != '$' && \
+	is_white_space(utils->line[*i]) == false && utils->line[*i] != '\"' \
+	&& utils->line[*i] != '\'')
 		*i = *i + 1;
 	name_var = malloc(sizeof(char) * ((*i - start) + 1));
 	if (!(name_var))
@@ -105,50 +104,4 @@ char	*get_var(t_expand *utils, int *i)
 	utils->new_line = check_var(name_var, utils->env, utils->new_line);
 	free(name_var);
 	return (utils->new_line);
-}
-
-char	*check_var(char *name_var, t_env **lst_env, char *new_line)
-{
-	char	*temp;
-	while (*lst_env)
-	{
-		if (ft_strcmp(name_var, (*lst_env)->name) == 0)
-		{
-			temp = new_line;
-			new_line = ft_strjoin(new_line, (*lst_env)->value);
-			free(temp);
-			return (new_line);
-		}
-		(*lst_env) = (*lst_env)->next;
-	}
-	return (new_line);
-}
-
-char	*ft_strjoin_b(char*s1, char *s2, int start, int i)
-{
-	int		j;
-	int		k;
-	char	*new_s;
-
-	j = 0;
-	k = 0;
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	new_s = malloc(sizeof(char) * (ft_strlen(s1) + (i - start) + 1));
-	if (!(new_s))
-		return (NULL);
-	while (s1[j])
-	{
-		new_s[k] = s1[j];
-		k++;
-		j++;
-	}
-	while (start < i)
-	{
-		new_s[k] = s2[start];
-		k++;
-		start++;
-	}
-	new_s[k] = '\0';
-	return (new_s);
 }

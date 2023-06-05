@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/05 11:18:53 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/05 12:52:00 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,6 @@ bool	is_white_space(char	c);
 char	*expand(char *line, t_env **lst_env);
 char	*change_line(t_data *data);
 bool	check_char(char *line);
+char	*ft_strjoin_b(char*s1, char *s2, int start, int i);
+char	*check_var(char *name_var, t_env **lst_env, char *new_line);
 #endif
