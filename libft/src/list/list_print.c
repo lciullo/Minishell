@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/21 10:36:12 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/31 08:35:18 by lciullo          ###   ########.fr       */
+/*   Created: 2023/06/05 10:46:00 by lciullo           #+#    #+#             */
+/*   Updated: 2023/06/05 10:46:04 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,18 @@ void	list_print_env(t_env *lst)
 	while (copy)
 	{
 		ft_dprintf(1, "%s=%s\n", copy->name, copy->value);
+		copy = copy->next;
+	}
+}
+
+void	list_print_export(t_env *lst)
+{
+	t_env	*copy;
+
+	copy = lst;
+	while (copy)
+	{
+		ft_dprintf(1, "declare -x %s=\"%s\n\"", copy->name, copy->value);
 		copy = copy->next;
 	}
 }

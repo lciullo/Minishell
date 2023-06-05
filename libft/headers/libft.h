@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:01:44 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/31 08:35:18 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/05 10:45:39 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int				ft_lstsize_env(t_env *lst);
 //=====================		VOIR SI ON LE GARDE =============//
 void			list_print(t_list *lst);
 void			list_print_env(t_env *lst);
+void			list_print_export(t_env *lst);
 void			print_utile_pipe(t_list *lst, int index);
 void			in_exec_print_list(t_list *lst);
 //=====================		VOIR SI ON LE GARDE =============//
