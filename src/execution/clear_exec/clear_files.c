@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 10:12:14 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/02 15:15:12 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/02 18:16:18 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	clear_exec_files_issu(t_list *list, t_env *lst, t_exec *data)
 	if (lst)
 		ft_lstclear_env(&lst, free);
 }
-
 
 void	clear_dup_issue(t_exec *data, t_list *list, t_env *lst)
 {

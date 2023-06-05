@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:25:34 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/31 14:37:12 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/02 18:57:06 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int	loop_for_heredoc(t_list *list, t_exec *data, t_env **lst)
 			{
 				return (-1);
 			}
+			ft_close(fd[0]);
 		}
 		copy = copy->next;
 	}

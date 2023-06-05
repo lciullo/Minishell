@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 11:17:09 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/02 17:43:19 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/02 18:15:49 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,7 @@ char	*check_cmd_access(char **paths, char *cmd)
 	row = 0;
 	join_slash = NULL;
 	cmd_with_path = NULL;
-	if (!cmd)
-		return (NULL);
-	if (is_path(cmd) == 1)
+	if (cmd != NULL && is_path(cmd) == 1)
 		return (cmd);
 	while (paths[row])
 	{

@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 17:44:33 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/02 17:44:35 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/02 18:05:18 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int	execution_core(t_list *list, t_exec *data, char **env, t_env *lst)
 	{
 		if (execute_token(list, data, env, lst) == -1)
 			return (-1);
-		exit (1);
 	}
 	switch_and_close_fds(data);
 	data->exec_progress++;
