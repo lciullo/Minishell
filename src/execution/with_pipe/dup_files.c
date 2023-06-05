@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:34:32 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/30 13:23:37 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/02 11:58:25 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static int	dup_infiles(t_exec *data)
 		if (dup2(data->infile, STDIN_FILENO) == -1)
 		{
 			ft_close(data->new_fd[0]);
+			perror("Dup2 issue for an infile");
 			return (-1);
 		}
 		ft_close(data->infile);
@@ -34,10 +35,10 @@ static int	dup_infiles(t_exec *data)
 		if (dup2(data->old_fd[0], STDIN_FILENO) == -1)
 		{
 			ft_close(data->new_fd[0]);
+			perror("Dup2 issue for fd[0]");
 			return (-1);
 		}
 		ft_close(data->old_fd[0]);
-		close(data->old_fd[0]);
 		ft_close(data->new_fd[0]);
 	}
 	return (0);
@@ -52,6 +53,7 @@ static int	dup_outfiles(t_exec *data)
 			ft_close(data->new_fd[0]);
 			ft_close(data->infile);
 			ft_close(data->old_fd[0]);
+			perror("Dup2 issue for an outfile");
 			return (-1);
 		}
 		ft_close(data->outfile);
@@ -62,6 +64,7 @@ static int	dup_outfiles(t_exec *data)
 		if (dup2(data->new_fd[1], STDOUT_FILENO) == -1)
 		{
 			ft_close(data->new_fd[0]);
+			perror("Dup2 issue for fd[1]");
 			return (-1);
 		}
 		ft_close(data->new_fd[1]);

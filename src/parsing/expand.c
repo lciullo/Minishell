@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:20:07 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/29 15:20:43 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/04 15:11:37 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,11 @@ char	*expand(char *line, t_env **lst_env)
 		if (line[i] == '\"')
 			new_line = get_var_quote(line, &i, lst_env, new_line, &start);
 		if (line[i] == '\'')
+		{
 			skip_quote(line, &i, line[i]);
+			if (line[i] == '\'')
+				i++;
+		}
 		if (line[i] == '$')
 		{
 			new_line = ft_strjoin_b(new_line, line, start, i);
@@ -47,6 +51,7 @@ char	*expand(char *line, t_env **lst_env)
 	}
 	if (line[start])
 		new_line = ft_strjoin_b(new_line, line, start, i);
+	free(line);
 	return (new_line);
 }
 

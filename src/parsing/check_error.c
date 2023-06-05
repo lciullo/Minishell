@@ -3,54 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   check_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:20 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/29 18:59:54 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/04 15:11:10 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	check_wrong_character(char *line);
-
-bool	check_error(t_data *data)
+//ajouter un check de tout les caractere qui ne sont pas a gerer 
+//pour mettre un syntax error [{()}]\\;&^%#@*,:
+int	check_error(t_data *data)
 {
 	if (skip_white_space(data->line) == 1)
-		return (false);
-	if (check_quote(data->line) == false)
-		return (false);
-	if (check_wrong_character(data->line) == false)
-	 	return (false);
-	if (check_pipe(data->line) == false)
-		return (false);
-	if (check_redir(data->line, data) == false)
-		return (false);
-	return (true);
+		return (1);
+	if (check_quote(data->line) == 1)
+		return (1);
+	if (check_pipe(data->line) == 1)
+		return (1);
+	if (check_redir(data->line, data) == 1)
+		return (1);
+	return (0);
 }
 
-bool	check_wrong_character(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] == '\'' || line[i] == '\"')
-			skip_quote(line, &i, line[i]);
-		if (line[i] && (line[i] == '[' || line[i] == '{' || line[i] == '(' \
-		|| line[i] == ')' || line[i] == '}' || line[i] == ']' || \
-		line[i] == '\\' || line[i] == ';' || line[i] == '&' || line[i] == '^' \
-		|| line[i] == '%' || line[i] == '#' || line[i] == '@' || line[i] == '*' \
-		|| line[i] == ',' || line[i] == ':'))
-			return (ft_dprintf(2, "on doit pas gerer ca grand fou\n"), false);
-		if (line[i])
-			i++;
-	}
-	return (true);
-}
-
-bool	check_quote(char *line)
+int	check_quote(char *line)
 {
 	int		i;
 
@@ -60,12 +37,12 @@ bool	check_quote(char *line)
 		if (line[i] == '\'' || line[i] == '\"')
 		{
 			if (nbr_quote(line, &i, line[i]) == 1)
-				return (ft_dprintf(2, "syntax error\n"), false);
+				return (ft_dprintf(2, "syntax error\n"), 1);
 		}
 		if (line[i] != '\0')
 			i++;
 	}
-	return (true);
+	return (0);
 }
 
 int	nbr_quote(char *line, int *i, char quote)
@@ -87,7 +64,7 @@ int	nbr_quote(char *line, int *i, char quote)
 	return (quote_nbr % 2);
 }
 
-bool	check_pipe(char	*line)
+int	check_pipe(char	*line)
 {
 	int	i;
 
@@ -95,16 +72,16 @@ bool	check_pipe(char	*line)
 	while (line[i])
 	{
 		if (i == 0 && line[i] == '|')
-			return (ft_dprintf(2, "syntax error\n"), false);
+			return (ft_dprintf(2, "syntax error\n"), 1);
 		if (line[i] == '|' && (line[skip_white_space_2(line, i + 1)] == '\0' \
 		|| line[skip_white_space_2(line, i + 1)] == '|'))
-			return (ft_dprintf(2, "syntax error\n"), false);
+			return (ft_dprintf(2, "syntax error\n"), 1);
 		i++;
 	}
-	return (true);
+	return (0);
 }
 
-bool	check_redir(char *line, t_data *data)
+int	check_redir(char *line, t_data *data)
 {
 	int	i;
 
@@ -113,19 +90,20 @@ bool	check_redir(char *line, t_data *data)
 	{
 		if (line[i] == '\'' || line[i] == '\"')
 			skip_quote(line, &i, line[i]);
-		if (line[i] && line[i] == '|')
+		if (line[i] == '|')
 			data->nbr_pipe++;
 		if (line[i] && (line[i] == '<' || line[i] == '>'))
 		{
 			if (skip_redir(line, &i, line[i], data) > 2)
-				return (ft_dprintf(2, "syntax error\n"), false);
+				return (ft_dprintf(2, "syntax error\n"), 1);
 			if (line[skip_white_space_2(line, i + 1)] == '\0')
-				return (ft_dprintf(2, "syntax error\n"), false);
+				return (ft_dprintf(2, "syntax error\n"), 1);
 		}
-		else if (line[i])
+		else
 			i++;
 	}
+	data->len_line = i;
 	data->nbr_redir = data->nbr_here_doc + \
 	data->nbr_outfile + data->nbr_append + data->nbr_infile;
-	return (true);
+	return (0);
 }

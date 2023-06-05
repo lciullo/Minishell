@@ -1,44 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   close_files.c                                      :+:      :+:    :+:   */
+/*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/26 13:58:37 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/30 10:08:04 by lciullo          ###   ########.fr       */
+/*   Created: 2023/05/31 08:41:08 by lciullo           #+#    #+#             */
+/*   Updated: 2023/05/31 13:12:23 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_close(int fd)
+void	add_to_tab(int *fd_heredoc, int fd)
 {
-	if (fd > 2)
-		close(fd);
+	int	i;
+
+	i = 0;
+	while (fd_heredoc[i] != 0)
+	{
+		i++;
+	}
+	fd_heredoc[i] = fd;
 }
 
-void	close_cmd_not_found(t_exec *data)
+void	heredoc_ctr_c(int signal)
 {
-	if (data->in_dir > 1)
-	{
-		close(data->old_fd[0]);
-		close(data->old_fd[1]);
-		close(data->infile);
-	}
-	else
-	{
-		close(data->old_fd[0]);
-		close(data->new_fd[0]);
-		close(data->infile);
-	}
-	if (data->out_dir > 1)
-		close(data->outfile);
-	else
-	{
-		close(data->new_fd[1]);
-		close(data->old_fd[1]);
-		close(data->outfile);
-	}
-	ft_close(data->infile);
+	(void)signal;
+	exit(1);
+}
+
+void	heredoc_new_line(int signal)
+{
+	(void)signal;
+	ft_dprintf(1, "\n");
 }

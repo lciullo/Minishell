@@ -48,22 +48,23 @@ static	void	loop_of_prompt(char **env, char *prompt_name, t_exec *data)
 static void	core_of_program(char	*line, char **env, t_exec *data)
 {
 	t_list		*list;
-	t_env		*lst_env;
+	t_env		*lst;
 	t_data		data_parsing;
 
 	list = NULL;
-	lst_env = NULL;
+	lst = NULL;
 	if (ft_isascii(line) == 0)
 		exit(1);
-	lst_env = creat_env(env);
-	//list_print_env(lst_env);
-	list = parsing(line, &data_parsing, &lst_env);
+	lst = creat_env(env);
+	//list_print_env(lst);
+	list = parsing(line, &data_parsing, &lst);
 	if (list == NULL)
 		return ;
 	//print_list(list);
-	execution(list, env, &data_parsing, data, lst_env);
+	if (execution(list, env, &data_parsing, data, lst) == -1)
+		perror("execution issue");
 	free(line);
-	ft_lstclear_env(&lst_env, free);
+	ft_lstclear_env(&lst, free);
 	ft_lstclear(&list, free);
 }
 
@@ -72,7 +73,7 @@ static void	control_c_realod_prompt(int signal)
 	(void)signal;
 	ft_dprintf(1, "\n");
 	rl_on_new_line();
-	rl_replace_line("", 0);
+	//rl_replace_line("", 0);
 	rl_redisplay();
 	return ;
 }

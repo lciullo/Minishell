@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_path_env.c                                     :+:      :+:    :+:   */
+/*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/02 15:21:28 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/26 17:11:01 by lciullo          ###   ########.fr       */
+/*   Created: 2023/06/02 11:17:09 by lciullo           #+#    #+#             */
+/*   Updated: 2023/06/02 18:15:49 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,36 @@ static char	*find_path(char **env)
 	return (path);
 }
 
-char	*check_cmd_acess(char **paths, char *cmd)
+int	is_executable(char *cmd)
+{
+	struct stat	info;
+
+	if (stat(cmd, &info) == 0)
+	{
+		if (!(info.st_mode & S_IXUSR))
+		{
+			ft_dprintf(2, "minishell: %s: Permission denied\n", cmd);
+			return (-1);
+		}
+		if (S_ISDIR(info.st_mode))
+		{
+			ft_dprintf(2, "%s, is a directory\n", cmd);
+			return (-1);
+		}
+		return (0);
+	}
+	ft_dprintf(2, "No such file or directory\n");
+	return (-1);
+}
+
+static int	is_path(char *cmd)
+{
+	if (ft_strchr(cmd, '/') != NULL)
+		return (1);
+	return (-1);
+}
+
+char	*check_cmd_access(char **paths, char *cmd)
 {
 	char	*join_slash;
 	char	*cmd_with_path;
@@ -40,7 +69,7 @@ char	*check_cmd_acess(char **paths, char *cmd)
 	row = 0;
 	join_slash = NULL;
 	cmd_with_path = NULL;
-	if (cmd != NULL && access(cmd, X_OK | F_OK) == 0) //appeler acess dans une autre fonction
+	if (cmd != NULL && is_path(cmd) == 1)
 		return (cmd);
 	while (paths[row])
 	{
@@ -52,25 +81,35 @@ char	*check_cmd_acess(char **paths, char *cmd)
 			return (free(join_slash), NULL);
 		free(join_slash);
 		if (access(cmd_with_path, X_OK) == 0)
-			return (cmd_with_path); //rappeler
+			return (cmd_with_path);
 		free(cmd_with_path);
 		row++;
 	}
 	return (NULL);
 }
 
+/*Voir si on doit free ca
+static void	env_paths_issue(t_exec *data)
+{
+	if (data->pids)
+		free(data->pids);
+	if (data->pids)
+		free(data->fd_heredoc);
+}*/
+
 int	get_path_env(t_exec *data, char **env)
 {
 	data->paths = find_path(env);
 	if (!data->paths)
 	{
-		ft_putstr_fd("environment path not found\n", 2);
+		perror("Environment path not found");
 		return (-1);
 	}
 	data->env_path = ft_split(data->paths, ':');
 	if (!data->env_path)
 	{
-		ft_putstr_fd("environment path not found\n", 2);
+		//doit on le free ?
+		perror("issue in split to find environnement");
 		return (-1);
 	}
 	return (0);
