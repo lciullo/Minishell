@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/05 20:18:47 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/06 09:21:56 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static t_list	*create_node(int *start, int *end, char **tab_line);
-static int	find_malloc_size(char **tab, int *end, int start);
-static void	fill_tab(char **tab_line, char **token, int *start, int *end);
-static void	del_delimiteur(t_list **list);
+static int		find_malloc_size(char **tab, int *end, int start);
+static void		fill_tab(char **tab_line, char **token, int *start, int *end);
+static void		del_delimiteur(t_list **list);
 
 t_list	*create_list(t_data *data, char **tab_line)
 {
@@ -51,7 +51,8 @@ static t_list	*create_node(int *start, int *end, char **tab_line)
 		*start = -1;
 		return (NULL);
 	}
-	token = malloc(sizeof(char *) * (find_malloc_size(tab_line, end, *start) + 1));
+	token = malloc(sizeof(char *) * \
+	(find_malloc_size(tab_line, end, *start) + 1));
 	if (!token)
 		return (free_array(tab_line), NULL);
 	fill_tab(tab_line, token, start, end);
@@ -68,9 +69,9 @@ static int	find_malloc_size(char **tab, int *end, int start)
 	malloc_size = 0;
 	while (tab[*end])
 	{
-		if ((tab[*end][0] == '<' || tab[*end][0] == '>' || tab[*end][0] == '|') || \
-		(*end != 0 &&  tab[*end - 1] && (tab[*end - 1][0] == '<' || \
-		tab[*end - 1][0] == '>')))
+		if ((tab[*end][0] == '<' || tab[*end][0] == '>' \
+		|| tab[*end][0] == '|') || (*end != 0 && tab[*end - 1] \
+		&& (tab[*end - 1][0] == '<' || tab[*end - 1][0] == '>')))
 		{
 			*end = *end + 1;
 			malloc_size = 1;

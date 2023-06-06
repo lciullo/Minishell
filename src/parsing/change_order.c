@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   change_order.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:22:13 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/05 20:15:24 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/06 09:24:01 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int	get_tab_size(char **tab);
-static void	change_order_redir(char **tab, char **new_tab, t_data *data, int *i);
-static void	change_order_token(char **tab, char **new_tab, t_data *data, int *i);
+static void	change_order_redir(char **tab, \
+			char **new_tab, t_data *data, int *i);
+static void	change_order_token(char **tab, char **new_tab, \
+			t_data *data, int *i);
 
 char	**change_order(char **tab, t_data *data)
 {

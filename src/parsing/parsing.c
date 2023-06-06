@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/05 20:03:57 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/06 09:26:09 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ bool	check_error(t_data *data)
 	if (check_quote(data->line) == false)
 		return (false);
 	if (check_wrong_character(data->line) == false)
-	 	return (false);
+		return (false);
 	if (check_pipe(data->line) == false)
 		return (false);
 	if (check_redir(data->line, data) == false)

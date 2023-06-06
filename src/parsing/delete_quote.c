@@ -1,4 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   delete_quote.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/06 09:21:23 by cllovio           #+#    #+#             */
+/*   Updated: 2023/06/06 09:21:26 by cllovio          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
+
 static char	*delete_quote(char *row);
 static int	get_nbr_quote(char *row);
 static void	copy_quote_content(char *new_s, char *row, int *i, int *j);
