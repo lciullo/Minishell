@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:08:31 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/05 20:06:04 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/06 13:11:07 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ static void	replace_space(char *line, t_data *data, int i)
 		if (line[i] == '\'' || line[i] == '\"')
 		{
 			check_quote = 0;
-			quote = line[i++];
-			while (line[i++] && check_quote == 0)
+			quote = line[i];
+			while (line[++i] && check_quote == 0)
 			{
 				if (line[i] == quote)
 				{
@@ -52,7 +52,7 @@ static void	replace_space(char *line, t_data *data, int i)
 					data->nbr_quote--;
 			}
 		}
-		if (line[i])
+		if (line[i] != '\0')
 			i++;
 	}
 }

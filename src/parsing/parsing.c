@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/06 09:26:09 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/06 11:37:44 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_list	*parsing(char *line, t_data *data, t_env **lst_env)
 
 	list = NULL;
 	init_structure(data, lst_env, line);
-	if (check_error(data) == 1)
+	if (check_error(data) == false)
 		return (NULL);
 	new_line = change_line(data);
 	tab_line = ft_split_parsing(new_line);
@@ -41,13 +41,13 @@ bool	check_error(t_data *data)
 		return (false);
 	if (check_quote(data->line) == false)
 		return (false);
-	if (check_wrong_character(data->line) == false)
-		return (false);
+	/* if (check_wrong_character(data->line) == false)
+	 	return (false);*/
 	if (check_pipe(data->line) == false)
 		return (false);
 	if (check_redir(data->line, data) == false)
 		return (false);
 	if (data->nbr_pipe >= 3333)
-		return (1);
+		return (false);
 	return (true);
 }

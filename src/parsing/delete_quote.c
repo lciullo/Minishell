@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 09:21:23 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/06 09:21:26 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/06 13:02:29 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ static int	get_nbr_quote(char *row)
 	{
 		if (row[i] == '\'' || row[i] == '\"')
 		{
-			quote = row[i++];
+			quote = row[i];
 			nbr_quote++;
-			while (row[i++])
+			while (row[++i])
 			{
 				if (row[i] == quote)
 				{
