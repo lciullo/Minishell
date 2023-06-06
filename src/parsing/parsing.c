@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/06 09:53:26 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/06 11:37:44 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ bool	check_error(t_data *data)
 		return (false);
 	if (check_quote(data->line) == false)
 		return (false);
-	if (check_wrong_character(data->line) == false)
-		return (false);
+	/* if (check_wrong_character(data->line) == false)
+	 	return (false);*/
 	if (check_pipe(data->line) == false)
 		return (false);
 	if (check_redir(data->line, data) == false)

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:20 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/05 20:00:23 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/06 13:49:05 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	check_wrong_character(char *line)
+/*bool	check_wrong_character(char *line)
 {
 	int	i;
 
@@ -21,17 +21,17 @@ bool	check_wrong_character(char *line)
 	{
 		if (line[i] == '\'' || line[i] == '\"')
 			skip_quote(line, &i, line[i]);
-		if (line[i] && (line[i] == '[' || line[i] == '{' || line[i] == '(' \
-		|| line[i] == ')' || line[i] == '}' || line[i] == ']' || \
-		line[i] == '\\' || line[i] == ';' || line[i] == '&' || line[i] == '^' \
+		if (line[i] && (line[i] == '[' || line[i] == '{' || line[i] == '(' ||\
+		line[i] == ')' || line[i] == '}' || line[i] == ']' \
+		|| line[i] == ';' || line[i] == '&' || line[i] == '^' \
 		|| line[i] == '%' || line[i] == '#' || line[i] == '@' || line[i] == '*' \
-		|| line[i] == ',' || line[i] == ':'))
+		|| line[i] == ',' || line[i] == ':' || line[i] == '!'))
 			return (ft_dprintf(2, "on doit pas gerer ca grand fou\n"), false);
 		if (line[i])
 			i++;
 	}
 	return (true);
-}
+}*/
 
 bool	check_quote(char *line)
 {
@@ -102,7 +102,7 @@ bool	check_redir(char *line, t_data *data)
 		{
 			if (skip_redir(line, &i, line[i], data) > 2)
 				return (ft_dprintf(2, "syntax error\n"), false);
-			if (line[skip_white_space_2(line, i + 1)] == '\0')
+			if (line[i + 1] && line[skip_white_space_2(line, i + 1)] == '\0')
 				return (ft_dprintf(2, "syntax error\n"), false);
 		}
 		else
