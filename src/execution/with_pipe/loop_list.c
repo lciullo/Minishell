@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:46:51 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/01 17:28:21 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/06 16:44:46 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static	int	wait_pids(t_exec *data)
 	return (0);
 }
 
-int	loop_pipe_by_pipe(t_list *list, t_exec	*data, char **env, t_env *lst)
+int	loop_pipe_by_pipe(t_list *list, t_exec	*data, char **env, t_env **lst)
 {
 	int	len_between_pipe;
 

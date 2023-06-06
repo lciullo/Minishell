@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/05 16:12:30 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/06 16:48:12 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,18 @@ void		free_struct(t_exec *data);
 //# ======================= EXECUTION ======================= #
 
 int			execution(t_list *t_list, char **env, t_data *parsing, \
-						t_exec *data, t_env *lst);
+						t_exec *data, t_env **lst);
 
-int			execution_core(t_list *list, t_exec *data, char **env, t_env *lst);
+int			execution_core(t_list *list, t_exec *data, char **env, t_env **lst);
 
 //# ==================== With Pipe =================== #
 
-int			launch_exec(t_exec *data, t_list *list, t_env *lst, char **env);
+int			launch_exec(t_exec *data, t_list *list, t_env **lst, char **env);
 
 //# === Loop many pipe === #
 
 int			loop_pipe_by_pipe(t_list *list, t_exec	*data, char **env, \
-								t_env *lst);
+								t_env **lst);
 
 //# ============== Execute token =============== #
 
@@ -88,21 +88,21 @@ int			dup_files(t_exec *data);
 
 //# --- Command not found --- #
 
-void		clear_cmd_not_found(t_exec *data, t_list *list, t_env *lst);
+void		clear_cmd_not_found(t_exec *data, t_list *list, t_env **lst);
 
 void		close_cmd_not_found(t_exec *data);
 
 //# --- Execve issue --- #
 
-void		clear_execve_issue(t_exec *data, t_list *list, t_env *lst);
+void		clear_execve_issue(t_exec *data, t_list *list, t_env **lst);
 
 //# --- Clear builtin execution --- #
 
-void		clear_builtin_exec(t_exec *data, t_list *list, t_env *lst);
+void		clear_builtin_exec(t_exec *data, t_list *list, t_env **lst);
 
 //# --- Files issue --- #
 
-void		clear_exec_files_issu(t_list *list, t_env *lst, t_exec *data);
+void		clear_exec_files_issu(t_list *list, t_env **lst, t_exec *data);
 
 //# === Clear between commands and when they are issues  === #
 
@@ -116,16 +116,16 @@ void		close_all_fds(t_exec *data);
 
 //# --- Dup issue --- #
 
-void		clear_dup_issue(t_exec *data, t_list *list, t_env *lst);
+void		clear_dup_issue(t_exec *data, t_list *list, t_env **lst);
 
 //# ==================== Without Pipe =================== #
 
 //# === One builtin execution  === #
 
-void		get_builtin_and_exec(t_list *list, t_exec *data, t_env *lst);
+void		get_builtin_and_exec(t_list *list, t_exec *data, t_env **lst);
 
 int			one_builtin_exec(t_list *list, char **token, t_exec *data, \
-							t_env *lst);
+							t_env **lst);
 
 //# ======================= MANAGEMENT FILES ======================= #
 
@@ -159,7 +159,7 @@ int			loop_for_outfile(t_list *list, t_exec *data);
 
 //# ======================= BUILTINS ======================= #
 
-void		loop_for_builtin(char **token, t_exec *data, t_env *lst);
+void		loop_for_builtin(char **token, t_exec *data, t_env **lst);
 
 t_env		*creat_env(char **env);
 
@@ -183,11 +183,19 @@ size_t		begin_of_name(char *path);
 
 //# --- Export --- #
 
-int			implement_export(char **token, t_exec *data, t_env *lst);
+int			implement_export(char **token, t_exec *data, t_env **lst);
 
-int			manage_export(char **token, t_exec *data, t_env *lst);
+int			print_export(t_env *lst);
 
 char		*get_name_variable(char *row);
+
+char		*get_value_variable(char *row);
+
+int			parse_name(char *name);
+
+int			is_equal(char *name);
+
+int			last_char(char *name);
 
 //# ======================= TEMPORARY ======================= #
 

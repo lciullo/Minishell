@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:39:08 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/05 16:39:07 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/06 15:43:01 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,24 @@
 static int	first_char(char c)
 {
 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c == '_'))
-		return (0);
+		return (SUCCESS);
 	else
 	{
 		ft_dprintf(2, "export: not a valid identifier\n");
-		return (-1);
+		return (FAILURE);
 	}
 }
 
-static int	last_char(char *name)
+int	last_char(char *name)
 {
-	int		last;
+	size_t	end;
 	char	c;
 
 	if (ft_strlen(name) > 1)
-		last = ft_strlen(name) - 1;
+		end = ft_strlen(name) - 1;
 	else
-		last = 1;
-	c = name[last - 1];
+		end = 1;
+	c = name[end - 1];
 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c == '+') || \
 		(c >= '0' && c <= '9'))
 	{
@@ -41,29 +41,47 @@ static int	last_char(char *name)
 		else
 			return (SUCCESS);
 	}
-	return (FAILLURE);
+	return (FAILURE);
 }
 
-static int	parse_name(char *name)
+static int	is_valid(int c)
 {
-	if (first_char(name[0]) == -1)
-		return (-1);
-	if (last_char(name) == -1)
-		return (-1);
-	return (0);
+	if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') \
+	|| (c >= 'A' && c <= 'Z') || (c == '_') || (c == '='))
+		return (SUCCESS);
+	else
+		return (FAILURE);
 }
 
-int	manage_export(char **token, t_exec *data, t_env *lst)
+static	int	is_valid_syntax(char *name)
 {
-	int	row;
+	size_t	i;
+	size_t	end;
 
-	row = 0;
-	(void)data;
-	(void)lst;
-	if (token[1])
+	i = 1;
+	if (ft_strlen(name) > 1)
+		end = ft_strlen(name) - 1;
+	else
+		end = 1;
+	while (name[i] != '\0' && i < end)
 	{
-		if (parse_name(token[1]) == -1)
-			return (-1);
+		if (is_valid(name[i]) == FAILURE)
+		{
+			ft_dprintf(2, "export: not a valid identifier\n");
+			return (FAILURE);
+		}
+		i++;
 	}
-	return (0);
+	return (SUCCESS);
+}
+
+int	parse_name(char *name)
+{
+	if (is_valid_syntax(name) == FAILURE)
+		return (FAILURE);
+	if (first_char(name[0]) == FAILURE)
+		return (FAILURE);
+	if (last_char(name) == FAILURE)
+		return (FAILURE);
+	return (SUCCESS);
 }

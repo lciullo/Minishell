@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:02:50 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/02 18:13:58 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/06 16:47:03 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	**get_command(t_list *list)
 	return (NULL);
 }
 
-static int	execution_of_token(t_exec *data, t_list *list, t_env *lst, char **env)
+static int	execution_of_token(t_exec *data, t_list *list, t_env **lst, char **env)
 {
 	data->cmd_with_path = check_cmd_access(data->env_path, data->cmd);
 	if (!data->cmd_with_path)
@@ -62,7 +62,7 @@ static int	execution_of_token(t_exec *data, t_list *list, t_env *lst, char **env
 	return (0);
 }
 
-int	launch_exec(t_exec *data, t_list *list, t_env *lst, char **env)
+int	launch_exec(t_exec *data, t_list *list, t_env **lst, char **env)
 {
 	if (sort_to_launch_exec(list, data) == TOKEN)
 	{

@@ -6,13 +6,13 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:50:28 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/02 15:50:29 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/06 16:41:53 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	sort_cmd(t_list *list, t_data *parsing, t_exec *data, char **env, t_env *lst)
+static int	sort_cmd(t_list *list, t_data *parsing, t_exec *data, char **env, t_env **lst)
 {
 	if (data->nb_block == 1 && parsing->nbr_pipe == 0 && data->nb_builtin == 1)
 	{
@@ -33,7 +33,7 @@ static int	sort_cmd(t_list *list, t_data *parsing, t_exec *data, char **env, t_e
 	return (0);
 }
 
-int	execution(t_list *list, char **env, t_data *parsing, t_exec *data, t_env *lst)
+int	execution(t_list *list, char **env, t_data *parsing, t_exec *data, t_env **lst)
 {
 	if (init_struct(list, data, parsing) == -1)
 	{
@@ -42,7 +42,7 @@ int	execution(t_list *list, char **env, t_data *parsing, t_exec *data, t_env *ls
 	}
 	if (parsing->nbr_here_doc >= 1)
 	{
-		if (loop_for_heredoc(list, data, &lst) == -1)
+		if (loop_for_heredoc(list, data, lst) == -1)
 			return (-1);
 	}
 	if (sort_cmd(list, parsing, data, env, lst) == -1)

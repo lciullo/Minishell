@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 18:13:24 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/02 18:13:29 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/06 16:38:39 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static	int	to_fork(char **token)
 	return (0);
 }*/
 
-int	one_builtin_exec(t_list *list, char **token, t_exec *data, t_env *lst)
+int	one_builtin_exec(t_list *list, char **token, t_exec *data, t_env **lst)
 {
 	/*if (data->in_dir > 0 || data->out_dir > 0)
 	{	
@@ -78,7 +78,7 @@ int	one_builtin_exec(t_list *list, char **token, t_exec *data, t_env *lst)
 	return (0);
 }
 
-void	get_builtin_and_exec(t_list *list, t_exec *data, t_env *lst)
+void	get_builtin_and_exec(t_list *list, t_exec *data, t_env **lst)
 {
 	while (list != NULL)
 	{
