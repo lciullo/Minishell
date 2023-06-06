@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/04 15:21:59 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/05 20:25:52 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ typedef struct s_data {
 	int		end;
 }	t_data;
 
+typedef	struct s_expand {
+	t_env	**env;
+	char	*line;
+	char	*new_line;
+}	t_expand;
+
 enum {
 	TOKEN,
 	INFILE,
@@ -43,55 +49,60 @@ enum {
 	EXPORT,
 };
 
-/* ---- change_list.c ----*/
-void	change_list(t_list **list);
-void	is_there_a_quote(t_list **list);
-char	*delete_quote(char *line);
-char	**change_order(char **tab);
-void	change_order_redir(char **new_tab, char **tab, \
-		int start, int end, int *i);
-void	change_order_token(char **new_tab, char **tab, \
-		int start, int end, int *i);
-
-/* ---- check_error.c ----*/
-int		check_error(t_data *data);
-int		check_quote(char *line);
-int		check_pipe(char	*line);
-int		nbr_quote(char *line, int *i, char quote);
-int		check_redir(char *line, t_data *data);
-
-/* ---- list.c ----*/
-t_list	*create_list(char *line, t_data *data);
-t_list	*create_node(int	*start, int *end, char **tab_line);
-void	find_malloc_size(char **tab, int *end, int *start, int *malloc_size);
-void	fill_tab(char **tab_line, char **token, int *start, int *end);
-void	del_delimiteur(t_list **list);
-
 /* ---- parsing.c ----*/
 t_list	*parsing(char *line, t_data *data, t_env **lst_env);
-void	replace_space(char *line, t_data *data, int i);
+bool	check_error(t_data *data);
+
+/* ---- utils.c ----*/
+void	init_structure(t_data *data, t_env **lst_env, char *line);
+void	change_tab(char **tab_line);
+bool	is_builtins(char *cmd);
+
+/* ---- check_error.c ----*/
+bool	check_wrong_character(char *line);
+bool	check_quote(char *line);
+int		nbr_quote(char *line, int *i, char quote);
+bool	check_pipe(char	*line);
+bool	check_redir(char *line, t_data *data);
+
+/* ---- change_line.c ----*/
+char	*change_line(t_data *data);
+
+/* ---- add_space.c ----*/
 char	*add_space(char	*line, t_data *data);
-char	*check_separator(char *line, char*new_line, int i, int j);
+
+/* ---- expand.c ----*/
+char	*expand(char *line, t_env **lst_env);
+
+/* ---- utils_expand.c ----*/
+char	*check_var(char *name_var, t_env **lst_env, char *new_line);
+char	*ft_strjoin_b(char*s1, char *s2, int start, int i);
+
+/* ---- split_parsing.c ----*/
+char	**ft_split_parsing(char const *s);
+bool	is_white_space(char c);
+
+/* ---- change_order.c ----*/
+char	**change_order(char **tab, t_data *data);
+
+/* ---- list.c ----*/
+t_list	*create_list(t_data *data, char **tab_line);
+
+/* ---- change_list.c ----*/
+void	change_list(t_list **list);
+void	parse_line_for_quote(t_list **list);
+
+/* ---- delete_quote.c ----*/
+char	*is_there_a_quote(char *row);
+
+/* ---- skip.c ----*/
+void	skip_quote(char *line, int *i, char quote);
+int	skip_white_space(char	*line);
+int	skip_white_space_2(char	*line, int i);
+int	skip_redir(char *line, int *i, char redir, t_data *data);
 
 /* ---- print.c ----*/
 void	print_list(t_list	*a);
 void	print_tab(char **tab);
 void	list_print(t_list *lst);
-
-/* ---- skip.c ----*/
-void	skip_quote(char *line, int *i, char quote);
-int		skip_white_space(char	*line);
-int		skip_white_space_2(char	*line, int i);
-int		skip_redir(char *line, int *i, char redir, t_data *data);
-
-/* ---- utils_parsing.c ----*/
-void	init_structure(t_data *data);
-void	change_tab(char **tab_line);
-bool	is_builtins(char *cmd);
-
-char	**ft_split_parsing(char const *s);
-bool	is_white_space(char	c);
-char	*expand(char *line, t_env **lst_env);
-char	*change_line(t_data *data);
-bool	check_char(char *line);
 #endif
