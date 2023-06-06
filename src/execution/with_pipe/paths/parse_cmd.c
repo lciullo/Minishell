@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 11:17:09 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/02 18:15:49 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/06 10:04:36 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ char	*check_cmd_access(char **paths, char *cmd)
 	row = 0;
 	join_slash = NULL;
 	cmd_with_path = NULL;
+	if (cmd[0] == '\0')
+		return (NULL);
 	if (cmd != NULL && is_path(cmd) == 1)
 		return (cmd);
 	while (paths[row])
