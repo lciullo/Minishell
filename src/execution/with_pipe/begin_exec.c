@@ -6,13 +6,13 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 17:44:33 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/07 15:37:34 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/06 16:46:24 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	execute_token(t_list *list, t_exec *data, char **env, t_env *lst)
+static int	execute_token(t_list *list, t_exec *data, char **env, t_env **lst)
 {
 	if (loop_for_infile(list, data) == -1)
 	{	
@@ -43,7 +43,7 @@ static	void	switch_and_close_fds(t_exec *data)
 	return ;
 }
 
-int	execution_core(t_list *list, t_exec *data, char **env, t_env *lst)
+int	execution_core(t_list *list, t_exec *data, char **env, t_env **lst)
 {
 	if (data->exec_progress != data->nb_block - 1)
 	{

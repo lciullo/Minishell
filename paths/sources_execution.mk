@@ -6,7 +6,7 @@
 #    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 09:55:39 by lciullo           #+#    #+#              #
-#    Updated: 2023/06/02 17:08:31 by lciullo          ###   ########.fr        #
+#    Updated: 2023/06/06 15:39:26 by lciullo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,4 +34,7 @@ SRC	=																	\
 		src/builtin/env.c												\
 		src/builtin/pwd.c												\
 		src/builtin/exit.c 												\
-		src/builtin/export.c
+		src/builtin/export/export.c										\
+		src/builtin/export/print_export.c								\
+		src/builtin/export/export_utils.c								\
+		src/builtin/export/parse_export.c

@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   print_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/22 13:52:54 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/05 10:54:54 by lciullo          ###   ########.fr       */
+/*   Created: 2023/06/06 15:36:32 by lciullo           #+#    #+#             */
+/*   Updated: 2023/06/06 15:38:17 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
 
-void	swap_nodes(t_env *current_node, t_env *next_node)
+static void	swap_nodes(t_env *current_node, t_env *next_node)
 {
 	char	*name;
 	char	*value;
-
 
 	name = NULL;
 	value = NULL;
@@ -29,7 +27,7 @@ void	swap_nodes(t_env *current_node, t_env *next_node)
 	next_node->value = value;
 }
 
-void	sort_in_alphabetic_order(t_env *head)
+static void	sort_in_alphabetic_order(t_env *head)
 {
 	int		to_sort;
 	t_env	*tmp;
@@ -54,19 +52,11 @@ void	sort_in_alphabetic_order(t_env *head)
 		}
 		end = tmp;
 	}
-	list_print_env(head);
+	list_print_export(head);
 }
 
 int	print_export(t_env *lst)
 {
 	sort_in_alphabetic_order(lst);
-	return (0);
-}
-
-int	implement_export(char **token, t_exec *data, t_env *lst)
-{
-	(void)data;
-	if (!token[1])
-		print_export(lst);
-	return (0);
+	return (SUCCESS);
 }
