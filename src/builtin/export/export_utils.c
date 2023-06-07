@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:59:26 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/07 16:43:23 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/07 17:38:29 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,6 @@ int	is_equal(char *name)
 		i++;
 	}
 	return (NO_EQUAL);
-}
-
-unsigned int	len_before_plus(char *name)
-{
-	unsigned int	i;
-
-	i = 0;
-	if (!name)
-		return (0);
-	while (name[i] != '\0' && name[i] != '+')
-		i++;
-	return (i);
 }
 
 char	*get_name_variable(char *row)

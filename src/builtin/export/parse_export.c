@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:39:08 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/06 15:43:01 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/07 17:14:34 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,13 @@ int	last_char(char *name)
 		end = ft_strlen(name) - 1;
 	else
 		end = 1;
-	c = name[end - 1];
+	c = name[end];
 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c == '+') || \
 		(c >= '0' && c <= '9'))
 	{
 		if (c == '+')
 			return (PLUS);
-		else
-			return (SUCCESS);
+		return (SUCCESS);
 	}
 	return (FAILURE);
 }

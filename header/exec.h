@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/07 15:08:20 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/07 17:38:42 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,8 +196,6 @@ int				parse_name(char *name);
 int				is_equal(char *name);
 
 int				last_char(char *name);
-
-unsigned int	len_before_plus(char *name);
 
 //# ======================= TEMPORARY ======================= #
 
