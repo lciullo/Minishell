@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:04:05 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/05 20:16:36 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/07 13:09:36 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	reput_space(char **tab_line, int *i, int *j);
 
-void	init_structure(t_data *data, t_env **lst_env, char *line)
+void	init_structure(t_data *data, t_env *lst_env, char *line)
 {
 	data->nbr_pipe = 0;
 	data->nbr_quote = 0;

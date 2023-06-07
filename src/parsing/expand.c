@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:20:07 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/06 16:58:56 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/07 15:16:53 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	handle_single_quote(t_expand *utils, int *i);
 static void	handle_dollar_sign(t_expand *utils, int *i, int *start);
 static char	*get_var(t_expand *utils, int *i);
 
-char	*expand(char *line, t_env **lst_env)
+char	*expand(char *line, t_env *lst_env)
 {
 	int			i;
 	int			start;
@@ -72,7 +72,8 @@ static void	handle_single_quote(t_expand *utils, int *i)
 
 static void	handle_dollar_sign(t_expand *utils, int *i, int *start)
 {
-	utils->new_line = ft_strjoin_b(utils->new_line, utils->line, *start, *i);
+	if (*i - *start != 0)
+		utils->new_line = ft_strjoin_b(utils->new_line, utils->line, *start, *i);
 	if (ft_isalpha(utils->line[*i + 1]) == 1 || utils->line[*i + 1] == '_')
 		utils->new_line = get_var(utils, i);
 	else

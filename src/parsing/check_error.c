@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:20 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/06 13:49:05 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/07 15:33:40 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ bool	check_redir(char *line, t_data *data)
 	{
 		if (line[i] == '\'' || line[i] == '\"')
 			skip_quote(line, &i, line[i]);
-		if (line[i] == '|')
-			data->nbr_pipe++;
 		if (line[i] && (line[i] == '<' || line[i] == '>'))
 		{
 			if (skip_redir(line, &i, line[i], data) > 2)
