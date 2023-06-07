@@ -57,7 +57,7 @@ static void	core_of_program(char	*line, char **env, t_exec *data)
 		exit(1);
 	lst = creat_env(env);
 	//list_print_env(lst);
-	list = parsing(line, &data_parsing, &lst);
+	list = parsing(line, &data_parsing, lst);
 	if (list == NULL)
 		return ;
 	//print_list(list);

@@ -6,26 +6,26 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 12:50:41 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/06 13:56:40 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/07 15:14:48 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*check_var(char *name_var, t_env **lst_env, char *new_line)
+char	*check_var(char *name_var, t_env *lst_env, char *new_line)
 {
 	char	*temp;
 
-	while (*lst_env)
+	while (lst_env)
 	{
-		if (ft_strcmp(name_var, (*lst_env)->name) == 0)
+		if (ft_strcmp(name_var, lst_env->name) == 0)
 		{
 			temp = new_line;
-			new_line = ft_strjoin(new_line, (*lst_env)->value);
+			new_line = ft_strjoin(new_line, lst_env->value);
 			free(temp);
 			return (new_line);
 		}
-		(*lst_env) = (*lst_env)->next;
+		lst_env = lst_env->next;
 	}
 	return (new_line);
 }

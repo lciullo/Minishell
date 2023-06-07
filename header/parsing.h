@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/05 20:25:52 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/07 13:10:10 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdbool.h>
 
 typedef struct s_data {
-	t_env	**lst_env;
+	t_env	*lst_env;
 	char	*line;
 	int		nbr_pipe;
 	int		nbr_quote;
@@ -33,7 +33,7 @@ typedef struct s_data {
 }	t_data;
 
 typedef	struct s_expand {
-	t_env	**env;
+	t_env	*env;
 	char	*line;
 	char	*new_line;
 }	t_expand;
@@ -50,11 +50,11 @@ enum {
 };
 
 /* ---- parsing.c ----*/
-t_list	*parsing(char *line, t_data *data, t_env **lst_env);
+t_list	*parsing(char *line, t_data *data, t_env *lst_env);
 bool	check_error(t_data *data);
 
 /* ---- utils.c ----*/
-void	init_structure(t_data *data, t_env **lst_env, char *line);
+void	init_structure(t_data *data, t_env *lst_env, char *line);
 void	change_tab(char **tab_line);
 bool	is_builtins(char *cmd);
 
@@ -72,10 +72,10 @@ char	*change_line(t_data *data);
 char	*add_space(char	*line, t_data *data);
 
 /* ---- expand.c ----*/
-char	*expand(char *line, t_env **lst_env);
+char	*expand(char *line, t_env *lst_env);
 
 /* ---- utils_expand.c ----*/
-char	*check_var(char *name_var, t_env **lst_env, char *new_line);
+char	*check_var(char *name_var, t_env *lst_env, char *new_line);
 char	*ft_strjoin_b(char*s1, char *s2, int start, int i);
 
 /* ---- split_parsing.c ----*/

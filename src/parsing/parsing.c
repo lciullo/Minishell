@@ -6,13 +6,15 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/06 11:37:44 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/07 15:36:41 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*parsing(char *line, t_data *data, t_env **lst_env)
+void	get_nbr_pipe(char *line, t_data *data);
+
+t_list	*parsing(char *line, t_data *data, t_env *lst_env)
 {
 	t_list		*list;
 	char		**tab_line;
@@ -23,6 +25,7 @@ t_list	*parsing(char *line, t_data *data, t_env **lst_env)
 	if (check_error(data) == false)
 		return (NULL);
 	new_line = change_line(data);
+	get_nbr_pipe(new_line, data);
 	tab_line = ft_split_parsing(new_line);
 	free(new_line);
 	if (!tab_line)
@@ -33,6 +36,21 @@ t_list	*parsing(char *line, t_data *data, t_env **lst_env)
 	if (!list)
 		return (NULL);
 	return (list);
+}
+
+void	get_nbr_pipe(char *line, t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '\'' || line[i] == '\"')
+			skip_quote(line, &i, line[i]);
+		if (line[i] == '|')
+			data->nbr_pipe++;
+		i++;
+	}
 }
 
 bool	check_error(t_data *data)
