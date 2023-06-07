@@ -6,11 +6,18 @@
 /*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:43:33 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/04 16:31:04 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/05 20:20:00 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	copy_quote_content(char *new_s, char *line, int *i, int *j);
+int		get_nbr_quote(char *line);
+char	*is_there_a_quote(char *row);
+char	*delete_quote(char *row);
+int		get_nbr_quote(char *row);
+void	copy_quote_content(char *new_s, char *row, int *i, int *j);
 
 void	change_list(t_list **list)
 {
@@ -38,104 +45,23 @@ void	change_list(t_list **list)
 	}
 }
 
-void	is_there_a_quote(t_list **list)
+void	parse_line_for_quote(t_list **list)
 {
 	t_list	*temp;
-	int		row;
-	int		i;
+	int		r;
 
 	temp = (*list);
 	while (temp)
 	{
 		if (temp->type == TOKEN || temp->type == BUILTIN)
 		{
-			row = 0;
-			while (temp->data[row])
+			r = 0;
+			while (temp->data[r])
 			{
-				i = 0;
-				while (temp->data[row][i])
-				{
-					if (temp->data[row][i] == '\'' || \
-					temp->data[row][i] == '\"')
-					{
-						temp->data[row] = delete_quote(temp->data[row]);
-						break ;
-					}
-					i++;
-				}
-				row++;
+				temp->data[r] = is_there_a_quote(temp->data[r]);
+				r++;
 			}
 		}
 		temp = temp->next;
 	}
-}
-
-char	*delete_quote(char *line)
-{
-	int		i;
-	int		j;
-	char	quote;
-	char	nbr_quote;
-	char	*new_s;
-
-	i = 0;
-	nbr_quote = 0;
-	new_s = NULL;
-	while (line[i])
-	{
-		if (line[i] == '\'' || line[i] == '\"')
-		{
-			quote = line[i];
-			i++;
-			nbr_quote++;
-			while (line[i])
-			{
-				if (line[i] == quote)
-				{
-					i++;
-					break ;
-				}
-				i++;
-			}
-		}
-		else
-			i++;
-	}
-	new_s = malloc(sizeof(char) * (ft_strlen(line) - (nbr_quote * 1) + 1));
-	if (!new_s)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (line[i])
-	{
-		if (line[i] == '\'' || line[i] == '\"')
-		{
-			quote = line[i];
-			i++;
-			nbr_quote++;
-			while (line[i])
-			{
-				if (line[i] == quote)
-				{
-					i++;
-					break ;
-				}
-				else
-				{
-					new_s[j] = line[i];
-					i++;
-					j++;
-				}
-			}
-		}
-		else
-		{
-			new_s[j] = line[i];
-			i++;
-			j++;
-		}
-	}
-	new_s[j] = '\0';
-	free(line);
-	return (new_s);
 }

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   begin_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 17:44:33 by lciullo           #+#    #+#             */
 /*   Updated: 2023/06/06 16:46:24 by lciullo          ###   ########.fr       */
@@ -47,15 +47,27 @@ int	execution_core(t_list *list, t_exec *data, char **env, t_env **lst)
 {
 	if (data->exec_progress != data->nb_block - 1)
 	{
-		pipe(data->new_fd);
+		if (pipe(data->new_fd) == -1)
+		{
+			ft_dprintf(2, "pipe issu of new_fd\n");
+			return (-1);
+		}
 	}
 	else
 		data->new_fd[1] = STDOUT_FILENO;
 	data->pids[data->nb_pids] = fork();
+	if (data->pids[data->nb_pids] == -1)
+	{
+		perror("Fork issu in few pipe execution_core\n");
+		return (-1);
+	}
 	if (data->pids[data->nb_pids] == 0)
 	{
 		if (execute_token(list, data, env, lst) == -1)
+		{
+			ft_dprintf(2, "in execution core\n");
 			return (-1);
+		}
 	}
 	switch_and_close_fds(data);
 	data->exec_progress++;

@@ -3,20 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   split_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:43:32 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/04 15:13:02 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/06 09:24:36 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	is_white_space(char c)
+static char	**ft_sp_parsing(char const *s, char **tab);
+static int	ft_count_words_parsing(char const *s);
+static void	*ft_free_parsing(char **tab, int j);
+
+char	**ft_split_parsing(char const *s)
 {
-	if ((c >= 9 && c <= 13) || c == ' ')
-		return (true);
-	return (false);
+	char		**tab;
+
+	if (!s)
+		return (NULL);
+	tab = malloc(sizeof(char *) * (ft_count_words_parsing(s) + 1));
+	if (!(tab))
+		return (NULL);
+	return (ft_sp_parsing(s, tab));
 }
 
 static int	ft_count_words_parsing(char const *s)
@@ -41,20 +50,6 @@ static int	ft_count_words_parsing(char const *s)
 			nb_words++;
 	}
 	return (nb_words);
-}
-
-static void	*ft_free_parsing(char **tab, int j)
-{
-	int	i;
-
-	i = 0;
-	while (i < j)
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-	return (NULL);
 }
 
 static char	**ft_sp_parsing(char const *s, char **tab)
@@ -84,14 +79,23 @@ static char	**ft_sp_parsing(char const *s, char **tab)
 	return (tab);
 }
 
-char	**ft_split_parsing(char const *s)
+bool	is_white_space(char c)
 {
-	char		**tab;
+	if ((c >= 9 && c <= 13) || c == ' ')
+		return (true);
+	return (false);
+}
 
-	if (!s)
-		return (NULL);
-	tab = malloc(sizeof(char *) * (ft_count_words_parsing(s) + 1));
-	if (!(tab))
-		return (NULL);
-	return (ft_sp_parsing(s, tab));
+static void	*ft_free_parsing(char **tab, int j)
+{
+	int	i;
+
+	i = 0;
+	while (i < j)
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+	return (NULL);
 }

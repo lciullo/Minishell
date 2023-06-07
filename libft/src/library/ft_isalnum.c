@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 14:59:50 by cllovio           #+#    #+#             */
-/*   Updated: 2022/11/12 13:38:44 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/06 13:57:07 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isalnum(int c)
+bool	ft_isalnum(int c)
 {
 	if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') \
 	|| (c >= 'A' && c <= 'Z'))
-		return (1);
+		return (true);
 	else
-		return (0);
+		return (false);
 }

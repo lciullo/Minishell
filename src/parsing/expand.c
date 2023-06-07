@@ -3,148 +3,108 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:20:07 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/04 15:11:37 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/07 15:16:53 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_strjoin_b(char*s1, char *s2, int start, int i);
-char	*get_var_quote(char *line, int *i, t_env **lst_env, \
-		char *new_line, int *start);
-char	*get_var(char *line, int *i, t_env **lst_env, char *new_line);
-char	*check_var(char *name_var, t_env **lst_env, char *new_line);
+static void	handle_double_quotes(t_expand *utils, int *i, int *start);
+static void	handle_single_quote(t_expand *utils, int *i);
+static void	handle_dollar_sign(t_expand *utils, int *i, int *start);
+static char	*get_var(t_expand *utils, int *i);
 
-char	*expand(char *line, t_env **lst_env)
+char	*expand(char *line, t_env *lst_env)
 {
-	int		i;
-	int		start;
-	char	*new_line;
+	int			i;
+	int			start;
+	t_expand	utils;
 
 	i = 0;
 	start = 0;
-	new_line = malloc(sizeof(char));
-	if (!new_line)
+	utils.line = line;
+	utils.env = lst_env;
+	utils.new_line = ft_calloc(1, 1);
+	if (!(utils.new_line))
 		return (NULL);
-	new_line[0] = '\0';
 	while (line[i])
 	{
-		if (line[i] == '\"')
-			new_line = get_var_quote(line, &i, lst_env, new_line, &start);
-		if (line[i] == '\'')
-		{
-			skip_quote(line, &i, line[i]);
-			if (line[i] == '\'')
-				i++;
-		}
-		if (line[i] == '$')
-		{
-			new_line = ft_strjoin_b(new_line, line, start, i);
-			new_line = get_var(line, &i, lst_env, new_line);
-			start = i;
-		}
+		if (utils.line[i] == '\"')
+			handle_double_quotes(&utils, &i, &start);
+		else if (line[i] == '\'')
+			handle_single_quote(&utils, &i);
+		else if (line[i] == '$' && (ft_isalnum(line[i + 1]) == true || line[i + 1] == '_' || line[i + 1] == '?' || line[i + 1] == '\'' || line[i + 1] == '\"'))
+			handle_dollar_sign(&utils, &i, &start);
 		else if (line[i])
 			i++;
 	}
 	if (line[start])
-		new_line = ft_strjoin_b(new_line, line, start, i);
-	free(line);
-	return (new_line);
+		utils.new_line = ft_strjoin_b(utils.new_line, line, start, i);
+	return (free(line), utils.new_line);
 }
 
-char	*get_var_quote(char *line, int *i, t_env **lst_env, \
-		char *new_line, int *start)
+static void	handle_double_quotes(t_expand *utils, int *i, int *start)
 {
-	if (line[*i] == '\"')
+	if (utils->line[*i] == '\"')
 		*i = *i + 1;
-	while (line[*i])
+	while (utils->line[*i])
 	{	
-		if (line[*i] == '\"')
+		if (utils->line[*i] == '\"')
 			break ;
-		if (line[*i] == '$')
-		{
-			new_line = ft_strjoin_b(new_line, line, *start, *i);
-			new_line = get_var(line, i, lst_env, new_line);
-			*start = *i;
-		}
-		else if (line[*i])
+		if (utils->line[*i] == '$' && (ft_isalnum(utils->line[*i + 1]) == true|| utils->line[*i + 1] == '_' || utils->line[*i + 1] == '?'))
+			handle_dollar_sign(utils, i, start);
+		else if (utils->line[*i])
 			*i = *i + 1;
 	}
-	if (line[*i] == '\"')
+	if (utils->line[*i] == '\"')
 		*i = *i + 1;
-	return (new_line);
 }
 
-char	*get_var(char *line, int *i, t_env **lst_env, char *new_line)
+static void	handle_single_quote(t_expand *utils, int *i)
+{
+	skip_quote(utils->line, i, utils->line[*i]);
+	if (utils->line[*i] == '\'')
+		*i = *i + 1;
+}
+
+static void	handle_dollar_sign(t_expand *utils, int *i, int *start)
+{
+	if (*i - *start != 0)
+		utils->new_line = ft_strjoin_b(utils->new_line, utils->line, *start, *i);
+	if (ft_isalpha(utils->line[*i + 1]) == 1 || utils->line[*i + 1] == '_')
+		utils->new_line = get_var(utils, i);
+	else
+		*i = *i + 2;
+	*start = *i;
+}
+
+static char	*get_var(t_expand *utils, int *i)
 {
 	int		start;
 	int		j;
 	char	*name_var;
 
 	j = 0;
-	if (line[*i] == '$')
+	if (utils->line[*i] == '$')
 		*i = *i + 1;
 	start = *i;
-	while (line[*i] && line[*i] != '$' && is_white_space(line[*i]) == false \
-	&& line[*i] != '\"' && line[*i] != '\'')
+	while (utils->line[*i] && (ft_isalnum(utils->line[*i]) == true \
+	|| utils->line[*i] == '_'))
 		*i = *i + 1;
 	name_var = malloc(sizeof(char) * ((*i - start) + 1));
 	if (!(name_var))
 		return (NULL);
 	while (start < *i)
 	{
-		name_var[j] = line[start];
+		name_var[j] = utils->line[start];
 		j++;
 		start++;
 	}
 	name_var[j] = '\0';
-	new_line = check_var(name_var, lst_env, new_line);
+	utils->new_line = check_var(name_var, utils->env, utils->new_line);
 	free(name_var);
-	return (new_line);
-}
-
-char	*check_var(char *name_var, t_env **lst_env, char *new_line)
-{
-	while (*lst_env)
-	{
-		if (ft_strcmp(name_var, (*lst_env)->name) == 0)
-		{
-			new_line = ft_strjoin(new_line, (*lst_env)->value);
-			return (new_line);
-		}
-		(*lst_env) = (*lst_env)->next;
-	}
-	return (new_line);
-}
-
-char	*ft_strjoin_b(char*s1, char *s2, int start, int i)
-{
-	int		j;
-	int		k;
-	char	*new_s;
-
-	j = 0;
-	k = 0;
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	new_s = malloc(sizeof(char) * (ft_strlen(s1) + (i - start) + 1));
-	if (!(new_s))
-		return (NULL);
-	while (s1[j])
-	{
-		new_s[k] = s1[j];
-		k++;
-		j++;
-	}
-	while (start < i)
-	{
-		new_s[k] = s2[start];
-		k++;
-		start++;
-	}
-	new_s[k] = '\0';
-	return (new_s);
+	return (utils->new_line);
 }
