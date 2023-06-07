@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:52:54 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/06 17:18:51 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/07 16:47:38 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,42 @@ int	is_in_env(t_env *lst, char *name)
 
 //si ya des leaks tmp 
 //fixe le += plus tard name-1 boucler sur les arguments
+
+static	char	*remove_plus_in_name(char *name)
+{
+	char	*to_find;
+
+	to_find = NULL;
+	if (last_char(name) == PLUS)
+	{
+		ft_strndup(to_find, name, len_before_plus(name));
+		if (!to_find)
+			return (NULL);
+	}
+	return (name);
+}
+
 int	search_and_replace_value(t_env *lst, char *name, char *value)
-{	
+{
+	char	*to_find;
+
+	to_find = remove_plus_in_name(name);
+	if (!to_find)
+		return (FAILURE);
 	while (lst != NULL)
 	{
-		if (ft_strcmp(lst->name, name) == 0)
+		if (ft_strcmp(lst->name, to_find) == 0)
 		{
 			if (last_char(name) == SUCCESS)
 			{
-				ft_dprintf(1, "My login dup lst->value %s\n", lst->value);
 				free(lst->value);
-				ft_dprintf(1, "before dup lst->value %s\n", lst->value);
 				lst->value = ft_strdup(value);
-				ft_dprintf(1, "lst->value %s\n", lst->value);
 			}
 			else
+			{
+				puts("in join case");
 				lst->value = ft_strjoin(lst->value, value);
+			}
 			break ;
 		}
 		lst = lst->next;

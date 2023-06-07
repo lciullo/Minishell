@@ -7,8 +7,8 @@ static void	core_of_program(char *line, char **env, t_exec *data, t_env *lst);
 
 int	main(int ac, char **av, char **env)
 {
-	char	*prompt_name;
-	t_exec	data;
+	char		*prompt_name;
+	t_exec		data;
 	t_env		*lst;
 
 	lst = NULL;
