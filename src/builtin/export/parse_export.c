@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:39:08 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/07 17:14:34 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/08 17:49:36 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,20 @@ static	int	is_valid_syntax(char *name)
 		i++;
 	}
 	return (SUCCESS);
+}
+
+int	is_equal(char *name)
+{
+	size_t	i;
+
+	i = 0;
+	while (name[i] != '\0')
+	{
+		if (name[i] == '=')
+			return (EQUAL);
+		i++;
+	}
+	return (NO_EQUAL);
 }
 
 int	parse_name(char *name)

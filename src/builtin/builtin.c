@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:07:54 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/06 16:51:17 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/08 17:33:45 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	loop_for_builtin(char **token, t_exec *data, t_env **lst)
 	else if (ft_strcmp(token[0], "env") == 0)
 		implement_env(*lst);
 	else if (ft_strcmp(token[0], "export") == 0)
-		implement_export(token, data, lst);
+		implement_export(token, lst);
 }
 
 int	is_builtin(char **token)

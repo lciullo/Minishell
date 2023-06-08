@@ -6,24 +6,25 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:59:26 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/07 17:38:29 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/08 17:29:24 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_equal(char *name)
+char	*remove_plus_in_name(char *name)
 {
-	size_t	i;
+	char	*to_find;
 
-	i = 0;
-	while (name[i] != '\0')
+	to_find = NULL;
+	if (last_char(name) == PLUS)
 	{
-		if (name[i] == '=')
-			return (EQUAL);
-		i++;
+		to_find = ft_strndup(to_find, name, (unsigned int)ft_strlen(name) - 1);
+		if (!to_find)
+			return (NULL);
+		return (to_find);
 	}
-	return (NO_EQUAL);
+	return (name);
 }
 
 char	*get_name_variable(char *row)
@@ -50,4 +51,30 @@ char	*get_value_variable(char *row)
 	if (!value)
 		return (NULL);
 	return (value);
+}
+
+void	change_equal_to_one(t_env *lst, char *name)
+{
+	while (lst != NULL)
+	{
+		if ((ft_strcmp(lst->name, name) == 0))
+		{
+			if (lst->equal == 0)
+				lst->equal = 1;
+		}
+		lst = lst->next;
+	}
+}
+
+void	change_equal_to_zero(t_env *lst, char *name)
+{
+	while (lst != NULL)
+	{
+		if ((ft_strcmp(lst->name, name) == 0))
+		{
+			if (lst->equal == 1)
+				lst->equal = 0;
+		}
+		lst = lst->next;
+	}
 }

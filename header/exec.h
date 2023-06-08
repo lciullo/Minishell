@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/07 17:38:42 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/08 17:33:39 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,9 +183,13 @@ size_t			begin_of_name(char *path);
 
 //# --- Export --- #
 
-int				implement_export(char **token, t_exec *data, t_env **lst);
+int				implement_export(char **token, t_env **lst);
+
+//# Export without arguments #
 
 int				print_export(t_env *lst);
+
+//# Export with arguments #
 
 char			*get_name_variable(char *row);
 
@@ -196,6 +200,18 @@ int				parse_name(char *name);
 int				is_equal(char *name);
 
 int				last_char(char *name);
+
+char			*remove_plus_in_name(char *name);
+
+//# Manage case with equal in name #
+
+int				search_and_replace_value(t_env *lst, char *name, char *value);
+
+t_env			*add_back_with_equal(t_env *lst, char *name, char *value);
+
+void			change_equal_to_zero(t_env *lst, char *name);
+
+void			change_equal_to_one(t_env *lst, char *name);
 
 //# ======================= TEMPORARY ======================= #
 
