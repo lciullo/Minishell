@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:20:07 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/07 15:16:53 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/08 09:59:26 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ char	*expand(char *line, t_env *lst_env)
 			handle_double_quotes(&utils, &i, &start);
 		else if (line[i] == '\'')
 			handle_single_quote(&utils, &i);
-		else if (line[i] == '$' && (ft_isalnum(line[i + 1]) == true || line[i + 1] == '_' || line[i + 1] == '?' || line[i + 1] == '\'' || line[i + 1] == '\"'))
+		else if (line[i] == '$' && (ft_isalnum(line[i + 1]) == true || \
+		line[i + 1] == '_' || line[i + 1] == '?' || line[i + 1] == '\'' \
+		|| line[i + 1] == '\"'))
 			handle_dollar_sign(&utils, &i, &start);
 		else if (line[i])
 			i++;
@@ -54,7 +56,8 @@ static void	handle_double_quotes(t_expand *utils, int *i, int *start)
 	{	
 		if (utils->line[*i] == '\"')
 			break ;
-		if (utils->line[*i] == '$' && (ft_isalnum(utils->line[*i + 1]) == true|| utils->line[*i + 1] == '_' || utils->line[*i + 1] == '?'))
+		if (utils->line[*i] == '$' && (ft_isalnum(utils->line[*i + 1]) == true|| \
+		utils->line[*i + 1] == '_' || utils->line[*i + 1] == '?'))
 			handle_dollar_sign(utils, i, start);
 		else if (utils->line[*i])
 			*i = *i + 1;

@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 12:50:41 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/07 15:14:48 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/08 08:22:51 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,5 @@ char	*ft_strjoin_b(char*s1, char *s2, int start, int i)
 		start++;
 	}
 	new_s[k] = '\0';
-	return (new_s);
+	return (free(s1), new_s);
 }

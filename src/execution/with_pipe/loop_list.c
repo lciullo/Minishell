@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:46:51 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/06 16:44:46 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/08 13:10:53 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	loop_pipe_by_pipe(t_list *list, t_exec	*data, char **env, t_env **lst)
 		len_between_pipe = get_next_pipe(list);
 		list = list_increment(&list, len_between_pipe + 1);
 	}
+	close_all_fds(data);
 	close_between_commands(data);
 	wait_pids(data);
 	data->nb_pids = 0;
