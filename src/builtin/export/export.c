@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:52:54 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/09 09:03:01 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/09 16:48:00 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,25 +69,32 @@ static int	loop_for_export_arguments(char **token, t_env **lst)
 {
 	char	*name;
 	char	*value;
-	char	*to_find;
+	int		in_env;
 	int		i;
 
 	name = NULL;
 	value = NULL;
-	to_find = NULL;
+	in_env = 0;
 	i = 1;
 	while (token[i])
 	{
+		if (is_in_env(*lst, "oui") == SUCCESS)
+			in_env = 1;
 		name = get_name_variable(token[i]);
-		to_find = get_name_variable(token[i]);
 		if (parse_name(name) == FAILURE)
 			return (FAILURE);
 		if (is_equal(token[i]) == EQUAL)
 			value = get_value_variable(token[i]);
 		add_to_export(lst, name, value, token[i]);
-		if (value)
+		if ((is_equal(token[i]) == NO_EQUAL) && in_env == 1)
+		{
+			free(name);
+		}
+		else if ((is_equal(token[i]) == EQUAL) && in_env == 1)
+		{
+			free(name);
 			free(value);
-		free(to_find);
+		}
 		i++;
 	}
 	return (SUCCESS);

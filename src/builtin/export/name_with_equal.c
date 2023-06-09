@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 10:08:52 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/09 08:50:33 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/09 16:36:31 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	search_and_replace_value(t_env *lst, char *name, char *value)
 		lst = lst->next;
 	}
 	change_equal_to_one(lst, name);
-	free(to_find);
 	return (SUCCESS);
 }
 
