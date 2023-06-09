@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/07 15:36:41 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/08 10:40:02 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,15 @@ void	get_nbr_pipe(char *line, t_data *data)
 	int	i;
 
 	i = 0;
+	data->nbr_pipe = 0;
 	while (line[i])
 	{
 		if (line[i] == '\'' || line[i] == '\"')
 			skip_quote(line, &i, line[i]);
-		if (line[i] == '|')
+		if (line[i] && line[i] == '|')
 			data->nbr_pipe++;
-		i++;
+		if (line[i])
+			i++;
 	}
 }
 
