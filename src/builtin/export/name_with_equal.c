@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 10:08:52 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/08 17:23:59 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/09 08:50:33 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	search_and_replace_value(t_env *lst, char *name, char *value)
 {
 	char	*to_find;
+	char	*temp;
 
 	to_find = remove_plus_in_name(name);
 	if (!to_find)
@@ -30,13 +31,16 @@ int	search_and_replace_value(t_env *lst, char *name, char *value)
 			}
 			else
 			{
+				temp = lst->value;
 				lst->value = ft_strjoin(lst->value, value);
+				free(temp);
 			}
 			break ;
 		}
 		lst = lst->next;
 	}
 	change_equal_to_one(lst, name);
+	free(to_find);
 	return (SUCCESS);
 }
 
@@ -49,7 +53,7 @@ t_env	*add_back_with_equal(t_env *lst, char *name, char *value)
 	{
 		tmp = ft_strndup(tmp, name, (ft_strlen(name) - 1));
 		ft_lstadd_back_env(&lst, ft_lstnew_env(tmp, value));
-		change_equal_to_one(lst, name);
+		change_equal_to_one(lst, tmp);
 		free(name);
 	}
 	else if (last_char(name) == SUCCESS)

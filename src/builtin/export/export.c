@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:52:54 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/08 17:36:54 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/09 09:03:01 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ static int	loop_for_export_arguments(char **token, t_env **lst)
 		if (is_equal(token[i]) == EQUAL)
 			value = get_value_variable(token[i]);
 		add_to_export(lst, name, value, token[i]);
+		if (value)
+			free(value);
 		free(to_find);
 		i++;
 	}
