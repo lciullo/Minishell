@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:20 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/08 10:10:57 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/09 12:52:52 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ bool	check_pipe(char	*line)
 
 bool	check_redir(char *line, t_data *data)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	while (line[i])
@@ -102,7 +102,10 @@ bool	check_redir(char *line, t_data *data)
 		{
 			if (skip_redir(line, &i, line[i], data) > 2)
 				return (ft_dprintf(2, "syntax error\n"), false);
-			if (line[i + 1] && line[skip_white_space_2(line, i + 1)] == '\0')
+			//a mieux tester avec des caractere chelou
+			if (is_white_space(line[i]) == true && ((line[skip_white_space_2(line, i + 1)] == '\0' \
+			|| line[skip_white_space_2(line, i + 1)] == '<' || line[skip_white_space_2(line, i + 1)] == '>' \
+			|| line[skip_white_space_2(line, i + 1)] == '|')))
 				return (ft_dprintf(2, "syntax error\n"), false);
 		}
 		else
@@ -113,3 +116,5 @@ bool	check_redir(char *line, t_data *data)
 	data->nbr_outfile + data->nbr_append + data->nbr_infile;
 	return (true);
 }
+
+//(line[skip_white_space_2(line, i + 1)] == '\0' || line[skip_white_space_2(line, i + 1)] == '<' || line[skip_white_space_2(line, i + 1)] == '>' || line[skip_white_space_2(line, i + 1)] == '|')

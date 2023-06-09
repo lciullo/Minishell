@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:08:31 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/07 13:23:03 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/09 16:09:03 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,11 @@ char	*change_line(t_data *data)
 	new_line = add_space(data->line, data);
 	if (!new_line)
 		return (NULL);
-	new_line = expand(new_line, data->lst_env);
-	if (!new_line)
-		return (NULL);
 	replace_space(new_line, data, 0);
 	return (new_line);
 }
 
-static void	replace_space(char *line, t_data *data, int i)
+void	replace_space(char *line, t_data *data, int i)
 {
 	int		check_quote;
 	char	quote;
