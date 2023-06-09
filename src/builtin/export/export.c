@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:52:54 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/09 16:48:00 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/09 17:00:20 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,21 @@ int	is_in_env(t_env *lst, char *name)
 
 int	add_to_export(t_env **lst, char *name, char *value, char *to_find)
 {
-	(void)value;
+	int	no_env;
+	int	in_env;
+
+	no_env = 0;
+	in_env = 1;
 	if (is_equal(to_find) == EQUAL)
 	{
-		if (is_in_env(*lst, name) == SUCCESS)
+		if (in_env == 1)
 			search_and_replace_value(*lst, name, value);
 		else
 			*lst = add_back_with_equal(*lst, name, value);
 	}
 	else
 	{
-		if (is_in_env(*lst, name) == FAILURE)
+		if (no_env == 0)
 		{
 			ft_lstadd_back_env(lst, ft_lstnew_env(name, value));
 			change_equal_to_zero(*lst, name);
@@ -78,7 +82,7 @@ static int	loop_for_export_arguments(char **token, t_env **lst)
 	i = 1;
 	while (token[i])
 	{
-		if (is_in_env(*lst, "oui") == SUCCESS)
+		if (is_in_env(*lst, "USER") == SUCCESS)
 			in_env = 1;
 		name = get_name_variable(token[i]);
 		if (parse_name(name) == FAILURE)
@@ -88,6 +92,7 @@ static int	loop_for_export_arguments(char **token, t_env **lst)
 		add_to_export(lst, name, value, token[i]);
 		if ((is_equal(token[i]) == NO_EQUAL) && in_env == 1)
 		{
+			//USER | OUI
 			free(name);
 		}
 		else if ((is_equal(token[i]) == EQUAL) && in_env == 1)

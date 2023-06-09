@@ -6,23 +6,31 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 10:08:52 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/09 16:36:31 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/09 17:04:45 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
+static size_t	size_before_plus(char *name)
+{
+	size_t	i;
+
+	i = 0;
+	while (name[i] != '\0' && name[i] != '+')
+		i++;
+	return (i);
+}
+
 int	search_and_replace_value(t_env *lst, char *name, char *value)
 {
-	char	*to_find;
 	char	*temp;
 
-	to_find = remove_plus_in_name(name);
-	if (!to_find)
-		return (FAILURE);
+	temp = NULL;
 	while (lst != NULL)
 	{
-		if (ft_strcmp(lst->name, to_find) == 0)
+		if (ft_strncmp(lst->name, name, size_before_plus(name)) == 0)
 		{
 			if (last_char(name) == SUCCESS)
 			{
@@ -55,7 +63,7 @@ t_env	*add_back_with_equal(t_env *lst, char *name, char *value)
 		change_equal_to_one(lst, tmp);
 		free(name);
 	}
-	else if (last_char(name) == SUCCESS)
+	else
 	{
 		ft_lstadd_back_env(&lst, ft_lstnew_env(name, value));
 		change_equal_to_one(lst, name);
