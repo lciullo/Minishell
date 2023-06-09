@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/07 15:14:26 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/08 08:35:24 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ static void	del_delimiteur(t_list **list)
 	if (copy->type == -1)
 	{
 		*list = copy->next;
-		free(copy->data);
+		free_array(copy->data);
 		free(copy);
 		del_delimiteur(list);
 	}
