@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:20:07 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/08 09:59:26 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/10 19:48:37 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ static void	handle_double_quotes(t_expand *utils, int *i, int *start)
 	{	
 		if (utils->line[*i] == '\"')
 			break ;
-		if (utils->line[*i] == '$' && (ft_isalnum(utils->line[*i + 1]) == true|| \
+		if (utils->line[*i] == '$' && \
+		(ft_isalnum(utils->line[*i + 1]) == true || \
 		utils->line[*i + 1] == '_' || utils->line[*i + 1] == '?'))
 			handle_dollar_sign(utils, i, start);
 		else if (utils->line[*i])
@@ -76,7 +77,8 @@ static void	handle_single_quote(t_expand *utils, int *i)
 static void	handle_dollar_sign(t_expand *utils, int *i, int *start)
 {
 	if (*i - *start != 0)
-		utils->new_line = ft_strjoin_b(utils->new_line, utils->line, *start, *i);
+		utils->new_line = ft_strjoin_b(utils->new_line, \
+		utils->line, *start, *i);
 	if (ft_isalpha(utils->line[*i + 1]) == 1 || utils->line[*i + 1] == '_')
 		utils->new_line = get_var(utils, i);
 	else

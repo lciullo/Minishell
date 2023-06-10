@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:36:12 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/08 11:37:42 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/09 15:11:44 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_list	*ft_lstnew(char **token, int type)
 	tab->data = token;
 	tab->type = type;
 	tab->fd = 0;
+	tab->quote_here_doc = 0;
 	tab->next = NULL;
 	return (tab);
 }

@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/08 08:35:24 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/09 14:00:03 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int		find_malloc_size(char **tab, int *end, int start);
 static void		fill_tab(char **tab_line, char **token, int *start, int *end);
 static void		del_delimiteur(t_list **list);
 
-t_list	*create_list(t_data *data, char **tab_line)
+t_list	*create_list(t_data *data, t_env *env, char **tab_line)
 {
 	int		start;
 	int		end;
@@ -34,6 +34,7 @@ t_list	*create_list(t_data *data, char **tab_line)
 		ft_lstadd_back(&list, new);
 	}
 	change_list(&list);
+	should_we_expand(&list, env);
 	parse_line_for_quote(&list);
 	free_array(tab_line);
 	if ((data->nbr_pipe + data->nbr_redir) != 0)
