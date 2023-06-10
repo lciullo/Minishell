@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:59:26 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/08 17:29:24 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/10 18:51:10 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,42 @@ char	*remove_plus_in_name(char *name)
 	return (name);
 }
 
-char	*get_name_variable(char *row)
+static	int	len_of_name(char *row, t_export *stat)
+{
+	int	len;
+
+	len = 0;
+	if (row[0] == '\0')
+	{
+		ft_dprintf(2, "export: not a valid identifier\n");
+		return (FAILURE);
+	}
+	if (row[0] == '=' && row[1] == '\0')
+		return ((int)ft_strlen(row));
+	while (row[len] != '\0' && row[len] != '=')
+		len++;
+	if (row[len] != '\0' && row[len] == '=')
+		stat->equal = TRUE;
+	if (row[len - 1] != '\0' && row[len - 1] == '+')
+		stat->plus = TRUE;
+	if (stat->plus == TRUE && stat->equal == TRUE)
+		return (len - 1);
+	else if (stat->plus == FALSE && stat->equal == TRUE)
+		return (len);
+	else if (stat->plus == FALSE && stat->equal == FALSE)
+		return (len);
+	return (SUCCESS);
+}
+
+char	*get_name_variable(char *row, t_export *stat)
 {
 	char		*name;
-	size_t		start;
+	int			start;
 
 	name = NULL;
-	start = begin_of_name(row);
+	start = len_of_name(row, stat);
+	if (start == FAILURE)
+		return (NULL);
 	name = ft_strndup(name, row, start);
 	if (!name)
 		return (NULL);

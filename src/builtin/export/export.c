@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:52:54 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/09 17:00:20 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/10 19:17:21 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,23 +44,18 @@ int	is_in_env(t_env *lst, char *name)
 	return (FAILURE);
 }
 
-int	add_to_export(t_env **lst, char *name, char *value, char *to_find)
+int	add_to_export(t_env **lst, char *name, char *value, t_export *stat)
 {
-	int	no_env;
-	int	in_env;
-
-	no_env = 0;
-	in_env = 1;
-	if (is_equal(to_find) == EQUAL)
+	if (stat->equal == TRUE)
 	{
-		if (in_env == 1)
-			search_and_replace_value(*lst, name, value);
+		if (stat->in_env == TRUE)
+			search_and_replace_value(*lst, name, value, stat);
 		else
 			*lst = add_back_with_equal(*lst, name, value);
 	}
 	else
 	{
-		if (no_env == 0)
+		if (stat->in_env == FALSE)
 		{
 			ft_lstadd_back_env(lst, ft_lstnew_env(name, value));
 			change_equal_to_zero(*lst, name);
@@ -69,37 +64,59 @@ int	add_to_export(t_env **lst, char *name, char *value, char *to_find)
 	return (SUCCESS);
 }
 
-static int	loop_for_export_arguments(char **token, t_env **lst)
+static int	check_name_by_name(char *token, t_env **lst, t_export *stat)
 {
-	char	*name;
-	char	*value;
-	int		in_env;
-	int		i;
+	char		*name;
+	char		*value;
 
 	name = NULL;
 	value = NULL;
-	in_env = 0;
+	if (token[0] == '=' && token[1] == '\0')
+	{
+		ft_dprintf(2, "export %s : not a valid identifier\n", token);
+		return (FAILURE);
+	}
+	name = get_name_variable(token, stat);
+	if (!name)
+		return (FAILURE);
+	if (parse_name(token) == FAILURE)
+	{
+		free(name);
+		return (FAILURE);
+	}
+	if (is_in_env(*lst, name) == SUCCESS)
+		stat->in_env = TRUE;
+	if (stat->equal == TRUE)
+		value = get_value_variable(token);
+	add_to_export(lst, name, value, stat);
+	if (stat->in_env == TRUE && stat->equal == FALSE && stat->plus == FALSE)
+		free(name);
+	else if (stat->in_env == TRUE && stat->equal == TRUE && stat->plus == FALSE)
+	{
+		free(name);
+		free(value);
+	}
+	else if (stat->in_env == TRUE && stat->equal == TRUE && stat->plus == TRUE)
+	{
+		free(name);
+		free(value);
+	}
+	return (SUCCESS);
+}
+
+static int	loop_for_export_arguments(char **token, t_env **lst)
+{
+	t_export	stat;
+	int			i;
+
+
+	stat.equal = 0;
+	stat.in_env = 0;
+	stat.plus = 0;
 	i = 1;
 	while (token[i])
 	{
-		if (is_in_env(*lst, "USER") == SUCCESS)
-			in_env = 1;
-		name = get_name_variable(token[i]);
-		if (parse_name(name) == FAILURE)
-			return (FAILURE);
-		if (is_equal(token[i]) == EQUAL)
-			value = get_value_variable(token[i]);
-		add_to_export(lst, name, value, token[i]);
-		if ((is_equal(token[i]) == NO_EQUAL) && in_env == 1)
-		{
-			//USER | OUI
-			free(name);
-		}
-		else if ((is_equal(token[i]) == EQUAL) && in_env == 1)
-		{
-			free(name);
-			free(value);
-		}
+		check_name_by_name(token[i], lst, &stat);
 		i++;
 	}
 	return (SUCCESS);
