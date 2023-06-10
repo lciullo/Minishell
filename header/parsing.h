@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/09 14:13:25 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/10 15:25:36 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ bool	check_error(t_data *data);
 
 /* ---- utils.c ----*/
 void	init_structure(t_data *data, t_env *lst_env, char *line);
-void	change_tab(char **tab_line);
+void	change_tab(char **tab_line, int type);
 bool	is_builtins(char *cmd);
 
 /* ---- check_error.c ----*/
@@ -107,5 +107,6 @@ void	print_tab(char **tab);
 void	list_print(t_list *lst);
 
 void	should_we_expand(t_list **list, t_env *env);
+void	replace_space(char *line, int i);
 
 #endif

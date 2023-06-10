@@ -16,7 +16,7 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	data.end = 0;
-	prompt_name = "doublechoc-> ";
+	prompt_name = "\001"BLUE"\002""doublechoc->""\001"END"\002";
 	loop_of_prompt(env, prompt_name, &data, lst);
 	return (0);
 }

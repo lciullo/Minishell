@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:43:32 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/09 16:07:41 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/10 18:35:00 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static char	**ft_sp_parsing(char const *s, char **tab)
 	return (tab);
 }
 
-bool	_space(char c)
+bool	is_white_space(char c)
 {
 	if ((c >= 9 && c <= 13) || c == ' ')
 		return (true);

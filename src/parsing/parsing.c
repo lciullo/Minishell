@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/09 14:16:12 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/10 15:25:45 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_list	*parsing(char *line, t_data *data, t_env *lst_env)
 	if (!tab_line)
 		return (NULL);
 	tab_line = change_order(tab_line, data);
-	change_tab(tab_line);
+	change_tab(tab_line, 1);
 	list = create_list(data, lst_env, tab_line);
 	if (!list)
 		return (NULL);

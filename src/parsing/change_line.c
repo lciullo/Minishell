@@ -6,13 +6,11 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 16:08:31 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/09 16:09:03 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/10 16:13:44 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	replace_space(char *line, t_data *data, int i);
 
 char	*change_line(t_data *data)
 {
@@ -21,11 +19,11 @@ char	*change_line(t_data *data)
 	new_line = add_space(data->line, data);
 	if (!new_line)
 		return (NULL);
-	replace_space(new_line, data, 0);
+	replace_space(new_line, 0);
 	return (new_line);
 }
 
-void	replace_space(char *line, t_data *data, int i)
+void	replace_space(char *line, int i)
 {
 	int		check_quote;
 	char	quote;
@@ -45,8 +43,6 @@ void	replace_space(char *line, t_data *data, int i)
 				}
 				else if (line[i] == ' ')
 					line[i] = -1;
-				if (line[i] == '\'' || line[i] == '\"')
-					data->nbr_quote--;
 			}
 		}
 		if (line[i] != '\0')
