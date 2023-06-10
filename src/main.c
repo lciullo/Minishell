@@ -29,6 +29,7 @@ static	void	loop_of_prompt(char **env, char *prompt_name, t_exec *data, t_env *l
 		if (data->end == 1)
 		{
 			ft_dprintf(1, "exit\n");
+			ft_lstclear_env(&lst, free);
 			break ;
 		}
 		signal(SIGINT, control_c_realod_prompt);
@@ -39,7 +40,6 @@ static	void	loop_of_prompt(char **env, char *prompt_name, t_exec *data, t_env *l
 		{
 			ft_dprintf(2, "exit\n");
 			free(line);
-			ft_lstclear_env(&lst, free);
 			exit (1);
 		}
 		if (line[0])

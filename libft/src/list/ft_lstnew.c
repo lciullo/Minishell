@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:36:12 by cllovio           #+#    #+#             */
 /*   Updated: 2023/06/09 15:11:44 by cllovio          ###   ########.fr       */
@@ -34,9 +34,9 @@ t_env	*ft_lstnew_env(char *name, char *value)
 	data = malloc(sizeof(t_env));
 	if (!(data))
 		return (NULL);
-	data ->name = name;
-	data ->value = value;
-	data ->equal = 0;
-	data ->next = NULL;
+	data->name = name;
+	data->value = value;
+	data->equal = 1;
+	data->next = NULL;
 	return (data);
 }

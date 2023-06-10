@@ -6,13 +6,13 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:36:32 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/06 15:38:17 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/08 10:55:25 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	swap_nodes(t_env *current_node, t_env *next_node)
+/*static void	swap_nodes(t_env *current_node, t_env *next_node)
 {
 	char	*name;
 	char	*value;
@@ -53,10 +53,11 @@ static void	sort_in_alphabetic_order(t_env *head)
 		end = tmp;
 	}
 	list_print_export(head);
-}
+}*/
 
 int	print_export(t_env *lst)
 {
-	sort_in_alphabetic_order(lst);
+	//sort_in_alphabetic_order(lst);
+	list_print_export(lst);
 	return (SUCCESS);
 }
