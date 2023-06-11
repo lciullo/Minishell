@@ -45,11 +45,13 @@
 extern int	g_exit_status;
 
 enum {
-	FAILURE=-1,
-	SUCCESS=0,
-	PLUS=1,
-	EQUAL=2,
-	NO_EQUAL = 3,
+	TRUE = 1,
+	FALSE = 0,
+	FAILURE = -1,
+	SUCCESS = 2,
+	PLUS = 3,
+	EQUAL = 4,
+	NO_EQUAL = 5,
 };
 
 #endif

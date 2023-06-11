@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/08 17:33:39 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/10 16:44:41 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,14 @@ typedef struct s_exec
 	char	*paths;
 	char	**env_path;
 }	t_exec;
+
+typedef struct s_export
+{
+	int	in_env;
+	int	equal;
+	int	plus;
+}	t_export;
+
 
 int				init_struct(t_list *list, t_exec *data, t_data *parsing);
 
@@ -191,7 +199,7 @@ int				print_export(t_env *lst);
 
 //# Export with arguments #
 
-char			*get_name_variable(char *row);
+char			*get_name_variable(char *row, t_export *stat);
 
 char			*get_value_variable(char *row);
 
@@ -205,9 +213,11 @@ char			*remove_plus_in_name(char *name);
 
 //# Manage case with equal in name #
 
-int				search_and_replace_value(t_env *lst, char *name, char *value);
+int				search_and_replace_value(t_env *lst, char *name, char *value, t_export *stat);
 
 t_env			*add_back_with_equal(t_env *lst, char *name, char *value);
+
+int				add_to_export(t_env **lst, char *name, char *value, t_export *stat);
 
 void			change_equal_to_zero(t_env *lst, char *name);
 
