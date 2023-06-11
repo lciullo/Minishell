@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:46:51 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/08 13:10:53 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/11 14:05:47 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static	int	wait_pids(t_exec *data)
 	return (0);
 }
 
-int	loop_pipe_by_pipe(t_list *list, t_exec	*data, char **env, t_env **lst)
+int	loop_pipe_by_pipe(t_list *list, t_exec	*data, t_env **lst)
 {
 	int	len_between_pipe;
 
@@ -58,7 +58,7 @@ int	loop_pipe_by_pipe(t_list *list, t_exec	*data, char **env, t_env **lst)
 	data->new_fd[1] = STDOUT_FILENO;
 	while (list != NULL)
 	{
-		execution_core(list, data, env, lst);
+		execution_core(list, data, lst);
 		len_between_pipe = get_next_pipe(list);
 		list = list_increment(&list, len_between_pipe + 1);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 11:17:09 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/08 09:27:20 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/11 14:15:17 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static char	*find_path(char **env)
 
 	path = NULL;
 	row = 0;
+	if (!env)
+		return (NULL);
 	while (env[row])
 	{
 		if (ft_strncmp("PATH=", env[row], 5) == 0)
@@ -69,6 +71,8 @@ char	*check_cmd_access(char **paths, char *cmd)
 	row = 0;
 	join_slash = NULL;
 	cmd_with_path = NULL;
+	if (!paths)
+		return (NULL);
 	if (cmd[0] == '\0')
 		return (NULL);
 	if (cmd != NULL && is_path(cmd) == 1)
@@ -90,27 +94,17 @@ char	*check_cmd_access(char **paths, char *cmd)
 	return (NULL);
 }
 
-/*Voir si on doit free ca
-static void	env_paths_issue(t_exec *data)
+int	get_path_env(t_exec *data)
 {
-	if (data->pids)
-		free(data->pids);
-	if (data->pids)
-		free(data->fd_heredoc);
-}*/
-
-int	get_path_env(t_exec *data, char **env)
-{
-	data->paths = find_path(env);
+	data->paths = find_path(data->env);
 	if (!data->paths)
 	{
 		perror("Environment path not found");
-		return (-1);
+		return (0);
 	}
 	data->env_path = ft_split(data->paths, ':');
 	if (!data->env_path)
 	{
-		//doit on le free ?
 		perror("issue in split to find environnement");
 		return (-1);
 	}

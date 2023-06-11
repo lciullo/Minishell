@@ -1,9 +1,9 @@
 #include "minishell.h"
 
-static void	loop_of_prompt(char **env, char *prompt_name, t_exec *data, t_env *lst);
+static void	loop_of_prompt(char *prompt_name, t_exec *data, t_env *lst);
 static void	control_c_realod_prompt(int signal);
 static void	display_new_line(int signal);
-static void	core_of_program(char *line, char **env, t_exec *data, t_env *lst);
+static void	core_of_program(char *line, t_exec *data, t_env *lst);
 
 int	main(int ac, char **av, char **env)
 {
@@ -17,13 +17,15 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	data.end = 0;
 	prompt_name = "\001"BLUE"\002""doublechoc->""\001"END"\002";
-	loop_of_prompt(env, prompt_name, &data, lst);
+	loop_of_prompt(prompt_name, &data, lst);
 	return (0);
 }
 
-static	void	loop_of_prompt(char **env, char *prompt_name, t_exec *data, t_env *lst)
+static	void	loop_of_prompt(char *prompt_name, t_exec *data, t_env *lst)
 {
 	char	*line;
+
+	line = NULL;
 	while (1)
 	{
 		if (data->end == 1)
@@ -44,11 +46,11 @@ static	void	loop_of_prompt(char **env, char *prompt_name, t_exec *data, t_env *l
 		}
 		if (line[0])
 			add_history(line);
-		core_of_program(line, env, data, lst);
+		core_of_program(line, data, lst);
 	}
 }
 
-static void	core_of_program(char	*line, char **env, t_exec *data, t_env *lst)
+static void	core_of_program(char *line, t_exec *data, t_env *lst)
 {
 	t_list		*list;
 	t_data		data_parsing;
@@ -61,7 +63,7 @@ static void	core_of_program(char	*line, char **env, t_exec *data, t_env *lst)
 	if (list == NULL)
 		return ;
 	//print_list(list);
-	if (execution(list, env, &data_parsing, data, &lst) == -1)
+	if (execution(list, &data_parsing, data, &lst) == -1)
 		perror("execution issue");
 	free(line);
 	ft_lstclear(&list, free);

@@ -6,7 +6,7 @@
 #    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 09:55:39 by lciullo           #+#    #+#              #
-#    Updated: 2023/06/11 11:25:25 by lciullo          ###   ########.fr        #
+#    Updated: 2023/06/11 11:52:46 by lciullo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRC	=																	\
 		src/builtin/echo.c												\
 		src/builtin/cd.c												\
 		src/builtin/env/env.c											\
+		src/builtin/env/create_env_array.c								\
 		src/builtin/pwd.c												\
 		src/builtin/exit.c 												\
 		src/builtin/export/export.c										\

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:29:59 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/07 13:50:20 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/11 14:10:45 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static	int	initialize_integers(t_list *list, t_exec *data, t_data *parsing)
 	return (0);
 }
 
-int	init_struct(t_list *list, t_exec *data, t_data *parsing)
+int	init_struct(t_list *list, t_env *lst, t_exec *data, t_data *parsing)
 {
 	if (initialize_integers(list, data, parsing) == -1)
 		return (-1);
@@ -89,5 +89,17 @@ int	init_struct(t_list *list, t_exec *data, t_data *parsing)
 	data->cmd = NULL;
 	data->paths = NULL;
 	data->env_path = NULL;
+	if (!lst)
+		data->env = NULL;
+	else
+	{
+		data->env = fill_env(lst);
+		if (!data->env)
+		{
+			free(data->pids);
+			free(data->fd_heredoc);
+			return (-1);
+		}
+	}
 	return (0);
 }
