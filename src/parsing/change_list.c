@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:43:33 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/05 20:20:00 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/09 15:13:59 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ void	parse_line_for_quote(t_list **list)
 	t_list	*temp;
 	int		r;
 
-	temp = (*list);
+	temp = (*list); 
 	while (temp)
 	{
-		if (temp->type == TOKEN || temp->type == BUILTIN)
+		if (temp->type == TOKEN || temp->type == BUILTIN || temp->type == HERE_DOC)
 		{
 			r = 0;
 			while (temp->data[r])

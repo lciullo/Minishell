@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:01:44 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/06 14:02:20 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/09 15:09:53 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_list
 	char			**data;
 	int				type;
 	int				fd;
+	int				quote_here_doc;
 	struct s_list	*next;
 }	t_list;
 

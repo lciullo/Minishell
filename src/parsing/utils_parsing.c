@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:04:05 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/07 13:09:36 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/10 16:14:45 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	init_structure(t_data *data, t_env *lst_env, char *line)
 	data->line = line;
 }
 
-void	change_tab(char **tab_line)
+void	change_tab(char **tab_line, int type)
 {
 	int		i;
 	int		j;
@@ -41,7 +41,11 @@ void	change_tab(char **tab_line)
 		j = 0;
 		while (tab_line[i][j])
 		{
-			if (tab_line[i][j] == '\'' || tab_line[i][j] == '\"')
+			if ((tab_line[i][j] == '\'' || tab_line[i][j] == '\"') && type == 0)
+			{
+				replace_space(tab_line[i], 0);
+			}
+			else if ((tab_line[i][j] == '\'' || tab_line[i][j] == '\"') && type == 1)
 				reput_space(tab_line, &i, &j);
 			if (tab_line[i][j] != '\0')
 				j++;
