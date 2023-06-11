@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 11:14:34 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/31 08:35:18 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/11 15:45:08 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,11 @@ void	ft_lstclear_env(t_env **lst, void (*del)(void*))
 	{
 		temp = *lst;
 		*lst = (*lst)->next;
-		free(temp->name);
-		free(temp->value);
-		free(temp);
+		if (temp->name)
+			free(temp->name);
+		if (temp->value)
+			free(temp->value);
+		if (temp)
+			free(temp);
 	}
 }
