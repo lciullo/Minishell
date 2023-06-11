@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 10:46:00 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/08 17:43:24 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/11 11:36:43 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,18 @@ void	list_print_export(t_env *lst)
 	copy = lst;
 	while (copy)
 	{
-		if (copy->value)
-			ft_dprintf(1, "declare -x %s=\"%s\"\n", copy->name, copy->value);
-		else if (!copy->value)
-			ft_dprintf(1, "declare -x %s=\"\"\n", copy->name);
+		if (copy->equal == TRUE)
+		{
+			if (copy->value)
+				ft_dprintf(1, "declare -x %s=\"%s\"\n", copy->name, copy->value);
+			else if (!copy->value)
+				ft_dprintf(1, "declare -x %s=\"\"\n", copy->name);
+		}
+		else
+		{
+			if (copy->name)
+				ft_dprintf(1, "declare -x %s\n", copy->name);
+		}
 		copy = copy->next;
 	}
 }
