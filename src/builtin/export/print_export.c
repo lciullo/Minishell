@@ -6,13 +6,13 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:36:32 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/08 10:55:25 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/11 15:49:59 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*static void	swap_nodes(t_env *current_node, t_env *next_node)
+static void	swap_nodes(t_env *current_node, t_env *next_node)
 {
 	char	*name;
 	char	*value;
@@ -52,12 +52,44 @@ static void	sort_in_alphabetic_order(t_env *head)
 		}
 		end = tmp;
 	}
-	list_print_export(head);
-}*/
+}
+
+static t_env	*copy_env_lst(t_env *lst)
+{
+	t_env	*node;
+	t_env	*copy_env;
+
+	node = NULL;
+	copy_env = NULL;
+	if (!lst)
+		return (NULL);
+	while (lst != NULL)
+	{
+		if (lst->value)
+			node = ft_lstnew_env(ft_strdup(lst->name), ft_strdup(lst->value));
+		else
+			node = ft_lstnew_env(ft_strdup(lst->name), lst->value);
+		if (!node)
+		{
+			ft_lstclear_env(&copy_env, free);
+			return (NULL);
+		}
+		ft_lstadd_back_env(&copy_env, node);
+		lst = lst->next;
+	}
+	return (copy_env);
+}
 
 int	print_export(t_env *lst)
 {
-	//sort_in_alphabetic_order(lst);
-	list_print_export(lst);
+	t_env	*copy_env;
+
+	copy_env = NULL;
+	copy_env = copy_env_lst(lst);
+	if (!copy_env)
+		return (FAILURE);
+	sort_in_alphabetic_order(copy_env);
+	list_print_export(copy_env);
+	ft_lstclear_env(&copy_env, free);
 	return (SUCCESS);
 }
