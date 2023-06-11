@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/11 11:34:55 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/11 14:06:09 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_exec
 	char	*cmd;
 	char	*paths;
 	char	**env_path;
+	char	**env;
 }	t_exec;
 
 typedef struct s_export
@@ -50,7 +51,8 @@ typedef struct s_export
 }	t_export;
 
 
-int				init_struct(t_list *list, t_exec *data, t_data *parsing);
+int				init_struct(t_list *list, t_env *lst, \
+							t_exec *data, t_data *parsing);
 
 void			free_struct(t_exec *data);
 
@@ -58,10 +60,10 @@ void			free_struct(t_exec *data);
 
 //# ======================= EXECUTION ======================= #
 
-int				execution(t_list *t_list, char **env, t_data *parsing, \
-							t_exec *data, t_env **lst);
+int				execution(t_list *t_list, t_data *parsing, \
+								t_exec *data, t_env **lst);
 
-int				execution_core(t_list *list, t_exec *data, char **env, t_env **lst);
+int				execution_core(t_list *list, t_exec *data, t_env **lst);
 
 //# ==================== With Pipe =================== #
 
@@ -69,8 +71,7 @@ int				launch_exec(t_exec *data, t_list *list, t_env **lst, char **env);
 
 //# === Loop many pipe === #
 
-int				loop_pipe_by_pipe(t_list *list, t_exec	*data, char **env, \
-									t_env **lst);
+int				loop_pipe_by_pipe(t_list *list, t_exec	*data, t_env **lst);
 
 //# ============== Execute token =============== #
 
@@ -78,7 +79,7 @@ int				loop_pipe_by_pipe(t_list *list, t_exec	*data, char **env, \
 
 //# --- Find path in environnement ---#
 
-int				get_path_env(t_exec *data, char **env);
+int				get_path_env(t_exec *data);
 
 //# --- Check access ---#
 
@@ -188,6 +189,8 @@ int				implement_exit(char **cmd, t_exec *data);
 int				implement_env(t_env *lst);
 
 size_t			begin_of_name(char *path);
+
+char			**fill_env(t_env *lst);
 
 //# --- Export --- #
 

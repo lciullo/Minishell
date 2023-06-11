@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   begin_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 17:44:33 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/06 16:46:24 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/11 14:07:18 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static	void	switch_and_close_fds(t_exec *data)
 	return ;
 }
 
-int	execution_core(t_list *list, t_exec *data, char **env, t_env **lst)
+int	execution_core(t_list *list, t_exec *data, t_env **lst)
 {
 	if (data->exec_progress != data->nb_block - 1)
 	{
@@ -63,7 +63,7 @@ int	execution_core(t_list *list, t_exec *data, char **env, t_env **lst)
 	}
 	if (data->pids[data->nb_pids] == 0)
 	{
-		if (execute_token(list, data, env, lst) == -1)
+		if (execute_token(list, data, data->env, lst) == -1)
 		{
 			ft_dprintf(2, "in execution core\n");
 			return (-1);
