@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/10 15:25:45 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/12 12:59:27 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,20 @@ t_list	*parsing(char *line, t_data *data, t_env *lst_env)
 	if (check_error(data) == false)
 		return (NULL);
 	new_line = change_line(data);
+	if (!(new_line))
+		return (print_error(MALLOC_ERR), NULL);
 	get_nbr_pipe(new_line, data);
 	tab_line = ft_split_parsing(new_line);
 	free(new_line);
 	if (!tab_line)
-		return (NULL);
+		return (print_error(MALLOC_ERR), NULL);
 	tab_line = change_order(tab_line, data);
+	if (!(tab_line))
+		return (print_error(MALLOC_ERR), NULL);
 	change_tab(tab_line, 1);
 	list = create_list(data, lst_env, tab_line);
 	if (!list)
-		return (NULL);
+		return (print_error(MALLOC_ERR), NULL);
 	return (list);
 }
 

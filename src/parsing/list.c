@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/09 14:00:03 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/12 16:08:08 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static t_list	*create_node(int *start, int *end, char **tab_line);
 static int		find_malloc_size(char **tab, int *end, int start);
-static void		fill_tab(char **tab_line, char **token, int *start, int *end);
+static int		fill_tab(char **tab_line, char **token, int *start, int *end);
 static void		del_delimiteur(t_list **list);
 
 t_list	*create_list(t_data *data, t_env *env, char **tab_line)
@@ -29,12 +29,20 @@ t_list	*create_list(t_data *data, t_env *env, char **tab_line)
 	list = NULL;
 	while (start != -1)
 	{
+		if (tab_line[end] == NULL)
+		{
+			start = -1;
+			break ;
+		}
 		start = end;
 		new = create_node(&start, &end, tab_line);
+		if (!(new))
+		 	return (NULL);
 		ft_lstadd_back(&list, new);
 	}
 	change_list(&list);
-	should_we_expand(&list, env);
+	if (should_we_expand(&list, env) == FAILURE)
+		return (free_array(tab_line), NULL);
 	parse_line_for_quote(&list);
 	free_array(tab_line);
 	if ((data->nbr_pipe + data->nbr_redir) != 0)
@@ -47,19 +55,15 @@ static t_list	*create_node(int *start, int *end, char **tab_line)
 	char	**token;
 	t_list	*new;
 
-	if (tab_line[*end] == NULL)
-	{
-		*start = -1;
-		return (NULL);
-	}
 	token = malloc(sizeof(char *) * \
 	(find_malloc_size(tab_line, end, *start) + 1));
 	if (!token)
 		return (free_array(tab_line), NULL);
-	fill_tab(tab_line, token, start, end);
+	if (fill_tab(tab_line, token, start, end) == FAILURE)
+		return (NULL);
 	new = ft_lstnew(token, -1);
 	if (!new)
-		return (NULL);
+		return (free_array(token), free_array(tab_line), NULL);
 	return (new);
 }
 
@@ -92,7 +96,7 @@ static int	find_malloc_size(char **tab, int *end, int start)
 	return (malloc_size);
 }
 
-static void	fill_tab(char **tab_line, char **token, int *start, int *end)
+static int	fill_tab(char **tab_line, char **token, int *start, int *end)
 {
 	int	i;
 
@@ -101,11 +105,12 @@ static void	fill_tab(char **tab_line, char **token, int *start, int *end)
 	{
 		token[i] = ft_strdup(tab_line[*start]);
 		if (!token[i])
-			return ;
+			return (free_array(tab_line), free_array(token), FAILURE);
 		*start = *start + 1;
 		i++;
 	}
 	token[i] = NULL;
+	return (SUCCESS);
 }
 
 static void	del_delimiteur(t_list **list)

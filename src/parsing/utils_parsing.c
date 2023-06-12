@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:04:05 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/10 16:14:45 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/12 14:03:08 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,45 @@ bool	is_builtins(char *cmd)
 	else if (ft_strcmp(cmd, "exit") == 0)
 		return (true);
 	return (false);
+}
+
+
+static char	*ft_copy_join_parsing(char *s1, char *s2, char *str)
+{
+	int	j;
+	int	i;
+
+	j = 0;
+	i = 0;
+	while (s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	// str[i] == '\n'
+	while (s2[j])
+	{
+		str[i] = s2[j];
+		i++;
+		j++;
+	}
+	str[i] = '\0';
+	return (str);
+}
+
+char	*ft_strjoin_parsing(char *s1, char *s2)
+{
+	char	*str;
+
+	if (!s1 || !s2)
+		return (NULL);
+	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1)); // +2
+	if (!str)
+	{
+		free((void *)s1);
+		return (NULL);
+	}
+	str = ft_copy_join_parsing(s1, s2, str);
+	free(s1);
+	return (str);
 }

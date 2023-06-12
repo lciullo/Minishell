@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
+#    By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/15 11:03:28 by lciullo           #+#    #+#              #
-#    Updated: 2023/05/17 08:38:26 by lciullo          ###   ########.fr        #
+#    Updated: 2023/06/12 11:53:09 by cllovio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ RMF				=	rm -rf
 
 CC 				= cc
 
-CFLAGS 			= -Wall -Werror -Wextra -I ${DIR_HEAD} -I ${DIR_LIB}
+CFLAGS 			= -Wall  -Wextra -I ${DIR_HEAD} -I ${DIR_LIB} #-Werror
 
 # ---- Debug Compilation flags ---- #
 
