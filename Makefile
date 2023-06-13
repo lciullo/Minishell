@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/02/15 11:03:28 by lciullo           #+#    #+#              #
-#    Updated: 2023/06/12 11:53:09 by cllovio          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 include paths/headers_execution.mk
 include paths/headers_parsing.mk
 include paths/sources_execution.mk
@@ -63,7 +51,9 @@ endif
 
 # ---- Leaks Compilation flags ---- #
 
-LEAKS			=	valgrind --suppressions=ignore_readline_reachable.txt --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes
+LEAKS			=	valgrind --suppressions=ignore_readline_reachable.txt --leak-check=full --show-leak-kinds=all --trace-children=yes 
+
+#--track-fds=yes
 
 # ====================== RULES ====================== #
 

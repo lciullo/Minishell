@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_cmds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:30:03 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/06 16:50:37 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/13 11:17:47 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,17 @@ void	clear_execve_issue(t_exec *data, t_list *list, t_env **lst)
 		ft_lstclear_env(lst, free);
 	free_struct(data);
 	perror("execve");
+}
+
+void	clear_is_executable(t_exec *data, t_list *list, t_env **lst)
+{
+	ft_dprintf(2, "%s: command not found\n", data->cmd);
+	if (list)
+		ft_lstclear(&list, free);
+	if (lst)
+		ft_lstclear_env(lst, free);
+	free_struct(data);
+	close_cmd_not_found(data);
 }
 
 void	clear_builtin_exec(t_exec *data, t_list *list, t_env **lst)

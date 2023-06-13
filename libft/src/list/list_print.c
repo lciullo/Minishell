@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   list_print.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 10:46:00 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/11 11:36:43 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/13 12:01:57 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
+#include <stdio.h>
 
 void	list_print_env(t_env *lst)
 {

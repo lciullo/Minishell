@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:01:44 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/11 11:37:11 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/13 12:22:51 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_env			*ft_lstlast_env(t_env *lst);
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), \
 					void (*del)(void *));
 t_list			*ft_lstnew(char **token, int type);
-t_env			*ft_lstnew_env(char *name, char *value);
+t_env			*ft_lstnew_env(char *name, char *value, int equal);
 int				ft_lstsize(t_list *lst);
 int				ft_lstsize_env(t_env *lst);
 //=====================		VOIR SI ON LE GARDE =============//

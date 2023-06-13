@@ -3,17 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:52:54 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/10 19:17:21 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/13 12:24:44 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*on ne regarde que token de 1*/
 //si ya des leaks tmp 
 //fixe le += plus tard name-1 boucler sur les arguments
-/*void	print_print(t_env *lst)
+
+#include "minishell.h"
+
+/*static void	print_print(t_env *lst)
 {
 	t_env	*copy;
 
@@ -25,8 +28,6 @@
 		copy = copy->next;
 	}
 }*/
-
-#include "minishell.h"
 
 int	is_in_env(t_env *lst, char *name)
 {
@@ -46,21 +47,25 @@ int	is_in_env(t_env *lst, char *name)
 
 int	add_to_export(t_env **lst, char *name, char *value, t_export *stat)
 {
+	//ft_dprintf(1, "before add to export\n");
+	//print_print(*lst);
 	if (stat->equal == TRUE)
 	{
 		if (stat->in_env == TRUE)
 			search_and_replace_value(*lst, name, value, stat);
 		else
-			*lst = add_back_with_equal(*lst, name, value);
+			*lst = add_back_with_equal(lst, name, value);
 	}
 	else
 	{
 		if (stat->in_env == FALSE)
 		{
-			ft_lstadd_back_env(lst, ft_lstnew_env(name, value));
-			change_equal_to_zero(*lst, name);
+			ft_lstadd_back_env(lst, ft_lstnew_env(name, value, 0));
+			//change_equal_to_zero(lst, name);
 		}
 	}
+	//ft_dprintf(1, "after add to export\n");
+	//print_print(*lst);
 	return (SUCCESS);
 }
 
@@ -87,7 +92,10 @@ static int	check_name_by_name(char *token, t_env **lst, t_export *stat)
 	if (is_in_env(*lst, name) == SUCCESS)
 		stat->in_env = TRUE;
 	if (stat->equal == TRUE)
+	{
+		puts("check name by name equal is true");
 		value = get_value_variable(token);
+	}
 	add_to_export(lst, name, value, stat);
 	if (stat->in_env == TRUE && stat->equal == FALSE && stat->plus == FALSE)
 		free(name);
