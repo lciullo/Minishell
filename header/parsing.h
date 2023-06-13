@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/10 15:25:36 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/12 19:15:30 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,17 @@ typedef	struct s_expand {
 	char	*line;
 	char	*new_line;
 }	t_expand;
+
+enum {
+	MALLOC_ERR,
+	HERE_DOC_ERR,
+	APPEND_ERR,
+	IN_ERR,
+	OUT_ERR,
+	PIPE_ERR,
+	S_QUOTE_ERR,
+	D_QUOTE_ERR,
+} ;
 
 enum {
 	TOKEN,
@@ -106,7 +117,9 @@ void	print_list(t_list	*a);
 void	print_tab(char **tab);
 void	list_print(t_list *lst);
 
-void	should_we_expand(t_list **list, t_env *env);
+int	should_we_expand(t_list **list, t_env *env);
 void	replace_space(char *line, int i);
+char	*ft_strjoin_parsing(char *s1, char *s2);
+void	print_error(int error_code);
 
 #endif

@@ -31,6 +31,7 @@ typedef struct s_exec
 	int		nb_cmd;
 	int		nb_builtin;
 	int		nb_heredoc;
+	int		quote_here_doc;
 	int		*fd_heredoc;
 	pid_t	*pids;
 	pid_t	pid_heredoc;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:43:33 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/09 15:13:59 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/13 09:07:05 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*is_there_a_quote(char *row);
 char	*delete_quote(char *row);
 int		get_nbr_quote(char *row);
 void	copy_quote_content(char *new_s, char *row, int *i, int *j);
+void	get_type_quote_here_doc(t_list **list);
 
 void	change_list(t_list **list)
 {
@@ -41,6 +42,32 @@ void	change_list(t_list **list)
 		else if (temp->type == -1 && \
 		(temp->data[0][0] != '>' || temp->data[0][0] != '<'))
 			temp->type = TOKEN;
+		temp = temp->next;
+	}
+	get_type_quote_here_doc(list);
+}
+
+void	get_type_quote_here_doc(t_list **list)
+{
+	t_list	*temp;
+	int		i;
+
+	temp = (*list);
+	while (temp)
+	{
+		if (temp->type == HERE_DOC)
+		{
+			i = 0;
+			while (temp->data[0][i])
+			{
+				if (temp->data[0][i] == '\'' || temp->data[0][i] == '\"')
+				{
+					temp->quote_here_doc = 1;
+					break ;
+				}
+				i++;
+			}
+		}
 		temp = temp->next;
 	}
 }

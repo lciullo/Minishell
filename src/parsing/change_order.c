@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:22:13 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/06 09:24:01 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/12 12:48:45 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	**change_order(char **tab, t_data *data)
 	i = 0;
 	new_tab = malloc(sizeof(char *) * (get_tab_size(tab) + 1));
 	if (!new_tab)
-		return (NULL);
+		return (free_array(tab), NULL);
 	while (tab[data->end])
 	{
 		if (tab[data->end][0] == '|' || tab[data->end + 1] == NULL)

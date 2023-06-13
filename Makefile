@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/02/15 11:03:28 by lciullo           #+#    #+#              #
-#    Updated: 2023/06/13 10:05:50 by lisa             ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 include paths/headers_execution.mk
 include paths/headers_parsing.mk
 include paths/sources_execution.mk
@@ -51,7 +39,7 @@ RMF				=	rm -rf
 
 CC 				= cc
 
-CFLAGS 			= -Wall -Werror -Wextra -I ${DIR_HEAD} -I ${DIR_LIB}
+CFLAGS 			= -Wall  -Wextra -I ${DIR_HEAD} -I ${DIR_LIB} #-Werror
 
 # ---- Debug Compilation flags ---- #
 
