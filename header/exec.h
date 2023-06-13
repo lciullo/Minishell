@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exec.h                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/13 10:18:12 by cllovio          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef EXEC_H
 # define EXEC_H
 
@@ -88,7 +76,7 @@ char			*check_cmd_access(char **paths, char *cmd);
 
 //# --- Check if is executable ---#
 
-int				is_executable(char *cmd);
+int				is_executable(char *cmd, t_exec *data, t_list *list, t_env **lst);
 
 //# --- Dup files ---#
 
@@ -101,6 +89,10 @@ int				dup_files(t_exec *data);
 void			clear_cmd_not_found(t_exec *data, t_list *list, t_env **lst);
 
 void			close_cmd_not_found(t_exec *data);
+
+//# --- Is executable --- #
+
+void			clear_is_executable(t_exec *data, t_list *list, t_env **lst);
 
 //# --- Execve issue --- #
 
@@ -219,13 +211,13 @@ char			*remove_plus_in_name(char *name);
 
 int				search_and_replace_value(t_env *lst, char *name, char *value, t_export *stat);
 
-t_env			*add_back_with_equal(t_env *lst, char *name, char *value);
+t_env			*add_back_with_equal(t_env **lst, char *name, char *value);
 
 int				add_to_export(t_env **lst, char *name, char *value, t_export *stat);
 
-void			change_equal_to_zero(t_env *lst, char *name);
+void			change_equal_to_zero(t_env **lst, char *name);
 
-void			change_equal_to_one(t_env *lst, char *name);
+void			change_equal_to_one(t_env **lst, char *name);
 
 //# ======================= TEMPORARY ======================= #
 

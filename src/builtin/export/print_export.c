@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:36:32 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/11 15:49:59 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/13 12:26:48 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,23 @@
 
 static void	swap_nodes(t_env *current_node, t_env *next_node)
 {
+	int		equal;
 	char	*name;
 	char	*value;
+	
 
 	name = NULL;
 	value = NULL;
+	equal = current_node->equal;
+	current_node->equal = next_node->equal;
+	next_node->equal = equal;
 	name = current_node->name;
 	current_node->name = next_node->name;
 	next_node->name = name;
 	value = current_node->value;
 	current_node->value = next_node->value;
 	next_node->value = value;
+	
 }
 
 static void	sort_in_alphabetic_order(t_env *head)
@@ -66,9 +72,9 @@ static t_env	*copy_env_lst(t_env *lst)
 	while (lst != NULL)
 	{
 		if (lst->value)
-			node = ft_lstnew_env(ft_strdup(lst->name), ft_strdup(lst->value));
+			node = ft_lstnew_env(ft_strdup(lst->name), ft_strdup(lst->value), lst->equal);
 		else
-			node = ft_lstnew_env(ft_strdup(lst->name), lst->value);
+			node = ft_lstnew_env(ft_strdup(lst->name), lst->value, lst->equal);
 		if (!node)
 		{
 			ft_lstclear_env(&copy_env, free);

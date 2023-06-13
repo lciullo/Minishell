@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   name_with_equal.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 10:08:52 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/10 17:44:04 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/13 12:25:05 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ int	search_and_replace_value(t_env *lst, char *name, char *value, t_export *stat
 		}
 		lst = lst->next;
 	}
-	change_equal_to_one(lst, name);
+	change_equal_to_one(&lst, name);
 	return (SUCCESS);
 }
 
-t_env	*add_back_with_equal(t_env *lst, char *name, char *value)
+t_env	*add_back_with_equal(t_env **lst, char *name, char *value)
 {
-	ft_lstadd_back_env(&lst, ft_lstnew_env(name, value));
-	change_equal_to_one(lst, name);
-	return (lst);
+	ft_lstadd_back_env(lst, ft_lstnew_env(name, value, 1));
+	//change_equal_to_one(lst, name);
+	return (*lst);
 }
