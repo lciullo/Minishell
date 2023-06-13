@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
+#    By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/15 11:03:28 by lciullo           #+#    #+#              #
-#    Updated: 2023/05/17 08:38:26 by lciullo          ###   ########.fr        #
+#    Updated: 2023/06/13 10:05:50 by lisa             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,9 @@ endif
 
 # ---- Leaks Compilation flags ---- #
 
-LEAKS			=	valgrind --suppressions=ignore_readline_reachable.txt --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes
+LEAKS			=	valgrind --suppressions=ignore_readline_reachable.txt --leak-check=full --show-leak-kinds=all --trace-children=yes 
+
+#--track-fds=yes
 
 # ====================== RULES ====================== #
 

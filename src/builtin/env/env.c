@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:12:43 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/05 16:05:41 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/13 12:24:09 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static t_env	*fill_list_env(char *row, t_env *lst)
 	value = ft_strndup(value, &row[start + 1], ft_strlen(row));
 	if (!value)
 		return (free(name), NULL);
-	ft_lstadd_back_env(&lst, ft_lstnew_env(name, value));
+	ft_lstadd_back_env(&lst, ft_lstnew_env(name, value, 1));
 	return (lst);
 }
 
