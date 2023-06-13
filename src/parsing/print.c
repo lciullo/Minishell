@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:45 by cllovio           #+#    #+#             */
-/*   Updated: 2023/05/12 17:07:55 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/13 09:06:39 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	print_list(t_list	*a)
 	{
 		print_tab(a->data);
 		printf("%d\n", a->type);
+		printf("%d\n", a->quote_here_doc);
 		if (a->next != NULL)
 			printf("------------------\n");
 		a = a->next;

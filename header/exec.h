@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/11 14:06:09 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/13 10:18:12 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_exec
 	int		nb_cmd;
 	int		nb_builtin;
 	int		nb_heredoc;
+	int		quote_here_doc;
 	int		*fd_heredoc;
 	pid_t	*pids;
 	pid_t	pid_heredoc;

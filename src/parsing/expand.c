@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:20:07 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/12 14:27:45 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/13 10:31:51 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*expand(char *line, t_env *lst_env)
 			handle_single_quote(&utils, &i);
 		else if (line[i] == '$' && (ft_isalnum(line[i + 1]) == true || \
 		line[i + 1] == '_' || line[i + 1] == '?' || line[i + 1] == '\'' \
-		|| line[i + 1] == '\"'))
+		|| line[i + 1] == '\"' || line[i + 1] == '$'))
 		{
 			if (handle_dollar_sign(&utils, &i, &start) == FAILURE)
 				return (NULL);
@@ -51,7 +51,7 @@ char	*expand(char *line, t_env *lst_env)
 	}
 	if (line[start])
 		utils.new_line = ft_strjoin_b(utils.new_line, line, start, i);
-	return (free(line), utils.new_line);
+	return (utils.new_line);
 }
 
 static int	handle_double_quotes(t_expand *utils, int *i, int *start)
@@ -64,7 +64,7 @@ static int	handle_double_quotes(t_expand *utils, int *i, int *start)
 			break ;
 		if (utils->line[*i] == '$' && \
 		(ft_isalnum(utils->line[*i + 1]) == true || \
-		utils->line[*i + 1] == '_' || utils->line[*i + 1] == '?'))
+		utils->line[*i + 1] == '_' || utils->line[*i + 1] == '?' || utils->line[*i + 1] == '$'))
 		{
 			if (handle_dollar_sign(utils, i, start) == FAILURE)
 				return (FAILURE);
@@ -93,7 +93,21 @@ static int	handle_dollar_sign(t_expand *utils, int *i, int *start)
 		if (!(utils->new_line))
 			return (FAILURE);
 	}
-	if (ft_isalpha(utils->line[*i + 1]) == 1 || utils->line[*i + 1] == '_')
+	if (utils->line[*i + 1] == '$')
+	{
+		utils->new_line = ft_strjoin_parsing(utils->new_line, "$$");
+		if (!(utils->new_line))
+			return (free(utils->line), FAILURE);
+		*i = *i + 2;
+	}
+	else if (utils->line[*i + 1] == '?')
+	{
+		utils->new_line = ft_strjoin_parsing(utils->new_line, ft_itoa(g_exit_status));
+		if (!(utils->new_line))
+			return (free(utils->line), FAILURE);
+		*i = *i + 2;
+	}
+	else if (ft_isalpha(utils->line[*i + 1]) == 1 || utils->line[*i + 1] == '_')
 	{
 		utils->new_line = get_var(utils, i);
 		if (!(utils->new_line))

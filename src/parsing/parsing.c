@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/12 12:59:27 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/13 09:52:54 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ t_list	*parsing(char *line, t_data *data, t_env *lst_env)
 	list = NULL;
 	init_structure(data, lst_env, line);
 	if (check_error(data) == false)
+	{
+		g_exit_status = 2;
 		return (NULL);
+	}
 	new_line = change_line(data);
 	if (!(new_line))
 		return (print_error(MALLOC_ERR), NULL);

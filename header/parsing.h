@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/12 13:18:48 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/12 19:15:30 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ enum {
 	APPEND_ERR,
 	IN_ERR,
 	OUT_ERR,
+	PIPE_ERR,
+	S_QUOTE_ERR,
+	D_QUOTE_ERR,
 } ;
 
 enum {

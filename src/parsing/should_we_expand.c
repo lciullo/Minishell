@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   should_we_expand.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 13:51:38 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/12 16:36:09 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/13 10:29:48 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ static char	**is_there_a_dollar(char **tab, t_env *env, int	*status_expand)
 {
 	int		i;
 	int		j;
+	char	*temp;
 
 	i = 0;
 	while (tab[i])
@@ -95,13 +96,20 @@ static char	**is_there_a_dollar(char **tab, t_env *env, int	*status_expand)
 		j = 0;
 		while (tab[i][j])
 		{
-			if (tab[i][j] == '$')
+			if (tab[i][j] == '$' || tab[i][j] == '~')
 			{
-				tab[i] = expand(tab[i], env);
-				if (!(tab[i]))
-					return (NULL);
-				*status_expand = 1;
-				break ;
+				if (ft_strcmp(tab[i], "~") == 0)
+					tab[i] = expand("$HOME", env);
+				else
+				{
+					temp = tab[i];
+					tab[i] = expand(tab[i], env);
+					if (!(tab[i]))
+						return (NULL);
+					free(temp);
+					*status_expand = 1;
+					break ;
+				}
 			}
 			j++;
 		}
