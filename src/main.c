@@ -49,7 +49,7 @@ static	void	loop_of_prompt(char *prompt_name, t_exec *data, t_env *lst)
 		if (line[0])
 			add_history(line);
 		core_of_program(line, data, lst);
-		printf("exit status : %d\n", g_exit_status);
+		//printf("exit status : %d\n", g_exit_status);
 	}
 }
 
