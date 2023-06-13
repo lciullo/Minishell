@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:07:54 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/08 17:33:45 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/13 16:44:02 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,9 @@ void	loop_for_builtin(char **token, t_exec *data, t_env **lst)
 	else if (ft_strcmp(token[0], "exit") == 0)
 		implement_exit(token, data);
 	else if (ft_strcmp(token[0], "env") == 0)
-		implement_env(*lst);
+		implement_env(token, *lst);
 	else if (ft_strcmp(token[0], "export") == 0)
 		implement_export(token, lst);
-}
-
-int	is_builtin(char **token)
-{
-	if (!token[0])
-		return (0);
-	if (ft_strcmp(token[0], "echo") == 0)
-		return (1);
-	else if (ft_strcmp(token[0], "cd") == 0)
-		return (1);
-	else if (ft_strcmp(token[0], "pwd") == 0)
-		return (1);
-	else if (ft_strcmp(token[0], "exit") == 0)
-		return (1);
-	else if (ft_strcmp(token[0], "env") == 0)
-		return (1);
-	return (0);
+	else if (ft_strcmp(token[0], "unset") == 0)
+		implement_unset(token, lst);
 }

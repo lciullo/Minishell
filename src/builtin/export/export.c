@@ -6,7 +6,7 @@
 /*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:52:54 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/13 12:24:44 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/13 16:45:24 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ static int	check_name_by_name(char *token, t_env **lst, t_export *stat)
 		stat->in_env = TRUE;
 	if (stat->equal == TRUE)
 	{
-		puts("check name by name equal is true");
 		value = get_value_variable(token);
 	}
 	add_to_export(lst, name, value, stat);

@@ -6,7 +6,7 @@
 /*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:12:43 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/13 12:24:09 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/13 16:13:51 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,13 @@ t_env	*creat_env(char **env)
 	return (lst);
 }
 
-int	implement_env(t_env *lst)
+int	implement_env(char **cmd, t_env *lst)
 {
+	if (cmd[1])
+	{
+		ft_dprintf(2, "subject : env with no options or arguments\n");
+		return (FAILURE);
+	}
 	list_print_env(lst);
 	return (1);
 }
