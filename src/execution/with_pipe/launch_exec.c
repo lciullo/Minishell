@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:02:50 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/06 16:47:03 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/13 11:16:03 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,17 @@ static int	execution_of_token(t_exec *data, t_list *list, t_env **lst, char **en
 	{
 		clear_cmd_not_found(data, list, lst);
 		close_tab(data);
+		if (env)
+			free_array(env);
 		exit(1);
 	}
 	close_tab(data);
-	if (data->cmd_with_path != NULL && is_executable(data->cmd_with_path) == 0)
+	if (data->cmd_with_path != NULL && is_executable(data->cmd_with_path, data, list, lst) == 0)
 	{
 		execve(data->cmd_with_path, get_command(list), env);
 		clear_execve_issue(data, list, lst);
 	}
+	exit (1);
 	return (0);
 }
 

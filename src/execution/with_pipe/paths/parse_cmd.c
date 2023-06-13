@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 11:17:09 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/11 14:15:17 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/13 11:13:26 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char	*find_path(char **env)
 	return (path);
 }
 
-int	is_executable(char *cmd)
+int	is_executable(char *cmd, t_exec *data, t_list *list, t_env **lst)
 {
 	struct stat	info;
 
@@ -42,16 +42,19 @@ int	is_executable(char *cmd)
 		if (!(info.st_mode & S_IXUSR))
 		{
 			ft_dprintf(2, "minishell: %s: Permission denied\n", cmd);
+			clear_is_executable(data, list, lst);
 			return (-1);
 		}
 		if (S_ISDIR(info.st_mode))
 		{
 			ft_dprintf(2, "%s, is a directory\n", cmd);
+			clear_is_executable(data, list, lst);
 			return (-1);
 		}
 		return (0);
 	}
 	ft_dprintf(2, "No such file or directory\n");
+	clear_is_executable(data, list, lst);
 	return (-1);
 }
 

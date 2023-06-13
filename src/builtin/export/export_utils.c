@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:59:26 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/10 18:51:10 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/13 11:50:54 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,28 +82,28 @@ char	*get_value_variable(char *row)
 	return (value);
 }
 
-void	change_equal_to_one(t_env *lst, char *name)
+void	change_equal_to_one(t_env **lst, char *name)
 {
-	while (lst != NULL)
+	while (*lst != NULL)
 	{
-		if ((ft_strcmp(lst->name, name) == 0))
+		if ((ft_strcmp((*lst)->name, name) == 0))
 		{
-			if (lst->equal == 0)
-				lst->equal = 1;
+			if ((*lst)->equal == 0)
+				(*lst)->equal = 1;
 		}
-		lst = lst->next;
+		*lst = (*lst)->next;
 	}
 }
 
-void	change_equal_to_zero(t_env *lst, char *name)
+void	change_equal_to_zero(t_env **lst, char *name)
 {
-	while (lst != NULL)
+	while (*lst != NULL)
 	{
-		if ((ft_strcmp(lst->name, name) == 0))
+		if ((ft_strcmp((*lst)->name, name) == 0))
 		{
-			if (lst->equal == 1)
-				lst->equal = 0;
+			if ((*lst)->equal == 1)
+				(*lst)->equal = 0;
 		}
-		lst = lst->next;
+		*lst = (*lst)->next;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:36:12 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/09 15:11:44 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/13 12:20:15 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_list	*ft_lstnew(char **token, int type)
 	return (tab);
 }
 
-t_env	*ft_lstnew_env(char *name, char *value)
+t_env	*ft_lstnew_env(char *name, char *value, int equal)
 {
 	t_env	*data;
 
@@ -36,7 +36,7 @@ t_env	*ft_lstnew_env(char *name, char *value)
 		return (NULL);
 	data->name = name;
 	data->value = value;
-	data->equal = 1;
+	data->equal = equal;
 	data->next = NULL;
 	return (data);
 }

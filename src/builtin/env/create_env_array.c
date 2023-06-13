@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_env_array.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 11:51:19 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/11 13:50:02 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/13 11:05:08 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,28 +45,35 @@ static size_t	get_nb_row(t_env *lst)
 static	char	*join_name_with_value(char *name, char *value)
 {
 	char	*start;
+	char	*tmp_name;
 	char	*result;
 
-	start = ft_strjoin(name, "=");
-	if (!start)
+	tmp_name = ft_strdup(name);
+	if (!tmp_name)
 		return (NULL);
+	start = ft_strjoin(tmp_name, "=");
+	if (!start)
+	{
+		free(tmp_name);
+		return (NULL);
+	}
 	result = ft_strjoin(start, value);
 	if (!result)
 	{
+		free(tmp_name);
 		free(start);
 		return (NULL);
 	}
 	free(start);
+	free(tmp_name);
 	return (result);
 }
 
 static char	**make_array(t_env *lst, char **env)
 {
 	size_t	row;
-	size_t	index;
 
 	row = 0;
-	index = 0;
 	while (lst != NULL)
 	{
 		if (lst->equal == TRUE)
