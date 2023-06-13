@@ -6,7 +6,7 @@
 /*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 18:13:24 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/13 18:03:33 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/13 19:23:32 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,12 @@ static int	execute_builtin_in_child(char **token, t_exec *data, t_env **lst)
 		ft_close(data->outfile);
 		exit (1);
 	}
+	waitpid(pid, NULL, 0);
 	return (SUCCESS);
 }
 int	one_builtin_exec(char **token, t_exec *data, t_env **lst)
 {
-	if (to_fork(token) == TRUE && data->out_dir >= 1)
+	if (to_fork(token) == TRUE)
 		execute_builtin_in_child(token, data, lst);
 	else
 	{
