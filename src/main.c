@@ -30,6 +30,7 @@ static	void	loop_of_prompt(char *prompt_name, t_exec *data, t_env *lst)
 	line = NULL;
 	while (1)
 	{
+		ft_dprintf(2, "%d\n", g_exit_status);
 		if (data->end == 1)
 		{
 			ft_dprintf(1, "exit\n");
@@ -77,7 +78,7 @@ static void	control_c_realod_prompt(int signal)
 	(void)signal;
 	ft_dprintf(1, "\n");
 	rl_on_new_line();
-	//rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	rl_redisplay();
 	return ;
 }
