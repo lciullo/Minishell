@@ -1,3 +1,4 @@
+
 #ifndef EXEC_H
 # define EXEC_H
 
@@ -126,8 +127,7 @@ void			clear_dup_issue(t_exec *data, t_list *list, t_env **lst);
 
 void			get_builtin_and_exec(t_list *list, t_exec *data, t_env **lst);
 
-int				one_builtin_exec(t_list *list, char **token, t_exec *data, \
-							t_env **lst);
+int				one_builtin_exec(char **token, t_exec *data, t_env **lst);
 
 //# ======================= MANAGEMENT FILES ======================= #
 
@@ -163,12 +163,6 @@ int				loop_for_outfile(t_list *list, t_exec *data);
 
 void			loop_for_builtin(char **token, t_exec *data, t_env **lst);
 
-t_env			*creat_env(char **env);
-
-int				is_builtin(char **token);
-
-int				implement_env(t_env *lst);
-
 int				implement_echo(char **cmd);
 
 int				implement_cd(char **cmd);
@@ -177,13 +171,17 @@ int				implement_pwd(char **cmd);
 
 int				implement_exit(char **cmd, t_exec *data);
 
+int 			implement_unset(char **token, t_env **lst);
+
 //# --- Environnement--- #
 
-int				implement_env(t_env *lst);
+int				implement_env(char **cmd, t_env *lst);
 
 size_t			begin_of_name(char *path);
 
 char			**fill_env(t_env *lst);
+
+t_env			*creat_env(char **env);
 
 //# --- Export --- #
 
