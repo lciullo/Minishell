@@ -3,31 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:52:54 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/13 16:45:24 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/14 16:54:57 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*on ne regarde que token de 1*/
-//si ya des leaks tmp 
-//fixe le += plus tard name-1 boucler sur les arguments
-
 #include "minishell.h"
-
-/*static void	print_print(t_env *lst)
-{
-	t_env	*copy;
-
-	copy = lst;
-	while (copy)
-	{
-		ft_dprintf(1, "[%s] =  [%s]\n", copy->name, copy->value);
-		ft_dprintf(1, "%d\n", copy->equal);
-		copy = copy->next;
-	}
-}*/
 
 int	is_in_env(t_env *lst, char *name)
 {
@@ -47,8 +30,7 @@ int	is_in_env(t_env *lst, char *name)
 
 int	add_to_export(t_env **lst, char *name, char *value, t_export *stat)
 {
-	//ft_dprintf(1, "before add to export\n");
-	//print_print(*lst);
+
 	if (stat->equal == TRUE)
 	{
 		if (stat->in_env == TRUE)
@@ -61,11 +43,8 @@ int	add_to_export(t_env **lst, char *name, char *value, t_export *stat)
 		if (stat->in_env == FALSE)
 		{
 			ft_lstadd_back_env(lst, ft_lstnew_env(name, value, 0));
-			//change_equal_to_zero(lst, name);
 		}
 	}
-	//ft_dprintf(1, "after add to export\n");
-	//print_print(*lst);
 	return (SUCCESS);
 }
 
@@ -76,7 +55,7 @@ static int	check_name_by_name(char *token, t_env **lst, t_export *stat)
 
 	name = NULL;
 	value = NULL;
-	if (token[0] == '=' && token[1] == '\0')
+	if (token[0] == '=')
 	{
 		ft_dprintf(2, "export %s : not a valid identifier\n", token);
 		return (FAILURE);
@@ -94,6 +73,12 @@ static int	check_name_by_name(char *token, t_env **lst, t_export *stat)
 	if (stat->equal == TRUE)
 	{
 		value = get_value_variable(token);
+		if (parse_value(value) == FAILURE)
+		{
+			free(value);
+			free(name);
+			return (FAILURE);
+		}
 	}
 	add_to_export(lst, name, value, stat);
 	if (stat->in_env == TRUE && stat->equal == FALSE && stat->plus == FALSE)
@@ -123,7 +108,10 @@ static int	loop_for_export_arguments(char **token, t_env **lst)
 	i = 1;
 	while (token[i])
 	{
-		check_name_by_name(token[i], lst, &stat);
+		if (token[i][0] == '-')
+			ft_dprintf(2, "Invalid option, subject : export with no options\n");
+		else
+			check_name_by_name(token[i], lst, &stat);
 		i++;
 	}
 	return (SUCCESS);
@@ -133,15 +121,7 @@ int	implement_export(char **token, t_env **lst)
 {
 	if (!token[1])
 		print_export(*lst);
-	else if (token[1][0] == '-')
-	{
-		ft_dprintf(2, "Invalid option, subject : export with no options\n");
+	if (loop_for_export_arguments(token, lst) == FAILURE)
 		return (FAILURE);
-	}
-	else if (token[1][0] != '-')
-	{
-		if (loop_for_export_arguments(token, lst) == FAILURE)
-			return (FAILURE);
-	}
 	return (SUCCESS);
 }
