@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:02:50 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/14 13:56:54 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/14 15:26:45 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,12 @@ static int	execution_of_token(t_exec *data, t_list *list, t_env **lst, char **en
 	data->cmd_with_path = check_cmd_access(data->env_path, data->cmd);
 	if (!data->cmd_with_path)
 	{
+		g_exit_status = 127;
 		clear_cmd_not_found(data, list, lst);
 		close_tab(data);
 		if (env)
 			free_array(env);
-		exit(1);
+		exit(g_exit_status);
 	}
 	close_tab(data);
 	if (data->cmd_with_path != NULL && is_executable(data->cmd_with_path, data, list, lst) == 0)
@@ -68,9 +69,7 @@ static int	execution_of_token(t_exec *data, t_list *list, t_env **lst, char **en
 int	launch_exec(t_exec *data, t_list *list, t_env **lst, char **env)
 {
 	if (sort_to_launch_exec(list, data) == TOKEN)
-	{
 		execution_of_token(data, list, lst, env);
-	}
 	else if (sort_to_launch_exec(list, data) == BUILTIN)
 	{
 		loop_for_builtin(get_command(list), data, lst);

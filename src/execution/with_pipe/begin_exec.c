@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   begin_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 17:44:33 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/11 14:07:18 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/14 14:44:53 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	execution_core(t_list *list, t_exec *data, t_env **lst)
 	}
 	if (data->pids[data->nb_pids] == 0)
 	{
-		if (execute_token(list, data, data->env, lst) == -1)
+		if ( execute_token(list, data, data->env, lst) == -1)
 		{
 			ft_dprintf(2, "in execution core\n");
 			return (-1);

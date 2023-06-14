@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/13 09:52:54 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/14 15:29:24 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ t_list	*parsing(char *line, t_data *data, t_env *lst_env)
 	char		*new_line;
 
 	list = NULL;
+	if (skip_white_space(line) == 1)
+	{
+		g_exit_status = 0;
+		return (NULL);
+	}
 	init_structure(data, lst_env, line);
 	if (check_error(data) == false)
 	{
@@ -64,8 +69,6 @@ void	get_nbr_pipe(char *line, t_data *data)
 
 bool	check_error(t_data *data)
 {
-	if (skip_white_space(data->line) == 1)
-		return (false);
 	if (check_quote(data->line) == false)
 		return (false);
 	/* if (check_wrong_character(data->line) == false)
