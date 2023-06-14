@@ -6,13 +6,13 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 14:59:48 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/14 12:48:26 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/14 18:37:55 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static size_t	nb_arguments(char **cmd)
+static size_t	get_nb_arguments(char **cmd)
 {
 	size_t	i;
 
@@ -24,9 +24,54 @@ static size_t	nb_arguments(char **cmd)
 	return (i);
 }
 
+static	char	*actualise_pwd(char *actual_path, t_env **lst)
+{
+	t_env	*copy;
+	char	*old_pwd;
+
+	old_pwd = NULL;
+	copy = *lst;
+	while (copy != NULL)
+	{
+		if (ft_strcmp(copy->name, "PWD") == 0)
+		{
+			old_pwd = ft_strdup(copy->value);
+			free(copy->value);
+			copy->value = ft_strdup(actual_path);
+			return (old_pwd);
+		}
+		copy = copy->next;
+	}
+	return (NULL);
+}
+
+static	int	get_old_pwd(char *old_pwd, t_env **lst)
+{
+	t_env	*copy;
+
+	copy = *lst;
+	while (copy != NULL)
+	{
+		if (ft_strcmp(copy->name, "OLDPWD") == 0)
+		{
+			free(copy->value);
+			copy->value = old_pwd;
+			return (SUCCESS);
+		}
+		copy = copy->next;
+	}
+	return (FAILURE);
+}
+
 int	implement_cd(char **cmd, t_env **lst)
 {
-	(void)lst;
+	int		nb_arg;
+	char	actual_path[1024];
+	char	*old_pwd;
+
+	nb_arg = 0;
+	old_pwd = NULL;
+	nb_arg = get_nb_arguments(cmd);
 	if (cmd[1])
 	{
 		if (cmd[1][0] == '-')
@@ -35,16 +80,27 @@ int	implement_cd(char **cmd, t_env **lst)
 			return (FAILURE);
 		}
 	}
-	if (nb_arguments(cmd) > 2)
+	if (nb_arg > 2)
 	{
 		ft_dprintf(2, "minishell: cd: too many arguments\n");
 		return (FAILURE);
 	}
-	if (chdir(cmd[1]) == FAILURE)
+	if (nb_arg == 1)
 	{
-		ft_dprintf(2, "minishell: cd: path not fou\n");
+		ft_dprintf(2, "subject: cd with only a relative or absolute path\n");
 		return (FAILURE);
 	}
-	ft_dprintf(2, "In cd\n");
+	if (nb_arg == 2)
+	{
+		if (chdir(cmd[1]) == -1)
+		{
+			ft_dprintf(2, "minishell: cd: path not fou\n");
+			return (FAILURE);
+		}
+		getcwd(actual_path, sizeof(actual_path));
+		old_pwd = actualise_pwd(actual_path, lst);
+		get_old_pwd(old_pwd, lst);
+		return (FAILURE);
+	}
 	return (SUCCESS);
 }
