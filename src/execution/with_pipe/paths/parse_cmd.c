@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 11:17:09 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/15 10:09:57 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/15 11:19:35 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,16 @@ char	*check_cmd_access(char **paths, char *cmd)
 	if (!paths)
 		return (NULL);
 	if (cmd[0] == '\0')
+	{
+		//127 exit status
 		return (NULL);
-	if (cmd != NULL && is_path(cmd) == 1)
+	}
+	if (!ft_strcmp(cmd, ".") || !ft_strcmp(cmd, ".."))
+		return (NULL);
+	if (is_path(cmd) == 1)
 	{
 		tmp = ft_strdup(cmd);
-		if (access(tmp, X_OK) == 0)
-			return (tmp);
-		return (NULL);
+		return (tmp);
 	}
 	while (paths[row])
 	{
