@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 15:12:43 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/14 17:34:36 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/15 11:04:50 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	implement_env(char **cmd, t_env *lst)
 	if (cmd[1])
 	{
 		ft_dprintf(2, "subject : env with no options or arguments\n");
+		g_exit_status = 127;
 		return (FAILURE);
 	}
 	list_print_env(lst);

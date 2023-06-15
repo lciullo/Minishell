@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/14 15:29:24 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/15 10:33:53 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ t_list	*parsing(char *line, t_data *data, t_env *lst_env)
 	list = create_list(data, lst_env, tab_line);
 	if (!list)
 		return (print_error(MALLOC_ERR), NULL);
+	if (ft_lstsize(list) == 1 && list->data[0][0] == '\0')
+	{
+		g_exit_status = 0;
+		return (NULL);
+	}
 	return (list);
 }
 

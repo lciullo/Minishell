@@ -65,9 +65,9 @@ int	launch_exec(t_exec *data, t_list *list, t_env **lst, char **env)
 		execution_of_token(data, list, lst, env);
 	else if (sort_to_launch_exec(list, data) == BUILTIN)
 	{
+		g_exit_status = 0;
 		loop_for_builtin(get_command(list), data, lst);
 		clear_builtin_exec(data, list, lst);
-		g_exit_status = 0;
 		exit(g_exit_status);
 	}
 	close(data->outfile);

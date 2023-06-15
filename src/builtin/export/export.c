@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:52:54 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/14 16:54:57 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/15 16:04:41 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static int	check_name_by_name(char *token, t_env **lst, t_export *stat)
 	if (token[0] == '=')
 	{
 		ft_dprintf(2, "export %s : not a valid identifier\n", token);
+		g_exit_status = 1;
 		return (FAILURE);
 	}
 	name = get_name_variable(token, stat);
@@ -93,6 +94,7 @@ static int	check_name_by_name(char *token, t_env **lst, t_export *stat)
 		free(name);
 		free(value);
 	}
+	g_exit_status = 0;
 	return (SUCCESS);
 }
 
@@ -101,7 +103,6 @@ static int	loop_for_export_arguments(char **token, t_env **lst)
 	t_export	stat;
 	int			i;
 
-
 	stat.equal = 0;
 	stat.in_env = 0;
 	stat.plus = 0;
@@ -109,7 +110,10 @@ static int	loop_for_export_arguments(char **token, t_env **lst)
 	while (token[i])
 	{
 		if (token[i][0] == '-')
+		{
 			ft_dprintf(2, "Invalid option, subject : export with no options\n");
+			g_exit_status = 2;
+		}
 		else
 			check_name_by_name(token[i], lst, &stat);
 		i++;

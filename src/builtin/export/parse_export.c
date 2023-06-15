@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:39:08 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/14 16:43:18 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/15 14:29:38 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static	int	is_valid_syntax(char *name)
 		if (is_valid(name[i]) == FAILURE)
 		{
 			ft_dprintf(2, "export '%s' : not a valid identifier\n", name);
+			g_exit_status = 1;
 			return (FAILURE);
 		}
 		i++;
@@ -76,10 +77,16 @@ int	parse_value(char *value)
 	i = 0;
 	while (value[i] != '\0')
 	{
-		if (value[i] == '(' || value[i] == ')' || \
-		value[i] == '&' || value[i] == ';' || value[i] == '!')
+		if (value[i] == '(' || value[i] == ')')
+		{
+			ft_dprintf(2, "minishell : syntax error near unexpected token \'%c\'\n", value[i]);
+			g_exit_status = 2;
+			return (FAILURE);
+		} 
+		if (value[i] == '&' || value[i] == ';' || value[i] == '!')
 		{
 			ft_dprintf(2, "export %c : not a valid identifier\n", value[i]);
+			g_exit_status = 1;
 			return (FAILURE);
 		}
 		i++;
@@ -105,12 +112,14 @@ int	parse_name(char *name)
 	if (first_char(tmp[0]) == FAILURE)
 	{
 		ft_dprintf(2, "export '%s': not a valid identifier\n", name);
+		g_exit_status = 1;
 		free(tmp);
 		return (FAILURE);
 	}
 	if (last_char(tmp) == FAILURE)
 	{
 		ft_dprintf(2, "export '%s': not a valid identifier\n", name);
+		g_exit_status = 1;
 		free(tmp);
 		return (FAILURE);
 	}

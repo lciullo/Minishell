@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 13:51:38 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/15 09:47:39 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/15 15:17:58 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ char	*join_tab(char **tab)
 	i = 0;
 	while (tab[i])
 	{
-		new_s = ft_strjoin_parsing(new_s, tab[i]);
+		new_s = ft_strjoin_parsing(new_s, tab[i], 0);
 		if (!new_s)
 			return (NULL);
-		new_s = ft_strjoin_parsing(new_s, " ");
+		new_s = ft_strjoin_parsing(new_s, " ", 0);
 		if (!new_s)
 			return (NULL);
 		i++;

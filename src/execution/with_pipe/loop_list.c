@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:46:51 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/14 14:57:52 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/15 10:45:29 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static	int	wait_pids(t_exec *data)
 	while (i < data->nb_block)
 	{
 		if (waitpid(data->pids[i], &status, 0) == -1)
-			g_exit_status = 1;
+			g_exit_status = 1;// demander a brieuc
 		else if (WIFEXITED(status))
 			g_exit_status = WEXITSTATUS(status);
 		ft_close(data->new_fd[0]);

@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 10:03:58 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/12 16:08:08 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/15 15:55:29 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ t_list	*create_list(t_data *data, t_env *env, char **tab_line)
 	if (should_we_expand(&list, env) == FAILURE)
 		return (free_array(tab_line), NULL);
 	parse_line_for_quote(&list);
+	reput_quote(&list);
 	free_array(tab_line);
 	if ((data->nbr_pipe + data->nbr_redir) != 0)
 		del_delimiteur(&list);

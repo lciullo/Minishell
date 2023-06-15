@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 18:13:24 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/14 15:12:52 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/15 18:18:33 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	execute_builtin_in_child(char **token, t_exec *data, t_env **lst)
 	pid = fork();
 	if (pid == FAILURE)
 	{
-		perror("Fork issu in one builtin execution\n");
+		perror("Fork issue in one builtin execution\n");
 		return (FAILURE);
 	}
 	if (pid == 0)
@@ -81,7 +81,7 @@ static int	execute_builtin_in_child(char **token, t_exec *data, t_env **lst)
 		loop_for_builtin(token, data, lst);
 		ft_close(data->infile);
 		ft_close(data->outfile);
-		exit (0);
+		exit (g_exit_status);
 	}
 	if (waitpid(pid, &status, 0) == -1)
 		g_exit_status = 1;
@@ -89,6 +89,7 @@ static int	execute_builtin_in_child(char **token, t_exec *data, t_env **lst)
 		g_exit_status = WEXITSTATUS(status);
 	return (SUCCESS);
 }
+
 int	one_builtin_exec(char **token, t_exec *data, t_env **lst)
 {
 	if (to_fork(token) == TRUE)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 14:59:48 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/15 09:15:12 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/15 18:17:14 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,14 @@ int	implement_cd(char **cmd, t_env **lst)
 	{
 		if (cmd[1][0] == '-')
 		{
+			g_exit_status = 2;
 			ft_dprintf(2, "Invalid option, subject : cd with no options\n");
 			return (FAILURE);
 		}
 	}
 	if (nb_arg > 2)
 	{
+		g_exit_status = 1;
 		ft_dprintf(2, "minishell: cd: too many arguments\n");
 		return (FAILURE);
 	}
@@ -95,13 +97,15 @@ int	implement_cd(char **cmd, t_env **lst)
 	{
 		if (chdir(cmd[1]) == -1)
 		{
-			ft_dprintf(2, "minishell: cd: path not fou\n");
+			ft_dprintf(2, "minishell: cd: path not found\n");
+			g_exit_status = 1;
 			return (FAILURE);
 		}
 		actual_path = getcwd(NULL, 0);
 		old_pwd = actualise_pwd(actual_path, lst);
 		get_old_pwd(old_pwd, lst);
 		free(actual_path);
+		g_exit_status = 0;
 		return (FAILURE);
 	}
 	return (SUCCESS);
