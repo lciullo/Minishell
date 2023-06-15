@@ -6,13 +6,13 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:39:08 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/10 19:06:32 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/14 16:43:18 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	first_char(char c)
+int	first_char(char c)
 {
 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c == '_'))
 		return (SUCCESS);
@@ -25,10 +25,11 @@ int	last_char(char *name)
 	size_t	end;
 	char	c;
 
+	end = 0;
 	if (ft_strlen(name) > 1)
 		end = ft_strlen(name) - 1;
 	else
-		end = 1;
+		end = 0;
 	c = name[end];
 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c == '+') || \
 		(c >= '0' && c <= '9') || (c == '_'))
@@ -67,18 +68,23 @@ static	int	is_valid_syntax(char *name)
 	return (SUCCESS);
 }
 
-int	is_equal(char *name)
+
+int	parse_value(char *value)
 {
 	size_t	i;
 
 	i = 0;
-	while (name[i] != '\0')
+	while (value[i] != '\0')
 	{
-		if (name[i] == '=')
-			return (EQUAL);
+		if (value[i] == '(' || value[i] == ')' || \
+		value[i] == '&' || value[i] == ';' || value[i] == '!')
+		{
+			ft_dprintf(2, "export %c : not a valid identifier\n", value[i]);
+			return (FAILURE);
+		}
 		i++;
 	}
-	return (NO_EQUAL);
+	return (SUCCESS);
 }
 
 int	parse_name(char *name)

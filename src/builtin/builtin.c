@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 10:07:54 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/13 16:44:02 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/14 10:59:52 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	loop_for_builtin(char **token, t_exec *data, t_env **lst)
 	if (ft_strcmp(token[0], "echo") == 0)
 		implement_echo(token);
 	else if (ft_strcmp(token[0], "cd") == 0)
-		implement_cd(token);
+		implement_cd(token, lst);
 	else if (ft_strcmp(token[0], "pwd") == 0)
 		implement_pwd(token);
 	else if (ft_strcmp(token[0], "exit") == 0)

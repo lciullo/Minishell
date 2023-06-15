@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:59:26 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/13 11:50:54 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/14 15:08:58 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@ char	*remove_plus_in_name(char *name)
 	return (name);
 }
 
+/*if (row[0] == '=' && row[1] == '\0')
+		return ((int)ft_strlen(row));
+if (row[0] == '=')
+	{
+		ft_dprintf(2, "export: not a valid identifier\n");
+		return (FAILURE);
+	}*/
+
 static	int	len_of_name(char *row, t_export *stat)
 {
 	int	len;
@@ -37,14 +45,17 @@ static	int	len_of_name(char *row, t_export *stat)
 		ft_dprintf(2, "export: not a valid identifier\n");
 		return (FAILURE);
 	}
-	if (row[0] == '=' && row[1] == '\0')
-		return ((int)ft_strlen(row));
 	while (row[len] != '\0' && row[len] != '=')
 		len++;
 	if (row[len] != '\0' && row[len] == '=')
 		stat->equal = TRUE;
 	if (row[len - 1] != '\0' && row[len - 1] == '+')
 		stat->plus = TRUE;
+	if (stat->equal == FALSE && stat->plus == TRUE)
+	{
+		ft_dprintf(2, "export: not a valid identifier\n");
+		return (FAILURE);
+	}
 	if (stat->plus == TRUE && stat->equal == TRUE)
 		return (len - 1);
 	else if (stat->plus == FALSE && stat->equal == TRUE)
@@ -95,15 +106,4 @@ void	change_equal_to_one(t_env **lst, char *name)
 	}
 }
 
-void	change_equal_to_zero(t_env **lst, char *name)
-{
-	while (*lst != NULL)
-	{
-		if ((ft_strcmp((*lst)->name, name) == 0))
-		{
-			if ((*lst)->equal == 1)
-				(*lst)->equal = 0;
-		}
-		*lst = (*lst)->next;
-	}
-}
+

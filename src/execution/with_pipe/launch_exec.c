@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   launch_exec.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/30 14:02:50 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/15 10:01:11 by cllovio          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 static int	sort_to_launch_exec(t_list *list, t_exec *data)
@@ -63,6 +51,10 @@ static int	execution_of_token(t_exec *data, t_list *list, t_env **lst, char **en
 		execve(data->cmd_with_path, get_command(list), env);
 		clear_execve_issue(data, list, lst);
 	}
+	if (env)
+		free_array(env);
+	if (data->cmd_with_path)
+		free(data->cmd_with_path);
 	exit (g_exit_status);
 	return (0);
 }

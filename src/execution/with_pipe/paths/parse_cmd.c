@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse_cmd.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/02 11:17:09 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/15 09:36:00 by cllovio          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 static char	*find_path(char **env)
@@ -70,17 +58,24 @@ char	*check_cmd_access(char **paths, char *cmd)
 {
 	char	*join_slash;
 	char	*cmd_with_path;
+	char	*tmp;
 	int		row;
 
 	row = 0;
 	join_slash = NULL;
 	cmd_with_path = NULL;
+	tmp = NULL;
 	if (!paths)
 		return (NULL);
 	if (cmd[0] == '\0')
 		return (NULL);
 	if (cmd != NULL && is_path(cmd) == 1)
-		return (cmd);
+	{
+		tmp = ft_strdup(cmd);
+		if (access(tmp, X_OK) == 0)
+			return (tmp);
+		return (NULL);
+	}
 	while (paths[row])
 	{
 		join_slash = ft_strjoin(paths[row], "/");
