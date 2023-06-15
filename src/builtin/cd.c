@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 14:59:48 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/14 18:37:55 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/15 09:15:12 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,12 @@ static	int	get_old_pwd(char *old_pwd, t_env **lst)
 int	implement_cd(char **cmd, t_env **lst)
 {
 	int		nb_arg;
-	char	actual_path[1024];
+	char	*actual_path;
 	char	*old_pwd;
 
 	nb_arg = 0;
 	old_pwd = NULL;
+	actual_path = NULL;
 	nb_arg = get_nb_arguments(cmd);
 	if (cmd[1])
 	{
@@ -97,9 +98,10 @@ int	implement_cd(char **cmd, t_env **lst)
 			ft_dprintf(2, "minishell: cd: path not fou\n");
 			return (FAILURE);
 		}
-		getcwd(actual_path, sizeof(actual_path));
+		actual_path = getcwd(NULL, 0);
 		old_pwd = actualise_pwd(actual_path, lst);
 		get_old_pwd(old_pwd, lst);
+		free(actual_path);
 		return (FAILURE);
 	}
 	return (SUCCESS);
