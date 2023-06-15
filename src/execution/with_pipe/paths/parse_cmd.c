@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 11:17:09 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/13 11:13:26 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/15 09:36:00 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	is_executable(char *cmd, t_exec *data, t_list *list, t_env **lst)
 		if (S_ISDIR(info.st_mode))
 		{
 			ft_dprintf(2, "%s, is a directory\n", cmd);
+			g_exit_status = 126;
 			clear_is_executable(data, list, lst);
 			return (-1);
 		}
