@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 11:17:09 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/13 11:13:26 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/15 10:09:57 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,24 @@ char	*check_cmd_access(char **paths, char *cmd)
 {
 	char	*join_slash;
 	char	*cmd_with_path;
+	char	*tmp;
 	int		row;
 
 	row = 0;
 	join_slash = NULL;
 	cmd_with_path = NULL;
+	tmp = NULL;
 	if (!paths)
 		return (NULL);
 	if (cmd[0] == '\0')
 		return (NULL);
 	if (cmd != NULL && is_path(cmd) == 1)
-		return (cmd);
+	{
+		tmp = ft_strdup(cmd);
+		if (access(tmp, X_OK) == 0)
+			return (tmp);
+		return (NULL);
+	}
 	while (paths[row])
 	{
 		join_slash = ft_strjoin(paths[row], "/");

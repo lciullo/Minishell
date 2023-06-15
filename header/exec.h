@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/13 17:59:40 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/14 16:43:29 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,13 +176,13 @@ void			loop_for_builtin(char **token, t_exec *data, t_env **lst);
 
 int				implement_echo(char **cmd);
 
-int				implement_cd(char **cmd);
+int				implement_cd(char **cmd, t_env **lst);
 
 int				implement_pwd(char **cmd);
 
 int				implement_exit(char **cmd, t_exec *data);
 
-int 			implement_unset(char **token, t_env **lst);
+int				implement_unset(char **token, t_env **lst);
 
 //# --- Environnement--- #
 
@@ -210,9 +210,11 @@ char			*get_value_variable(char *row);
 
 int				parse_name(char *name);
 
-int				is_equal(char *name);
+int				parse_value(char *value);
 
 int				last_char(char *name);
+
+int				first_char(char c);
 
 char			*remove_plus_in_name(char *name);
 
@@ -223,8 +225,6 @@ int				search_and_replace_value(t_env *lst, char *name, char *value, t_export *s
 t_env			*add_back_with_equal(t_env **lst, char *name, char *value);
 
 int				add_to_export(t_env **lst, char *name, char *value, t_export *stat);
-
-void			change_equal_to_zero(t_env **lst, char *name);
 
 void			change_equal_to_one(t_env **lst, char *name);
 
