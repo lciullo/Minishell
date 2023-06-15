@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:29:59 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/15 09:56:41 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/15 18:14:19 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,16 @@ int	init_struct(t_list *list, t_env *lst, t_exec *data, t_data *parsing)
 	data->env_path = NULL;
 	if (!lst)
 		data->env = NULL;
+	//data->env = malloc(sizeof(char *) *  1);
 	else
 	{
 		data->env = fill_env(lst);
 		if (!data->env)
 		{
+			perror("malloc failed here");
 			free(data->pids);
 			free(data->fd_heredoc);
-			return (-1);
+			return (1);
 		}
 	}
 	return (0);

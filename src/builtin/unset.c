@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static void	search_and_delete(char *name, t_env *lst)
+/*static void	search_and_delete(char *name, t_env **lst)
 {
 	t_env	*copy;
 	t_env	*next_node;
@@ -21,6 +21,33 @@ static void	search_and_delete(char *name, t_env *lst)
 		}
 		next_node = copy;
 		copy = copy->next;
+	}
+}*/
+
+static void	search_and_delete(char *name, t_env **lst)
+{
+	t_env	*it;
+	t_env	*prev;
+
+	it = *lst;
+	prev = NULL;
+	while (it)
+	{
+		if (!ft_strcmp(it->name, name))
+		{
+			if (prev)
+				prev->next = it->next;
+			else
+				*lst = it->next;
+			if (it->name)
+				free(it->name);
+			if (it->value)
+				free(it->value);
+			free(it);
+			return ;
+		}
+		prev = it;
+		it = it->next;
 	}
 }
 
@@ -72,11 +99,14 @@ int	implement_unset(char **token, t_env **lst)
 {
 	int	i;
 
+	printf("in unset : %p\n", *lst);
 	i = 1;
+	if (!lst)
+		return (FAILURE);
 	while (token[i] != NULL)
 	{
 		if (parse_unset(token[i]) == SUCCESS)
-			search_and_delete(token[i], *lst);
+			search_and_delete(token[i], lst);
 		i++;
 	}
 	return (SUCCESS);

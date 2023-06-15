@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 14:59:48 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/15 09:15:12 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/15 17:54:25 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static	int	get_old_pwd(char *old_pwd, t_env **lst)
 		{
 			free(copy->value);
 			copy->value = old_pwd;
+			copy->equal = 1;
 			return (SUCCESS);
 		}
 		copy = copy->next;

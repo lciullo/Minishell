@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_env_array.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 11:51:19 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/13 11:05:08 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/15 18:09:56 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ char	**fill_env(t_env *lst)
 	char	**env;
 	size_t	nb_row;
 
+	if (!lst)
+		return (NULL);
 	env = NULL;
 	nb_row = get_nb_row(lst);
 	if (nb_row == 0)
