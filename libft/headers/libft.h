@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:01:44 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/13 12:22:51 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/15 15:08:21 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void			in_exec_print_list(t_list *lst);
 //=====================		VOIR SI ON LE GARDE =============//
 char			*ft_strcpy(char *dest, const char *src);
 //# ============ LIBRARY ============ #
-
+int				ft_atoi_exit(char *str, int *nb);
 long			ft_atoi_long(char *str);
 int				ft_atoi(const char *str);
 bool			ft_isalnum(int c);
