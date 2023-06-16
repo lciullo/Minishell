@@ -25,9 +25,9 @@ int	implement_pwd(char **cmd)
 	}
 	if (current_directory_path)
 	{
-		g_exit_status = 0;
 		ft_dprintf(1, "%s\n", current_directory_path);
 		free(current_directory_path);
 	}
+	g_exit_status = 0;
 	return (0);
 }
