@@ -57,7 +57,7 @@ static int	is_path(char *cmd)
 	return (-1);
 }
 
-char	*check_cmd_access(char **paths, char *cmd)
+char	*check_cmd_access(char **paths, char *cmd, int empty)
 {
 	char	*join_slash;
 	char	*cmd_with_path;
@@ -70,10 +70,18 @@ char	*check_cmd_access(char **paths, char *cmd)
 	tmp = NULL;
 	if (!paths)
 		return (NULL);
-	if (cmd[0] == '\0')
+	if (cmd[0] == '\0' || empty == 0)
 	{
-		g_exit_status = 127;
-		return (NULL);
+		if (empty == 0)
+		{
+			g_exit_status = 0;
+			return (NULL);
+		}
+		else if (cmd[0] == '\0')
+		{
+			g_exit_status = 127;
+			return (NULL);
+		}
 	}
 	if (!ft_strcmp(cmd, ".") || !ft_strcmp(cmd, ".."))
 		return (NULL);
