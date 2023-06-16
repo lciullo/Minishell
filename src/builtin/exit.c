@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 16:52:30 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/15 15:20:57 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:02:54 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	implement_exit(char **cmd, t_exec *data)
 	{
 		ft_dprintf(2, "exit\nminishell: exit: %s: numeric argument is required\n",
 			cmd[1]);
+		data->end = 1;
 		return (FAILURE);
 	}
 	data->end = 1;

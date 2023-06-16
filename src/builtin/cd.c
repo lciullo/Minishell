@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 14:59:48 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/15 17:54:25 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/16 09:14:52 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,13 @@ static	char	*actualise_pwd(char *actual_path, t_env **lst)
 	{
 		if (ft_strcmp(copy->name, "PWD") == 0)
 		{
-			old_pwd = ft_strdup(copy->value);
-			free(copy->value);
-			copy->value = ft_strdup(actual_path);
+			if (copy->value[0] != '\0')
+			{
+				old_pwd = ft_strdup(copy->value);
+				free(copy->value);
+			}
+			else
+				copy->value = ft_strdup(actual_path);
 			return (old_pwd);
 		}
 		copy = copy->next;
@@ -54,7 +58,8 @@ static	int	get_old_pwd(char *old_pwd, t_env **lst)
 	{
 		if (ft_strcmp(copy->name, "OLDPWD") == 0)
 		{
-			free(copy->value);
+			if (copy->value)
+				free(copy->value);
 			copy->value = old_pwd;
 			copy->equal = 1;
 			return (SUCCESS);
@@ -100,6 +105,11 @@ int	implement_cd(char **cmd, t_env **lst)
 			return (FAILURE);
 		}
 		actual_path = getcwd(NULL, 0);
+		if (actual_path == NULL)
+		{
+			ft_dprintf(2, "minishell: cd: path not fou\n");
+			return (FAILURE);
+		}
 		old_pwd = actualise_pwd(actual_path, lst);
 		get_old_pwd(old_pwd, lst);
 		free(actual_path);

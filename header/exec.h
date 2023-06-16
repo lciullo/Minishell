@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:40:53 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/14 16:43:29 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/16 09:03:15 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ int				implement_env(char **cmd, t_env *lst);
 
 size_t			begin_of_name(char *path);
 
-char			**fill_env(t_env *lst);
+char			**fill_env(t_env *lst, int *malloc_check);
 
 t_env			*creat_env(char **env);
 

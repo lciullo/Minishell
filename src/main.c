@@ -33,7 +33,8 @@ static	void	loop_of_prompt(char *prompt_name, t_exec *data, t_env *lst)
 		if (data->end == 1)
 		{
 			ft_dprintf(1, "exit\n");
-			ft_lstclear_env(&lst, free);
+			if (lst)
+				ft_lstclear_env(&lst, free);
 			break ;
 		}
 		signal(SIGINT, control_c_realod_prompt);

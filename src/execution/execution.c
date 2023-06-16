@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:50:28 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/15 18:06:08 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/16 08:50:38 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	execution(t_list *list, t_data *parsing, t_exec *data, t_env **lst)
 	close_for_heredoc(list);
 	ft_close(data->infile);
 	free_struct(data);
-	if (data->env == NULL)
-		free(data->env);
+	if (data->env != NULL)
+		free_array(data->env);
 	return (0);
 }
