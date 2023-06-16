@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/12 19:15:30 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/15 15:23:07 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,8 @@ void	list_print(t_list *lst);
 
 int	should_we_expand(t_list **list, t_env *env);
 void	replace_space(char *line, int i);
-char	*ft_strjoin_parsing(char *s1, char *s2);
+char	*ft_strjoin_parsing(char *s1, char *s2, int type);
 void	print_error(int error_code);
+void	reput_quote(t_list **list);
 
 #endif

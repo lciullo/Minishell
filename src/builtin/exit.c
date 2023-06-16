@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 16:52:30 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/16 11:02:54 by lciullo          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -48,16 +37,18 @@ int	implement_exit(char **cmd, t_exec *data)
 	else if (cmd[2])
 	{
 		data->end = 0;
+		g_exit_status = 2;
 		ft_dprintf(2, "exit\nminishell: exit: too many arguments\n");
 		return (1);
 	}
 	if ((ft_atoi_exit(cmd[1], &nb) == FAILURE) || ft_is_numeric(cmd[1]) == FAILURE)
 	{
+		g_exit_status = 2;
 		ft_dprintf(2, "exit\nminishell: exit: %s: numeric argument is required\n",
 			cmd[1]);
 		data->end = 1;
 		return (FAILURE);
 	}
 	data->end = 1;
-	return (SUCCESS);
+	return (nb);
 }

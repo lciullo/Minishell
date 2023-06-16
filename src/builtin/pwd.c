@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 15:35:56 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/16 09:10:01 by lciullo          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -23,6 +12,7 @@ int	implement_pwd(char **cmd)
 		if (cmd[1][0] == '-')
 		{
 			ft_dprintf(2, "Invalid option, subject : pwd with no options\n");
+			g_exit_status = 2;
 			return (FAILURE);
 		}
 	}
@@ -30,6 +20,7 @@ int	implement_pwd(char **cmd)
 	if (current_directory_path[0] == '\0')
 	{
 		ft_dprintf(2, "doublechoc-> : %s\n", strerror(errno));
+		g_exit_status = 0;
 		return (errno);
 	}
 	if (current_directory_path)
@@ -37,5 +28,6 @@ int	implement_pwd(char **cmd)
 		ft_dprintf(1, "%s\n", current_directory_path);
 		free(current_directory_path);
 	}
+	g_exit_status = 0;
 	return (0);
 }

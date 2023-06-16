@@ -67,7 +67,8 @@ int	parse_unset(char *value)
 	i = 0;
 	if (!value || value[0] == '\0')
 	{
-		ft_dprintf(2, "export : not a valid identifier\n");
+		ft_dprintf(2, "unset : not a valid identifier\n");
+		g_exit_status = 1;
 		return (FAILURE);
 	}
 	if (value[0] != '\0')
@@ -75,11 +76,13 @@ int	parse_unset(char *value)
 		if (value[0] == '-')
 		{
 			ft_dprintf(2, "Invalid option, subject : unset with no options\n");
+			g_exit_status = 2;
 			return (FAILURE);
 		}
 		if (first_char(value[0]) == FAILURE)
 		{
-			ft_dprintf(2, "export %s : not a valid identifier\n", value);
+			ft_dprintf(2, "unset %s : not a valid identifier\n", value);
+			g_exit_status = 1;
 			return (FAILURE);
 		}
 	}
@@ -87,11 +90,13 @@ int	parse_unset(char *value)
 	{
 		if (is_valid(value[i]) == FAILURE)
 		{
-			ft_dprintf(2, "export %s : not a valid identifier\n", value);
+			ft_dprintf(2, "unset %s : not a valid identifier\n", value);
+			g_exit_status = 1;
 			return (FAILURE);
 		}
 		i++;
 	}
+	g_exit_status = 0;
 	return (SUCCESS);
 }
 

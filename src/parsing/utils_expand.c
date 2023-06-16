@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 12:50:41 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/12 14:24:45 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/15 15:39:11 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*check_var(char *name_var, t_env *lst_env, char *new_line)
 	{
 		if (ft_strcmp(name_var, lst_env->name) == 0)
 		{
-			new_line = ft_strjoin_parsing(new_line, lst_env->value);
+			new_line = ft_strjoin_parsing(new_line, lst_env->value, 0);
 			if (!(new_line))
 				return (NULL);
 			return (new_line);

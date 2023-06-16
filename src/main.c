@@ -15,12 +15,13 @@ int	main(int ac, char **av, char **env)
 
 	lst = NULL;
 	lst = creat_env(env);
+	g_exit_status = 0;
 	(void)ac;
 	(void)av;
 	data.end = 0;
 	prompt_name = "\001"BLUE"\002""doublechoc-> ""\001"END"\002";
 	loop_of_prompt(prompt_name, &data, lst);
-	return (0);
+	return (g_exit_status);
 }
 
 static	void	loop_of_prompt(char *prompt_name, t_exec *data, t_env *lst)

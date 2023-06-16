@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:59:26 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/14 15:08:58 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/15 14:05:11 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static	int	len_of_name(char *row, t_export *stat)
 	if (row[0] == '\0')
 	{
 		ft_dprintf(2, "export: not a valid identifier\n");
+		g_exit_status = 1;
 		return (FAILURE);
 	}
 	while (row[len] != '\0' && row[len] != '=')
@@ -54,6 +55,7 @@ static	int	len_of_name(char *row, t_export *stat)
 	if (stat->equal == FALSE && stat->plus == TRUE)
 	{
 		ft_dprintf(2, "export: not a valid identifier\n");
+		g_exit_status = 1;
 		return (FAILURE);
 	}
 	if (stat->plus == TRUE && stat->equal == TRUE)

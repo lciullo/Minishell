@@ -38,15 +38,17 @@ static int	execution_of_token(t_exec *data, t_list *list, t_env **lst, char **en
 	data->cmd_with_path = check_cmd_access(data->env_path, data->cmd);
 	if (!data->cmd_with_path)
 	{
+		g_exit_status = 127;
 		clear_cmd_not_found(data, list, lst);
 		close_tab(data);
 		if (env)
 			free_array(env);
-		exit(1);
+		exit(g_exit_status);
 	}
 	close_tab(data);
 	if (data->cmd_with_path != NULL && is_executable(data->cmd_with_path, data, list, lst) == 0)
 	{
+		g_exit_status = 1;
 		execve(data->cmd_with_path, get_command(list), env);
 		clear_execve_issue(data, list, lst);
 	}
@@ -54,21 +56,20 @@ static int	execution_of_token(t_exec *data, t_list *list, t_env **lst, char **en
 		free_array(env);
 	if (data->cmd_with_path)
 		free(data->cmd_with_path);
-	exit (1);
+	exit (g_exit_status);
 	return (0);
 }
 
 int	launch_exec(t_exec *data, t_list *list, t_env **lst, char **env)
 {
 	if (sort_to_launch_exec(list, data) == TOKEN)
-	{
 		execution_of_token(data, list, lst, env);
-	}
 	else if (sort_to_launch_exec(list, data) == BUILTIN)
 	{
+		g_exit_status = 0;
 		loop_for_builtin(get_command(list), data, lst);
 		clear_builtin_exec(data, list, lst);
-		exit(1);
+		exit(g_exit_status);
 	}
 	close(data->outfile);
 	exit(1);

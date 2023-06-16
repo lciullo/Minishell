@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse_cmd.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/02 11:17:09 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/15 11:19:35 by lciullo          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -48,6 +37,7 @@ int	is_executable(char *cmd, t_exec *data, t_list *list, t_env **lst)
 		if (S_ISDIR(info.st_mode))
 		{
 			ft_dprintf(2, "%s, is a directory\n", cmd);
+			g_exit_status = 126;
 			clear_is_executable(data, list, lst);
 			return (-1);
 		}

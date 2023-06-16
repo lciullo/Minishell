@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:43:33 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/13 09:07:05 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/14 10:55:50 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	get_type_quote_here_doc(t_list **list);
 void	change_list(t_list **list)
 {
 	t_list	*temp;
-
+	
 	temp = (*list);
 	while (temp)
 	{

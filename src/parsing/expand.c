@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:20:07 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/13 10:31:51 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/15 15:34:22 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,16 +93,17 @@ static int	handle_dollar_sign(t_expand *utils, int *i, int *start)
 		if (!(utils->new_line))
 			return (FAILURE);
 	}
+	// faire une seule fonction pour pouur les 2 if
 	if (utils->line[*i + 1] == '$')
 	{
-		utils->new_line = ft_strjoin_parsing(utils->new_line, "$$");
+		utils->new_line = ft_strjoin_parsing(utils->new_line, "$$", 0);
 		if (!(utils->new_line))
 			return (free(utils->line), FAILURE);
 		*i = *i + 2;
 	}
 	else if (utils->line[*i + 1] == '?')
 	{
-		utils->new_line = ft_strjoin_parsing(utils->new_line, ft_itoa(g_exit_status));
+		utils->new_line = ft_strjoin_parsing(utils->new_line, ft_itoa(g_exit_status), 0);
 		if (!(utils->new_line))
 			return (free(utils->line), FAILURE);
 		*i = *i + 2;
