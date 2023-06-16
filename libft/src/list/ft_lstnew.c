@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:36:12 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/13 12:20:15 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/16 15:31:09 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_list	*ft_lstnew(char **token, int type)
 	tab->type = type;
 	tab->fd = 0;
 	tab->quote_here_doc = 0;
+	tab->empty = NOT_EMPTY;
 	tab->next = NULL;
 	return (tab);
 }

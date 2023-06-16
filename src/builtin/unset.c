@@ -104,7 +104,6 @@ int	implement_unset(char **token, t_env **lst)
 {
 	int	i;
 
-	printf("in unset : %p\n", *lst);
 	i = 1;
 	if (!lst)
 		return (FAILURE);

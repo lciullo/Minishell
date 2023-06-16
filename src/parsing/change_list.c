@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:43:33 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/14 10:55:50 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/16 15:58:35 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ void	parse_line_for_quote(t_list **list)
 	temp = (*list); 
 	while (temp)
 	{
-		if (temp->type == TOKEN || temp->type == BUILTIN || temp->type == HERE_DOC)
+		if (temp->type == TOKEN || temp->type == BUILTIN || temp->type == HERE_DOC \
+		|| temp->type == INFILE || temp->type == OUTFILE || temp->type == APPEND)
 		{
 			r = 0;
 			while (temp->data[r])
@@ -89,6 +90,20 @@ void	parse_line_for_quote(t_list **list)
 				r++;
 			}
 		}
+		temp = temp->next;
+	}
+}
+
+
+void	is_it_empty(t_list **list)
+{
+	t_list *temp;
+
+	temp = (*list);
+	while (temp)
+	{
+		if (temp->data[0][0] == '\0')
+			temp->empty = EMPTY;
 		temp = temp->next;
 	}
 }
