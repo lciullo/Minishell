@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:43:33 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/16 15:58:35 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/16 17:34:52 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,9 @@ void	is_it_empty(t_list **list)
 	while (temp)
 	{
 		if (temp->data[0][0] == '\0')
-			temp->empty = EMPTY;
+		{
+			temp->empty = 0;
+		}
 		temp = temp->next;
 	}
 }

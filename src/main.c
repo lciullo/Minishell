@@ -67,7 +67,7 @@ static void	core_of_program(char *line, t_exec *data, t_env **lst)
 	list = parsing(line, &data_parsing, *lst);
 	if (list == NULL)
 		return ;
-	print_list(list);
+	//print_list(list);
 	if (execution(list, &data_parsing, data, lst) == -1)
 		perror("execution issue");
 	free(line);

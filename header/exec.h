@@ -73,7 +73,7 @@ int				get_path_env(t_exec *data);
 
 //# --- Check access ---#
 
-char			*check_cmd_access(char **paths, char *cmd);
+char			*check_cmd_access(char **paths, char *cmd, int empty);
 
 //# --- Check if is executable ---#
 
