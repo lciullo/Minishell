@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:01:44 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/15 15:08:21 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/16 15:51:56 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_list
 	int				type;
 	int				fd;
 	int				quote_here_doc;
+	int				empty;
 	struct s_list	*next;
 }	t_list;
 
@@ -49,6 +50,11 @@ typedef struct s_lst
 enum {
 	PRINT,
 	DO_NOT,
+};
+
+enum {
+	EMPTY,
+	NOT_EMPTY,
 };
 
 enum {

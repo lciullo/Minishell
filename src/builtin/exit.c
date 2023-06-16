@@ -3,7 +3,7 @@
 
 static int	is_valid(int c)
 {
-	if ((c >= '0' && c <= '9') || (c == ' '))
+	if ((c >= '0' && c <= '9') || (c == ' ') || (c == '-' || c == '+'))
 	{
 		return (SUCCESS);
 	}
@@ -34,20 +34,20 @@ int	implement_exit(char **cmd, t_exec *data)
 		data->end = 1;
 		return (0);
 	}
-	else if (cmd[2])
-	{
-		data->end = 0;
-		g_exit_status = 2;
-		ft_dprintf(2, "exit\nminishell: exit: too many arguments\n");
-		return (1);
-	}
-	if ((ft_atoi_exit(cmd[1], &nb) == FAILURE) || ft_is_numeric(cmd[1]) == FAILURE)
+	if (((ft_atoi_exit(cmd[1], &nb) == FAILURE) || ft_is_numeric(cmd[1]) == FAILURE))
 	{
 		g_exit_status = 2;
 		ft_dprintf(2, "exit\nminishell: exit: %s: numeric argument is required\n",
 			cmd[1]);
 		data->end = 1;
 		return (FAILURE);
+	}
+	if (cmd[2])
+	{
+		data->end = 0;
+		g_exit_status = 1;
+		ft_dprintf(2, "exit\nminishell: exit: too many arguments\n");
+		return (1);
 	}
 	data->end = 1;
 	g_exit_status = nb;

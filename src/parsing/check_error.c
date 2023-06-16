@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:20 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/12 19:13:18 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/16 14:54:19 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ bool	check_pipe(char	*line)
 	{
 		if (i == 0 && line[i] == '|')
 			return (print_error(PIPE_ERR), false);
+		if (line[i] == '\'' || line[i] == '\"')
+			skip_quote(line, &i, line[i]);
 		if (line[i] == '|' && (line[skip_white_space_2(line, i + 1)] == '\0' \
 		|| line[skip_white_space_2(line, i + 1)] == '|'))
 			return (print_error(PIPE_ERR), false);

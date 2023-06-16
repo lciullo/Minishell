@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/15 15:23:07 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/16 15:51:49 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,7 @@ void	replace_space(char *line, int i);
 char	*ft_strjoin_parsing(char *s1, char *s2, int type);
 void	print_error(int error_code);
 void	reput_quote(t_list **list);
+
+void	is_it_empty(t_list **list);
 
 #endif
