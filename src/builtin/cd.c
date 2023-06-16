@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 14:59:48 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/15 18:17:14 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/16 10:29:21 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	implement_cd(char **cmd, t_env **lst)
 	}
 	if (nb_arg == 1)
 	{
+		g_exit_status = 1;
 		ft_dprintf(2, "subject: cd with only a relative or absolute path\n");
 		return (FAILURE);
 	}

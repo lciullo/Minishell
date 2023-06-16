@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 14:37:22 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/05 13:37:09 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/16 10:34:39 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ int	implement_echo(char **cmd)
 	}
 	if (option)
 		ft_dprintf(1, "\n");
+	g_exit_status = 0;
 	return (0);
 }

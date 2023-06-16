@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 16:52:30 by lciullo           #+#    #+#             */
-/*   Updated: 2023/04/26 16:05:15 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/16 11:00:43 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,20 @@ int	implement_exit(char **cmd, t_exec *data)
 	else if (cmd[2])
 	{
 		data->end = 0;
+		g_exit_status = 2;
 		ft_dprintf(2, "exit\nminishell: exit: too many arguments\n");
 		return (1);
 	}
 	nb = ft_atoi_long(cmd[1]);
 	if (nb == -1)
 	{
+		g_exit_status = 2;
 		ft_dprintf(2, "exit\nminishell: exit: %s: numeric argument is required\n",
 			cmd[1]);
 		return (2);
 	}
 	data->end = 1;
+	g_exit_status = nb;
 	nb = (nb + 256) % 256;
 	return (nb);
 }
