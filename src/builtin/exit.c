@@ -1,22 +1,34 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 16:52:30 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/16 11:00:43 by cllovio          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
+static int	is_valid(int c)
+{
+	if ((c >= '0' && c <= '9') || (c == ' '))
+	{
+		return (SUCCESS);
+	}
+	else
+		return (FAILURE);
+}
+
+static int	ft_is_numeric(char *nb)
+{
+	int	i;
+
+	i = 0;
+	while (nb[i] != '\0')
+	{
+		if (is_valid(nb[i]) == FAILURE)
+			return (FAILURE);
+		i++;
+	}
+	return (SUCCESS);
+}
+
 int	implement_exit(char **cmd, t_exec *data)
 {
-	long	nb;
+	int	nb;
 
-	nb = 0;
 	if (ft_strcmp(cmd[0], "exit") == 0 && !cmd[1])
 	{
 		data->end = 1;
@@ -29,16 +41,14 @@ int	implement_exit(char **cmd, t_exec *data)
 		ft_dprintf(2, "exit\nminishell: exit: too many arguments\n");
 		return (1);
 	}
-	nb = ft_atoi_long(cmd[1]);
-	if (nb == -1)
+	if ((ft_atoi_exit(cmd[1], &nb) == FAILURE) || ft_is_numeric(cmd[1]) == FAILURE)
 	{
 		g_exit_status = 2;
 		ft_dprintf(2, "exit\nminishell: exit: %s: numeric argument is required\n",
 			cmd[1]);
-		return (2);
+		data->end = 1;
+		return (FAILURE);
 	}
 	data->end = 1;
-	g_exit_status = nb;
-	nb = (nb + 256) % 256;
 	return (nb);
 }

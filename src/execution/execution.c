@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/26 15:50:28 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/15 13:30:54 by cllovio          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -50,7 +39,7 @@ int	execution(t_list *list, t_data *parsing, t_exec *data, t_env **lst)
 	close_for_heredoc(list);
 	ft_close(data->infile);
 	free_struct(data);
-	if (data->env)
+	if (data->env != NULL)
 		free_array(data->env);
 	return (0);
 }

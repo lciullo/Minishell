@@ -1,3 +1,4 @@
+
 #include "minishell.h"
 
 static char	*find_path(char **env)
@@ -68,13 +69,16 @@ char	*check_cmd_access(char **paths, char *cmd)
 	if (!paths)
 		return (NULL);
 	if (cmd[0] == '\0')
+	{
+		//127 exit status
 		return (NULL);
-	if (cmd != NULL && is_path(cmd) == 1)
+	}
+	if (!ft_strcmp(cmd, ".") || !ft_strcmp(cmd, ".."))
+		return (NULL);
+	if (is_path(cmd) == 1)
 	{
 		tmp = ft_strdup(cmd);
-		if (access(tmp, X_OK) == 0)
-			return (tmp);
-		return (NULL);
+		return (tmp);
 	}
 	while (paths[row])
 	{

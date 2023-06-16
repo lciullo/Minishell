@@ -1,3 +1,4 @@
+
 #include "minishell.h"
 
 static int	sort_to_launch_exec(t_list *list, t_exec *data)

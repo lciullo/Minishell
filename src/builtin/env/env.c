@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/27 15:12:43 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/15 11:04:50 by cllovio          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -47,9 +36,20 @@ t_env	*creat_env(char **env)
 {
 	size_t		row;
 	t_env		*lst;
+	char		*pwd;
 
 	lst = NULL;
 	row = 0;
+	pwd = NULL;
+	if (env[0] == NULL)
+	{
+		pwd = getcwd(NULL, 0);
+		ft_lstadd_back_env(&lst, ft_lstnew_env(ft_strdup("PWD"), pwd, 1));
+		ft_lstadd_back_env(&lst, ft_lstnew_env(ft_strdup("SHLVL"), ft_strdup("1"), 1));
+		ft_lstadd_back_env(&lst, ft_lstnew_env(ft_strdup("_"), ft_strdup("/usr/bin/env"), 1));
+		ft_lstadd_back_env(&lst, ft_lstnew_env(ft_strdup("OLDPWD"), NULL, 0));
+		return (lst);
+	}
 	while (env[row] != NULL)
 	{
 		lst = fill_list_env(env[row], lst);
@@ -66,6 +66,8 @@ int	implement_env(char **cmd, t_env *lst)
 		g_exit_status = 127;
 		return (FAILURE);
 	}
+	if (!lst)
+		return (FAILURE);
 	list_print_env(lst);
 	return (1);
 }

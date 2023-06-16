@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 15:35:56 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/15 17:32:15 by cllovio          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -28,14 +17,17 @@ int	implement_pwd(char **cmd)
 		}
 	}
 	current_directory_path = getcwd(NULL, 0);
-	if (!current_directory_path)
+	if (current_directory_path[0] == '\0')
 	{
 		ft_dprintf(2, "doublechoc-> : %s\n", strerror(errno));
 		g_exit_status = 0;
 		return (errno);
 	}
-	g_exit_status = 0;
-	ft_dprintf(1, "%s\n", current_directory_path);
-	free(current_directory_path);
+	if (current_directory_path)
+	{
+		g_exit_status = 0;
+		ft_dprintf(1, "%s\n", current_directory_path);
+		free(current_directory_path);
+	}
 	return (0);
 }

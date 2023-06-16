@@ -179,7 +179,7 @@ int				implement_env(char **cmd, t_env *lst);
 
 size_t			begin_of_name(char *path);
 
-char			**fill_env(t_env *lst);
+char			**fill_env(t_env *lst, int *malloc_check);
 
 t_env			*creat_env(char **env);
 
