@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:29:59 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/15 09:56:41 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/16 09:01:57 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,9 @@ static	int	initialize_integers(t_list *list, t_exec *data, t_data *parsing)
 
 int	init_struct(t_list *list, t_env *lst, t_exec *data, t_data *parsing)
 {
+	int	malloc_check;
+
+	malloc_check = 1;
 	if (initialize_integers(list, data, parsing) == -1)
 		return (-1);
 	data->cmd_with_path = NULL;
@@ -93,12 +96,15 @@ int	init_struct(t_list *list, t_env *lst, t_exec *data, t_data *parsing)
 		data->env = NULL;
 	else
 	{
-		data->env = fill_env(lst);
+		data->env = fill_env(lst, &malloc_check);
 		if (!data->env)
 		{
+			ft_dprintf(1, "check malloc %d\n", malloc_check);
+			perror("malloc failed here");
+			return (0);
 			free(data->pids);
 			free(data->fd_heredoc);
-			return (-1);
+			return (1);
 		}
 	}
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_print.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 10:46:00 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/13 12:01:57 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/15 17:31:22 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,13 @@ void	list_print_env(t_env *lst)
 	copy = lst;
 	while (copy)
 	{
-		ft_dprintf(1, "%s=%s\n", copy->name, copy->value);
+		if (copy->equal == TRUE)
+		{
+			if (copy->value)
+				ft_dprintf(1, "declare -x %s=\"%s\"\n", copy->name, copy->value);
+			else if (!copy->value)
+				ft_dprintf(1, "declare -x %s=\"\"\n", copy->name);
+		}
 		copy = copy->next;
 	}
 }

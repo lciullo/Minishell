@@ -3,7 +3,7 @@
 static void	loop_of_prompt(char *prompt_name, t_exec *data, t_env *lst);
 static void	control_c_realod_prompt(int signal);
 static void	display_new_line(int signal);
-static void	core_of_program(char *line, t_exec *data, t_env *lst);
+static void	core_of_program(char *line, t_exec *data, t_env **lst);
 
 int g_exit_status;
 
@@ -33,7 +33,8 @@ static	void	loop_of_prompt(char *prompt_name, t_exec *data, t_env *lst)
 		if (data->end == 1)
 		{
 			ft_dprintf(1, "exit\n");
-			ft_lstclear_env(&lst, free);
+			if (lst)
+				ft_lstclear_env(&lst, free);
 			break ;
 		}
 		signal(SIGINT, control_c_realod_prompt);
@@ -48,12 +49,12 @@ static	void	loop_of_prompt(char *prompt_name, t_exec *data, t_env *lst)
 		}
 		if (line[0])
 			add_history(line);
-		core_of_program(line, data, lst);
+		core_of_program(line, data, &lst);
 		//printf("exit status : %d\n", g_exit_status);
 	}
 }
 
-static void	core_of_program(char *line, t_exec *data, t_env *lst)
+static void	core_of_program(char *line, t_exec *data, t_env **lst)
 {
 	t_list		*list;
 	t_data		data_parsing;
@@ -62,11 +63,11 @@ static void	core_of_program(char *line, t_exec *data, t_env *lst)
 	if (ft_isascii(line) == 0)
 		exit(1);
 	//list_print_env(lst);
-	list = parsing(line, &data_parsing, lst);
+	list = parsing(line, &data_parsing, *lst);
 	if (list == NULL)
 		return ;
 	//print_list(list);
-	if (execution(list, &data_parsing, data, &lst) == -1)
+	if (execution(list, &data_parsing, data, lst) == -1)
 		perror("execution issue");
 	free(line);
 	ft_lstclear(&list, free);
