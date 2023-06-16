@@ -50,5 +50,6 @@ int	implement_exit(char **cmd, t_exec *data)
 		return (FAILURE);
 	}
 	data->end = 1;
+	g_exit_status = nb;
 	return (nb);
 }

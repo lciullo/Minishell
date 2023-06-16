@@ -100,7 +100,8 @@ int	implement_cd(char **cmd, t_env **lst)
 		actual_path = getcwd(NULL, 0);
 		if (actual_path == NULL)
 		{
-			ft_dprintf(2, "minishell: cd: path not fou\n");
+			ft_dprintf(2, "minishell: cd: path not foumd\n");
+			g_exit_status = 1;
 			return (FAILURE);
 		}
 		actual_path = getcwd(NULL, 0);
