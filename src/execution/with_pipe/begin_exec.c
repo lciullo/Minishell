@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 17:44:33 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/16 16:16:36 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/17 16:58:02 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,12 @@ static	void	switch_and_close_fds(t_exec *data)
 	return ;
 }
 
+static void	signal_handeler(int signal)
+{
+	(void)signal;
+	return ;
+}
+
 int	execution_core(t_list *list, t_exec *data, t_env **lst)
 {
 	if (data->exec_progress != data->nb_block - 1)
@@ -55,6 +61,8 @@ int	execution_core(t_list *list, t_exec *data, t_env **lst)
 	}
 	else
 		data->new_fd[1] = STDOUT_FILENO;
+	signal(SIGQUIT, signal_handeler);
+	signal(SIGINT, signal_handeler);
 	data->pids[data->nb_pids] = fork();
 	if (data->pids[data->nb_pids] == -1)
 	{

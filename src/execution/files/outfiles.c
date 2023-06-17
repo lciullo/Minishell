@@ -31,7 +31,7 @@ static	int	manage_outfile(int type, char *outfile, t_exec *data)
 		ft_close(data->infile);
 		ft_close(data->new_fd[0]);
 		ft_close(data->new_fd[1]);
-		perror("Open outfile issu");
+		perror("Permission denied");
 		return (-1);
 	}
 	return (0);

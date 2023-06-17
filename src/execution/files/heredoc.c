@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:25:34 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/13 10:19:47 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/17 16:07:18 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ static	void	loop_in_child_heredoc(t_exec *data, int *fd, char *delimiter, t_env 
 	while (1)
 	{
 		signal(SIGINT, heredoc_ctr_c);
-		signal(SIGINT, heredoc_new_line);
+		signal(SIGQUIT, SIG_IGN);
 		line = readline("heredoc> ");
+		signal(SIGINT, heredoc_new_line);
 		if (line)
 		{
 			if (!ft_strcmp(line, delimiter))
@@ -40,7 +41,11 @@ static	void	loop_in_child_heredoc(t_exec *data, int *fd, char *delimiter, t_env 
 			free(line);
 		}
 		else
-			printf("\n");
+		{
+			ft_dprintf(2, "here-document at line 2 delimited by end-of-file\n");
+			free(line);
+			exit (1);
+		}
 	}
 	close(fd[1]);
 	exit(1);

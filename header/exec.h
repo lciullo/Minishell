@@ -31,6 +31,7 @@ typedef struct s_exec
 	char	*paths;
 	char	**env_path;
 	char	**env;
+	t_list	*head;
 }	t_exec;
 
 typedef struct s_export

@@ -81,6 +81,7 @@ int	init_struct(t_list *list, t_env *lst, t_exec *data, t_data *parsing)
 	data->cmd = NULL;
 	data->paths = NULL;
 	data->env_path = NULL;
+	data->head = list;
 	if (!lst)
 		data->env = NULL;
 	else

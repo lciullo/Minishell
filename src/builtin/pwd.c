@@ -17,12 +17,13 @@ int	implement_pwd(char **cmd)
 		}
 	}
 	current_directory_path = getcwd(NULL, 0);
-	if (current_directory_path[0] == '\0')
+	if (current_directory_path == NULL)
 	{
-		ft_dprintf(2, "doublechoc-> : %s\n", strerror(errno));
+		ft_dprintf(2, "pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
 		g_exit_status = 0;
 		return (errno);
 	}
+	ft_dprintf(2, "getcwd return %s\n", current_directory_path);
 	if (current_directory_path)
 	{
 		ft_dprintf(1, "%s\n", current_directory_path);

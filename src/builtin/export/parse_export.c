@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 13:39:08 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/15 14:29:38 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/17 12:19:22 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	parse_value(char *value)
 			g_exit_status = 2;
 			return (FAILURE);
 		} 
-		if (value[i] == '&' || value[i] == ';' || value[i] == '!')
+		if (value[i] == '&' || value[i] == ';')
 		{
 			ft_dprintf(2, "export %c : not a valid identifier\n", value[i]);
 			g_exit_status = 1;

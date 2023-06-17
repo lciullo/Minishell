@@ -41,10 +41,14 @@ void	clear_is_executable(t_exec *data, t_list *list, t_env **lst)
 void	clear_builtin_exec(t_exec *data, t_list *list, t_env **lst)
 {
 	if (list)
-		ft_lstclear(&list, free);
+	{
+		ft_lstclear(&data->head, free);
+	}
 	if (lst)
 		ft_lstclear_env(lst, free);
 	free_struct(data);
+	if (data->env != NULL)
+		free_array(data->env);
 	close_all_fds(data);
 	close(data->outfile);
 	close(data->infile);
