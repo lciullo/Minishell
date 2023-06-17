@@ -44,10 +44,15 @@ t_env	*creat_env(char **env)
 	if (env[0] == NULL)
 	{
 		pwd = getcwd(NULL, 0);
+		/*if (!pwd)
+		{
+			return (NULL);
+		}*/
 		ft_lstadd_back_env(&lst, ft_lstnew_env(ft_strdup("PWD"), pwd, 1));
 		ft_lstadd_back_env(&lst, ft_lstnew_env(ft_strdup("SHLVL"), ft_strdup("1"), 1));
 		ft_lstadd_back_env(&lst, ft_lstnew_env(ft_strdup("_"), ft_strdup("/usr/bin/env"), 1));
 		ft_lstadd_back_env(&lst, ft_lstnew_env(ft_strdup("OLDPWD"), NULL, 0));
+		//free(pwd);
 		return (lst);
 	}
 	while (env[row] != NULL)
@@ -55,6 +60,7 @@ t_env	*creat_env(char **env)
 		lst = fill_list_env(env[row], lst);
 		row++;
 	}
+	//strcmp SHLVL atoi itoa 1000 on retourne 1
 	return (lst);
 }
 

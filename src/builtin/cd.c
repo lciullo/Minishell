@@ -104,7 +104,6 @@ int	implement_cd(char **cmd, t_env **lst)
 			g_exit_status = 1;
 			return (FAILURE);
 		}
-		actual_path = getcwd(NULL, 0);
 		old_pwd = actualise_pwd(actual_path, lst);
 		get_old_pwd(old_pwd, lst);
 		free(actual_path);
