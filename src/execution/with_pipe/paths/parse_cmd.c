@@ -45,7 +45,7 @@ int	is_executable(char *cmd, t_exec *data, t_list *list, t_env **lst)
 		return (0);
 	}
 	ft_dprintf(2, "No such file or directory\n");
-	g_exit_status = 126;
+	g_exit_status = 127;
 	clear_is_executable(data, list, lst);
 	return (-1);
 }

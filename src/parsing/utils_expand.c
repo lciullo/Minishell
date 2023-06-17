@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 12:50:41 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/15 15:39:11 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/17 12:22:36 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 char	*check_var(char *name_var, t_env *lst_env, char *new_line)
 {
+	char	*value;
 	while (lst_env)
 	{
 		if (ft_strcmp(name_var, lst_env->name) == 0)
 		{
-			new_line = ft_strjoin_parsing(new_line, lst_env->value, 0);
+			value = ft_strdup(lst_env->value);//securier
+			change_quote(value, 0);
+			new_line = ft_strjoin_parsing(new_line, value, 0);
 			if (!(new_line))
 				return (NULL);
 			return (new_line);
@@ -27,6 +30,32 @@ char	*check_var(char *name_var, t_env *lst_env, char *new_line)
 	}
 	return (new_line);
 }
+
+void	change_quote(char *value, int type)
+{
+	int	i;
+
+	i = 0;
+	while (value[i])
+	{
+		if (type == 0)
+		{
+			if (value[i] == '\"')
+				value[i] = -1;
+			else if (value[i] == '\'')
+				value[i] = -2;
+		}
+		if (type == 1)
+		{
+			if (value[i] == -1)
+				value[i] = '\"';
+			if (value[i] == -2)
+				value[i] = '\'';
+		}
+		i++;
+	}
+}
+
 
 char	*ft_strjoin_b(char*s1, char *s2, int start, int i)
 {
@@ -54,5 +83,5 @@ char	*ft_strjoin_b(char*s1, char *s2, int start, int i)
 		start++;
 	}
 	new_s[k] = '\0';
-	return (free(s1), new_s);
+	return (new_s);
 }

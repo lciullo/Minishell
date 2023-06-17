@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:04:05 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/15 15:26:54 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/17 12:20:11 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,19 @@ void	change_tab(char **tab_line, int type)
 	while (tab_line[i])
 	{
 		j = 0;
-		while (tab_line[i][j])
+		if (type == 2)
+			change_quote(tab_line[i], 1);
+		else
 		{
-			if ((tab_line[i][j] == '\'' || tab_line[i][j] == '\"') && type == 0)
+			while (tab_line[i][j])
 			{
-				replace_space(tab_line[i], 0);
+				if ((tab_line[i][j] == '\'' || tab_line[i][j] == '\"') && type == 0)
+					replace_space(tab_line[i], 0);
+				else if ((tab_line[i][j] == '\'' || tab_line[i][j] == '\"') && type == 1)
+					reput_space(tab_line, &i, &j);
+				if (tab_line[i][j] != '\0')
+					j++;
 			}
-			else if ((tab_line[i][j] == '\'' || tab_line[i][j] == '\"') && type == 1)
-				reput_space(tab_line, &i, &j);
-			if (tab_line[i][j] != '\0')
-				j++;
 		}
 		i++;
 	}
@@ -128,32 +131,6 @@ void	check_quote_expand(char *s)
 	}
 }
 
-void	reput_quote(t_list **list)
-{
-	int	i;
-	int	j;
-	t_list	*temp;
-
-	temp = (*list);
-	while (temp)
-	{
-		i = 0;
-		while (temp->data[i])
-		{
-			j = 0;
-			while (temp->data[i][j])
-			{
-				if (temp->data[i][j] == -1)
-					temp->data[i][j] = '\"';
-				else if (temp->data[i][j] == -2)
-					temp->data[i][j] = '\'';
-				j++;
-			}
-			i++;
-		}
-		temp = temp->next;
-	}
-}
 char	*ft_strjoin_parsing(char *s1, char *s2, int type)
 {
 	char	*str;

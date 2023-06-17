@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/14 09:41:00 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/16 16:23:18 by lciullo          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
@@ -121,8 +110,8 @@ int	should_we_expand(t_list **list, t_env *env);
 void	replace_space(char *line, int i);
 char	*ft_strjoin_parsing(char *s1, char *s2, int type);
 void	print_error(int error_code);
-void	reput_quote(t_list **list);
 
 void	is_it_empty(t_list **list);
+void	change_quote(char *value, int type);
 
 #endif

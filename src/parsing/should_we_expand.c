@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 13:51:38 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/15 15:17:58 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/17 10:50:53 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,18 @@ static char	**is_there_a_dollar(char **tab, t_env *env, int	*status_expand)
 		{
 			if (tab[i][j] == '$' || tab[i][j] == '~')
 			{
-				if (ft_strcmp(tab[i], "~") == 0)
+				if (tab[i][0] == '~' && tab[i][1] == '\0')
 				{	
 					temp = tab[i];
 					tab[i] = ft_strdup("$HOME");//securiser
+					if (!tab[i])
+						return (NULL);
+					free(temp);
+				}
+				else if (tab[i][0] == '~' && tab[i][1] != '\0')
+				{
+					temp = tab[i];
+					tab[i] = ft_strjoin_b("$HOME", tab[i], 1, ft_strlen(tab[i]));
 					if (!tab[i])
 						return (NULL);
 					free(temp);
