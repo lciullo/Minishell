@@ -27,7 +27,8 @@ static	char	*actualise_pwd(char *actual_path, t_env **lst)
 			if (copy->value[0] != '\0')
 			{
 				old_pwd = ft_strdup(copy->value);
-				free(copy->value);
+				/*if (copy->value)
+					free(copy->value);*/
 			}
 			else
 				copy->value = ft_strdup(actual_path);
@@ -93,7 +94,7 @@ int	implement_cd(char **cmd, t_env **lst)
 	{
 		if (chdir(cmd[1]) == -1)
 		{
-			ft_dprintf(2, "minishell: cd: path not found\n");
+			ft_dprintf(2, "chdir: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
 			g_exit_status = 1;
 			return (FAILURE);
 		}

@@ -25,7 +25,7 @@ static	int	manage_infile(char *infile, t_exec *data)
 	data->in_dir++;
 	if (data->infile == -1)
 	{
-		perror("Open infile issu");
+		perror("Permission denied");
 		return (-1);
 	}
 	return (0);

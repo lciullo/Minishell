@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:36:32 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/13 12:26:48 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/17 13:27:19 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static void	swap_nodes(t_env *current_node, t_env *next_node)
 	int		equal;
 	char	*name;
 	char	*value;
-	
 
 	name = NULL;
 	value = NULL;
@@ -30,7 +29,6 @@ static void	swap_nodes(t_env *current_node, t_env *next_node)
 	value = current_node->value;
 	current_node->value = next_node->value;
 	next_node->value = value;
-	
 }
 
 static void	sort_in_alphabetic_order(t_env *head)
