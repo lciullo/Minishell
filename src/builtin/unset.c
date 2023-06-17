@@ -68,22 +68,22 @@ int	parse_unset(char *value)
 	if (!value || value[0] == '\0')
 	{
 		ft_dprintf(2, "unset : not a valid identifier\n");
-		g_exit_status = 1;
-		return (FAILURE);
+		//g_exit_status = 1;
+		return (1);
 	}
 	if (value[0] != '\0')
 	{
 		if (value[0] == '-')
 		{
 			ft_dprintf(2, "Invalid option, subject : unset with no options\n");
-			g_exit_status = 2;
-			return (FAILURE);
+			//g_exit_status = 2;
+			return (2);
 		}
 		if (first_char(value[0]) == FAILURE)
 		{
 			ft_dprintf(2, "unset %s : not a valid identifier\n", value);
 			g_exit_status = 1;
-			return (FAILURE);
+			return (1);
 		}
 	}
 	while (value[i] != '\0')
@@ -91,27 +91,36 @@ int	parse_unset(char *value)
 		if (is_valid(value[i]) == FAILURE)
 		{
 			ft_dprintf(2, "unset %s : not a valid identifier\n", value);
-			g_exit_status = 1;
-			return (FAILURE);
+			//g_exit_status = 1;
+			return (1);
 		}
 		i++;
 	}
-	g_exit_status = 0;
-	return (SUCCESS);
+	return (0);
 }
 
 int	implement_unset(char **token, t_env **lst)
 {
 	int	i;
+	int	exit_status;
+	int	previous_exit_status;
 
 	i = 1;
+	exit_status = 0;
+	previous_exit_status = 0;
 	if (!lst)
 		return (FAILURE);
 	while (token[i] != NULL)
 	{
-		if (parse_unset(token[i]) == SUCCESS)
+		if (i != 1)
+			previous_exit_status = exit_status;
+		exit_status = parse_unset(token[i]);
+		if ( exit_status == 0)
 			search_and_delete(token[i], lst);
+		if (previous_exit_status != 0 && exit_status == 0)
+			exit_status = previous_exit_status;
 		i++;
 	}
+	g_exit_status = exit_status;
 	return (SUCCESS);
 }

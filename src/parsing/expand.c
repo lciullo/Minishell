@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:20:07 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/15 15:34:22 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/17 10:50:11 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ char	*expand(char *line, t_env *lst_env)
 	int			i;
 	int			start;
 	t_expand	utils;
+	char		*temp;
 
 	i = 0;
 	start = 0;
@@ -39,9 +40,9 @@ char	*expand(char *line, t_env *lst_env)
 		}
 		else if (line[i] == '\'')
 			handle_single_quote(&utils, &i);
-		else if (line[i] == '$' && (ft_isalnum(line[i + 1]) == true || \
+		else if ((line[i] == '$' && (ft_isalnum(line[i + 1]) == true || \
 		line[i + 1] == '_' || line[i + 1] == '?' || line[i + 1] == '\'' \
-		|| line[i + 1] == '\"' || line[i + 1] == '$'))
+		|| line[i + 1] == '\"' || line[i + 1] == '$')))
 		{
 			if (handle_dollar_sign(&utils, &i, &start) == FAILURE)
 				return (NULL);
@@ -50,7 +51,11 @@ char	*expand(char *line, t_env *lst_env)
 			i++;
 	}
 	if (line[start])
-		utils.new_line = ft_strjoin_b(utils.new_line, line, start, i);
+	{
+		temp = utils.new_line;
+		utils.new_line = ft_strjoin_b(utils.new_line, line, start, i);//securiser
+		free(temp);
+	}
 	return (utils.new_line);
 }
 
@@ -86,10 +91,13 @@ static void	handle_single_quote(t_expand *utils, int *i)
 
 static int	handle_dollar_sign(t_expand *utils, int *i, int *start)
 {
+	char *temp;
 	if (*i - *start != 0)
 	{
+		temp = utils->new_line;
 		utils->new_line = ft_strjoin_b(utils->new_line, \
 		utils->line, *start, *i);
+		free(temp);
 		if (!(utils->new_line))
 			return (FAILURE);
 	}
