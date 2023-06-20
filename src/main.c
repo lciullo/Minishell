@@ -69,9 +69,12 @@ static void	core_of_program(char *line, t_exec *data, t_env **lst)
 		return ;
 	//print_list(list);
 	if (execution(list, &data_parsing, data, lst) == -1)
+	{
 		perror("execution issue");
+	}
 	free(line);
-	ft_lstclear(&list, free);
+	if (list)
+		ft_lstclear(&list, free);
 }
 
 static void	control_c_realod_prompt(int signal)
