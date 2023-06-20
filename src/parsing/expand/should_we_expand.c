@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 13:51:38 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/17 10:50:53 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/20 15:03:13 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	should_we_expand(t_list **list, t_env *env)
 
 	temp = (*list);
 	status_expand = 0;
-	//print_list(*list);
 	while (temp)
 	{
 		if (temp->type != HERE_DOC)
@@ -36,7 +35,7 @@ int	should_we_expand(t_list **list, t_env *env)
 				temp->data = temp_tab;
 				return (ft_lstclear(list, free), FAILURE);
 			}
-			if (status_expand == 1 && temp->data[0][0] != '\0')
+			if (status_expand == 1 && temp->data[1] != NULL)
 			{
 				change_tab(temp->data, 0);
 				temp_tab = temp->data;
@@ -47,7 +46,7 @@ int	should_we_expand(t_list **list, t_env *env)
 					return (ft_lstclear(list, free), FAILURE);
 				}
 				temp_tab = temp->data;
-				temp->data = ft_split_parsing(tab_in_line); //leaks en null check
+				temp->data = ft_split_parsing(tab_in_line);
 				if (!(temp->data))
 				{
 					temp->data = temp_tab;

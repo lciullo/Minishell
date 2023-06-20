@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 14:37:22 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/17 14:39:36 by lciullo          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 static	int	count_dash(char *arg)
@@ -59,6 +47,7 @@ int	implement_echo(char **cmd)
 
 	i = 1;
 	option = 0;
+	g_exit_status = 0;
 	if (!cmd[1] && cmd[0])
 	{
 		ft_dprintf(1, "\n");
@@ -77,6 +66,5 @@ int	implement_echo(char **cmd)
 	}
 	if (option)
 		ft_dprintf(1, "\n");
-	g_exit_status = 0;
 	return (0);
 }

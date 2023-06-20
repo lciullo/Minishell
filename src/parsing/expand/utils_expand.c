@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 12:50:41 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/17 12:22:36 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/20 14:08:46 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char	*check_var(char *name_var, t_env *lst_env, char *new_line)
 {
 	char	*value;
+
 	while (lst_env)
 	{
 		if (ft_strcmp(name_var, lst_env->name) == 0)
@@ -55,7 +56,6 @@ void	change_quote(char *value, int type)
 		i++;
 	}
 }
-
 
 char	*ft_strjoin_b(char*s1, char *s2, int start, int i)
 {

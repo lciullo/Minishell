@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:20:07 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/17 10:50:11 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/20 14:11:46 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ static void	handle_single_quote(t_expand *utils, int *i)
 
 static int	handle_dollar_sign(t_expand *utils, int *i, int *start)
 {
-	char *temp;
+	char	*temp;
+
 	if (*i - *start != 0)
 	{
 		temp = utils->new_line;

@@ -66,34 +66,18 @@ int	parse_unset(char *value)
 
 	i = 0;
 	if (!value || value[0] == '\0')
-	{
-		ft_dprintf(2, "unset : not a valid identifier\n");
-		//g_exit_status = 1;
-		return (1);
-	}
+		return (ft_dprintf(2, "unset : not a valid identifier\n"), 1);
 	if (value[0] != '\0')
 	{
 		if (value[0] == '-')
-		{
-			ft_dprintf(2, "Invalid option, subject : unset with no options\n");
-			//g_exit_status = 2;
-			return (2);
-		}
+			return (ft_dprintf(2, "Invalid option, subject : unset with no options\n"), 2);
 		if (first_char(value[0]) == FAILURE)
-		{
-			ft_dprintf(2, "unset %s : not a valid identifier\n", value);
-			g_exit_status = 1;
-			return (1);
-		}
+			return (ft_dprintf(2, "unset %s : not a valid identifier\n", value), 1);
 	}
 	while (value[i] != '\0')
 	{
 		if (is_valid(value[i]) == FAILURE)
-		{
-			ft_dprintf(2, "unset %s : not a valid identifier\n", value);
-			//g_exit_status = 1;
-			return (1);
-		}
+			return (ft_dprintf(2, "unset %s : not a valid identifier\n", value), 1);
 		i++;
 	}
 	return (0);
