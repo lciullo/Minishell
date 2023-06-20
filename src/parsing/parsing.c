@@ -6,19 +6,19 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/16 15:15:10 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/20 14:09:08 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	get_nbr_pipe(char *line, t_data *data);
+char	**prepare_line_for_list(t_data *data);
 
 t_list	*parsing(char *line, t_data *data, t_env *lst_env)
 {
 	t_list		*list;
 	char		**tab_line;
-	char		*new_line;
 
 	list = NULL;
 	if (skip_white_space(line) == 1)
@@ -32,6 +32,20 @@ t_list	*parsing(char *line, t_data *data, t_env *lst_env)
 		g_exit_status = 2;
 		return (NULL);
 	}
+	tab_line = prepare_line_for_list(data);
+	if (!tab_line)
+		return (print_error(MALLOC_ERR), NULL);
+	list = create_list(data, lst_env, tab_line);
+	if (!list)
+		return (print_error(MALLOC_ERR), NULL);
+	return (list);
+}
+
+char	**prepare_line_for_list(t_data *data)
+{
+	char	*new_line;
+	char	**tab_line;
+
 	new_line = change_line(data);
 	if (!(new_line))
 		return (print_error(MALLOC_ERR), NULL);
@@ -44,15 +58,7 @@ t_list	*parsing(char *line, t_data *data, t_env *lst_env)
 	if (!(tab_line))
 		return (print_error(MALLOC_ERR), NULL);
 	change_tab(tab_line, 1);
-	list = create_list(data, lst_env, tab_line);
-	if (!list)
-		return (print_error(MALLOC_ERR), NULL);
-	// if (ft_lstsize(list) == 1 && list->data[0][0] == '\0')
-	// {
-	// 	g_exit_status = 0;
-	// 	return (NULL);
-	// }
-	return (list);
+	return (tab_line);
 }
 
 void	get_nbr_pipe(char *line, t_data *data)
@@ -70,19 +76,4 @@ void	get_nbr_pipe(char *line, t_data *data)
 		if (line[i])
 			i++;
 	}
-}
-
-bool	check_error(t_data *data)
-{
-	if (check_quote(data->line) == false)
-		return (false);
-	/* if (check_wrong_character(data->line) == false)
-	 	return (false);*/
-	if (check_pipe(data->line) == false)
-		return (false);
-	if (check_redir(data->line, data) == false)
-		return (false);
-	if (data->nbr_pipe >= 3333)
-		return (false);
-	return (true);
 }

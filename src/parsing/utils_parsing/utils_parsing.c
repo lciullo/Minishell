@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 10:04:05 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/17 12:20:11 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/20 14:15:44 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,11 @@ void	change_tab(char **tab_line, int type)
 		{
 			while (tab_line[i][j])
 			{
-				if ((tab_line[i][j] == '\'' || tab_line[i][j] == '\"') && type == 0)
+				if ((tab_line[i][j] == '\'' || \
+				tab_line[i][j] == '\"') && type == 0)
 					replace_space(tab_line[i], 0);
-				else if ((tab_line[i][j] == '\'' || tab_line[i][j] == '\"') && type == 1)
+				else if ((tab_line[i][j] == '\'' || \
+				tab_line[i][j] == '\"') && type == 1)
 					reput_space(tab_line, &i, &j);
 				if (tab_line[i][j] != '\0')
 					j++;
@@ -90,65 +92,4 @@ bool	is_builtins(char *cmd)
 	else if (ft_strcmp(cmd, "exit") == 0)
 		return (true);
 	return (false);
-}
-
-
-static char	*ft_copy_join_parsing(char *s1, char *s2, char *str)
-{
-	int	j;
-	int	i;
-
-	j = 0;
-	i = 0;
-	while (s1[i])
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	// str[i] == '\n'
-	while (s2[j])
-	{
-		str[i] = s2[j];
-		i++;
-		j++;
-	}
-	str[i] = '\0';
-	return (str);
-}
-
-void	check_quote_expand(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == '\"')
-			s[i] = -1;
-		else if (s[i] =='\'')
-			s[i] = -2;
-		i++;
-	}
-}
-
-char	*ft_strjoin_parsing(char *s1, char *s2, int type)
-{
-	char	*str;
-
-	if (!s1 || !s2)
-		return (NULL);
-	if (type == 1)
-	{
-		check_quote_expand(s2);
-		ft_dprintf(2, "%s\n", s2);
-	}
-	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1)); // +2
-	if (!str)
-	{
-		free((void *)s1);
-		return (NULL);
-	}
-	str = ft_copy_join_parsing(s1, s2, str);
-	free(s1);
-	return (str);
 }
