@@ -20,6 +20,7 @@ typedef struct s_exec
 	int		nb_cmd;
 	int		nb_builtin;
 	int		nb_heredoc;
+	int		nb_args;
 	int		quote_here_doc;
 	int		*fd_heredoc;
 	pid_t	*pids;
@@ -137,6 +138,7 @@ int				one_builtin_exec(char **token, t_exec *data, t_env **lst);
 void			heredoc_ctr_c(int signal);
 
 void			heredoc_new_line(int signal);
+void			heredoc_signals(int signal);
 
 int				loop_for_heredoc(t_list *list, t_exec *data, t_env **lst);
 

@@ -24,6 +24,9 @@ static int	sort_cmd(t_list *list, t_data *parsing, t_exec *data, t_env **lst)
 
 int	execution(t_list *list, t_data *parsing, t_exec *data, t_env **lst)
 {
+	int	check;
+
+	check = 0;
 	if (init_struct(list, *lst, data, parsing) == -1)
 	{
 		perror("Malloc failed in structure initialisation");
@@ -31,8 +34,25 @@ int	execution(t_list *list, t_data *parsing, t_exec *data, t_env **lst)
 	}
 	if (parsing->nbr_here_doc >= 1)
 	{
-		if (loop_for_heredoc(list, data, lst) == -1)
+		check = loop_for_heredoc(list, data, lst);
+		if (check == -1 || check == 130 || check == 131)
+		{
+			close_for_heredoc(list);
+			ft_close(data->infile);
+			free_struct(data);
+			if (data->env != NULL)
+				free_array(data->env);
 			return (-1);
+		}
+		if (parsing->nbr_here_doc == data->nb_args)
+		{
+			close_for_heredoc(list);
+			ft_close(data->infile);
+			free_struct(data);
+			if (data->env != NULL)
+				free_array(data->env);
+			return (0);
+		}
 	}
 	if (sort_cmd(list, parsing, data, lst) == -1)
 		return (-1);

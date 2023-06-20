@@ -39,7 +39,7 @@ RMF				=	rm -rf
 
 CC 				= cc
 
-CFLAGS 			= -Wall  -Wextra -I ${DIR_HEAD} -I ${DIR_LIB} #-Werror
+CFLAGS 			= -Wall  -Wextra -Werror -I ${DIR_HEAD} -I ${DIR_LIB} 
 
 # ---- Debug Compilation flags ---- #
 
@@ -51,9 +51,9 @@ endif
 
 # ---- Leaks Compilation flags ---- #
 
-LEAKS			=	valgrind --suppressions=ignore_readline_reachable.txt --leak-check=full --show-leak-kinds=all --trace-children=yes 
+LEAKS			=	valgrind --suppressions=ignore_readline_reachable.txt --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes
 
-#--track-fds=yes
+
 
 # ====================== RULES ====================== #
 

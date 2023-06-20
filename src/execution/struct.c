@@ -58,6 +58,7 @@ static	int	initialize_integers(t_list *list, t_exec *data, t_data *parsing)
 	data->nb_cmd = get_nb_total_of_cmd(list);
 	data->nb_builtin = get_nb_builtin(list);
 	data->nb_heredoc = parsing->nbr_here_doc;
+	data->nb_args = data->nb_cmd + parsing->nbr_redir;
 	data->pids = ft_calloc(data->nb_block, sizeof(pid_t));
 	if (!data->pids)
 		return (-1);
@@ -89,11 +90,11 @@ int	init_struct(t_list *list, t_env *lst, t_exec *data, t_data *parsing)
 		data->env = fill_env(lst, &malloc_check);
 		if (!data->env)
 		{
-			ft_dprintf(1, "check malloc %d\n", malloc_check);
-			perror("malloc failed here");
-			return (0);
+			if (malloc_check == 1)
+				return (0);
 			free(data->pids);
 			free(data->fd_heredoc);
+			perror("malloc failed here");
 			return (1);
 		}
 	}
