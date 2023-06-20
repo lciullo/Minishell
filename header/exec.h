@@ -105,6 +105,10 @@ void			clear_execve_issue(t_exec *data, t_list *list, t_env **lst);
 
 void			clear_builtin_exec(t_exec *data, t_list *list, t_env **lst);
 
+//# --- Execve issue --- #
+
+void			clear_only_redir(t_exec *data, t_list *list, t_env **lst, char **env);
+
 //# --- Files issue --- #
 
 void			clear_exec_files_issu(t_list *list, t_env **lst, t_exec *data);
@@ -140,7 +144,7 @@ void			heredoc_ctr_c(int signal);
 void			heredoc_new_line(int signal);
 void			heredoc_signals(int signal);
 
-int				loop_for_heredoc(t_list *list, t_exec *data, t_env **lst);
+int				loop_for_heredoc(t_list *list, t_exec *data, t_data *parsing, t_env **lst);
 
 void			add_to_tab(int *fd_heredoc, int fd);
 
@@ -152,7 +156,7 @@ void			close_tab(t_exec *data);
 
 void			fork_issue_heredoc(t_exec *data, int fd[2]);
 
-void			itoa_heredoc_issue(t_exec *data, int fd[2]);
+void			itoa_heredoc_issue(t_exec *data, int fd[2], int status);
 
 void			pipe_heredoc_issue(t_exec *data);
 

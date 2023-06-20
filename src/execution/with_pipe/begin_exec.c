@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 17:44:33 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/17 16:58:02 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/20 19:15:29 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ int	execution_core(t_list *list, t_exec *data, t_env **lst)
 			return (-1);
 		}
 	}
+	close_for_heredoc(list);
+	ft_close(data->infile);
 	switch_and_close_fds(data);
 	data->exec_progress++;
 	data->nb_pids++;

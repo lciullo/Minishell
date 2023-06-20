@@ -3,12 +3,24 @@
 void	clear_cmd_not_found(t_exec *data, t_list *list, t_env **lst)
 {
 	ft_dprintf(2, "%s: command not found\n", data->cmd);
+	close_cmd_not_found(data);
 	if (list)
 		ft_lstclear(&list, free);
 	if (lst)
 		ft_lstclear_env(lst, free);
 	free_struct(data);
-	close_cmd_not_found(data);
+}
+
+void	clear_only_redir(t_exec *data, t_list *list, t_env **lst, char **env)
+{
+	close(data->outfile);
+	if (list)
+		ft_lstclear(&data->head, free);
+	if (lst)
+		ft_lstclear_env(lst, free);
+	if (env)
+		free_array(env);
+	free_struct(data);
 }
 
 void	clear_execve_issue(t_exec *data, t_list *list, t_env **lst)
@@ -25,6 +37,7 @@ void	clear_execve_issue(t_exec *data, t_list *list, t_env **lst)
 
 void	clear_is_executable(t_exec *data, t_list *list, t_env **lst)
 {
+	close_cmd_not_found(data);
 	if (list)
 		ft_lstclear(&list, free);
 	if (data->pids)
@@ -35,11 +48,13 @@ void	clear_is_executable(t_exec *data, t_list *list, t_env **lst)
 		free_array(data->env_path);
 	if (lst)
 		ft_lstclear_env(lst, free);
-	close_cmd_not_found(data);
 }
 
 void	clear_builtin_exec(t_exec *data, t_list *list, t_env **lst)
 {
+	close_all_fds(data);
+	close(data->outfile);
+	close(data->infile);
 	if (list)
 	{
 		ft_lstclear(&data->head, free);
@@ -49,7 +64,4 @@ void	clear_builtin_exec(t_exec *data, t_list *list, t_env **lst)
 	free_struct(data);
 	if (data->env != NULL)
 		free_array(data->env);
-	close_all_fds(data);
-	close(data->outfile);
-	close(data->infile);
 }

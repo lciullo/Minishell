@@ -68,10 +68,8 @@ static void	core_of_program(char *line, t_exec *data, t_env **lst)
 	if (list == NULL)
 		return ;
 	//print_list(list);
-	if (execution(list, &data_parsing, data, lst) == -1)
-	{
+	if (execution(list, &data_parsing, data, lst) == FAILURE)
 		perror("execution issue");
-	}
 	free(line);
 	if (list)
 		ft_lstclear(&list, free);

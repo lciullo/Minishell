@@ -5,8 +5,6 @@ static int	sort_to_launch_exec(t_list *list, t_exec *data)
 {
 	while (list != NULL && list->type != PIPE)
 	{
-		// if (list->empty == EMPTY)
-		// 	return (EMPTY);
 		if (list->type == BUILTIN)
 		{
 			data->cmd = list->data[0];
@@ -94,9 +92,6 @@ int	launch_exec(t_exec *data, t_list *list, t_env **lst, char **env)
 		clear_builtin_exec(data, list, lst);
 		exit(g_exit_status);
 	}
-	// else if(get_type == EMPTY)
-	// 	exit (0);
-	close(data->outfile);
-	exit(1);
-	return (0);
+	clear_only_redir(data, list, lst, env);
+	exit(g_exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:25:34 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/20 16:46:43 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/20 19:10:30 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,17 +90,17 @@ static	void	loop_in_child_heredoc(t_exec *data, int *fd, char *delimiter, t_env 
 	exit(1);
 }
 
-static int	store_heredoc_in_list(char **delimiter, t_exec *data, int *fd)
+static int	store_heredoc_in_list(char **delimiter, t_exec *data, int *fd, int status)
 {
 	ft_close(fd[1]);
 	free(*delimiter);
 	*delimiter = ft_itoa(fd[0]);
 	if (!*delimiter)
 	{
-		itoa_heredoc_issue(data, fd);
-		return (-1);
+		itoa_heredoc_issue(data, fd, status);
+		return (FAILURE);
 	}
-	return (0);
+	return (SUCCESS);
 }
 
 static	int	manage_heredoc(char **delimiter, t_exec *data, t_env **lst, int fd[2], t_list *list)
@@ -108,16 +108,16 @@ static	int	manage_heredoc(char **delimiter, t_exec *data, t_env **lst, int fd[2]
 	int	status;
 
 	status = 0;
-	if (pipe(fd) == -1)
+	if (pipe(fd) == FAILURE)
 	{
 		pipe_heredoc_issue(data);
-		return (-1);
+		return (FAILURE);
 	}
 	data->pid_heredoc = fork();
-	if (data->pid_heredoc == -1)
+	if (data->pid_heredoc == FAILURE)
 	{
 		fork_issue_heredoc(data, fd);
-		return (-1);
+		return (FAILURE);
 	}
 	if (data->pid_heredoc == 0)
 	{
@@ -125,10 +125,18 @@ static	int	manage_heredoc(char **delimiter, t_exec *data, t_env **lst, int fd[2]
 	}
 	else
 	{
-		if (store_heredoc_in_list(delimiter, data, fd) == -1)
-			return (-1);
+		if (store_heredoc_in_list(delimiter, data, fd, status) == FAILURE)
+		{
+			if (data->pids)
+				free(data->pids);
+			if (data->fd_heredoc)
+				free(data->fd_heredoc);
+			if (data->env)
+				free_array(data->env);
+			return (FAILURE);
+		}
 		add_to_tab(data->fd_heredoc, fd[0]);
-		if (waitpid(data->pid_heredoc, &status, WUNTRACED) == -1)
+		if (waitpid(data->pid_heredoc, &status, WUNTRACED) == FAILURE)
 			g_exit_status = WEXITSTATUS(status);
 		else if (WIFEXITED(status))
 			g_exit_status = WEXITSTATUS(status);
@@ -136,23 +144,29 @@ static	int	manage_heredoc(char **delimiter, t_exec *data, t_env **lst, int fd[2]
 	return (g_exit_status);
 }
 
-int	loop_for_heredoc(t_list *list, t_exec *data, t_env **lst)
+int	loop_for_heredoc(t_list *list, t_exec *data, t_data *parsing, t_env **lst)
 {
 	t_list	*copy;
 	int		fd[2];
+	int		close_before_last;
 
 	copy = list;
 	fd[0] = 0;
 	fd[1] = 1;
+	close_before_last = 0;
 	while (copy != NULL)
 	{
 		if (copy->type == HERE_DOC)
 		{
 			data->quote_here_doc = copy->quote_here_doc;
 			g_exit_status = manage_heredoc(&copy->data[0], data, lst, fd, list);
-			if (g_exit_status == -1 || g_exit_status == 131 || g_exit_status == 130)
+			if (g_exit_status == -1 || g_exit_status == 131 \
+					|| g_exit_status == 130)
 				return (g_exit_status);
 		}
+		if (close_before_last <= parsing->nbr_here_doc)
+			ft_close(fd[0]);
+		close_before_last++;
 		copy = copy->next;
 	}
 	return (g_exit_status);

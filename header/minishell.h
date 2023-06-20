@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 15:54:30 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/13 09:52:21 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/20 18:52:48 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ extern int	g_exit_status;
 enum {
 	FAILURE = -1,
 	SUCCESS = 2,
+	ONLY_HEREDOC = -2,
 	PLUS = 3,
 	EQUAL = 4,
 	NO_EQUAL = 5,
