@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:25:34 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/17 16:07:18 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/20 16:46:43 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,20 @@
 
 #include "minishell.h"
 
-static	void	loop_in_child_heredoc(t_exec *data, int *fd, char *delimiter, t_env **lst)
+static	void	loop_in_child_heredoc(t_exec *data, int *fd, char *delimiter, t_env **lst, t_list *list)
 {
 	char	*line;
 
 	line = NULL;
-	data->expand = 1;
+	//data->expand = 1;
 	close(fd[0]);
 	close_tab(data);
-	while (1)
+	g_exit_status = 0;
+	while (g_exit_status == 0)
 	{
-		signal(SIGINT, heredoc_ctr_c);
+		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, heredoc_ctr_c);
 		line = readline("heredoc> ");
 		signal(SIGINT, heredoc_new_line);
 		if (line)
@@ -42,11 +44,48 @@ static	void	loop_in_child_heredoc(t_exec *data, int *fd, char *delimiter, t_env 
 		}
 		else
 		{
-			ft_dprintf(2, "here-document at line 2 delimited by end-of-file\n");
+			if (g_exit_status == 130)
+			{
+				if (lst)
+					ft_lstclear_env(lst, free);
+				if (list)
+					ft_lstclear(&list, free);
+				if (data->env)
+					free_array(data->env);
+				if (data->pids)
+					free(data->pids);
+				if (data->fd_heredoc)
+					free(data->fd_heredoc);
+				close(fd[1]);
+				exit (g_exit_status);
+			}
+			ft_dprintf(2, "here-document at line %d delimited by end-of-file [%s]\n", line, delimiter);
 			free(line);
-			exit (1);
+			g_exit_status = 131;
+			if (lst)
+				ft_lstclear_env(lst, free);
+			if (list)
+				ft_lstclear(&list, free);
+			if (data->env)
+				free_array(data->env);
+			if (data->pids)
+				free(data->pids);
+			if (data->fd_heredoc)
+				free(data->fd_heredoc);
+			close(fd[1]);
+			exit (g_exit_status);
 		}
 	}
+	if (lst)
+		ft_lstclear_env(lst, free);
+	if (list)
+		ft_lstclear(&list, free);
+	if (data->env)
+		free_array(data->env);
+	if (data->pids)
+		free(data->pids);
+	if (data->fd_heredoc)
+		free(data->fd_heredoc);
 	close(fd[1]);
 	exit(1);
 }
@@ -64,8 +103,11 @@ static int	store_heredoc_in_list(char **delimiter, t_exec *data, int *fd)
 	return (0);
 }
 
-static	int	manage_heredoc(char **delimiter, t_exec *data, t_env **lst, int fd[2])
+static	int	manage_heredoc(char **delimiter, t_exec *data, t_env **lst, int fd[2], t_list *list)
 {
+	int	status;
+
+	status = 0;
 	if (pipe(fd) == -1)
 	{
 		pipe_heredoc_issue(data);
@@ -78,15 +120,20 @@ static	int	manage_heredoc(char **delimiter, t_exec *data, t_env **lst, int fd[2]
 		return (-1);
 	}
 	if (data->pid_heredoc == 0)
-		loop_in_child_heredoc(data, fd, *delimiter, lst);
+	{
+		loop_in_child_heredoc(data, fd, *delimiter, lst, list);
+	}
 	else
 	{
 		if (store_heredoc_in_list(delimiter, data, fd) == -1)
 			return (-1);
 		add_to_tab(data->fd_heredoc, fd[0]);
-		waitpid(data->pid_heredoc, NULL, 0);
+		if (waitpid(data->pid_heredoc, &status, WUNTRACED) == -1)
+			g_exit_status = WEXITSTATUS(status);
+		else if (WIFEXITED(status))
+			g_exit_status = WEXITSTATUS(status);
 	}
-	return (0);
+	return (g_exit_status);
 }
 
 int	loop_for_heredoc(t_list *list, t_exec *data, t_env **lst)
@@ -102,12 +149,11 @@ int	loop_for_heredoc(t_list *list, t_exec *data, t_env **lst)
 		if (copy->type == HERE_DOC)
 		{
 			data->quote_here_doc = copy->quote_here_doc;
-			if (manage_heredoc(&copy->data[0], data, lst, fd) == -1)
-			{
-				return (-1);
-			}
+			g_exit_status = manage_heredoc(&copy->data[0], data, lst, fd, list);
+			if (g_exit_status == -1 || g_exit_status == 131 || g_exit_status == 130)
+				return (g_exit_status);
 		}
 		copy = copy->next;
 	}
-	return (0);
+	return (g_exit_status);
 }

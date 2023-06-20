@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 08:41:08 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/31 13:12:23 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/20 16:06:29 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	add_to_tab(int *fd_heredoc, int fd)
 void	heredoc_ctr_c(int signal)
 {
 	(void)signal;
-	exit(1);
+	g_exit_status = 130;
+	close(0);
 }
 
 void	heredoc_new_line(int signal)
