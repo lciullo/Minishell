@@ -6,24 +6,11 @@
 /*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 12:56:18 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/21 12:41:34 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/21 13:22:50 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	close_for_heredoc(t_list *list)
-{
-	while (list != NULL)
-	{
-		if (list->type == HERE_DOC)
-		{
-			ft_close(ft_atoi(list->data[0]));
-		}
-		list = list->next;
-	}
-	return (0);
-}
 
 void	fork_issue_heredoc(t_exec *data, int fd[2])
 {
@@ -69,8 +56,7 @@ void clear_heredoc_end(t_exec *data, t_env **lst, t_list *list, int fd[2])
 		free(data->pids);
 	if (data->fd_heredoc)
 		free(data->fd_heredoc);
-	(void)fd;
-	//close(fd[1]);
+	close(fd[1]);
 }
 void	pipe_heredoc_issue(t_exec *data)
 {
@@ -81,14 +67,3 @@ void	pipe_heredoc_issue(t_exec *data)
 	perror("Pipe issue in heredoc");
 }
 
-void	close_tab_heredoc(t_exec *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->nb_heredoc)
-	{
-		ft_close(data->fd_heredoc[i]);
-		i++;
-	}
-}

@@ -6,7 +6,7 @@
 #    By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 09:55:39 by lciullo           #+#    #+#              #
-#    Updated: 2023/06/21 12:47:34 by lisa             ###   ########.fr        #
+#    Updated: 2023/06/21 13:24:16 by lisa             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,9 @@ SRC	=																	\
 		src/execution/with_pipe/paths/parse_cmd.c						\
 		src/execution/with_pipe/dup_files.c 							\
 		src/execution/clear_exec/close_files.c 							\
-		src/execution/clear_exec/clear_heredoc.c						\
+		src/execution/clear_exec/close_heredoc.c						\
 		src/execution/clear_exec/clear_cmds.c							\
+		src/execution/clear_exec/clear_heredoc.c						\
 		src/execution/clear_exec/clear_files.c							\
 		src/builtin/builtin.c 											\
 		src/builtin/echo.c												\
