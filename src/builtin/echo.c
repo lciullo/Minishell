@@ -1,5 +1,43 @@
 #include "minishell.h"
 
+static	int		count_dash(char *arg);
+static	int		is_valid_option(char *arg);
+static	int		parse_option(char *arg);
+static	void	write_in_echo(char **cmd, int i, int option);
+
+int	implement_echo(char **cmd)
+{
+	int	i;
+	int	option;
+
+	i = 1;
+	option = 0;
+	g_exit_status = 0;
+	if (!cmd[1] && cmd[0])
+	{
+		ft_dprintf(1, "\n");
+		return (0);
+	}
+	if (cmd[1])
+		option = parse_option(cmd[1]);
+	while (cmd && cmd[i] != NULL && parse_option(cmd[i]) == 0)
+		i++;
+	write_in_echo(cmd, i, option);
+	return (SUCCESS);
+}
+
+static	int	parse_option(char *arg)
+{
+	int		dash;
+
+	dash = count_dash(arg);
+	if (dash != 1)
+		return (1);
+	if (is_valid_option(arg) == 1)
+		return (1);
+	return (0);
+}
+
 static	int	count_dash(char *arg)
 {
 	int	i;
@@ -28,35 +66,8 @@ static	int	is_valid_option(char *arg)
 	return (1);
 }
 
-static	int	parse_option(char *arg)
+static void	write_in_echo(char **cmd, int i, int option)
 {
-	int		dash;
-
-	dash = count_dash(arg);
-	if (dash != 1)
-		return (1);
-	if (is_valid_option(arg) == 1)
-		return (1);
-	return (0);
-}
-
-int	implement_echo(char **cmd)
-{
-	int	i;
-	int	option;
-
-	i = 1;
-	option = 0;
-	g_exit_status = 0;
-	if (!cmd[1] && cmd[0])
-	{
-		ft_dprintf(1, "\n");
-		return (0);
-	}
-	if (cmd[1])
-		option = parse_option(cmd[1]);
-	while (cmd && cmd[i] != NULL && parse_option(cmd[i]) == 0)
-		i++;
 	while (cmd && cmd[i] != NULL)
 	{
 		ft_dprintf(1, "%s", cmd[i]);
@@ -66,5 +77,6 @@ int	implement_echo(char **cmd)
 	}
 	if (option)
 		ft_dprintf(1, "\n");
-	return (0);
 }
+
+

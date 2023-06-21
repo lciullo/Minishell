@@ -25,11 +25,7 @@ static	char	*actualise_pwd(char *actual_path, t_env **lst)
 		if (ft_strcmp(copy->name, "PWD") == 0)
 		{
 			if (copy->value[0] != '\0')
-			{
 				old_pwd = ft_strdup(copy->value);
-				/*if (copy->value)
-					free(copy->value);*/
-			}
 			else
 				copy->value = ft_strdup(actual_path);
 			return (old_pwd);

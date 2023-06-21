@@ -15,6 +15,8 @@ int	main(int ac, char **av, char **env)
 
 	lst = NULL;
 	lst = creat_env(env);
+	if (!lst)
+		perror("Issue to create env in linked list");
 	g_exit_status = 0;
 	(void)ac;
 	(void)av;

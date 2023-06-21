@@ -6,7 +6,7 @@
 #    By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 09:55:39 by lciullo           #+#    #+#              #
-#    Updated: 2023/06/21 13:24:16 by lisa             ###   ########.fr        #
+#    Updated: 2023/06/21 18:08:15 by lisa             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRC	=																	\
 		src/builtin/cd.c												\
 		src/builtin/env/env.c											\
 		src/builtin/env/create_env_array.c								\
+		src/builtin/env/create_env_list.c								\
 		src/builtin/pwd.c												\
 		src/builtin/exit.c 												\
 		src/builtin/unset.c												\
