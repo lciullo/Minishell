@@ -15,17 +15,14 @@
 static	int		manage_outfile(int type, char *outfile, t_exec *data);
 static	void	is_outfile_open(t_exec *data);
 
-int	loop_for_outfile(t_list *list, t_exec *data, t_env **lst)
+int	loop_for_outfile(t_list *list, t_exec *data)
 {
 	while (list != NULL && list->type != PIPE)
 	{
 		if (list->type == OUTFILE || list->type == APPEND)
 		{
 			if (manage_outfile(list->type, list->data[0], data) == FAILURE)
-			{
-				clear_exec_files_issu(list, lst, data);
 				return (FAILURE);
-			}
 		}
 		list = list->next;
 	}

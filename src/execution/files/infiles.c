@@ -14,19 +14,16 @@
 
 static	void	is_infile_open(t_exec *data);
 static	int		manage_infile(char *infile, t_exec *data);
-void			in_zero_fd(t_exec *data, int fd);
+static void		in_zero_fd(t_exec *data, int fd);
 
-int	loop_for_infile(t_list *list, t_exec *data, t_env **lst)
+int	loop_for_infile(t_list *list, t_exec *data)
 {
 	while (list != NULL && list->type != PIPE)
 	{
 		if (list->type == INFILE)
 		{
 			if (manage_infile(list->data[0], data) == FAILURE)
-			{
-				clear_exec_files_issu(list, lst, data);
 				return (FAILURE);
-			}
 		}
 		if (list->type == HERE_DOC)
 		{

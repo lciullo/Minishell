@@ -3,42 +3,74 @@
 /*                                                        :::      ::::::::   */
 /*   one_builtin_exec.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 18:13:24 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/15 18:18:33 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/21 17:45:38 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	int	dup_for_one_builtin(t_exec *data)
+static	int	dup_for_one_builtin(t_exec *data, t_env **lst, t_list *list);
+static	int	to_fork(char **token);
+static int	execute_builtin_in_child(char **token, t_exec *data, t_env **lst, t_list *list);
+
+void	get_builtin_and_exec(t_list *list, t_exec *data, t_env **lst)
+{
+	
+	while (list != NULL)
+	{
+		if (list->type == BUILTIN)
+			one_builtin_exec(list->data, data, lst, list);
+		list = list->next;
+	}
+	return ;
+}
+
+int	one_builtin_exec(char **token, t_exec *data, t_env **lst, t_list *list)
+{
+	if (!token[0])
+		return (FAILURE);
+	if (to_fork(token) == TRUE)
+		execute_builtin_in_child(token, data, lst, list);
+	else
+	{
+		loop_for_builtin(token, data, lst);
+		ft_close(data->infile);
+		ft_close(data->outfile);
+	}
+	return (SUCCESS);
+}
+
+static	int	dup_for_one_builtin(t_exec *data, t_env **lst, t_list *list)
 {
 	if (data->infile > 2)
 	{
-		if (dup2(data->infile, STDIN_FILENO) == -1)
+		
+		if (dup2(data->infile, STDIN_FILENO) == FAILURE)
 		{
-			ft_dprintf(2, "dup infile issue\n");
-			return (-1);
+			clear_dup_issue_builtin(data, list, lst);
+			perror("dup infile issue");
+			exit (1);
 		}
 		ft_close(data->infile);
 	}
 	if (data->outfile > 2)
 	{
-		if (dup2(data->outfile, STDOUT_FILENO) == -1)
+		if (dup2(data->outfile, STDOUT_FILENO) == FAILURE)
 		{
-			ft_dprintf(2, "dup outfile issue\n");
-			return (-1);
+			clear_dup_issue_builtin(data, list, lst);
+			perror("dup outfile issue");
+			exit (1);
 		}
 		ft_close(data->outfile);
 	}
-	return (0);
+	return (SUCCESS);
 }
 
 static	int	to_fork(char **token)
 {
-	if (!token[0])
-		return (FALSE);
 	if (ft_strcmp(token[0], "echo") == 0)
 		return (TRUE);
 	if (ft_strcmp(token[0], "pwd") == 0)
@@ -63,7 +95,7 @@ static	int	to_fork(char **token)
 	return (FAILURE);
 }
 
-static int	execute_builtin_in_child(char **token, t_exec *data, t_env **lst)
+static int	execute_builtin_in_child(char **token, t_exec *data, t_env **lst, t_list *list)
 {
 	int pid;
 	int	status;
@@ -77,39 +109,17 @@ static int	execute_builtin_in_child(char **token, t_exec *data, t_env **lst)
 	}
 	if (pid == 0)
 	{
-		dup_for_one_builtin(data);
+		dup_for_one_builtin(data, lst, list);
 		loop_for_builtin(token, data, lst);
 		ft_close(data->infile);
 		ft_close(data->outfile);
 		exit (g_exit_status);
 	}
-	if (waitpid(pid, &status, 0) == -1)
+	if (waitpid(pid, &status, 0) == FAILURE)
 		g_exit_status = 1;
 	else if (WIFEXITED(status))
 		g_exit_status = WEXITSTATUS(status);
+	ft_close(data->infile);
+	ft_close(data->outfile);
 	return (SUCCESS);
-}
-
-int	one_builtin_exec(char **token, t_exec *data, t_env **lst)
-{
-	if (to_fork(token) == TRUE)
-		execute_builtin_in_child(token, data, lst);
-	else
-	{
-		loop_for_builtin(token, data, lst);
-		ft_close(data->infile);
-		ft_close(data->outfile);
-	}
-	return (0);
-}
-
-void	get_builtin_and_exec(t_list *list, t_exec *data, t_env **lst)
-{
-	while (list != NULL)
-	{
-		if (list->type == BUILTIN)
-			one_builtin_exec(list->data, data, lst);
-		list = list->next;
-	}
-	return ;
 }

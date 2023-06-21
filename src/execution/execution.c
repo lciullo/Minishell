@@ -64,17 +64,25 @@ static int	sort_cmd(t_list *list, t_data *parsing, t_exec *data, t_env **lst)
 {
 	if (data->nb_block == 1 && parsing->nbr_pipe == 0 && data->nb_builtin == 1)
 	{
-		if (loop_for_infile(list, data, lst) == FAILURE)
+		if (loop_for_infile(list, data) == FAILURE)
+		{
+			clear_one_builtin_exec_files(data);
 			return (FAILURE);
-		if (loop_for_outfile(list, data, lst) == FAILURE)
+		}
+		if (loop_for_outfile(list, data) == FAILURE)
+		{
+			clear_one_builtin_exec_files(data);
 			return (FAILURE);
+		}
 		get_builtin_and_exec(list, data, lst);
 		return (SUCCESS);
 	}
 	else if (data->nb_block >= 1)
 	{
 		if (get_path_env(data) == FAILURE)
+		{
 			return (FAILURE);
+		}
 		if (loop_pipe_by_pipe(list, data, lst) == FAILURE)
 			return (FAILURE);
 	}

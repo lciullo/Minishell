@@ -112,7 +112,7 @@ void			clear_only_redir(t_exec *data, t_list *list, t_env **lst, char **env);
 
 //# --- Files issue --- #
 
-void			clear_exec_files_issu(t_list *list, t_env **lst, t_exec *data);
+void			clear_exec_files_issue(t_list *list, t_env **lst, t_exec *data);
 
 //# === Clear between commands and when they are issues  === #
 
@@ -128,13 +128,17 @@ void			close_all_fds(t_exec *data);
 
 void			clear_dup_issue(t_exec *data, t_list *list, t_env **lst);
 
+void			clear_dup_issue_builtin(t_exec *data, t_list *list, t_env **lst);
+
 //# ==================== Without Pipe =================== #
 
 //# === One builtin execution  === #
 
 void			get_builtin_and_exec(t_list *list, t_exec *data, t_env **lst);
 
-int				one_builtin_exec(char **token, t_exec *data, t_env **lst);
+int				one_builtin_exec(char **token, t_exec *data, t_env **lst, t_list *list);
+
+void			clear_one_builtin_exec_files(t_exec *data);
 
 //# ======================= MANAGEMENT FILES ======================= #
 
@@ -172,9 +176,9 @@ void			pipe_heredoc_issue(t_exec *data);
 
 //# === Infile outfile === #
 
-int				loop_for_infile(t_list *list, t_exec *data, t_env **lst);
+int				loop_for_infile(t_list *list, t_exec *data);
 
-int				loop_for_outfile(t_list *list, t_exec *data, t_env **lst);
+int				loop_for_outfile(t_list *list, t_exec *data);
 
 //# ======================= BUILTINS ======================= #
 

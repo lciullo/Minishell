@@ -6,7 +6,7 @@
 /*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 17:44:33 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/21 14:50:48 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/21 17:39:49 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,16 @@
 
 static int	execute_token(t_list *list, t_exec *data, char **env, t_env **lst)
 {
-	if (loop_for_infile(list, data, lst) == -1)
+	if (loop_for_infile(list, data) == -1)
+	{
+		clear_exec_files_issue(list, lst, data);
 		exit(1);
-	if (loop_for_outfile(list, data, lst) == -1)
+	}
+	if (loop_for_outfile(list, data) == -1)
+	{
+		clear_exec_files_issue(list, lst, data);
 		exit(1);
+	}
 	if (dup_files(data) == -1)
 	{
 		clear_dup_issue(data, list, lst);
@@ -49,7 +55,7 @@ int	execution_core(t_list *list, t_exec *data, t_env **lst)
 	{
 		if (pipe(data->new_fd) == -1)
 		{
-			ft_dprintf(2, "pipe issu of new_fd\n");
+			ft_dprintf(2, "pipe issue of new_fd\n");
 			return (-1);
 		}
 	}
@@ -60,7 +66,7 @@ int	execution_core(t_list *list, t_exec *data, t_env **lst)
 	data->pids[data->nb_pids] = fork();
 	if (data->pids[data->nb_pids] == -1)
 	{
-		perror("Fork issu in few pipe execution_core\n");
+		perror("Fork issue in few pipe execution_core\n");
 		return (-1);
 	}
 	if (data->pids[data->nb_pids] == 0)
