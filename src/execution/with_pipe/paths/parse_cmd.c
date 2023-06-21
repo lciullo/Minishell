@@ -1,26 +1,7 @@
 
 #include "minishell.h"
 
-static char	*find_path(char **env)
-{
-	char	*path;
-	int		row;
-
-	path = NULL;
-	row = 0;
-	if (!env)
-		return (NULL);
-	while (env[row])
-	{
-		if (ft_strncmp("PATH=", env[row], 5) == 0)
-			path = env[row];
-		row++;
-	}
-	if (!path)
-		return (NULL);
-	path += 5;
-	return (path);
-}
+static int	is_path(char *cmd);
 
 int	is_executable(char *cmd, t_exec *data, t_list *list, t_env **lst)
 {
@@ -56,40 +37,37 @@ static int	is_path(char *cmd)
 		return (1);
 	return (-1);
 }
+/// access
 
-char	*check_cmd_access(char **paths, char *cmd, int empty)
+static int check_empty_access(char **paths, char *cmd, int empty)
 {
-	char	*join_slash;
-	char	*cmd_with_path;
-	char	*tmp;
-	int		row;
-
-	row = 0;
-	join_slash = NULL;
-	cmd_with_path = NULL;
-	tmp = NULL;
 	if (!paths)
-		return (NULL);
+		return (FAILURE);
 	if (cmd[0] == '\0' || empty == 0)
 	{
 		if (empty == 0)
 		{
 			g_exit_status = 0;
-			return (NULL);
+			return (FAILURE);
 		}
 		else if (cmd[0] == '\0')
 		{
 			g_exit_status = 127;
-			return (NULL);
+			return (FAILURE);
 		}
 	}
-	if (!ft_strcmp(cmd, ".") || !ft_strcmp(cmd, ".."))
-		return (NULL);
-	if (is_path(cmd) == 1)
-	{
-		tmp = ft_strdup(cmd);
-		return (tmp);
-	}
+	return (SUCCESS);
+}
+
+static char *join_cmd_with_path(char **paths, char *cmd)
+{
+	char	*join_slash;
+	char	*cmd_with_path;
+	int		row;
+
+	join_slash = NULL;
+	cmd_with_path = NULL;
+	row = 0;
 	while (paths[row])
 	{
 		join_slash = ft_strjoin(paths[row], "/");
@@ -104,22 +82,27 @@ char	*check_cmd_access(char **paths, char *cmd, int empty)
 		free(cmd_with_path);
 		row++;
 	}
-	return (NULL);
+	return (cmd_with_path);
 }
 
-int	get_path_env(t_exec *data)
+char	*check_cmd_access(char **paths, char *cmd, int empty)
 {
-	data->paths = find_path(data->env);
-	if (!data->paths)
+	char	*cmd_with_path;
+	char	*tmp;
+
+	cmd_with_path = NULL;
+	tmp = NULL;
+	if (check_empty_access(paths, cmd, empty) == FAILURE)
+		return (NULL);
+	if (!ft_strcmp(cmd, ".") || !ft_strcmp(cmd, ".."))
+		return (NULL);
+	if (is_path(cmd) == 1)
 	{
-		perror("Environment path not found");
-		return (0);
+		tmp = ft_strdup(cmd);
+		return (tmp);
 	}
-	data->env_path = ft_split(data->paths, ':');
-	if (!data->env_path)
-	{
-		perror("issue in split to find environnement");
-		return (-1);
-	}
-	return (0);
+	cmd_with_path = join_cmd_with_path(paths, cmd);
+	if (!cmd_with_path)
+		return (NULL);
+	return (NULL);
 }
