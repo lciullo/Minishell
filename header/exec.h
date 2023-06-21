@@ -25,6 +25,7 @@ typedef struct s_exec
 	int		*fd_heredoc;
 	pid_t	*pids;
 	pid_t	pid_heredoc;
+	int		tmp_fd_heredoc[2];
 	int		new_fd[2];
 	int		old_fd[2];
 	char	*cmd_with_path;
@@ -142,17 +143,22 @@ int				one_builtin_exec(char **token, t_exec *data, t_env **lst);
 void			heredoc_ctr_c(int signal);
 
 void			heredoc_new_line(int signal);
+
 void			heredoc_signals(int signal);
 
 int				loop_for_heredoc(t_list *list, t_exec *data, t_data *parsing, t_env **lst);
 
-void			add_to_tab(int *fd_heredoc, int fd);
+void			add_to_tab_heredoc(int *fd_heredoc, int fd);
 
 //# === Clear heredoc  === #
 
 int				close_for_heredoc(t_list *list);
 
-void			close_tab(t_exec *data);
+void 			clear_store_heredoc_issue(t_exec *data);
+
+void 			clear_heredoc_end(t_exec *data, t_env **lst, t_list *list, int fd[2]);
+
+void			close_tab_heredoc(t_exec *data);
 
 void			fork_issue_heredoc(t_exec *data, int fd[2]);
 

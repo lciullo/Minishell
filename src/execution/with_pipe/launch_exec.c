@@ -58,12 +58,12 @@ static int	execution_of_token(t_exec *data, t_list *list, t_env **lst, char **en
 		if (empty != 0)
 			g_exit_status = 127;
 		clear_cmd_not_found(data, list, lst);
-		close_tab(data);
+		close_tab_heredoc(data);
 		if (env)
 			free_array(env);
 		exit(g_exit_status);
 	}
-	close_tab(data);
+	close_tab_heredoc(data);
 	if (data->cmd_with_path != NULL && is_executable(data->cmd_with_path, data, list, lst) == 0)
 	{
 		g_exit_status = 1;

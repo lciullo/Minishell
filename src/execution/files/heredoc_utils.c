@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 08:41:08 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/20 16:06:29 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/21 12:42:34 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	add_to_tab(int *fd_heredoc, int fd)
+void	add_to_tab_heredoc(int *fd_heredoc, int fd)
 {
 	int	i;
 

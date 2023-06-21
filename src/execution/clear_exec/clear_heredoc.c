@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 12:56:18 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/20 18:59:59 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/21 12:41:34 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,31 @@ void	itoa_heredoc_issue(t_exec *data, int fd[2], int status)
 		g_exit_status = WEXITSTATUS(status);
 }
 
+void 	clear_store_heredoc_issue(t_exec *data)
+{
+	if (data->pids)
+		free(data->pids);
+	if (data->fd_heredoc)
+		free(data->fd_heredoc);
+	if (data->env)
+		free_array(data->env);
+}
+
+void clear_heredoc_end(t_exec *data, t_env **lst, t_list *list, int fd[2])
+{
+	if (lst)
+		ft_lstclear_env(lst, free);
+	if (list)
+		ft_lstclear(&list, free);
+	if (data->env)
+		free_array(data->env);
+	if (data->pids)
+		free(data->pids);
+	if (data->fd_heredoc)
+		free(data->fd_heredoc);
+	(void)fd;
+	//close(fd[1]);
+}
 void	pipe_heredoc_issue(t_exec *data)
 {
 	if (data->pids)
@@ -56,7 +81,7 @@ void	pipe_heredoc_issue(t_exec *data)
 	perror("Pipe issue in heredoc");
 }
 
-void	close_tab(t_exec *data)
+void	close_tab_heredoc(t_exec *data)
 {
 	int	i;
 
