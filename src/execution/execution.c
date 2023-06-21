@@ -26,7 +26,7 @@ int	execution(t_list *list, t_data *parsing, t_exec *data, t_env **lst)
 	}
 	if (sort_cmd(list, parsing, data, lst) == FAILURE)
 		return (FAILURE);
-	close_for_heredoc(list);
+	//close_for_heredoc(list);
 	ft_close(data->infile);
 	free_struct(data);
 	if (data->env != NULL)
@@ -45,7 +45,7 @@ static	int	launch_heredoc(t_list *list, t_data *parsing, \
 		return (FAILURE);
 	if (check == FAILURE || check == 130 || check == 131)
 	{
-		close_for_heredoc(list);
+		//close_for_heredoc(list);
 		ft_close(data->infile);
 		free_struct(data);
 		if (data->env != NULL)
@@ -54,7 +54,7 @@ static	int	launch_heredoc(t_list *list, t_data *parsing, \
 	}
 	if (parsing->nbr_here_doc == data->nb_args)
 	{
-		close_for_heredoc(list);
+		//close_for_heredoc(list);
 		ft_close(data->infile);
 		free_struct(data);
 		if (data->env != NULL)
