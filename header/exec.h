@@ -164,6 +164,8 @@ int				close_heredoc_list(t_list *list);
 
 void 			clear_store_heredoc_issue(t_exec *data);
 
+void			clear_heredoc_main_process(t_exec *data);
+
 void 			clear_heredoc_end(t_exec *data, t_env **lst, t_list *list, int fd[2]);
 
 void			close_tab_heredoc(t_exec *data);

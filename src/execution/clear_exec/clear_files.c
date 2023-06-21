@@ -6,7 +6,7 @@
 /*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 10:12:14 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/21 17:39:49 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/21 19:34:35 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,12 @@ void	clear_dup_issue_builtin(t_exec *data, t_list *list, t_env **lst)
 		ft_lstclear_env(lst, free);
 	ft_close(data->infile);
 	ft_close(data->outfile);
+}
+
+void	clear_heredoc_main_process(t_exec *data)
+{
+	ft_close(data->infile);
+	free_struct(data);
+	if (data->env != NULL)
+		free_array(data->env);
 }
