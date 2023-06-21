@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:25:34 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/17 16:07:18 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/21 17:23:07 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static	void	loop_in_child_heredoc(t_exec *data, int *fd, char *delimiter, t_env 
 				break ;
 			if (ft_strcmp(line, "$") && data->quote_here_doc == 0)
 			{
-				line = expand(line, *lst);
+				line = expand(line, *lst, 0, 0);
 			}
 			write(fd[1], line, ft_strlen(line));
 			write(fd[1], "\n", 1);
