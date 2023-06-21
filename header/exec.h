@@ -62,6 +62,8 @@ int				execution_core(t_list *list, t_exec *data, t_env **lst);
 
 int				launch_exec(t_exec *data, t_list *list, t_env **lst, char **env);
 
+int				execution_of_token(t_exec *data, t_list *list, t_env **lst, char **env);
+
 //# === Loop many pipe === #
 
 int				loop_pipe_by_pipe(t_list *list, t_exec	*data, t_env **lst);

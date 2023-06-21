@@ -6,13 +6,13 @@
 /*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 17:44:33 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/21 20:50:36 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/21 21:10:41 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	execute_token(t_list *list, t_exec *data, char **env, t_env **lst);
+static int	begining_of_exec(t_list *list, t_exec *data, char **env, t_env **lst);
 static	void	switch_and_close_fds(t_exec *data);
 static void	signal_handeler(int signal);
 static int	fork_for_execution(t_list *list, t_exec *data, t_env **lst);
@@ -35,28 +35,6 @@ int	execution_core(t_list *list, t_exec *data, t_env **lst)
 	return (SUCCESS);
 }
 
-static int	execute_token(t_list *list, t_exec *data, char **env, t_env **lst)
-{
-	if (loop_for_infile(list, data) == FAILURE)
-	{
-		clear_exec_files_issue(list, lst, data);
-		exit(1);
-	}
-	if (loop_for_outfile(list, data) == FAILURE)
-	{
-		clear_exec_files_issue(list, lst, data);
-		exit(1);
-	}
-	if (dup_files(data) == FAILURE)
-	{
-		clear_dup_issue(data, list, lst);
-		exit (1);
-	}
-	ft_close(data->infile);
-	launch_exec(data, list, lst, env);
-	return (SUCCESS);
-}
-
 static void	signal_handeler(int signal)
 {
 	(void)signal;
@@ -65,14 +43,13 @@ static void	signal_handeler(int signal)
 
 static int call_to_launch_exec(t_list *list, t_exec *data, t_env **lst)
 {
-	if (execute_token(list, data, data->env, lst) == FAILURE)
+	if (begining_of_exec(list, data, data->env, lst) == FAILURE)
 	{
 		perror("Issue in child process\n");
 		return (FAILURE);
 	}
 	return (SUCCESS);
 }
-
 static int	fork_for_execution(t_list *list, t_exec *data, t_env **lst)
 {
 	signal(SIGQUIT, signal_handeler);
@@ -91,6 +68,28 @@ static int	fork_for_execution(t_list *list, t_exec *data, t_env **lst)
 	switch_and_close_fds(data);
 	data->exec_progress++;
 	data->nb_pids++;
+	return (SUCCESS);
+}
+
+static int	begining_of_exec(t_list *list, t_exec *data, char **env, t_env **lst)
+{
+	if (loop_for_infile(list, data) == FAILURE)
+	{
+		clear_exec_files_issue(list, lst, data);
+		exit(1);
+	}
+	if (loop_for_outfile(list, data) == FAILURE)
+	{
+		clear_exec_files_issue(list, lst, data);
+		exit(1);
+	}
+	if (dup_files(data) == FAILURE)
+	{
+		clear_dup_issue(data, list, lst);
+		exit (1);
+	}
+	ft_close(data->infile);
+	launch_exec(data, list, lst, env);
 	return (SUCCESS);
 }
 

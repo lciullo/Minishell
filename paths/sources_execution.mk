@@ -6,7 +6,7 @@
 #    By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 09:55:39 by lciullo           #+#    #+#              #
-#    Updated: 2023/06/21 18:08:15 by lisa             ###   ########.fr        #
+#    Updated: 2023/06/21 21:26:44 by lisa             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRC	=																	\
 		src/execution/with_pipe/launch_exec.c							\
 		src/execution/with_pipe/begin_exec.c							\
 		src/execution/with_pipe/paths/parse_cmd.c						\
+		src/execution/with_pipe/execute_token.c							\
 		src/execution/with_pipe/dup_files.c 							\
 		src/execution/clear_exec/close_files.c 							\
 		src/execution/clear_exec/close_heredoc.c						\
