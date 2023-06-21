@@ -2,6 +2,7 @@
 
 static t_env	*fill_list_env(char *row, t_env *lst);
 static t_env	*if_empty_env(t_env *lst);
+static t_env	*get_shlvl_list(t_env *lst);
 
 t_env	*creat_env(char **env)
 {
@@ -22,7 +23,7 @@ t_env	*creat_env(char **env)
 			return (NULL);
 		row++;
 	}
-	//lst = get_shlvl_list(t_env *lst);
+	lst = get_shlvl_list(lst);
 	return (lst);
 }
 
@@ -57,6 +58,33 @@ static t_env	*fill_list_env(char *row, t_env *lst)
 	if (!value)
 		return (free(name), NULL);
 	ft_lstadd_back_env(&lst, ft_lstnew_env(name, value, 1));
+	return (lst);
+}
+
+static t_env	*get_shlvl_list(t_env *lst)
+{
+	t_env 	*copy;
+	int		nb;
+
+	copy = lst;
+	nb = 0;
+	while (copy != NULL && ft_strcmp(copy->name, "SHLVL") != 0)
+		copy = copy->next;
+	if (copy->value)
+	{
+		nb = ft_atoi(copy->value);
+		if (nb >= 1000)
+		{
+			ft_putstr_fd("shell level 1000 too high, resetting to 1", 2);
+			nb = 1;
+		}
+		else
+			nb++;
+		free(copy->value);
+		copy->value = ft_itoa(nb);
+		if (!copy->value)
+			return (NULL);
+	}
 	return (lst);
 }
 
