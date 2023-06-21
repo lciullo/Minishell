@@ -12,10 +12,24 @@
 
 #include "minishell.h"
 
-static	void	is_outfile_open(t_exec *data)
+static	int		manage_outfile(int type, char *outfile, t_exec *data);
+static	void	is_outfile_open(t_exec *data);
+
+int	loop_for_outfile(t_list *list, t_exec *data, t_env **lst)
 {
-	if (data->outfile > 2)
-		close(data->outfile);
+	while (list != NULL && list->type != PIPE)
+	{
+		if (list->type == OUTFILE || list->type == APPEND)
+		{
+			if (manage_outfile(list->type, list->data[0], data) == FAILURE)
+			{
+				clear_exec_files_issu(list, lst, data);
+				return (FAILURE);
+			}
+		}
+		list = list->next;
+	}
+	return (SUCCESS);
 }
 
 static	int	manage_outfile(int type, char *outfile, t_exec *data)
@@ -26,27 +40,19 @@ static	int	manage_outfile(int type, char *outfile, t_exec *data)
 	else if (type == APPEND)
 		data->outfile = open(outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	data->out_dir++;
-	if (data->outfile == -1)
+	if (data->outfile == FAILURE)
 	{	
 		ft_close(data->infile);
 		ft_close(data->new_fd[0]);
 		ft_close(data->new_fd[1]);
 		perror("Permission denied");
-		return (-1);
+		return (FAILURE);
 	}
-	return (0);
+	return (SUCCESS);
 }
 
-int	loop_for_outfile(t_list *list, t_exec *data)
+static	void	is_outfile_open(t_exec *data)
 {
-	while (list != NULL && list->type != PIPE)
-	{
-		if (list->type == OUTFILE || list->type == APPEND)
-		{
-			if (manage_outfile(list->type, list->data[0], data) == -1)
-				return (-1);
-		}
-		list = list->next;
-	}
-	return (0);
+	if (data->outfile > 2)
+		close(data->outfile);
 }

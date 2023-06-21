@@ -2,7 +2,6 @@
 #include "minishell.h"
 
 static int	sort_cmd(t_list *list, t_data *parsing, t_exec *data, t_env **lst);
-
 static	int	launch_heredoc(t_list *list, t_data *parsing, \
 				t_exec *data, t_env **lst);
 
@@ -26,7 +25,6 @@ int	execution(t_list *list, t_data *parsing, t_exec *data, t_env **lst)
 	}
 	if (sort_cmd(list, parsing, data, lst) == FAILURE)
 		return (FAILURE);
-	//close_for_heredoc(list);
 	ft_close(data->infile);
 	free_struct(data);
 	if (data->env != NULL)
@@ -45,7 +43,6 @@ static	int	launch_heredoc(t_list *list, t_data *parsing, \
 		return (FAILURE);
 	if (check == FAILURE || check == 130 || check == 131)
 	{
-		//close_for_heredoc(list);
 		ft_close(data->infile);
 		free_struct(data);
 		if (data->env != NULL)
@@ -54,7 +51,6 @@ static	int	launch_heredoc(t_list *list, t_data *parsing, \
 	}
 	if (parsing->nbr_here_doc == data->nb_args)
 	{
-		//close_for_heredoc(list);
 		ft_close(data->infile);
 		free_struct(data);
 		if (data->env != NULL)
@@ -68,9 +64,9 @@ static int	sort_cmd(t_list *list, t_data *parsing, t_exec *data, t_env **lst)
 {
 	if (data->nb_block == 1 && parsing->nbr_pipe == 0 && data->nb_builtin == 1)
 	{
-		if (loop_for_infile(list, data) == FAILURE)
+		if (loop_for_infile(list, data, lst) == FAILURE)
 			return (FAILURE);
-		if (loop_for_outfile(list, data) == FAILURE)
+		if (loop_for_outfile(list, data, lst) == FAILURE)
 			return (FAILURE);
 		get_builtin_and_exec(list, data, lst);
 		return (SUCCESS);

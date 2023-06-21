@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	close_for_heredoc(t_list *list)
+int	close_heredoc_list(t_list *list)
 {
 	while (list != NULL)
 	{

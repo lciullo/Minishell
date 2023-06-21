@@ -140,7 +140,7 @@ int				one_builtin_exec(char **token, t_exec *data, t_env **lst);
 
 //# === Heredoc === #
 
-void			heredoc_ctr_c(int signal);
+void			heredoc_ctrl_c(int signal);
 
 void			heredoc_new_line(int signal);
 
@@ -152,9 +152,11 @@ void			loop_in_child_heredoc(t_exec *data, char *delimiter, t_env **lst, t_list 
 
 void			add_to_tab_heredoc(int *fd_heredoc, int fd);
 
+void 			init_signals_heredoc(void);
+
 //# === Clear heredoc  === #
 
-int				close_for_heredoc(t_list *list);
+int				close_heredoc_list(t_list *list);
 
 void 			clear_store_heredoc_issue(t_exec *data);
 
@@ -164,15 +166,15 @@ void			close_tab_heredoc(t_exec *data);
 
 void			fork_issue_heredoc(t_exec *data, int fd[2]);
 
-void			itoa_heredoc_issue(t_exec *data, int fd[2], int status);
+void			itoa_heredoc_issue(t_exec *data, int fd[2]);
 
 void			pipe_heredoc_issue(t_exec *data);
 
 //# === Infile outfile === #
 
-int				loop_for_infile(t_list *list, t_exec *data);
+int				loop_for_infile(t_list *list, t_exec *data, t_env **lst);
 
-int				loop_for_outfile(t_list *list, t_exec *data);
+int				loop_for_outfile(t_list *list, t_exec *data, t_env **lst);
 
 //# ======================= BUILTINS ======================= #
 

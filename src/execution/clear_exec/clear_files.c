@@ -6,7 +6,7 @@
 /*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 10:12:14 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/21 12:30:13 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/21 14:41:08 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	clear_exec_files_issu(t_list *list, t_env **lst, t_exec *data)
 	close_tab_heredoc(data);
 	free_struct(data);
 	if (list)
-		ft_lstclear(&list, free);
+		ft_lstclear(&data->head, free);
 	if (lst)
 		ft_lstclear_env(lst, free);
 	if (data->env_path)

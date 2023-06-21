@@ -1,11 +1,7 @@
 #include "minishell.h"
 
-static void init_signals_heredoc(void);
-
 static void init_heredoc_process(t_exec *data);
-
 static int  empty_line_heredoc(t_exec *data, t_env **lst, t_list *list, char *line);
-
 static int 	not_empty_heredoc_line(t_exec *data, char *delimiter, char *line, t_env **lst);
 
 void	loop_in_child_heredoc(t_exec *data, char *delimiter, t_env **lst, t_list *list)
@@ -32,13 +28,6 @@ void	loop_in_child_heredoc(t_exec *data, char *delimiter, t_env **lst, t_list *l
 	}
 	clear_heredoc_end(data, lst, list, data->tmp_fd_heredoc);
 	exit(1);
-}
-
-static void init_signals_heredoc(void)
-{
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, heredoc_ctr_c);
 }
 
 static void init_heredoc_process(t_exec *data)

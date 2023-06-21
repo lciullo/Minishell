@@ -6,7 +6,7 @@
 /*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 17:44:33 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/21 12:18:29 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/21 14:50:48 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,10 @@
 
 static int	execute_token(t_list *list, t_exec *data, char **env, t_env **lst)
 {
-	if (loop_for_infile(list, data) == -1)
-	{	
-		clear_exec_files_issu(list, lst, data);
+	if (loop_for_infile(list, data, lst) == -1)
 		exit(1);
-	}
-	if (loop_for_outfile(list, data) == -1)
-	{
-		clear_exec_files_issu(list, lst, data);
+	if (loop_for_outfile(list, data, lst) == -1)
 		exit(1);
-	}
 	if (dup_files(data) == -1)
 	{
 		clear_dup_issue(data, list, lst);
@@ -77,7 +71,7 @@ int	execution_core(t_list *list, t_exec *data, t_env **lst)
 			return (-1);
 		}
 	}
-	//close_for_heredoc(list);
+	//close_heredoc_list(list);
 	ft_close(data->infile);
 	switch_and_close_fds(data);
 	data->exec_progress++;

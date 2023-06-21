@@ -6,7 +6,7 @@
 /*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 12:56:18 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/21 13:22:50 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/21 13:58:16 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,12 @@ void	fork_issue_heredoc(t_exec *data, int fd[2])
 	perror("Fork issue in heredoc");
 }
 
-void	itoa_heredoc_issue(t_exec *data, int fd[2], int status)
+void	itoa_heredoc_issue(t_exec *data, int fd[2])
 {
 	ft_close(fd[0]);
 	ft_close(fd[1]);
 	perror("Ft_itoa issue");
-	if (waitpid(data->pid_heredoc, &status, WUNTRACED) == FAILURE)
-		g_exit_status = WEXITSTATUS(status);
-	else if (WIFEXITED(status))
-		g_exit_status = WEXITSTATUS(status);
+	clear_store_heredoc_issue(data);
 }
 
 void 	clear_store_heredoc_issue(t_exec *data)
