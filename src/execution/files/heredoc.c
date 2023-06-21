@@ -6,58 +6,13 @@
 /*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:25:34 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/21 12:44:44 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/21 12:47:53 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*Voir avec Clemence pour le null check du fork et le << stop qui aborte avec fsanitize*/
 
 #include "minishell.h"
-
-static	void	loop_in_child_heredoc(t_exec *data, char *delimiter, t_env **lst, t_list *list)
-{
-	char	*line;
-
-	line = NULL;
-	close(data->tmp_fd_heredoc[0]);
-	close_tab_heredoc(data);
-	g_exit_status = 0;
-	while (g_exit_status == 0)
-	{
-		signal(SIGINT, SIG_IGN);
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGINT, heredoc_ctr_c);
-		line = readline("heredoc> ");
-		signal(SIGINT, heredoc_new_line);
-		if (line)
-		{
-			if (!ft_strcmp(line, delimiter))
-				break ;
-			if (ft_strcmp(line, "$") && data->quote_here_doc == 0)
-			{
-				line = expand(line, *lst);
-			}
-			write(data->tmp_fd_heredoc[1], line, ft_strlen(line));
-			write(data->tmp_fd_heredoc[1], "\n", 1);
-			free(line);
-		}
-		else
-		{
-			if (g_exit_status == 130)
-			{
-				clear_heredoc_end(data, lst, list, data->tmp_fd_heredoc);
-				exit (g_exit_status);
-			}
-			ft_dprintf(2, "here-document at line %d delimited by end-of-file [%s]\n", line, delimiter);
-			free(line);
-			g_exit_status = 131;
-			clear_heredoc_end(data, lst, list, data->tmp_fd_heredoc);
-			exit (g_exit_status);
-		}
-	}
-	clear_heredoc_end(data, lst, list, data->tmp_fd_heredoc);
-	exit(1);
-}
 
 static int	store_heredoc_in_list(char **delimiter, t_exec *data, int status)
 {

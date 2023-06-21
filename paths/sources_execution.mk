@@ -6,7 +6,7 @@
 #    By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 09:55:39 by lciullo           #+#    #+#              #
-#    Updated: 2023/06/13 16:39:32 by lisa             ###   ########.fr        #
+#    Updated: 2023/06/21 12:47:34 by lisa             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRC	=																	\
 		src/execution/files/outfiles.c									\
 		src/execution/files/heredoc.c									\
 		src/execution/files/heredoc_utils.c								\
+		src/execution/files/heredoc_child_process.c						\
 		src/execution/no_pipe/one_builtin_exec.c						\
 		src/execution/with_pipe/loop_list.c								\
 		src/execution/with_pipe/launch_exec.c							\

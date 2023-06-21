@@ -148,6 +148,8 @@ void			heredoc_signals(int signal);
 
 int				loop_for_heredoc(t_list *list, t_exec *data, t_data *parsing, t_env **lst);
 
+void			loop_in_child_heredoc(t_exec *data, char *delimiter, t_env **lst, t_list *list);
+
 void			add_to_tab_heredoc(int *fd_heredoc, int fd);
 
 //# === Clear heredoc  === #
