@@ -6,24 +6,11 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 12:56:18 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/31 14:37:12 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/22 10:46:41 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	close_for_heredoc(t_list *list)
-{
-	while (list != NULL)
-	{
-		if (list->type == HERE_DOC)
-		{
-			ft_close(ft_atoi(list->data[0]));
-		}
-		list = list->next;
-	}
-	return (0);
-}
 
 void	fork_issue_heredoc(t_exec *data, int fd[2])
 {
@@ -40,12 +27,33 @@ void	itoa_heredoc_issue(t_exec *data, int fd[2])
 {
 	ft_close(fd[0]);
 	ft_close(fd[1]);
+	perror("Ft_itoa issue");
+	clear_store_heredoc_issue(data);
+}
+
+void	clear_store_heredoc_issue(t_exec *data)
+{
 	if (data->pids)
 		free(data->pids);
 	if (data->fd_heredoc)
 		free(data->fd_heredoc);
-	perror("Ft_itoa issue");
-	waitpid(data->pid_heredoc, NULL, 0);
+	if (data->env)
+		free_array(data->env);
+}
+
+void	clear_heredoc_end(t_exec *data, t_env **lst, t_list *list, int fd[2])
+{
+	if (lst)
+		ft_lstclear_env(lst, free);
+	if (list)
+		ft_lstclear(&list, free);
+	if (data->env)
+		free_array(data->env);
+	if (data->pids)
+		free(data->pids);
+	if (data->fd_heredoc)
+		free(data->fd_heredoc);
+	close(fd[1]);
 }
 
 void	pipe_heredoc_issue(t_exec *data)
@@ -55,16 +63,4 @@ void	pipe_heredoc_issue(t_exec *data)
 	if (data->fd_heredoc)
 		free(data->fd_heredoc);
 	perror("Pipe issue in heredoc");
-}
-
-void	close_tab(t_exec *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->nb_heredoc)
-	{
-		ft_close(data->fd_heredoc[i]);
-		i++;
-	}
 }

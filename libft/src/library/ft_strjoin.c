@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 09:13:37 by lciullo           #+#    #+#             */
-/*   Updated: 2023/05/04 14:44:40 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/22 10:16:15 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static char	*ft_copy_join(char *s1, char *s2, char *str)
 		str[i] = s1[i];
 		i++;
 	}
-	// str[i] == '\n'
 	while (s2[j])
 	{
 		str[i] = s2[j];
@@ -41,7 +40,7 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1)); // +2
+	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!str)
 	{
 		free((void *)s1);

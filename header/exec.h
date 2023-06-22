@@ -25,6 +25,7 @@ typedef struct s_exec
 	int		*fd_heredoc;
 	pid_t	*pids;
 	pid_t	pid_heredoc;
+	int		tmp_fd_heredoc[2];
 	int		new_fd[2];
 	int		old_fd[2];
 	char	*cmd_with_path;
@@ -59,7 +60,9 @@ int				execution_core(t_list *list, t_exec *data, t_env **lst);
 
 //# ==================== With Pipe =================== #
 
-int				launch_exec(t_exec *data, t_list *list, t_env **lst, char **env);
+int				launch_exec(t_exec *data, t_list *list, t_env **lst);
+
+int				execution_of_token(t_exec *data, t_list *list, t_env **lst);
 
 //# === Loop many pipe === #
 
@@ -105,9 +108,13 @@ void			clear_execve_issue(t_exec *data, t_list *list, t_env **lst);
 
 void			clear_builtin_exec(t_exec *data, t_list *list, t_env **lst);
 
+//# --- Execve issue --- #
+
+void			clear_only_redir(t_exec *data, t_list *list, t_env **lst);
+
 //# --- Files issue --- #
 
-void			clear_exec_files_issu(t_list *list, t_env **lst, t_exec *data);
+void			clear_exec_files_issue(t_list *list, t_env **lst, t_exec *data);
 
 //# === Clear between commands and when they are issues  === #
 
@@ -123,32 +130,49 @@ void			close_all_fds(t_exec *data);
 
 void			clear_dup_issue(t_exec *data, t_list *list, t_env **lst);
 
+void			clear_dup_issue_builtin(t_exec *data, t_list *list, t_env **lst);
+
 //# ==================== Without Pipe =================== #
 
 //# === One builtin execution  === #
 
 void			get_builtin_and_exec(t_list *list, t_exec *data, t_env **lst);
 
-int				one_builtin_exec(char **token, t_exec *data, t_env **lst);
+int				one_builtin_exec(char **token, t_exec *data, t_env **lst, t_list *list);
+
+void			clear_one_builtin_exec_files(t_exec *data);
+
+void			clear_in_child(t_exec *data, t_env **lst, t_list *list);
 
 //# ======================= MANAGEMENT FILES ======================= #
 
 //# === Heredoc === #
 
-void			heredoc_ctr_c(int signal);
+void			heredoc_ctrl_c(int signal);
 
 void			heredoc_new_line(int signal);
+
 void			heredoc_signals(int signal);
 
-int				loop_for_heredoc(t_list *list, t_exec *data, t_env **lst);
+int				loop_for_heredoc(t_list *list, t_exec *data, t_data *parsing, t_env **lst);
 
-void			add_to_tab(int *fd_heredoc, int fd);
+void			loop_in_child_heredoc(t_exec *data, char *delimiter, t_env **lst, t_list *list);
+
+void			add_to_tab_heredoc(int *fd_heredoc, int fd);
+
+void 			init_signals_heredoc(void);
 
 //# === Clear heredoc  === #
 
-int				close_for_heredoc(t_list *list);
+int				close_heredoc_list(t_list *list);
 
-void			close_tab(t_exec *data);
+void 			clear_store_heredoc_issue(t_exec *data);
+
+void			clear_heredoc_main_process(t_exec *data);
+
+void 			clear_heredoc_end(t_exec *data, t_env **lst, t_list *list, int fd[2]);
+
+void			close_tab_heredoc(t_exec *data);
 
 void			fork_issue_heredoc(t_exec *data, int fd[2]);
 
@@ -208,7 +232,14 @@ int				last_char(char *name);
 
 int				first_char(char c);
 
+int				is_valid_export(int c);
+
+int				is_valid_syntax(char *name);
+
 char			*remove_plus_in_name(char *name);
+
+void			clear_export_end_according_cases(t_export *stat, \
+					char *name, char *value);
 
 //# Manage case with equal in name #
 
@@ -219,6 +250,12 @@ t_env			*add_back_with_equal(t_env **lst, char *name, char *value);
 int				add_to_export(t_env **lst, char *name, char *value, t_export *stat);
 
 void			change_equal_to_one(t_env **lst, char *name);
+
+int				check_name_by_name(char *token, t_env **lst, t_export *stat);
+
+int				check_only_equal(char *token);
+
+int				is_in_env(t_env *lst, char *name);
 
 //# ======================= TEMPORARY ======================= #
 

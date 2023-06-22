@@ -52,6 +52,8 @@ static	int	initialize_integers(t_list *list, t_exec *data, t_data *parsing)
 	data->old_fd[1] = 0;
 	data->new_fd[0] = 0;
 	data->new_fd[1] = 0;
+	data->tmp_fd_heredoc[0] = 0;
+	data->tmp_fd_heredoc[1] = 0;
 	data->in_dir = 0;
 	data->out_dir = 0;
 	data->nb_block = parsing->nbr_pipe + 1;

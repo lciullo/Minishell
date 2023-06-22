@@ -1,29 +1,5 @@
 #include "minishell.h"
 
-/*static void	search_and_delete(char *name, t_env **lst)
-{
-	t_env	*copy;
-	t_env	*next_node;
-
-	copy = lst;
-	next_node = NULL;
-	while (copy)
-	{
-		if (!ft_strcmp(copy->name, name))
-		{
-			next_node->next = copy->next;
-			if (copy->name)
-				free(copy->name);
-			if (copy->value)
-				free(copy->value);
-			free(copy);
-			return ;
-		}
-		next_node = copy;
-		copy = copy->next;
-	}
-}*/
-
 static void	search_and_delete(char *name, t_env **lst)
 {
 	t_env	*it;
@@ -99,7 +75,7 @@ int	implement_unset(char **token, t_env **lst)
 		if (i != 1)
 			previous_exit_status = exit_status;
 		exit_status = parse_unset(token[i]);
-		if ( exit_status == 0)
+		if (exit_status == 0)
 			search_and_delete(token[i], lst);
 		if (previous_exit_status != 0 && exit_status == 0)
 			exit_status = previous_exit_status;

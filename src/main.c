@@ -15,6 +15,8 @@ int	main(int ac, char **av, char **env)
 
 	lst = NULL;
 	lst = creat_env(env);
+	if (!lst)
+		perror("Issue to create env in linked list");
 	g_exit_status = 0;
 	(void)ac;
 	(void)av;
@@ -68,12 +70,10 @@ static void	core_of_program(char *line, t_exec *data, t_env **lst)
 	if (list == NULL)
 		return ;
 	//print_list(list);
-	if (execution(list, &data_parsing, data, lst) == -1)
-	{
+	if (execution(list, &data_parsing, data, lst) == FAILURE)
 		perror("execution issue");
-	}
 	free(line);
-	if (list)
+	if (list != NULL)
 		ft_lstclear(&list, free);
 }
 
