@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 09:21:23 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/06 13:02:29 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/22 14:21:34 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	copy_quote_content(char *new_s, char *row, int *i, int *j);
 
 char	*is_there_a_quote(char *row)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	while (row[i])
@@ -26,6 +26,8 @@ char	*is_there_a_quote(char *row)
 		if (row[i] == '\'' || row[i] == '\"')
 		{
 			row = delete_quote(row);
+			if (!row)
+				return (NULL);
 			break ;
 		}
 		i++;
@@ -40,7 +42,7 @@ static char	*delete_quote(char *row)
 	char	*new_s;
 
 	new_s = malloc(sizeof(char) * \
-			(ft_strlen(row) - (get_nbr_quote(row) * 1) + 1));
+	(ft_strlen(row) - (get_nbr_quote(row) * 1) + 1));
 	if (!new_s)
 		return (NULL);
 	i = 0;

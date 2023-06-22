@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 static bool	check_quote(char *line);

@@ -35,4 +35,3 @@ static int	del_delimiteur_1(t_list **list)
 	}
 	return (1);
 }
-

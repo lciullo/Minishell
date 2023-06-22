@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 void	init_structure(t_data *data, t_env *lst_env, char *line)
@@ -60,4 +59,3 @@ bool	if_check(int type, char *line, int i)
 		return (true);
 	return (false);
 }
-

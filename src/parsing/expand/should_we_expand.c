@@ -58,10 +58,11 @@ static int	process_expanded_data(t_list *temp)
 	}
 	temp_tab = temp->data;
 	temp->data = ft_split_parsing(tab_in_line);
+	free(tab_in_line);
 	if (!(temp->data))
 	{
 		temp->data = temp_tab;
-		return (free(tab_in_line), FAILURE);
+		return (FAILURE);
 	}
 	free(temp_tab);
 	change_tab(temp->data, 1);
