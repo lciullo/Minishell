@@ -34,7 +34,7 @@ int	implement_exit(char **cmd, t_exec *data)
 		data->end = 1;
 		return (0);
 	}
-	if (((ft_atoi_exit(cmd[1], &nb) == FAILURE) || ft_is_numeric(cmd[1]) == FAILURE))
+	if (((ft_atoi_exit(cmd[1], &nb) == -1) || ft_is_numeric(cmd[1]) == -1))
 	{
 		g_exit_status = 2;
 		ft_dprintf(2, "exit\nminishell: exit: %s: numeric argument is required\n",

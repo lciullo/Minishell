@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static	int		manage_outfile(int type, char *outfile, t_exec *data);
+static	int	manage_outfile(int type, char *outfile, t_exec *data);
 static	void	is_outfile_open(t_exec *data);
 
 int	loop_for_outfile(t_list *list, t_exec *data)

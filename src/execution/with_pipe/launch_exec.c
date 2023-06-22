@@ -4,13 +4,13 @@
 static int	sort_to_launch_exec(t_list *list, t_exec *data);
 static char	**get_command(t_list *list);
 
-int	launch_exec(t_exec *data, t_list *list, t_env **lst, char **env)
+int	launch_exec(t_exec *data, t_list *list, t_env **lst)
 {
 	int	get_type;
 
 	get_type = sort_to_launch_exec(list, data);
 	if (get_type == TOKEN)
-		execution_of_token(data, list, lst, env);
+		execution_of_token(data, list, lst);
 	else if (get_type == BUILTIN)
 	{
 		g_exit_status = 0;
@@ -18,7 +18,7 @@ int	launch_exec(t_exec *data, t_list *list, t_env **lst, char **env)
 		clear_builtin_exec(data, list, lst);
 		exit(g_exit_status);
 	}
-	clear_only_redir(data, list, lst, env);
+	clear_only_redir(data, list, lst);
 	exit(g_exit_status);
 }
 

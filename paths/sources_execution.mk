@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    sources_execution.mk                               :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+         #
+#    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 09:55:39 by lciullo           #+#    #+#              #
-#    Updated: 2023/06/21 21:38:12 by lisa             ###   ########.fr        #
+#    Updated: 2023/06/22 11:11:55 by lciullo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRC	=																	\
 		src/execution/with_pipe/loop_list.c								\
 		src/execution/with_pipe/launch_exec.c							\
 		src/execution/with_pipe/begin_exec.c							\
-		src/execution/with_pipe/paths/parse_cmd.c						\
+		src/execution/with_pipe/paths/check_access.c					\
+		src/execution/with_pipe/paths/is_executable.c					\
 		src/execution/with_pipe/paths/get_cmd_with_path.c				\
 		src/execution/with_pipe/execute_token.c							\
 		src/execution/with_pipe/dup_files.c 							\
@@ -42,6 +43,7 @@ SRC	=																	\
 		src/builtin/exit.c 												\
 		src/builtin/unset.c												\
 		src/builtin/export/export.c										\
+		src/builtin/export/check_is_valid.c								\
 		src/builtin/export/print_export.c								\
 		src/builtin/export/export_utils.c								\
 		src/builtin/export/parse_export.c								\

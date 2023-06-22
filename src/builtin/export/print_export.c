@@ -58,7 +58,8 @@ static t_env	*copy_env_lst(t_env *lst)
 	while (lst != NULL)
 	{
 		if (lst->value)
-			node = ft_lstnew_env(ft_strdup(lst->name), ft_strdup(lst->value), lst->equal);
+			node = ft_lstnew_env(ft_strdup(lst->name), \
+					ft_strdup(lst->value), lst->equal);
 		else
 			node = ft_lstnew_env(ft_strdup(lst->name), lst->value, lst->equal);
 		if (!node)

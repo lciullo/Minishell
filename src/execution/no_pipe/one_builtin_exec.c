@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_builtin_exec.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 18:13:24 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/21 17:45:38 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/22 10:42:42 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static	int	dup_for_one_builtin(t_exec *data, t_env **lst, t_list *list);
 static	int	to_fork(char **token);
-static int	execute_builtin_in_child(char **token, t_exec *data, t_env **lst, t_list *list);
+static int	execute_builtin_in_child(char **token, t_exec *data, \
+				t_env **lst, t_list *list);
 
 void	get_builtin_and_exec(t_list *list, t_exec *data, t_env **lst)
 {
-	
 	while (list != NULL)
 	{
 		if (list->type == BUILTIN)
@@ -47,7 +47,6 @@ static	int	dup_for_one_builtin(t_exec *data, t_env **lst, t_list *list)
 {
 	if (data->infile > 2)
 	{
-		
 		if (dup2(data->infile, STDIN_FILENO) == FAILURE)
 		{
 			clear_dup_issue_builtin(data, list, lst);
@@ -95,9 +94,10 @@ static	int	to_fork(char **token)
 	return (FAILURE);
 }
 
-static int	execute_builtin_in_child(char **token, t_exec *data, t_env **lst, t_list *list)
+static int	execute_builtin_in_child(char **token, t_exec *data, \
+		t_env **lst, t_list *list)
 {
-	int pid;
+	int	pid;
 	int	status;
 
 	status = 0;

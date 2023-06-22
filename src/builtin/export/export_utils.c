@@ -1,5 +1,8 @@
 #include "minishell.h"
 
+static	int	len_of_name(char *row, t_export *stat);
+static	int	len_according_cases(int len, t_export *stat);
+
 char	*remove_plus_in_name(char *name)
 {
 	char	*to_find;
@@ -15,13 +18,16 @@ char	*remove_plus_in_name(char *name)
 	return (name);
 }
 
-/*if (row[0] == '=' && row[1] == '\0')
-		return ((int)ft_strlen(row));
-if (row[0] == '=')
-	{
-		ft_dprintf(2, "export: not a valid identifier\n");
-		return (FAILURE);
-	}*/
+static	int	len_according_cases(int len, t_export *stat)
+{
+	if (stat->plus == TRUE && stat->equal == TRUE)
+		return (len - 1);
+	else if (stat->plus == FALSE && stat->equal == TRUE)
+		return (len);
+	else if (stat->plus == FALSE && stat->equal == FALSE)
+		return (len);
+	return (FAILURE);
+}
 
 static	int	len_of_name(char *row, t_export *stat)
 {
@@ -46,13 +52,8 @@ static	int	len_of_name(char *row, t_export *stat)
 		g_exit_status = 1;
 		return (FAILURE);
 	}
-	if (stat->plus == TRUE && stat->equal == TRUE)
-		return (len - 1);
-	else if (stat->plus == FALSE && stat->equal == TRUE)
-		return (len);
-	else if (stat->plus == FALSE && stat->equal == FALSE)
-		return (len);
-	return (SUCCESS);
+	len = len_according_cases(len, stat);
+	return (len);
 }
 
 char	*get_name_variable(char *row, t_export *stat)
@@ -95,6 +96,3 @@ void	change_equal_to_one(t_env **lst, char *name)
 		*lst = (*lst)->next;
 	}
 }
-
-
-

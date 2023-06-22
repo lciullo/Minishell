@@ -1,10 +1,13 @@
 #include "minishell.h"
 
-static void init_heredoc_process(t_exec *data);
-static int  empty_line_heredoc(t_exec *data, t_env **lst, t_list *list, char *line);
-static int 	not_empty_heredoc_line(t_exec *data, char *delimiter, char *line, t_env **lst);
+static void	init_heredoc_process(t_exec *data);
+static int	empty_line_heredoc(t_exec *data, t_env **lst, \
+				t_list *list, char *line);
+static int	not_empty_heredoc_line(t_exec *data, char *delimiter, \
+					char *line, t_env **lst);
 
-void	loop_in_child_heredoc(t_exec *data, char *delimiter, t_env **lst, t_list *list)
+void	loop_in_child_heredoc(t_exec *data, char *delimiter, \
+		t_env **lst, t_list *list)
 {
 	char	*line;
 
@@ -17,7 +20,7 @@ void	loop_in_child_heredoc(t_exec *data, char *delimiter, t_env **lst, t_list *l
 		signal(SIGINT, heredoc_new_line);
 		if (line)
 		{
-			if (not_empty_heredoc_line(data, delimiter, line,lst) == BREAK)
+			if (not_empty_heredoc_line(data, delimiter, line, lst) == BREAK)
 				break ;
 		}
 		else
@@ -30,17 +33,18 @@ void	loop_in_child_heredoc(t_exec *data, char *delimiter, t_env **lst, t_list *l
 	exit(1);
 }
 
-static void init_heredoc_process(t_exec *data)
+static void	init_heredoc_process(t_exec *data)
 {
 	close(data->tmp_fd_heredoc[0]);
 	close_tab_heredoc(data);
 	g_exit_status = 0;
 }
 
-static int not_empty_heredoc_line(t_exec *data, char *delimiter, char *line, t_env **lst)
+static int	not_empty_heredoc_line(t_exec *data, char *delimiter, \
+			char *line, t_env **lst)
 {
 	if (!ft_strcmp(line, delimiter))
-			return (BREAK);
+		return (BREAK);
 	if (ft_strcmp(line, "$") && data->quote_here_doc == 0)
 		line = expand(line, *lst);
 	write(data->tmp_fd_heredoc[1], line, ft_strlen(line));
@@ -49,7 +53,8 @@ static int not_empty_heredoc_line(t_exec *data, char *delimiter, char *line, t_e
 	return (SUCCESS);
 }
 
-static int  empty_line_heredoc(t_exec *data, t_env **lst, t_list *list, char *line)
+static int	empty_line_heredoc(t_exec *data, t_env **lst, \
+			t_list *list, char *line)
 {
 	if (g_exit_status == 130)
 	{
@@ -62,5 +67,3 @@ static int  empty_line_heredoc(t_exec *data, t_env **lst, t_list *list, char *li
 	clear_heredoc_end(data, lst, list, data->tmp_fd_heredoc);
 	return (g_exit_status);
 }
-
-

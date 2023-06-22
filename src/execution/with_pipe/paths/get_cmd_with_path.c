@@ -14,9 +14,9 @@ int	get_path_env(t_exec *data)
 	if (!data->env_path)
 	{
 		perror("issue in split to find environnement");
-		return (FAILURE);
+		return (-1);
 	}
-	return (SUCCESS);
+	return (0);
 }
 
 static char	*find_path(char **env)

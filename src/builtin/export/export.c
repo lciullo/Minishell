@@ -36,6 +36,17 @@ int	add_to_export(t_env **lst, char *name, char *value, t_export *stat)
 	return (SUCCESS);
 }
 
+static int	check_only_equal(char *token)
+{
+	if (token[0] == '=')
+	{
+		ft_dprintf(2, "export %s : not a valid identifier\n", token);
+		g_exit_status = 1;
+		return (FAILURE);
+	}
+	return (SUCCESS);
+}
+
 static int	check_name_by_name(char *token, t_env **lst, t_export *stat)
 {
 	char		*name;
@@ -43,45 +54,23 @@ static int	check_name_by_name(char *token, t_env **lst, t_export *stat)
 
 	name = NULL;
 	value = NULL;
-	if (token[0] == '=')
-	{
-		ft_dprintf(2, "export %s : not a valid identifier\n", token);
-		g_exit_status = 1;
+	if (check_only_equal(token) == FAILURE)
 		return (FAILURE);
-	}
 	name = get_name_variable(token, stat);
 	if (!name)
 		return (FAILURE);
 	if (parse_name(token) == FAILURE)
-	{
-		free(name);
-		return (FAILURE);
-	}
+		return (free(name), FAILURE);
 	if (is_in_env(*lst, name) == SUCCESS)
 		stat->in_env = TRUE;
 	if (stat->equal == TRUE)
 	{
 		value = get_value_variable(token);
 		if (parse_value(value) == FAILURE)
-		{
-			free(value);
-			free(name);
-			return (FAILURE);
-		}
+			return (free(name), free(value), FAILURE);
 	}
 	add_to_export(lst, name, value, stat);
-	if (stat->in_env == TRUE && stat->equal == FALSE && stat->plus == FALSE)
-		free(name);
-	else if (stat->in_env == TRUE && stat->equal == TRUE && stat->plus == FALSE)
-	{
-		free(name);
-		free(value);
-	}
-	else if (stat->in_env == TRUE && stat->equal == TRUE && stat->plus == TRUE)
-	{
-		free(name);
-		free(value);
-	}
+	clear_export_end_according_cases(stat, name, value);
 	g_exit_status = 0;
 	return (SUCCESS);
 }

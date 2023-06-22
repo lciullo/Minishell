@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:01:44 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/20 15:26:36 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/22 10:15:32 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef struct s_lst
 	int					equal;
 	struct s_lst		*next;
 }	t_env;
-
 
 enum {
 	PRINT,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 12:56:18 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/21 17:39:49 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/22 10:46:41 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	itoa_heredoc_issue(t_exec *data, int fd[2])
 	clear_store_heredoc_issue(data);
 }
 
-void 	clear_store_heredoc_issue(t_exec *data)
+void	clear_store_heredoc_issue(t_exec *data)
 {
 	if (data->pids)
 		free(data->pids);
@@ -41,7 +41,7 @@ void 	clear_store_heredoc_issue(t_exec *data)
 		free_array(data->env);
 }
 
-void clear_heredoc_end(t_exec *data, t_env **lst, t_list *list, int fd[2])
+void	clear_heredoc_end(t_exec *data, t_env **lst, t_list *list, int fd[2])
 {
 	if (lst)
 		ft_lstclear_env(lst, free);
@@ -55,6 +55,7 @@ void clear_heredoc_end(t_exec *data, t_env **lst, t_list *list, int fd[2])
 		free(data->fd_heredoc);
 	close(fd[1]);
 }
+
 void	pipe_heredoc_issue(t_exec *data)
 {
 	if (data->pids)
@@ -63,4 +64,3 @@ void	pipe_heredoc_issue(t_exec *data)
 		free(data->fd_heredoc);
 	perror("Pipe issue in heredoc");
 }
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 08:41:08 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/21 14:28:21 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/22 10:41:55 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	heredoc_new_line(int signal)
 	ft_dprintf(1, "\n");
 }
 
-void init_signals_heredoc(void)
+void	init_signals_heredoc(void)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);

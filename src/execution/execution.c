@@ -2,9 +2,9 @@
 #include "minishell.h"
 
 static int	sort_cmd(t_list *list, t_data *parsing, t_exec *data, t_env **lst);
-static	int	launch_heredoc(t_list *list, t_data *parsing, \
-				t_exec *data, t_env **lst);
-static int 	check_files_one_builtin_exec(t_list *list, t_exec *data);
+static int	launch_heredoc(t_list *list, t_data *parsing, \
+					t_exec *data, t_env **lst);
+static int	check_files_one_builtin_exec(t_list *list, t_exec *data);
 static	void	clear_after_execution(t_exec *data);
 
 int	execution(t_list *list, t_data *parsing, t_exec *data, t_env **lst)
@@ -72,7 +72,7 @@ static int	sort_cmd(t_list *list, t_data *parsing, t_exec *data, t_env **lst)
 	return (SUCCESS);
 }
 
-static int check_files_one_builtin_exec(t_list *list, t_exec *data)
+static int	check_files_one_builtin_exec(t_list *list, t_exec *data)
 {
 	if (loop_for_infile(list, data) == FAILURE)
 	{

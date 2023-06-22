@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 09:25:34 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/21 17:39:49 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/22 10:36:13 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int	store_heredoc_in_list(char **delimiter, t_exec *data);
-static int 	manage_main_process_heredoc(t_exec *data, char **delimiter);
-static	int	manage_heredoc(char **delimiter, t_exec *data, t_env **lst, t_list *list);
+static int	manage_main_process_heredoc(t_exec *data, char **delimiter);
+static	int	manage_heredoc(char **delimiter, t_exec *data, \
+								t_env **lst, t_list *list);
 
 int	loop_for_heredoc(t_list *list, t_exec *data, t_data *parsing, t_env **lst)
 {
@@ -41,7 +42,8 @@ int	loop_for_heredoc(t_list *list, t_exec *data, t_data *parsing, t_env **lst)
 	return (g_exit_status);
 }
 
-static	int	manage_heredoc(char **delimiter, t_exec *data, t_env **lst, t_list *list)
+static	int	manage_heredoc(char **delimiter, t_exec *data, \
+			t_env **lst, t_list *list)
 {
 	if (pipe(data->tmp_fd_heredoc) == FAILURE)
 	{
@@ -61,9 +63,9 @@ static	int	manage_heredoc(char **delimiter, t_exec *data, t_env **lst, t_list *l
 	return (g_exit_status);
 }
 
-static int manage_main_process_heredoc(t_exec *data, char **delimiter)
+static int	manage_main_process_heredoc(t_exec *data, char **delimiter)
 {
-	int status;
+	int	status;
 
 	status = 0;
 	if (waitpid(data->pid_heredoc, &status, WUNTRACED) == FAILURE)

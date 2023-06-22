@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   loop_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:46:51 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/21 20:23:23 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/22 09:17:12 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	int	get_next_pipe(t_list *list);
+static	int		get_next_pipe(t_list *list);
 static	t_list	*list_increment(t_list **list, int len_between_pipe);
-static	int	wait_pids(t_exec *data);
+static	int		wait_pids(t_exec *data);
 
 int	loop_pipe_by_pipe(t_list *list, t_exec	*data, t_env **lst)
 {
@@ -69,7 +69,7 @@ static	int	wait_pids(t_exec *data)
 	while (i < data->nb_block)
 	{
 		if (waitpid(data->pids[i], &status, 0) == FAILURE)
-			g_exit_status = 1;//demander brieuc
+			g_exit_status = 1;
 		else if (WIFEXITED(status))
 			g_exit_status = WEXITSTATUS(status);
 		if (WIFSIGNALED(status) && i == data->nb_block - 1)

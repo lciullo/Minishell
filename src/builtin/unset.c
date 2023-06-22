@@ -75,7 +75,7 @@ int	implement_unset(char **token, t_env **lst)
 		if (i != 1)
 			previous_exit_status = exit_status;
 		exit_status = parse_unset(token[i]);
-		if ( exit_status == 0)
+		if (exit_status == 0)
 			search_and_delete(token[i], lst);
 		if (previous_exit_status != 0 && exit_status == 0)
 			exit_status = previous_exit_status;

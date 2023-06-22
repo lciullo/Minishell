@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   begin_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 17:44:33 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/21 21:10:41 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/22 10:32:26 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	begining_of_exec(t_list *list, t_exec *data, char **env, t_env **lst);
+static int	in_child_process(t_list *list, t_exec *data, t_env **lst);
 static	void	switch_and_close_fds(t_exec *data);
 static void	signal_handeler(int signal);
-static int	fork_for_execution(t_list *list, t_exec *data, t_env **lst);
-static int call_to_launch_exec(t_list *list, t_exec *data, t_env **lst);
+static int	main_process_before_each_cmd(t_list *list, \
+				t_exec *data, t_env **lst);
 
 int	execution_core(t_list *list, t_exec *data, t_env **lst)
 {
@@ -30,7 +30,7 @@ int	execution_core(t_list *list, t_exec *data, t_env **lst)
 	}
 	else
 		data->new_fd[1] = STDOUT_FILENO;
-	if (fork_for_execution(list, data, lst) == FAILURE)
+	if (main_process_before_each_cmd(list, data, lst) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
 }
@@ -41,16 +41,8 @@ static void	signal_handeler(int signal)
 	return ;
 }
 
-static int call_to_launch_exec(t_list *list, t_exec *data, t_env **lst)
-{
-	if (begining_of_exec(list, data, data->env, lst) == FAILURE)
-	{
-		perror("Issue in child process\n");
-		return (FAILURE);
-	}
-	return (SUCCESS);
-}
-static int	fork_for_execution(t_list *list, t_exec *data, t_env **lst)
+static int	main_process_before_each_cmd(t_list *list, \
+						t_exec *data, t_env **lst)
 {
 	signal(SIGQUIT, signal_handeler);
 	signal(SIGINT, signal_handeler);
@@ -62,7 +54,7 @@ static int	fork_for_execution(t_list *list, t_exec *data, t_env **lst)
 	}
 	if (data->pids[data->nb_pids] == 0)
 	{
-		if (call_to_launch_exec(list, data, lst) == FAILURE)
+		if (in_child_process(list, data, lst) == FAILURE)
 			return (FAILURE);
 	}
 	switch_and_close_fds(data);
@@ -71,7 +63,7 @@ static int	fork_for_execution(t_list *list, t_exec *data, t_env **lst)
 	return (SUCCESS);
 }
 
-static int	begining_of_exec(t_list *list, t_exec *data, char **env, t_env **lst)
+static int	in_child_process(t_list *list, t_exec *data, t_env **lst)
 {
 	if (loop_for_infile(list, data) == FAILURE)
 	{
@@ -89,7 +81,7 @@ static int	begining_of_exec(t_list *list, t_exec *data, char **env, t_env **lst)
 		exit (1);
 	}
 	ft_close(data->infile);
-	launch_exec(data, list, lst, env);
+	launch_exec(data, list, lst);
 	return (SUCCESS);
 }
 

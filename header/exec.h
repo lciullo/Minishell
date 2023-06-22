@@ -60,9 +60,9 @@ int				execution_core(t_list *list, t_exec *data, t_env **lst);
 
 //# ==================== With Pipe =================== #
 
-int				launch_exec(t_exec *data, t_list *list, t_env **lst, char **env);
+int				launch_exec(t_exec *data, t_list *list, t_env **lst);
 
-int				execution_of_token(t_exec *data, t_list *list, t_env **lst, char **env);
+int				execution_of_token(t_exec *data, t_list *list, t_env **lst);
 
 //# === Loop many pipe === #
 
@@ -110,7 +110,7 @@ void			clear_builtin_exec(t_exec *data, t_list *list, t_env **lst);
 
 //# --- Execve issue --- #
 
-void			clear_only_redir(t_exec *data, t_list *list, t_env **lst, char **env);
+void			clear_only_redir(t_exec *data, t_list *list, t_env **lst);
 
 //# --- Files issue --- #
 
@@ -230,7 +230,14 @@ int				last_char(char *name);
 
 int				first_char(char c);
 
+int				is_valid_export(int c);
+
+int				is_valid_syntax(char *name);
+
 char			*remove_plus_in_name(char *name);
+
+void			clear_export_end_according_cases(t_export *stat, \
+					char *name, char *value);
 
 //# Manage case with equal in name #
 
