@@ -1,25 +1,12 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   should_we_expand.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/09 13:51:38 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/20 15:03:13 by cllovio          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
-static char	**is_there_a_dollar(char **tab, t_env *env, int	*status_expand);
-char		*join_tab(char **tab);
+static int	expand_data(t_list *temp, t_env *env, int *status_expand);
+static int	process_expanded_data(t_list *temp);
+static char	*join_tab(char **tab);
 
 int	should_we_expand(t_list **list, t_env *env)
 {
 	t_list	*temp;
-	char	*tab_in_line;
-	char	**temp_tab;
 	int		status_expand;
 
 	temp = (*list);
@@ -28,32 +15,12 @@ int	should_we_expand(t_list **list, t_env *env)
 	{
 		if (temp->type != HERE_DOC)
 		{
-			temp_tab = temp->data;
-			temp->data = is_there_a_dollar(temp->data, env, &status_expand);
-			if (!(temp->data))
-			{
-				temp->data = temp_tab;
+			if (expand_data(temp, env, &status_expand) == FAILURE)
 				return (ft_lstclear(list, free), FAILURE);
-			}
 			if (status_expand == 1 && temp->data[1] != NULL)
 			{
-				change_tab(temp->data, 0);
-				temp_tab = temp->data;
-				tab_in_line = join_tab(temp->data);
-				if (!(tab_in_line))
-				{
-					temp->data = temp_tab;
+				if (process_expanded_data(temp) == FAILURE)
 					return (ft_lstclear(list, free), FAILURE);
-				}
-				temp_tab = temp->data;
-				temp->data = ft_split_parsing(tab_in_line);
-				if (!(temp->data))
-				{
-					temp->data = temp_tab;
-					return (ft_lstclear(list, free), free(tab_in_line), FAILURE);
-				}
-				free(temp_tab);
-				change_tab(temp->data, 1);
 				status_expand = 0;
 			}
 		}
@@ -62,7 +29,46 @@ int	should_we_expand(t_list **list, t_env *env)
 	return (SUCCESS);
 }
 
-char	*join_tab(char **tab)
+static int	expand_data(t_list *temp, t_env *env, int *status_expand)
+{
+	char	**temp_tab;
+
+	temp_tab = temp->data;
+	temp->data = is_there_a_dollar(temp->data, env, status_expand);
+	if (!(temp->data))
+	{
+		temp->data = temp_tab;
+		return (FAILURE);
+	}
+	return (SUCCESS);
+}
+
+static int	process_expanded_data(t_list *temp)
+{
+	char	*tab_in_line;
+	char	**temp_tab;
+
+	change_tab(temp->data, 0);
+	temp_tab = temp->data;
+	tab_in_line = join_tab(temp->data);
+	if (!(tab_in_line))
+	{
+		temp->data = temp_tab;
+		return (FAILURE);
+	}
+	temp_tab = temp->data;
+	temp->data = ft_split_parsing(tab_in_line);
+	if (!(temp->data))
+	{
+		temp->data = temp_tab;
+		return (free(tab_in_line), FAILURE);
+	}
+	free(temp_tab);
+	change_tab(temp->data, 1);
+	return (SUCCESS);
+}
+
+static char	*join_tab(char **tab)
 {
 	int		i;
 	char	*new_s;
@@ -73,58 +79,13 @@ char	*join_tab(char **tab)
 	i = 0;
 	while (tab[i])
 	{
-		new_s = ft_strjoin_parsing(new_s, tab[i], 0);
+		new_s = ft_strjoin_parsing(new_s, tab[i]);
 		if (!new_s)
 			return (NULL);
-		new_s = ft_strjoin_parsing(new_s, " ", 0);
+		new_s = ft_strjoin_parsing(new_s, " ");
 		if (!new_s)
 			return (NULL);
 		i++;
 	}
 	return (new_s);
-}
-
-static char	**is_there_a_dollar(char **tab, t_env *env, int	*status_expand)
-{
-	int		i;
-	int		j;
-	char	*temp;
-
-	i = 0;
-	while (tab[i])
-	{
-		j = 0;
-		while (tab[i][j])
-		{
-			if (tab[i][j] == '$' || tab[i][j] == '~')
-			{
-				if (tab[i][0] == '~' && tab[i][1] == '\0')
-				{	
-					temp = tab[i];
-					tab[i] = ft_strdup("$HOME");//securiser
-					if (!tab[i])
-						return (NULL);
-					free(temp);
-				}
-				else if (tab[i][0] == '~' && tab[i][1] != '\0')
-				{
-					temp = tab[i];
-					tab[i] = ft_strjoin_b("$HOME", tab[i], 1, ft_strlen(tab[i]));
-					if (!tab[i])
-						return (NULL);
-					free(temp);
-				}
-				temp = tab[i];
-				tab[i] = expand(tab[i], env);
-				if (!(tab[i]))
-					return (NULL);
-				free(temp);
-				*status_expand = 1;
-				break ;
-			}
-			j++;
-		}
-		i++;
-	}
-	return (tab);
 }
