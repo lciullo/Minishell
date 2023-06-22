@@ -1,16 +1,9 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   check_error.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/15 10:59:20 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/20 14:36:58 by cllovio          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
+
+static bool	check_quote(char *line);
+static int	nbr_quote(char *line, int *i, char quote);
+static bool	check_pipe(char	*line);
+static bool	check_redir(char *line, t_data *data);
 
 bool	check_error(t_data *data)
 {
@@ -25,17 +18,25 @@ bool	check_error(t_data *data)
 	return (true);
 }
 
-bool	check_quote(char *line)
+static bool	check_quote(char *line)
 {
 	int		i;
+	char	quote;
 
 	i = 0;
 	while (line[i])
 	{
 		if (line[i] == '\'' || line[i] == '\"')
 		{
+			quote = line[i];
 			if (nbr_quote(line, &i, line[i]) == 1)
-				return (ft_dprintf(2, "syntax error\n"), false);
+			{
+				if (quote == '\'')
+					print_error(S_QUOTE_ERR);
+				else
+					print_error(D_QUOTE_ERR);
+				return (false);
+			}
 		}
 		if (line[i] != '\0')
 			i++;
@@ -43,7 +44,7 @@ bool	check_quote(char *line)
 	return (true);
 }
 
-int	nbr_quote(char *line, int *i, char quote)
+static int	nbr_quote(char *line, int *i, char quote)
 {
 	int	quote_nbr;
 
@@ -62,7 +63,7 @@ int	nbr_quote(char *line, int *i, char quote)
 	return (quote_nbr % 2);
 }
 
-bool	check_pipe(char	*line)
+static bool	check_pipe(char	*line)
 {
 	int	i;
 
@@ -73,8 +74,8 @@ bool	check_pipe(char	*line)
 			return (print_error(PIPE_ERR), false);
 		if (line[i] == '\'' || line[i] == '\"')
 			skip_quote(line, &i, line[i]);
-		if (line[i] == '|' && (line[skip_white_space_2(line, i + 1)] == '\0' \
-		|| line[skip_white_space_2(line, i + 1)] == '|'))
+		if (line[i] == '|' && (line[skip_ws_i(line, i + 1)] == '\0' \
+		|| line[skip_ws_i(line, i + 1)] == '|'))
 			return (print_error(PIPE_ERR), false);
 		i++;
 	}
@@ -82,9 +83,11 @@ bool	check_pipe(char	*line)
 }
 
 //a mieux tester avec des caractere chelou
-bool	check_redir(char *line, t_data *data)
+
+static bool	check_redir(char *line, t_data *data)
 {
 	int		i;
+	
 
 	i = 0;
 	while (line[i])
@@ -97,9 +100,7 @@ bool	check_redir(char *line, t_data *data)
 		{
 			if (skip_redir(line, &i, line[i], data) > 2)
 				return (ft_dprintf(2, "syntax error\n"), false);
-			if (is_white_space(line[i]) == true && ((line[skip_white_space_2(line, i + 1)] == '\0' || \
-			line[skip_white_space_2(line, i + 1)] == '<' || line[skip_white_space_2(line, i + 1)] == '>' \
-			|| line[skip_white_space_2(line, i + 1)] == '|')))
+			if (if_check(2, line, i) == true)
 				return (ft_dprintf(2, "syntax error\n"), false);
 		}
 		else

@@ -1,18 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   utils_parsing.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/18 10:04:05 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/20 14:15:44 by cllovio          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
-
-static void	reput_space(char **tab_line, int *i, int *j);
 
 void	init_structure(t_data *data, t_env *lst_env, char *line)
 {
@@ -30,51 +16,6 @@ void	init_structure(t_data *data, t_env *lst_env, char *line)
 	data->line = line;
 }
 
-void	change_tab(char **tab_line, int type)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	while (tab_line[i])
-	{
-		j = 0;
-		if (type == 2)
-			change_quote(tab_line[i], 1);
-		else
-		{
-			while (tab_line[i][j])
-			{
-				if ((tab_line[i][j] == '\'' || \
-				tab_line[i][j] == '\"') && type == 0)
-					replace_space(tab_line[i], 0);
-				else if ((tab_line[i][j] == '\'' || \
-				tab_line[i][j] == '\"') && type == 1)
-					reput_space(tab_line, &i, &j);
-				if (tab_line[i][j] != '\0')
-					j++;
-			}
-		}
-		i++;
-	}
-}
-
-static void	reput_space(char **tab_line, int *i, int *j)
-{
-	char	quote;
-
-	quote = tab_line[*i][*j];
-	*j = *j + 1;
-	while (tab_line[*i][*j])
-	{
-		if (tab_line[*i][*j] == quote)
-			break ;
-		if (tab_line[*i][*j] == -1)
-			tab_line[*i][*j] = ' ';
-		*j = *j + 1;
-	}
-}
-
 bool	is_builtins(char *cmd)
 {
 	if (ft_strcmp(cmd, "echo") == 0)
@@ -90,6 +31,31 @@ bool	is_builtins(char *cmd)
 	else if (ft_strcmp(cmd, "env") == 0)
 		return (true);
 	else if (ft_strcmp(cmd, "exit") == 0)
+		return (true);
+	return (false);
+}
+
+bool	is_white_space(char c)
+{
+	if ((c >= 9 && c <= 13) || c == ' ')
+		return (true);
+	return (false);
+}
+
+bool	if_check(int type, char *line, int i)
+{
+	if (type == 0 && (line[i] == '$' && (ft_isalnum(line[i + 1]) == true || \
+	line[i + 1] == '_' || line[i + 1] == '?' || line[i + 1] == '\'' \
+	|| line[i + 1] == '\"' || line[i + 1] == '$')))
+		return (true);
+	if (type == 1 && (line[i] == '$' && (ft_isalnum(line[i + 1]) == true \
+	|| line[i + 1] == '_' || line[i + 1] == '?' || line[i + 1] == '$')))
+		return (true);
+	if (type == 2 && (is_white_space(line[i]) == true && \
+	((line[skip_ws_i(line, i + 1)] == '\0' || \
+	line[skip_ws_i(line, i + 1)] == '<' || \
+	line[skip_ws_i(line, i + 1)] == '>' \
+	|| line[skip_ws_i(line, i + 1)] == '|'))))
 		return (true);
 	return (false);
 }

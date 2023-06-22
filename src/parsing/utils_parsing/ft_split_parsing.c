@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   split_parsing.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/26 14:43:32 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/12 14:44:37 by cllovio          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 static char	**ft_sp_parsing(char const *s, char **tab);
@@ -77,13 +65,6 @@ static char	**ft_sp_parsing(char const *s, char **tab)
 	}
 	tab[j] = NULL;
 	return (tab);
-}
-
-bool	is_white_space(char c)
-{
-	if ((c >= 9 && c <= 13) || c == ' ')
-		return (true);
-	return (false);
 }
 
 static void	*ft_free_parsing(char **tab, int j)
