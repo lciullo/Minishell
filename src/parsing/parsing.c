@@ -6,14 +6,11 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 15:41:46 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/20 14:09:08 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/22 10:42:35 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	get_nbr_pipe(char *line, t_data *data);
-char	**prepare_line_for_list(t_data *data);
 
 t_list	*parsing(char *line, t_data *data, t_env *lst_env)
 {
@@ -21,7 +18,7 @@ t_list	*parsing(char *line, t_data *data, t_env *lst_env)
 	char		**tab_line;
 
 	list = NULL;
-	if (skip_white_space(line) == 1)
+	if (skip_ws(line) == 1)
 	{
 		g_exit_status = 0;
 		return (NULL);
@@ -41,39 +38,25 @@ t_list	*parsing(char *line, t_data *data, t_env *lst_env)
 	return (list);
 }
 
-char	**prepare_line_for_list(t_data *data)
+void	print_error(int error_code)
 {
-	char	*new_line;
-	char	**tab_line;
-
-	new_line = change_line(data);
-	if (!(new_line))
-		return (print_error(MALLOC_ERR), NULL);
-	get_nbr_pipe(new_line, data);
-	tab_line = ft_split_parsing(new_line);
-	free(new_line);
-	if (!tab_line)
-		return (print_error(MALLOC_ERR), NULL);
-	tab_line = change_order(tab_line, data);
-	if (!(tab_line))
-		return (print_error(MALLOC_ERR), NULL);
-	change_tab(tab_line, 1);
-	return (tab_line);
-}
-
-void	get_nbr_pipe(char *line, t_data *data)
-{
-	int	i;
-
-	i = 0;
-	data->nbr_pipe = 0;
-	while (line[i])
+	if (error_code == MALLOC_ERR)
 	{
-		if (line[i] == '\'' || line[i] == '\"')
-			skip_quote(line, &i, line[i]);
-		if (line[i] && line[i] == '|')
-			data->nbr_pipe++;
-		if (line[i])
-			i++;
+		g_exit_status = 1;
+		ft_dprintf(2, "minishell : a malloc failed during the parsing\n");
 	}
+	else if (error_code == HERE_DOC_ERR)
+		ft_dprintf(2, "minishell : syntax error near unexpected token \'<<\'\n");
+	else if (error_code == APPEND_ERR)
+		ft_dprintf(2, "minishell : syntax error near unexpected token \'>>\'\n");
+	else if (error_code == IN_ERR)
+		ft_dprintf(2, "minishell : syntax error near unexpected token \'<\'\n");
+	else if (error_code == OUT_ERR)
+		ft_dprintf(2, "minishell : syntax error near unexpected token \'>\'\n");
+	else if (error_code == PIPE_ERR)
+		ft_dprintf(2, "minishell : syntax error near unexpected token \'|\'\n");
+	else if (error_code == S_QUOTE_ERR)
+		ft_dprintf(2, "minishell : syntax error near unexpected token \'\'\'\n");
+	else if (error_code == D_QUOTE_ERR)
+		ft_dprintf(2, "minishell : syntax error near unexpected token \'\"\'\n");
 }

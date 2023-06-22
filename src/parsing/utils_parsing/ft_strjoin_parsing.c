@@ -3,8 +3,8 @@
 char	*ft_strjoin_parsing(char *s1, char *s2)
 {
 	char	*str;
-	int	j;
-	int	i;
+	int		j;
+	int		i;
 
 	if (!s1 || !s2)
 		return (NULL);

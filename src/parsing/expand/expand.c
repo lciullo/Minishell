@@ -3,47 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 09:20:07 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/21 19:37:06 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/22 11:03:52 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	end_of_expand(t_expand *utils, int i, int start);
+static int	handle_quotes(t_expand *utils, int *i, int *start);
 static int	handle_dollar_sign(t_expand *utils, int *i, int *start);
-static char	*get_var(t_expand *utils, int *i);
-int	handle_quotes(t_expand *utils, int *i, int *start);
-void	end_of_expand(t_expand *utils, int i, int start);
-int	handle_special_case(t_expand *utils, int *i);
+static int	handle_special_case(t_expand *utils, int *i);
 
-bool	if_check(int type, char *line, int i)
-{
-	if (type == 0 && (line[i] == '$' && (ft_isalnum(line[i + 1]) == true || \
-		line[i + 1] == '_' || line[i + 1] == '?' || line[i + 1] == '\'' \
-		|| line[i + 1] == '\"' || line[i + 1] == '$')))
-			return (true);
-	if (type == 1 && (line[i] == '$' && (ft_isalnum(line[i + 1]) == true \
-	|| line[i + 1] == '_' || line[i + 1] == '?' || line[i + 1] == '$')))
-		return (true);
-	return (false);
-}
-
-void	init_struct_expand(char *line, t_env *lst_env, t_expand *utils)
-{
-	utils->line = line;
-	utils->env = lst_env;
-	utils->new_line = ft_calloc(1, 1);
-}
-	
+//je securise end_of_Expand 
 char	*expand(char *line, t_env *lst_env, int i, int start)
 {
 	t_expand	utils;
 
 	init_struct_expand(line, lst_env, &utils);
 	if (!utils.line)
-		return (free(line),NULL);
+		return (free(line), NULL);
 	if (!lst_env)
 		return (NULL);
 	while (utils.line[i])
@@ -62,25 +43,25 @@ char	*expand(char *line, t_env *lst_env, int i, int start)
 		else if (utils.line[i])
 			i++;
 	}
-	end_of_expand(&utils, i, start); //je securise ?
+	end_of_expand(&utils, i, start);
 	return (utils.new_line);
 }
 
-
-void	end_of_expand(t_expand *utils, int i, int start)
+static void	end_of_expand(t_expand *utils, int i, int start)
 {
 	char	*temp;
-	
+
 	if (utils->line[start])
 	{
 		temp = utils->new_line;
-		utils->new_line = ft_strjoin_expand(utils->new_line, utils->line, start, i);//securiser
+		utils->new_line = ft_strjoin_expand(utils->new_line, \
+		utils->line, start, i);
 		if (utils->new_line)
 			free(temp);
 	}
 }
 
-int	handle_quotes(t_expand *utils, int *i, int *start)
+static int	handle_quotes(t_expand *utils, int *i, int *start)
 {
 	if (utils->line[*i] == '\'')
 	{
@@ -138,8 +119,10 @@ static int	handle_dollar_sign(t_expand *utils, int *i, int *start)
 	return (SUCCESS);
 }
 
-int	handle_special_case(t_expand *utils, int *i)
+static int	handle_special_case(t_expand *utils, int *i)
 {
+	char	*str_exit_status;
+
 	if (utils->line[*i + 1] == '$')
 	{
 		utils->new_line = ft_strjoin_parsing(utils->new_line, "$$");
@@ -149,39 +132,14 @@ int	handle_special_case(t_expand *utils, int *i)
 	}
 	else if (utils->line[*i + 1] == '?')
 	{
-		utils->new_line = ft_strjoin_parsing(utils->new_line, ft_itoa(g_exit_status));
+		str_exit_status = ft_itoa(g_exit_status);
+		if (!(str_exit_status))
+			return (FAILURE);
+		utils->new_line = ft_strjoin_parsing(utils->new_line, str_exit_status);
+		free(str_exit_status);
 		if (!(utils->new_line))
 			return (FAILURE);
 		*i = *i + 2;
 	}
 	return (SUCCESS);
-}
-
-static char	*get_var(t_expand *utils, int *i)
-{
-	int		start;
-	int		j;
-	char	*name_var;
-
-	j = 0;
-	if (utils->line[*i] == '$')
-		*i = *i + 1;
-	start = *i;
-	while (utils->line[*i] && (ft_isalnum(utils->line[*i]) == true \
-	|| utils->line[*i] == '_'))
-		*i = *i + 1;
-	name_var = malloc(sizeof(char) * ((*i - start) + 1));
-	if (!(name_var))
-		return (free(utils->new_line), NULL);
-	while (start < *i)
-	{
-		name_var[j] = utils->line[start];
-		j++;
-		start++;
-	}
-	name_var[j] = '\0';
-	utils->new_line = check_var(name_var, utils->env, utils->new_line);
-	if (!(utils->new_line))
-		return (free(name_var), NULL);
-	return (free(name_var), utils->new_line);
 }

@@ -36,7 +36,7 @@ enum {
 	PIPE_ERR,
 	S_QUOTE_ERR,
 	D_QUOTE_ERR,
-} ;
+};
 
 enum {
 	TOKEN,
@@ -49,69 +49,82 @@ enum {
 	EXPORT,
 };
 
+/*======================= PARSING =======================*/
+
 /* ---- parsing.c ----*/
 t_list	*parsing(char *line, t_data *data, t_env *lst_env);
-bool	check_error(t_data *data);
-
-/* ---- utils.c ----*/
-void	init_structure(t_data *data, t_env *lst_env, char *line);
-void	change_tab(char **tab_line, int type);
-bool	is_builtins(char *cmd);
+void	print_error(int error_code);
 
 /* ---- check_error.c ----*/
-bool	check_wrong_character(char *line);
-bool	check_quote(char *line);
-int		nbr_quote(char *line, int *i, char quote);
-bool	check_pipe(char	*line);
-bool	check_redir(char *line, t_data *data);
+bool	check_error(t_data *data);
 
-/* ---- change_line.c ----*/
-char	*change_line(t_data *data);
-
-/* ---- add_space.c ----*/
-char	*add_space(char	*line, t_data *data);
+/*======================= EXPAND =======================*/
 
 /* ---- expand.c ----*/
 char	*expand(char *line, t_env *lst_env, int i, int start);
 
+/* ---- is_there_a_dollar.c ----*/
+char	**is_there_a_dollar(char **tab, t_env *env, int	*status_expand);
+
+/* ---- should_we_expand.c ----*/
+int	should_we_expand(t_list **list, t_env *env);
+
 /* ---- utils_expand.c ----*/
-char	*check_var(char *name_var, t_env *lst_env, char *new_line);
+void	init_struct_expand(char *line, t_env *lst_env, t_expand *utils);
+char	*get_var(t_expand *utils, int *i);
+void	change_quote(char *value, int type);
+
+/*======================= UTILS_PARSING =======================*/
+
+/* ---- ft_split_parsing.c ----*/
+char	**ft_split_parsing(char const *s);
+
+/* ---- ft_split_parsing.c ----*/
+char	*ft_strjoin_parsing(char *s1, char *s2);
 char	*ft_strjoin_expand(char*s1, char *s2, int start, int i);
 
-/* ---- split_parsing.c ----*/
-char	**ft_split_parsing(char const *s);
+/* ---- skip.c ----*/
+void	skip_quote(char *line, int *i, char quote);
+int		skip_ws(char	*line);
+int		skip_ws_i(char	*line, int i);
+int		skip_redir(char *line, int *i, char redir, t_data *data);
+
+/* ---- utils_parsing.c ----*/
+void	init_structure(t_data *data, t_env *lst_env, char *line);
+bool	is_builtins(char *cmd);
 bool	is_white_space(char c);
+bool	if_check(int type, char *line, int i);
+
+/*======================= LIST =======================*/
+
+/* ---- create_list.c ----*/
+t_list	*create_list(t_data *data, t_env *env, char **tab_line);
+
+/* ---- prepare_list_creation.c ----*/
+char	**prepare_line_for_list(t_data *data);
+
+/*======================= LIST/CHANGE_LIST =======================*/
+
+/* ---- change_list.c ----*/
+int		change_list(t_list **list, t_env *env, t_data *data, char **tab_line);
+
+/* ---- change_list.c ----*/
+char	*add_space(char	*line, t_data *data);
 
 /* ---- change_order.c ----*/
 char	**change_order(char **tab, t_data *data);
 
-/* ---- list.c ----*/
-t_list	*create_list(t_data *data, t_env *env, char **tab_line);
+/* ---- change_tab.c ----*/
+void	change_tab(char **tab_line, int type);
+void	replace_space(char *line, int i);
 
-/* ---- change_list_type.c ----*/
-void	change_list_type(t_list **list);
-void	parse_line_for_quote(t_list **list);
+/* ---- del_delimiteur.c ----*/
+void	del_delimiteur(t_list **list);
 
 /* ---- delete_quote.c ----*/
 char	*is_there_a_quote(char *row);
 
-/* ---- skip.c ----*/
-void	skip_quote(char *line, int *i, char quote);
-int	skip_white_space(char	*line);
-int	skip_white_space_2(char	*line, int i);
-int	skip_redir(char *line, int *i, char redir, t_data *data);
-
-/* ---- print.c ----*/
 void	print_list(t_list	*a);
 void	print_tab(char **tab);
 void	list_print(t_list *lst);
-
-int	should_we_expand(t_list **list, t_env *env);
-void	replace_space(char *line, int i);
-char	*ft_strjoin_parsing(char *s1, char *s2);
-void	print_error(int error_code);
-
-void	is_it_empty(t_list **list);
-void	change_quote(char *value, int type);
-
 #endif

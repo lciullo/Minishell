@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 09:10:18 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/12 11:54:08 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/22 08:54:10 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ char	*add_space(char	*line, t_data *data)
 
 	i = 0;
 	j = 0;
-	new_line = calloc((data->len_line + ((data->nbr_pipe * 2 + data->nbr_redir * 2)) + 1), sizeof(char));
+	new_line = calloc((data->len_line + \
+	((data->nbr_pipe * 2 + data->nbr_redir * 2)) + 1), sizeof(char));
 	if (!new_line)
 		return (NULL);
 	while (line[i])

@@ -3,21 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   should_we_expand.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 13:51:38 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/21 20:50:28 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/22 10:58:38 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	**is_there_a_dollar(char **tab, t_env *env, int	*status_expand);
-char		*join_tab(char **tab);
-int	expand_data(t_list *temp, t_env *env, int *status_expand);
-int	process_expanded_data(t_list *temp);
-int	handle_tilde(char **tab, int i);
-int	launch_expand(t_env *env, char **tab, int i, int *status_expand);
+static int	expand_data(t_list *temp, t_env *env, int *status_expand);
+static int	process_expanded_data(t_list *temp);
+static char	*join_tab(char **tab);
 
 int	should_we_expand(t_list **list, t_env *env)
 {
@@ -44,10 +41,10 @@ int	should_we_expand(t_list **list, t_env *env)
 	return (SUCCESS);
 }
 
-int	expand_data(t_list *temp, t_env *env, int *status_expand)
+static int	expand_data(t_list *temp, t_env *env, int *status_expand)
 {
 	char	**temp_tab;
-	
+
 	temp_tab = temp->data;
 	temp->data = is_there_a_dollar(temp->data, env, status_expand);
 	if (!(temp->data))
@@ -58,11 +55,11 @@ int	expand_data(t_list *temp, t_env *env, int *status_expand)
 	return (SUCCESS);
 }
 
-int	process_expanded_data(t_list *temp)
+static int	process_expanded_data(t_list *temp)
 {
 	char	*tab_in_line;
 	char	**temp_tab;
-	
+
 	change_tab(temp->data, 0);
 	temp_tab = temp->data;
 	tab_in_line = join_tab(temp->data);
@@ -83,7 +80,7 @@ int	process_expanded_data(t_list *temp)
 	return (SUCCESS);
 }
 
-char	*join_tab(char **tab)
+static char	*join_tab(char **tab)
 {
 	int		i;
 	char	*new_s;
@@ -103,65 +100,4 @@ char	*join_tab(char **tab)
 		i++;
 	}
 	return (new_s);
-}
-
-static char	**is_there_a_dollar(char **tab, t_env *env, int	*status_expand)
-{
-	int		i;
-	int		j;
-	i = 0;
-	while (tab[i])
-	{
-		j = 0;
-		while (tab[i][j])
-		{
-			if (tab[i][j] == '$' || tab[i][j] == '~')
-			{
-				if (handle_tilde(tab, i) == FAILURE)
-					return (NULL);
-				if (launch_expand(env, tab, i, status_expand) == FAILURE)
-					return (NULL);
-				break ;
-			}
-			j++;
-		}
-		i++;
-	}
-	return (tab);
-}
-
-int	launch_expand(t_env *env, char **tab, int i, int *status_expand)
-{
-	char *temp;
-	
-	temp = tab[i];
-	tab[i] = expand(tab[i], env, 0, 0);
-	if (!(tab[i]))
-		return (FAILURE);
-	free(temp);
-	*status_expand = 1;
-	return (SUCCESS);
-}
-
-int	handle_tilde(char **tab, int i)
-{
-	char *temp;
-	
-	if (tab[i][0] == '~' && tab[i][1] == '\0')
-	{	
-		temp = tab[i];
-		tab[i] = ft_strdup("$HOME");//securiser
-		if (!tab[i])
-			return (FAILURE);
-		free(temp);
-	}
-	else if (tab[i][0] == '~' && tab[i][1] != '\0')
-	{
-		temp = tab[i];
-		tab[i] = ft_strjoin_expand("$HOME", tab[i], 1, ft_strlen(tab[i]));
-		if (!tab[i])
-			return (FAILURE);
-		free(temp);
-	}
-	return (SUCCESS);
 }
