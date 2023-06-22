@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 18:13:24 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/22 10:42:42 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/22 14:29:42 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,7 @@ static int	execute_builtin_in_child(char **token, t_exec *data, \
 	{
 		dup_for_one_builtin(data, lst, list);
 		loop_for_builtin(token, data, lst);
-		ft_close(data->infile);
-		ft_close(data->outfile);
+		clear_in_child(data, lst, list);
 		exit (g_exit_status);
 	}
 	if (waitpid(pid, &status, 0) == FAILURE)

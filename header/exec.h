@@ -142,6 +142,8 @@ int				one_builtin_exec(char **token, t_exec *data, t_env **lst, t_list *list);
 
 void			clear_one_builtin_exec_files(t_exec *data);
 
+void			clear_in_child(t_exec *data, t_env **lst, t_list *list);
+
 //# ======================= MANAGEMENT FILES ======================= #
 
 //# === Heredoc === #
@@ -248,6 +250,12 @@ t_env			*add_back_with_equal(t_env **lst, char *name, char *value);
 int				add_to_export(t_env **lst, char *name, char *value, t_export *stat);
 
 void			change_equal_to_one(t_env **lst, char *name);
+
+int				check_name_by_name(char *token, t_env **lst, t_export *stat);
+
+int				check_only_equal(char *token);
+
+int				is_in_env(t_env *lst, char *name);
 
 //# ======================= TEMPORARY ======================= #
 

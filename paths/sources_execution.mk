@@ -6,7 +6,7 @@
 #    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 09:55:39 by lciullo           #+#    #+#              #
-#    Updated: 2023/06/22 11:11:55 by lciullo          ###   ########.fr        #
+#    Updated: 2023/06/22 14:33:13 by lciullo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRC	=																	\
 		src/execution/clear_exec/clear_cmds.c							\
 		src/execution/clear_exec/clear_heredoc.c						\
 		src/execution/clear_exec/clear_files.c							\
+		src/execution/clear_exec/clear_one_builtin_exec.c				\
 		src/builtin/builtin.c 											\
 		src/builtin/echo.c												\
 		src/builtin/cd.c												\
@@ -48,4 +49,5 @@ SRC	=																	\
 		src/builtin/export/export_utils.c								\
 		src/builtin/export/parse_export.c								\
 		src/builtin/export/name_with_equal.c							\
+		src/builtin/export/check_name_by_name.c							\
 		src/builtin/export/clear_export.c

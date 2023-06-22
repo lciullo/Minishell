@@ -1,59 +1,9 @@
 
 #include "minishell.h"
 
-static size_t	get_nb_arguments(char **cmd)
-{
-	size_t	i;
-
-	i = 0;
-	if (!cmd)
-		return (FAILURE);
-	while (cmd[i] != NULL)
-		i++;
-	return (i);
-}
-
-static	char	*actualise_pwd(char *actual_path, t_env **lst)
-{
-	t_env	*copy;
-	char	*old_pwd;
-
-	old_pwd = NULL;
-	copy = *lst;
-	while (copy != NULL)
-	{
-		if (ft_strcmp(copy->name, "PWD") == 0)
-		{
-			if (copy->value[0] != '\0')
-				old_pwd = ft_strdup(copy->value);
-			else
-				copy->value = ft_strdup(actual_path);
-			return (old_pwd);
-		}
-		copy = copy->next;
-	}
-	return (NULL);
-}
-
-static	int	get_old_pwd(char *old_pwd, t_env **lst)
-{
-	t_env	*copy;
-
-	copy = *lst;
-	while (copy != NULL)
-	{
-		if (ft_strcmp(copy->name, "OLDPWD") == 0)
-		{
-			if (copy->value)
-				free(copy->value);
-			copy->value = old_pwd;
-			copy->equal = 1;
-			return (SUCCESS);
-		}
-		copy = copy->next;
-	}
-	return (FAILURE);
-}
+static char		*actualise_pwd(char *actual_path, t_env **lst);
+static size_t	get_nb_arguments(char **cmd);
+static	int		get_old_pwd(char *old_pwd, t_env **lst);
 
 int	implement_cd(char **cmd, t_env **lst)
 {
@@ -108,4 +58,58 @@ int	implement_cd(char **cmd, t_env **lst)
 		return (FAILURE);
 	}
 	return (SUCCESS);
+}
+
+static size_t	get_nb_arguments(char **cmd)
+{
+	size_t	i;
+
+	i = 0;
+	if (!cmd)
+		return (FAILURE);
+	while (cmd[i] != NULL)
+		i++;
+	return (i);
+}
+
+static	char	*actualise_pwd(char *actual_path, t_env **lst)
+{
+	t_env	*copy;
+	char	*old_pwd;
+
+	old_pwd = NULL;
+	copy = *lst;
+	while (copy != NULL)
+	{
+		if (ft_strcmp(copy->name, "PWD") == 0)
+		{
+			if (copy->value[0] != '\0')
+				old_pwd = ft_strdup(copy->value);
+			else
+				copy->value = ft_strdup(actual_path);
+			return (old_pwd);
+		}
+		copy = copy->next;
+	}
+	return (NULL);
+}
+
+static	int	get_old_pwd(char *old_pwd, t_env **lst)
+{
+	t_env	*copy;
+
+	copy = *lst;
+	while (copy != NULL)
+	{
+		if (ft_strcmp(copy->name, "OLDPWD") == 0)
+		{
+			if (copy->value)
+				free(copy->value);
+			copy->value = old_pwd;
+			copy->equal = 1;
+			return (SUCCESS);
+		}
+		copy = copy->next;
+	}
+	return (FAILURE);
 }
