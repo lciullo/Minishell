@@ -21,14 +21,22 @@ bool	check_error(t_data *data)
 static bool	check_quote(char *line)
 {
 	int		i;
+	char	quote;
 
 	i = 0;
 	while (line[i])
 	{
 		if (line[i] == '\'' || line[i] == '\"')
 		{
+			quote = line[i];
 			if (nbr_quote(line, &i, line[i]) == 1)
-				return (ft_dprintf(2, "syntax error\n"), false);
+			{
+				if (quote == '\'')
+					print_error(S_QUOTE_ERR);
+				else
+					print_error(D_QUOTE_ERR);
+				return (false);
+			}
 		}
 		if (line[i] != '\0')
 			i++;
@@ -79,6 +87,7 @@ static bool	check_pipe(char	*line)
 static bool	check_redir(char *line, t_data *data)
 {
 	int		i;
+	
 
 	i = 0;
 	while (line[i])
