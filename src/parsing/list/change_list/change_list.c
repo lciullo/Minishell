@@ -3,7 +3,7 @@
 static void	change_type(t_list **list);
 static void	get_type_quote_here_doc(t_list **list);
 static void	is_it_empty(t_list **list);
-static void	parse_line_for_quote(t_list **list);
+static int	parse_line_for_quote(t_list **list);
 
 int	change_list(t_list **list, t_env *env, t_data *data, char **tab_line)
 {
@@ -14,7 +14,8 @@ int	change_list(t_list **list, t_env *env, t_data *data, char **tab_line)
 	if (should_we_expand(list, env) == FAILURE)
 		return (free_array(tab_line), FAILURE);
 	is_it_empty(list);
-	parse_line_for_quote(list);
+	if (parse_line_for_quote(list) == FAILURE)
+		return (ft_lstclear(list, free), free_array(tab_line), FAILURE);
 	temp = (*list);
 	while (temp)
 	{
@@ -94,9 +95,10 @@ static void	is_it_empty(t_list **list)
 	}
 }
 
-static void	parse_line_for_quote(t_list **list)
+static int	parse_line_for_quote(t_list **list)
 {
 	t_list	*temp;
+	char	*temp_str;
 	int		r;
 
 	temp = (*list);
@@ -107,10 +109,17 @@ static void	parse_line_for_quote(t_list **list)
 			r = 0;
 			while (temp->data[r])
 			{
+				temp_str = temp->data[r];
 				temp->data[r] = is_there_a_quote(temp->data[r]);
+				if (!(temp->data[r]))
+				{
+					temp->data[r] = temp_str;
+					return (FAILURE);
+				}
 				r++;
 			}
 		}
 		temp = temp->next;
 	}
+	return (SUCCESS);
 }

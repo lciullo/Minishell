@@ -25,7 +25,7 @@ char	*expand(char *line, t_env *lst_env, int i, int start)
 		else if (if_check(0, line, i) == true)
 		{
 			if (handle_dollar_sign(&utils, &i, &start) == FAILURE)
-				return (NULL);
+				return (free(utils.line), NULL);
 			start = i;
 		}
 		else if (utils.line[i])
@@ -35,6 +35,7 @@ char	*expand(char *line, t_env *lst_env, int i, int start)
 	return (utils.new_line);
 }
 
+//a re checker
 static void	end_of_expand(t_expand *utils, int i, int start)
 {
 	char	*temp;
@@ -44,8 +45,9 @@ static void	end_of_expand(t_expand *utils, int i, int start)
 		temp = utils->new_line;
 		utils->new_line = ft_strjoin_expand(utils->new_line, \
 		utils->line, start, i);
-		if (utils->new_line)
-			free(temp);
+		if (!utils->new_line)
+			free(utils->line);
+		free(temp);
 	}
 }
 
@@ -66,7 +68,7 @@ static int	handle_quotes(t_expand *utils, int *i, int *start)
 			if (if_check(1, utils->line, *i) == true)
 			{
 				if (handle_dollar_sign(utils, i, start) == FAILURE)
-					return (FAILURE);
+					return (free(utils->line), FAILURE);
 				*start = *i;
 			}
 			else if (utils->line[*i])
@@ -87,20 +89,20 @@ static int	handle_dollar_sign(t_expand *utils, int *i, int *start)
 		temp = utils->new_line;
 		utils->new_line = ft_strjoin_expand(utils->new_line, \
 		utils->line, *start, *i);
-		free(temp);
 		if (!(utils->new_line))
 			return (FAILURE);
+		free(temp);
 	}
 	if (utils->line[*i + 1] == '$' || utils->line[*i + 1] == '?')
 	{
 		if (handle_special_case(utils, i) == FAILURE)
-			return (free(utils->line), FAILURE);
+			return (FAILURE);
 	}
 	else if (ft_isalpha(utils->line[*i + 1]) == 1 || utils->line[*i + 1] == '_')
 	{
 		utils->new_line = get_var(utils, i);
 		if (!(utils->new_line))
-			return (free(utils->line), FAILURE);
+			return (FAILURE);
 	}
 	else
 		*i = *i + 2;
@@ -122,7 +124,7 @@ static int	handle_special_case(t_expand *utils, int *i)
 	{
 		str_exit_status = ft_itoa(g_exit_status);
 		if (!(str_exit_status))
-			return (FAILURE);
+			return (free(utils->new_line), FAILURE);
 		utils->new_line = ft_strjoin_parsing(utils->new_line, str_exit_status);
 		free(str_exit_status);
 		if (!(utils->new_line))

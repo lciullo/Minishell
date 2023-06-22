@@ -38,6 +38,7 @@ char	*get_var(t_expand *utils, int *i)
 	return (free(name_var), utils->new_line);
 }
 
+// NULL CHECK EN COURS
 static char	*check_var(char *name_var, t_env *lst_env, char *new_line)
 {
 	char	*value;
@@ -48,9 +49,10 @@ static char	*check_var(char *name_var, t_env *lst_env, char *new_line)
 		{
 			value = ft_strdup(lst_env->value);
 			if (!value)
-				return (NULL);
+				return (free(new_line), NULL);
 			change_quote(value, 0);
 			new_line = ft_strjoin_parsing(new_line, value);
+			free(value);
 			if (!(new_line))
 				return (NULL);
 			return (new_line);

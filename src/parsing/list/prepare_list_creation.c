@@ -9,16 +9,16 @@ char	**prepare_line_for_list(t_data *data)
 
 	new_line = add_space(data->line, data);
 	if (!(new_line))
-		return (print_error(MALLOC_ERR), NULL);
+		return (NULL);
 	replace_space(new_line, 0);
 	get_nbr_pipe(new_line, data);
 	tab_line = ft_split_parsing(new_line);
 	free(new_line);
 	if (!tab_line)
-		return (print_error(MALLOC_ERR), NULL);
+		return (NULL);
 	tab_line = change_order(tab_line, data);
 	if (!(tab_line))
-		return (print_error(MALLOC_ERR), NULL);
+		return (NULL);
 	change_tab(tab_line, 1);
 	return (tab_line);
 }

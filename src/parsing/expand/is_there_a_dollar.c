@@ -38,7 +38,10 @@ static int	handle_tilde(char **tab, int i)
 		temp = tab[i];
 		tab[i] = ft_strdup("$HOME");
 		if (!tab[i])
+		{
+			tab[i] = temp;
 			return (FAILURE);
+		}
 		free(temp);
 	}
 	else if (tab[i][0] == '~' && tab[i][1] != '\0')
@@ -46,7 +49,10 @@ static int	handle_tilde(char **tab, int i)
 		temp = tab[i];
 		tab[i] = ft_strjoin_expand("$HOME", tab[i], 1, ft_strlen(tab[i]));
 		if (!tab[i])
+		{
+			tab[i] = temp;
 			return (FAILURE);
+		}
 		free(temp);
 	}
 	return (SUCCESS);
@@ -59,7 +65,10 @@ static int	launch_expand(t_env *env, char **tab, int i, int *status_expand)
 	temp = tab[i];
 	tab[i] = expand(tab[i], env, 0, 0);
 	if (!(tab[i]))
+	{
+		tab[i] = temp;
 		return (FAILURE);
+	}
 	free(temp);
 	*status_expand = 1;
 	return (SUCCESS);

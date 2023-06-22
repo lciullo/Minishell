@@ -6,16 +6,16 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:22:13 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/12 12:48:45 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/22 12:09:40 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int	get_tab_size(char **tab);
-static void	change_order_redir(char **tab, \
+static int	change_order_redir(char **tab, \
 			char **new_tab, t_data *data, int *i);
-static void	change_order_token(char **tab, char **new_tab, \
+static int	change_order_token(char **tab, char **new_tab, \
 			t_data *data, int *i);
 
 char	**change_order(char **tab, t_data *data)
@@ -30,7 +30,10 @@ char	**change_order(char **tab, t_data *data)
 	while (tab[data->end])
 	{
 		if (tab[data->end][0] == '|' || tab[data->end + 1] == NULL)
-			change_order_redir(tab, new_tab, data, &i);
+		{
+			if (change_order_redir(tab, new_tab, data, &i) == FAILURE)
+				return (free_array(tab), NULL);
+		}
 		data->end++;
 	}
 	new_tab[data->end] = NULL;
@@ -48,7 +51,7 @@ static int	get_tab_size(char **tab)
 	return (tab_size);
 }
 
-static void	change_order_redir(char **tab, char **new_tab, t_data *data, int *i)
+static int	change_order_redir(char **tab, char **new_tab, t_data *data, int *i)
 {
 	int	start_b;
 
@@ -58,18 +61,24 @@ static void	change_order_redir(char **tab, char **new_tab, t_data *data, int *i)
 		if (tab[data->start][0] == '<' || tab[data->start][0] == '>')
 		{
 			new_tab[*i] = ft_strdup(tab[data->start]);
+			if (!(new_tab[*i]))
+				return (FAILURE);
 			*i = *i + 1;
 			data->start++;
 			new_tab[*i] = ft_strdup(tab[data->start]);
+			if (!(new_tab[*i]))
+				return (FAILURE);
 			*i = *i + 1;
 		}
 		data->start++;
 	}
 	data->start = start_b;
-	change_order_token(tab, new_tab, data, i);
+	if (change_order_token(tab, new_tab, data, i) == FAILURE)
+		return (FAILURE);
+	return (SUCCESS);
 }
 
-static void	change_order_token(char **tab, char **new_tab, t_data *data, int *i)
+static int	change_order_token(char **tab, char **new_tab, t_data *data, int *i)
 {
 	while (data->start <= data->end)
 	{
@@ -81,9 +90,12 @@ static void	change_order_token(char **tab, char **new_tab, t_data *data, int *i)
 		else
 		{
 			new_tab[*i] = ft_strdup(tab[data->start]);
+			if ((!new_tab[*i]))
+				return (FAILURE);
 			*i = *i + 1;
 			data->start++;
 		}
 	}
 	data->start = data->end + 1;
+	return (SUCCESS);
 }
