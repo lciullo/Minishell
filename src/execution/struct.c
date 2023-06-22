@@ -46,7 +46,7 @@ static	int	initialize_integers(t_list *list, t_exec *data, t_data *parsing)
 	data->exec_progress = 0;
 	data->nb_pids = 0;
 	data->infile = 0;
-	data->outfile = 1;
+	data->outfile = 0;
 	data->expand = 0;
 	data->old_fd[0] = 0;
 	data->old_fd[1] = 0;
@@ -75,9 +75,6 @@ static	int	initialize_integers(t_list *list, t_exec *data, t_data *parsing)
 
 int	init_struct(t_list *list, t_env *lst, t_exec *data, t_data *parsing)
 {
-	int	malloc_check;
-
-	malloc_check = 1;
 	if (initialize_integers(list, data, parsing) == -1)
 		return (-1);
 	data->cmd_with_path = NULL;
@@ -89,16 +86,9 @@ int	init_struct(t_list *list, t_env *lst, t_exec *data, t_data *parsing)
 		data->env = NULL;
 	else
 	{
-		data->env = fill_env(lst, &malloc_check);
+		data->env = fill_env(lst);
 		if (!data->env)
-		{
-			if (malloc_check == 1)
-				return (0);
-			free(data->pids);
-			free(data->fd_heredoc);
-			perror("malloc failed here");
-			return (1);
-		}
+			return (0);
 	}
 	return (0);
 }

@@ -13,6 +13,7 @@ int	loop_for_heredoc(t_list *list, t_exec *data, t_data *parsing, t_env **lst)
 
 	copy = list;
 	close_before_last = 0;
+	(void)parsing;
 	while (copy != NULL)
 	{
 		if (copy->type == HERE_DOC)
@@ -23,8 +24,8 @@ int	loop_for_heredoc(t_list *list, t_exec *data, t_data *parsing, t_env **lst)
 					|| g_exit_status == 130)
 				return (g_exit_status);
 		}
-		if (close_before_last < parsing->nbr_here_doc)
-			ft_close(data->tmp_fd_heredoc[0]);
+		/*if (close_before_last < parsing->nbr_here_doc)
+			ft_close(data->tmp_fd_heredoc[0]);*/
 		close_before_last++;
 		copy = copy->next;
 	}
@@ -45,6 +46,8 @@ static	int	manage_heredoc(char **delimiter, t_exec *data, \
 		fork_issue_heredoc(data, data->tmp_fd_heredoc);
 		return (FAILURE);
 	}
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	if (data->pid_heredoc == 0)
 		loop_in_child_heredoc(data, *delimiter, lst, list);
 	else
