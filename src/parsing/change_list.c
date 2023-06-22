@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:43:33 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/17 11:50:26 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/21 19:28:47 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		get_nbr_quote(char *row);
 void	copy_quote_content(char *new_s, char *row, int *i, int *j);
 void	get_type_quote_here_doc(t_list **list);
 
-void	change_list(t_list **list)
+void	change_list_type(t_list **list)
 {
 	t_list	*temp;
 	

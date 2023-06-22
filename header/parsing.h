@@ -72,11 +72,11 @@ char	*change_line(t_data *data);
 char	*add_space(char	*line, t_data *data);
 
 /* ---- expand.c ----*/
-char	*expand(char *line, t_env *lst_env);
+char	*expand(char *line, t_env *lst_env, int i, int start);
 
 /* ---- utils_expand.c ----*/
 char	*check_var(char *name_var, t_env *lst_env, char *new_line);
-char	*ft_strjoin_b(char*s1, char *s2, int start, int i);
+char	*ft_strjoin_expand(char*s1, char *s2, int start, int i);
 
 /* ---- split_parsing.c ----*/
 char	**ft_split_parsing(char const *s);
@@ -88,8 +88,8 @@ char	**change_order(char **tab, t_data *data);
 /* ---- list.c ----*/
 t_list	*create_list(t_data *data, t_env *env, char **tab_line);
 
-/* ---- change_list.c ----*/
-void	change_list(t_list **list);
+/* ---- change_list_type.c ----*/
+void	change_list_type(t_list **list);
 void	parse_line_for_quote(t_list **list);
 
 /* ---- delete_quote.c ----*/
@@ -108,7 +108,7 @@ void	list_print(t_list *lst);
 
 int	should_we_expand(t_list **list, t_env *env);
 void	replace_space(char *line, int i);
-char	*ft_strjoin_parsing(char *s1, char *s2, int type);
+char	*ft_strjoin_parsing(char *s1, char *s2);
 void	print_error(int error_code);
 
 void	is_it_empty(t_list **list);
