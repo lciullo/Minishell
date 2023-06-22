@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    sources_parsing.mk                                 :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/04/14 09:55:41 by lciullo           #+#    #+#              #
-#    Updated: 2023/06/22 11:25:46 by cllovio          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 SRC	+= 	src/main.c\
 		src/parsing/expand/expand.c\
 		src/parsing/expand/is_there_a_dollar.c\
@@ -30,3 +18,4 @@ SRC	+= 	src/main.c\
 		src/parsing/check_error.c\
 		src/parsing/parsing.c\
 		src/parsing/print.c
+

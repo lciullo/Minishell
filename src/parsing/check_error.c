@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   check_error.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/15 10:59:20 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/22 10:41:32 by cllovio          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -87,6 +76,7 @@ static bool	check_pipe(char	*line)
 }
 
 //a mieux tester avec des caractere chelou
+
 static bool	check_redir(char *line, t_data *data)
 {
 	int		i;
