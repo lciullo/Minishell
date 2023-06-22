@@ -46,7 +46,7 @@ static int	not_empty_heredoc_line(t_exec *data, char *delimiter, \
 	if (!ft_strcmp(line, delimiter))
 		return (BREAK);
 	if (ft_strcmp(line, "$") && data->quote_here_doc == 0)
-		line = expand(line, *lst);
+		line = expand(line, *lst, 0, 0);
 	write(data->tmp_fd_heredoc[1], line, ft_strlen(line));
 	write(data->tmp_fd_heredoc[1], "\n", 1);
 	free(line);
