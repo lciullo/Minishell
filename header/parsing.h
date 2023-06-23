@@ -25,6 +25,7 @@ typedef	struct s_expand {
 	t_env	*env;
 	char	*line;
 	char	*new_line;
+	char	quote;
 }	t_expand;
 
 enum {
@@ -61,7 +62,7 @@ bool	check_error(t_data *data);
 /*======================= EXPAND =======================*/
 
 /* ---- expand.c ----*/
-char	*expand(char *line, t_env *lst_env, int i, int start);
+char	*expand(t_expand *utils, int i, int start, int here_doc);
 
 /* ---- is_there_a_dollar.c ----*/
 char	**is_there_a_dollar(char **tab, t_env *env, int	*status_expand);
@@ -109,7 +110,7 @@ char	**prepare_line_for_list(t_data *data);
 int		change_list(t_list **list, t_env *env, t_data *data, char **tab_line);
 
 /* ---- change_list.c ----*/
-char	*add_space(char	*line, t_data *data);
+char	*add_space(char	*line, int status, int malloc_size);
 
 /* ---- change_order.c ----*/
 char	**change_order(char **tab, t_data *data);

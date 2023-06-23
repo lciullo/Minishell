@@ -43,14 +43,17 @@ static void	init_heredoc_process(t_exec *data)
 static int	not_empty_heredoc_line(t_exec *data, char *delimiter, \
 			char *line, t_env **lst)
 {
-	char	*temp;
-
+	char		*temp;
+	t_expand	utils;
 	if (!ft_strcmp(line, delimiter))
-		return (free(line), BREAK);
+		return (BREAK);
 	if (ft_strchr(line, '$') != 0 && data->quote_here_doc == 0)
 	{
 		temp = line;
-		line = expand(line, *lst, 0, 0);
+		init_struct_expand(line, *lst, &utils);
+		if (!utils.new_line)
+			return (FAILURE);
+		line = expand(&utils, 0, 0, 1);
 		free(temp);
 	}
 	write(data->tmp_fd_heredoc[1], line, ft_strlen(line));

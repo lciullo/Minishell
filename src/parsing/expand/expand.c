@@ -1,38 +1,34 @@
 #include "minishell.h"
 
 static void	end_of_expand(t_expand *utils, int i, int start);
-static int	handle_quotes(t_expand *utils, int *i, int *start);
+static int	handle_quotes(t_expand *utils, int *i, int *start, int here_doc);
 static int	handle_dollar_sign(t_expand *utils, int *i, int *start);
 static int	handle_special_case(t_expand *utils, int *i);
 
 //je securise end_of_Expand 
-char	*expand(char *line, t_env *lst_env, int i, int start)
+char	*expand(t_expand *utils, int i, int start, int here_doc)
 {
-	t_expand	utils;
-
-	init_struct_expand(line, lst_env, &utils);
-	if (!utils.line)
-		return (free(line), NULL);
-	if (!lst_env)
+	if (!utils->env)
 		return (NULL);
-	while (utils.line[i])
+	while (utils->line[i])
 	{
-		if (utils.line[i] == '\"' || utils.line[i] == '\'')
+		if (utils->line[i] == '\"' || utils->line[i] == '\'')
 		{
-			if (handle_quotes(&utils, &i, &start) == FAILURE)
+			utils->quote = utils->line[i];
+			if (handle_quotes(utils, &i, &start, here_doc) == FAILURE)
 				return (NULL);
 		}
-		else if (if_check(0, line, i) == true)
+		else if (if_check(0, utils->line, i) == true)
 		{
-			if (handle_dollar_sign(&utils, &i, &start) == FAILURE)
-				return (free(utils.line), NULL);
+			if (handle_dollar_sign(utils, &i, &start) == FAILURE)
+				return (free(utils->line), NULL);
 			start = i;
 		}
-		else if (utils.line[i])
+		else if (utils->line[i])
 			i++;
 	}
-	end_of_expand(&utils, i, start);
-	return (utils.new_line);
+	end_of_expand(utils, i, start);
+	return (utils->new_line);
 }
 
 //a re checker
@@ -51,19 +47,19 @@ static void	end_of_expand(t_expand *utils, int i, int start)
 	}
 }
 
-static int	handle_quotes(t_expand *utils, int *i, int *start)
+static int	handle_quotes(t_expand *utils, int *i, int *start, int here_doc)
 {
-	if (utils->line[*i] == '\'')
+	if (utils->line[*i] == '\'' && here_doc == 0)
 	{
 		skip_quote(utils->line, i, utils->line[*i]);
 		if (utils->line[*i] == '\'')
 			*i = *i + 1;
 	}
-	else if (utils->line[*i] == '\"')
+	else if (utils->line[*i] == '\"' || (utils->line[*i] == '\'' && here_doc == 1))
 	{
-		if (utils->line[*i] == '\"')
+		if (utils->line[*i] == utils->quote)
 			*i = *i + 1;
-		while (utils->line[*i] && utils->line[*i] != '\"')
+		while (utils->line[*i] && utils->line[*i] != utils->quote)
 		{	
 			if (if_check(1, utils->line, *i) == true)
 			{
@@ -74,7 +70,7 @@ static int	handle_quotes(t_expand *utils, int *i, int *start)
 			else if (utils->line[*i])
 				*i = *i + 1;
 		}
-		if (utils->line[*i] == '\"')
+		if (utils->line[*i] == utils->quote)
 			*i = *i + 1;
 	}
 	return (SUCCESS);
