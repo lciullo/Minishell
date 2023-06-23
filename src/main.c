@@ -64,15 +64,20 @@ static void	core_of_program(char *line, t_exec *data, t_env **lst)
 
 	list = NULL;
 	if (ft_isascii(line) == 0)
+	{
+		if (lst)
+			ft_lstclear_env(lst, free);
+		free(line);
 		exit(1);
+	}
 	//list_print_env(lst);
 	list = parsing(line, &data_parsing, *lst);
+	free(line);
 	if (list == NULL)
 		return ;
 	//print_list(list);
 	if (execution(list, &data_parsing, data, lst) == FAILURE)
 		perror("execution issue");
-	free(line);
 	if (list != NULL)
 		ft_lstclear(&list, free);
 }
@@ -82,7 +87,7 @@ static void	control_c_realod_prompt(int signal)
 	(void)signal;
 	ft_dprintf(1, "\n");
 	rl_on_new_line();
-	//rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	rl_redisplay();
 	return ;
 }

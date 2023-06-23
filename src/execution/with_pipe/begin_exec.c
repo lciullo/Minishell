@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 17:44:33 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/22 10:32:26 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/22 18:29:00 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ static void	signal_handeler(int signal)
 static int	main_process_before_each_cmd(t_list *list, \
 						t_exec *data, t_env **lst)
 {
-	signal(SIGQUIT, signal_handeler);
 	signal(SIGINT, signal_handeler);
+	signal(SIGQUIT, signal_handeler);
 	data->pids[data->nb_pids] = fork();
 	if (data->pids[data->nb_pids] == FAILURE)
 	{
