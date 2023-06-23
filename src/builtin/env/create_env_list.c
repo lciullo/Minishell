@@ -2,7 +2,7 @@
 
 static t_env	*fill_list_env(char *row, t_env *lst);
 static t_env	*if_empty_env(t_env *lst);
-static t_env	*get_shlvl_list(t_env *lst);
+//static t_env	*get_shlvl_list(t_env *lst);
 
 t_env	*creat_env(char **env)
 {
@@ -16,14 +16,17 @@ t_env	*creat_env(char **env)
 		lst = if_empty_env(lst);
 		return (lst);
 	}
-	while (env[row] != NULL)
+	else
 	{
-		lst = fill_list_env(env[row], lst);
-		if (!lst)
-			return (NULL);
-		row++;
+		while (env[row] != NULL)
+		{
+			lst = fill_list_env(env[row], lst);
+			if (!lst)
+				return (NULL);
+			row++;
+		}
 	}
-	lst = get_shlvl_list(lst);
+	//lst = get_shlvl_list(lst);
 	return (lst);
 }
 
@@ -61,15 +64,19 @@ static t_env	*fill_list_env(char *row, t_env *lst)
 	return (lst);
 }
 
-static t_env	*get_shlvl_list(t_env *lst)
+/*static t_env	*get_shlvl_list(t_env *lst)
 {
 	t_env 	*copy;
 	int		nb;
 
 	copy = lst;
 	nb = 0;
+	if (!lst)
+		return (NULL);
 	while (copy != NULL && ft_strcmp(copy->name, "SHLVL") != 0)
 		copy = copy->next;
+	if (!copy)
+		return (NULL);
 	if (copy->value)
 	{
 		nb = ft_atoi(copy->value);
@@ -86,7 +93,7 @@ static t_env	*get_shlvl_list(t_env *lst)
 			return (NULL);
 	}
 	return (lst);
-}
+}*/
 
 size_t	begin_of_name(char *path)
 {

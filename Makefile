@@ -67,7 +67,7 @@ ${NAME}: ${OBJS}
 	${CC} ${CFLAGS} $^ ${LIBRARY} -o $@ -lreadline
 
 ${DIR_OBJS}/%.o: %.c ${HEAD} ${LIBRARY}
-	mkdir -p ${dir $@}
+	@mkdir -p ${dir $@}
 	${CC} ${CFLAGS} -c $< -o $@
 
 # ---- Library ---- #

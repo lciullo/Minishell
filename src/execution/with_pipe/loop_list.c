@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:46:51 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/22 09:17:12 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/22 18:28:03 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ static	int	wait_pids(t_exec *data)
 		{
 			if (WTERMSIG(status) == SIGQUIT)
 				ft_dprintf(2, "quit core dumped\n");
+			else if (WTERMSIG(status) == SIGINT)
+				ft_dprintf(2, "\n");
 		}
 		ft_close(data->new_fd[0]);
 		i++;

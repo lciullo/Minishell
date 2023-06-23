@@ -17,7 +17,7 @@ void	loop_in_child_heredoc(t_exec *data, char *delimiter, \
 	{
 		init_signals_heredoc();
 		line = readline("heredoc> ");
-		signal(SIGINT, heredoc_new_line);
+		//signal(SIGINT, heredoc_new_line);
 		if (line)
 		{
 			if (not_empty_heredoc_line(data, delimiter, line, lst) == BREAK)
@@ -43,10 +43,16 @@ static void	init_heredoc_process(t_exec *data)
 static int	not_empty_heredoc_line(t_exec *data, char *delimiter, \
 			char *line, t_env **lst)
 {
+	char	*temp;
+
 	if (!ft_strcmp(line, delimiter))
-		return (BREAK);
-	if (ft_strcmp(line, "$") && data->quote_here_doc == 0)
-		line = expand(line, *lst);
+		return (free(line), BREAK);
+	if (ft_strchr(line, '$') != 0 && data->quote_here_doc == 0)
+	{
+		temp = line;
+		line = expand(line, *lst, 0, 0);
+		free(temp);
+	}
 	write(data->tmp_fd_heredoc[1], line, ft_strlen(line));
 	write(data->tmp_fd_heredoc[1], "\n", 1);
 	free(line);
