@@ -7,7 +7,8 @@ char	**prepare_line_for_list(t_data *data)
 	char	*new_line;
 	char	**tab_line;
 
-	new_line = add_space(data->line, data);
+	new_line = add_space(data->line, 0, (data->len_line + \
+	((data->nbr_pipe * 2 + data->nbr_redir * 2)) + 1));
 	if (!(new_line))
 		return (NULL);
 	replace_space(new_line, 0);

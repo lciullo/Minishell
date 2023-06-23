@@ -87,7 +87,7 @@ static bool	check_pipe(char	*line)
 static bool	check_redir(char *line, t_data *data)
 {
 	int		i;
-	
+
 
 	i = 0;
 	while (line[i])
@@ -100,7 +100,8 @@ static bool	check_redir(char *line, t_data *data)
 		{
 			if (skip_redir(line, &i, line[i], data) > 2)
 				return (ft_dprintf(2, "syntax error\n"), false);
-			if (if_check(2, line, i) == true)
+			if (if_check(2, line, i) == true || ((line[i] == '\0' || \
+			line[i] == '<' || line[i] == '>' || line[i] == '|')))
 				return (ft_dprintf(2, "syntax error\n"), false);
 		}
 		else

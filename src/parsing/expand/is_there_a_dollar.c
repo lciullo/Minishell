@@ -60,10 +60,14 @@ static int	handle_tilde(char **tab, int i)
 
 static int	launch_expand(t_env *env, char **tab, int i, int *status_expand)
 {
-	char	*temp;
+	char		*temp;
+	t_expand	utils;
 
+	init_struct_expand(tab[i], env, &utils);
+	if (!utils.new_line)
+		return (FAILURE);
 	temp = tab[i];
-	tab[i] = expand(tab[i], env, 0, 0);
+	tab[i] = expand(&utils, 0, 0, 0);
 	if (!(tab[i]))
 	{
 		tab[i] = temp;

@@ -6,18 +6,18 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 09:10:18 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/22 12:11:49 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/23 14:20:50 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	handles_quote(char *line, char *new_line, int *i, int *j);
+static int	handles_quote(char *line, char *new_line, int *i, int *j);
 static void	handles_double_redir(char *line, char *new_line, int *i, int *j);
 static void	handles_pipe_and_simple_redir(char *line, char *new_line, \
 		int *i, int *j);
 
-char	*add_space(char	*line, t_data *data)
+char	*add_space(char	*line, int status, int malloc_size)
 {
 	char	*new_line;
 	int		i;
@@ -25,28 +25,28 @@ char	*add_space(char	*line, t_data *data)
 
 	i = 0;
 	j = 0;
-	new_line = calloc((data->len_line + \
-	((data->nbr_pipe * 2 + data->nbr_redir * 2)) + 1), sizeof(char));
+	new_line = calloc(malloc_size, sizeof(char));
 	if (!new_line)
 		return (NULL);
 	while (line[i])
 	{
+		status = 0;
 		if (line[i] == '\'' || line[i] == '\"')
-			handles_quote(line, new_line, &i, &j);
+			status = handles_quote(line, new_line, &i, &j);
 		if (line[i] && ((line[i] == '>' && line[i + 1] == '>') \
 		|| (line[i] && line[i] == '<' && line[i + 1] == '<')))
 			handles_double_redir(line, new_line, &i, &j);
 		else if (line[i] && (line[i] == '|' || (line[i] == '>' && \
 		line[i + 1] != '>') || (line[i] == '<' && line[i + 1] != '<')))
 			handles_pipe_and_simple_redir(line, new_line, &i, &j);
-		else if (line[i])
+		else if (line[i] && status != 1)
 			new_line[j++] = line[i++];
 	}
 	new_line[j] = '\0';
 	return (new_line);
 }
 
-static void	handles_quote(char *line, char *new_line, int *i, int *j)
+static int	handles_quote(char *line, char *new_line, int *i, int *j)
 {
 	char	quote;
 
@@ -65,12 +65,13 @@ static void	handles_quote(char *line, char *new_line, int *i, int *j)
 			*i = *i + 1;
 		}
 	}
-	if (line[*i] && (line[*i] == '\'' || line[*i] == '\"'))
+	if (line[*i] && (line[*i] == quote))
 	{
 		new_line[*j] = line[*i];
 		*i = *i + 1;
 		*j = *j + 1;
 	}
+	return (1);
 }
 
 static void	handles_double_redir(char *line, char *new_line, int *i, int *j)
@@ -104,3 +105,5 @@ static void	handles_pipe_and_simple_redir(char *line, char *new_line, \
 		*i = *i + 1;
 	}
 }
+
+//'$USER'""'''|$USER'|"$USER"
