@@ -1,29 +1,59 @@
 #include "minishell.h"
 
+static int	parse_unset(char *value);
+static void	search_and_delete(char *name, t_env **lst);
+static int	is_valid(int c);
+
+void	implement_unset(char **token, t_env **lst)
+{
+	int	i;
+	int	exit_status;
+	int	previous_exit_status;
+
+	i = 1;
+	exit_status = 0;
+	previous_exit_status = 0;
+	if (!lst)
+		return ;
+	while (token[i] != NULL)
+	{
+		if (i != 1)
+			previous_exit_status = exit_status;
+		exit_status = parse_unset(token[i]);
+		if (exit_status == 0)
+			search_and_delete(token[i], lst);
+		if (previous_exit_status != 0 && exit_status == 0)
+			exit_status = previous_exit_status;
+		i++;
+	}
+	g_exit_status = exit_status;
+	return ;
+}
+
 static void	search_and_delete(char *name, t_env **lst)
 {
-	t_env	*it;
+	t_env	*index;
 	t_env	*prev;
 
-	it = *lst;
+	index = *lst;
 	prev = NULL;
-	while (it)
+	while (index)
 	{
-		if (!ft_strcmp(it->name, name))
+		if (!ft_strcmp(index->name, name))
 		{
 			if (prev)
-				prev->next = it->next;
+				prev->next = index->next;
 			else
-				*lst = it->next;
-			if (it->name)
-				free(it->name);
-			if (it->value)
-				free(it->value);
-			free(it);
+				*lst = index->next;
+			if (index->name)
+				free(index->name);
+			if (index->value)
+				free(index->value);
+			free(index);
 			return ;
 		}
-		prev = it;
-		it = it->next;
+		prev = index;
+		index = index->next;
 	}
 }
 
@@ -36,7 +66,7 @@ static int	is_valid(int c)
 		return (FAILURE);
 }
 
-int	parse_unset(char *value)
+static int	parse_unset(char *value)
 {
 	size_t	i;
 
@@ -57,30 +87,4 @@ int	parse_unset(char *value)
 		i++;
 	}
 	return (0);
-}
-
-int	implement_unset(char **token, t_env **lst)
-{
-	int	i;
-	int	exit_status;
-	int	previous_exit_status;
-
-	i = 1;
-	exit_status = 0;
-	previous_exit_status = 0;
-	if (!lst)
-		return (FAILURE);
-	while (token[i] != NULL)
-	{
-		if (i != 1)
-			previous_exit_status = exit_status;
-		exit_status = parse_unset(token[i]);
-		if (exit_status == 0)
-			search_and_delete(token[i], lst);
-		if (previous_exit_status != 0 && exit_status == 0)
-			exit_status = previous_exit_status;
-		i++;
-	}
-	g_exit_status = exit_status;
-	return (SUCCESS);
 }

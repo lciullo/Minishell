@@ -76,10 +76,9 @@ static void	core_of_program(char *line, t_exec *data, t_env **lst)
 	if (list == NULL)
 		return ;
 	//print_list(list);
-	if (execution(list, &data_parsing, data, lst) == FAILURE)
-		perror("execution issue");
+	execution(list, &data_parsing, data, lst);
 	if (list != NULL)
-		ft_lstclear(&list, free);
+		ft_lstclear(&data->head, free);
 }
 
 static void	control_c_realod_prompt(int signal)

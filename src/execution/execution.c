@@ -7,7 +7,7 @@ static int	launch_heredoc(t_list *list, t_data *parsing, \
 static int	check_files_one_builtin_exec(t_list *list, t_exec *data);
 static	void	clear_after_execution(t_exec *data);
 
-int	execution(t_list *list, t_data *parsing, t_exec *data, t_env **lst)
+void	execution(t_list *list, t_data *parsing, t_exec *data, t_env **lst)
 {
 	int	heredoc_check;
 
@@ -15,20 +15,20 @@ int	execution(t_list *list, t_data *parsing, t_exec *data, t_env **lst)
 	if (init_struct(list, *lst, data, parsing) == FAILURE)
 	{
 		perror("Malloc failed in structure initialisation");
-		return (FAILURE);
+		return ;
 	}
 	if (parsing->nbr_here_doc >= 1)
 	{
 		heredoc_check = launch_heredoc(list, parsing, data, lst);
 		if (heredoc_check == FAILURE)
-			return (FAILURE);
+			return ;
 		else if (heredoc_check == ONLY_HEREDOC)
-			return (SUCCESS);
+			return ;
 	}
 	if (sort_cmd(list, parsing, data, lst) == FAILURE)
-		return (FAILURE);
+		return ;
 	clear_after_execution(data);
-	return (SUCCESS);
+	return ;
 }
 
 static	int	launch_heredoc(t_list *list, t_data *parsing, \

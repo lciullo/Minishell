@@ -2,13 +2,13 @@
 
 static int	loop_for_export_arguments(char **token, t_env **lst);
 
-int	implement_export(char **token, t_env **lst)
+void	implement_export(char **token, t_env **lst)
 {
 	if (!token[1])
 		print_export(*lst);
 	if (loop_for_export_arguments(token, lst) == FAILURE)
-		return (FAILURE);
-	return (SUCCESS);
+		return ;
+	return ;
 }
 
 int	is_in_env(t_env *lst, char *name)
@@ -71,7 +71,7 @@ static int	loop_for_export_arguments(char **token, t_env **lst)
 	{
 		if (token[i][0] == '-')
 		{
-			ft_dprintf(2, "Invalid option, subject : export with no options\n");
+			write(2, "Invalid option, subject : export with no options\n", 50);
 			g_exit_status = 2;
 		}
 		else
@@ -80,6 +80,3 @@ static int	loop_for_export_arguments(char **token, t_env **lst)
 	}
 	return (SUCCESS);
 }
-
-
-

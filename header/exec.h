@@ -53,7 +53,7 @@ void			free_struct(t_exec *data);
 
 //# ======================= EXECUTION ======================= #
 
-int				execution(t_list *t_list, t_data *parsing, \
+void			execution(t_list *t_list, t_data *parsing, \
 								t_exec *data, t_env **lst);
 
 int				execution_core(t_list *list, t_exec *data, t_env **lst);
@@ -190,19 +190,19 @@ int				loop_for_outfile(t_list *list, t_exec *data);
 
 void			loop_for_builtin(char **token, t_exec *data, t_env **lst);
 
-int				implement_echo(char **cmd);
+void			implement_echo(char **cmd);
 
 int				implement_cd(char **cmd, t_env **lst);
 
 int				implement_pwd(char **cmd);
 
-int				implement_exit(char **cmd, t_exec *data);
+void			implement_exit(char **cmd, t_exec *data);
 
-int				implement_unset(char **token, t_env **lst);
+void			implement_unset(char **token, t_env **lst);
 
 //# --- Environnement--- #
 
-int				implement_env(char **cmd, t_env *lst);
+void			implement_env(char **cmd, t_env *lst);
 
 size_t			begin_of_name(char *path);
 
@@ -212,7 +212,7 @@ t_env			*creat_env(char **env);
 
 //# --- Export --- #
 
-int				implement_export(char **token, t_env **lst);
+void			implement_export(char **token, t_env **lst);
 
 //# Export without arguments #
 
