@@ -17,6 +17,8 @@ char	*expand(t_expand *utils, int i, int start, int here_doc)
 			utils->quote = utils->line[i];
 			if (handle_quotes(utils, &i, &start, here_doc) == FAILURE)
 				return (NULL);
+			if (utils->line[i] == utils->quote)
+				i++;
 		}
 		else if (if_check(0, utils->line, i) == true)
 		{
@@ -50,12 +52,9 @@ static void	end_of_expand(t_expand *utils, int i, int start)
 static int	handle_quotes(t_expand *utils, int *i, int *start, int here_doc)
 {
 	if (utils->line[*i] == '\'' && here_doc == 0)
-	{
 		skip_quote(utils->line, i, utils->line[*i]);
-		if (utils->line[*i] == '\'')
-			*i = *i + 1;
-	}
-	else if (utils->line[*i] == '\"' || (utils->line[*i] == '\'' && here_doc == 1))
+	else if (utils->line[*i] == '\"' || \
+	(utils->line[*i] == '\'' && here_doc == 1))
 	{
 		if (utils->line[*i] == utils->quote)
 			*i = *i + 1;
@@ -70,8 +69,6 @@ static int	handle_quotes(t_expand *utils, int *i, int *start, int here_doc)
 			else if (utils->line[*i])
 				*i = *i + 1;
 		}
-		if (utils->line[*i] == utils->quote)
-			*i = *i + 1;
 	}
 	return (SUCCESS);
 }

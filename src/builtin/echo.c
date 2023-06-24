@@ -1,9 +1,9 @@
 #include "minishell.h"
 
-static	int		count_dash(char *arg);
-static	int		is_valid_option(char *arg);
-static	int		parse_option(char *arg);
-static	void	write_in_echo(char **cmd, int i, int option);
+static int	count_dash(char *arg);
+static int	is_valid_option(char *arg);
+static int	parse_option(char *arg);
+static void	write_in_echo(char **cmd, int i, int option);
 
 int	implement_echo(char **cmd)
 {
@@ -78,5 +78,3 @@ static void	write_in_echo(char **cmd, int i, int option)
 	if (option)
 		ft_dprintf(1, "\n");
 }
-
-

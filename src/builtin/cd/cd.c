@@ -1,56 +1,43 @@
 #include "minishell.h"
 
 static char		*actualise_pwd(char *actual_path, t_env **lst);
-static size_t	get_nb_arguments(char **cmd);
 static	int		get_old_pwd(char *old_pwd, t_env **lst);
+static int		check_nb_arg(int nb_arg, char **cmd, t_env **lst);
 
 int	implement_cd(char **cmd, t_env **lst)
 {
 	int		nb_arg;
-	char	*actual_path;
-	char	*old_pwd;
 
 	nb_arg = 0;
-	old_pwd = NULL;
-	actual_path = NULL;
 	nb_arg = get_nb_arguments(cmd);
 	if (cmd[1])
 	{
 		if (cmd[1][0] == '-')
-		{
-			g_exit_status = 2;
-			ft_dprintf(2, "Invalid option, subject : cd with no options\n");
-			return (FAILURE);
-		}
+			return (error_message_cd(0), FAILURE);
 	}
+	if (check_nb_arg(nb_arg, cmd, lst) == FAILURE)
+		return (FAILURE);
+	return (SUCCESS);
+}
+
+static int	check_nb_arg(int nb_arg, char **cmd, t_env **lst)
+{
+	char	*actual_path;
+	char	*old_pwd;
+
+	old_pwd = NULL;
+	actual_path = NULL;
 	if (nb_arg > 2)
-	{
-		g_exit_status = 1;
-		ft_dprintf(2, "minishell: cd: too many arguments\n");
-		return (FAILURE);
-	}
+		return (error_message_cd(1), FAILURE);
 	if (nb_arg == 1)
-	{
-		g_exit_status = 1;
-		ft_dprintf(2, "subject: cd with only a relative or absolute path\n");
-		return (FAILURE);
-	}
+		return (error_message_cd(2), FAILURE);
 	if (nb_arg == 2)
 	{
 		if (chdir(cmd[1]) == -1)
-		{
-			ft_dprintf(2, "chdir: error retrieving current directory: \
-			getcwd: cannot access parent directories: No such file or directory\n");
-			g_exit_status = 1;
-			return (FAILURE);
-		}
+			return (error_message_cd(3), FAILURE);
 		actual_path = getcwd(NULL, 0);
 		if (actual_path == NULL)
-		{
-			ft_dprintf(2, "minishell: cd: path not foumd\n");
-			g_exit_status = 1;
-			return (FAILURE);
-		}
+			return (error_message_cd(4), FAILURE);
 		old_pwd = actualise_pwd(actual_path, lst);
 		get_old_pwd(old_pwd, lst);
 		free(actual_path);
@@ -58,18 +45,6 @@ int	implement_cd(char **cmd, t_env **lst)
 		return (FAILURE);
 	}
 	return (SUCCESS);
-}
-
-static size_t	get_nb_arguments(char **cmd)
-{
-	size_t	i;
-
-	i = 0;
-	if (!cmd)
-		return (FAILURE);
-	while (cmd[i] != NULL)
-		i++;
-	return (i);
 }
 
 static	char	*actualise_pwd(char *actual_path, t_env **lst)

@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 static int	is_valid(int c)
