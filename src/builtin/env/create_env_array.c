@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_env_array.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 11:51:19 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/22 17:19:23 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/24 13:11:50 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,28 +50,20 @@ static	char	*join_name_with_value(char *name, char *value)
 
 	tmp_name = ft_strdup(name);
 	if (!tmp_name)
-	{
-		perror("Malloc failed in join name with value (ft_strdup)");
-		return (NULL);
-	}
+		return (perror("Malloc failed in join name with value"), NULL);
 	start = ft_strjoin(tmp_name, "=");
 	if (!start)
 	{
-		free(tmp_name);
-		perror("Malloc failed in join name with value (first ft_strjoin)");
-		return (NULL);
+		perror("Malloc failed in join name with value");
+		return (free(tmp_name), NULL);
 	}
 	result = ft_strjoin(start, value);
 	if (!result)
 	{
-		free(tmp_name);
-		free(start);
-		perror("Malloc failed in join name with value (second ft_strjoin)");
-		return (NULL);
+		perror("Malloc failed in join name with value");
+		return (free(start), free(tmp_name), NULL);
 	}
-	free(start);
-	free(tmp_name);
-	return (result);
+	return (free(start), free(tmp_name), result);
 }
 
 static char	**make_array(t_env *lst, char **env)
@@ -113,9 +105,7 @@ char	**fill_env(t_env *lst)
 	if (!env)
 		return (NULL);
 	env = make_array(lst, env);
-	{
-		if (!env)
-			return (NULL);
-	}
+	if (!env)
+		return (NULL);
 	return (env);
 }

@@ -92,7 +92,7 @@ int				dup_files(t_exec *data);
 
 //# --- Command not found --- #
 
-void			clear_cmd_not_found(t_exec *data, t_list *list, t_env **lst);
+void			clear_cmd_not_found(t_exec *data);
 
 void			close_cmd_not_found(t_exec *data);
 
@@ -256,11 +256,5 @@ int				check_name_by_name(char *token, t_env **lst, t_export *stat);
 int				check_only_equal(char *token);
 
 int				is_in_env(t_env *lst, char *name);
-
-//# ======================= TEMPORARY ======================= #
-
-//# --- Print debug --- #
-
-void			exec_print_list(t_list *lst);
 
 #endif

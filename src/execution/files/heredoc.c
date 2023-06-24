@@ -24,8 +24,6 @@ int	loop_for_heredoc(t_list *list, t_exec *data, t_data *parsing, t_env **lst)
 					|| g_exit_status == 130)
 				return (g_exit_status);
 		}
-		/*if (close_before_last < parsing->nbr_here_doc)
-			ft_close(data->tmp_fd_heredoc[0]);*/
 		close_before_last++;
 		copy = copy->next;
 	}

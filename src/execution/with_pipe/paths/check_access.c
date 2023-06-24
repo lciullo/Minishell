@@ -15,15 +15,15 @@ char	*check_cmd_access(char **paths, char *cmd, int empty)
 	if (!paths)
 		return (NULL);
 	if (cmd[0] == '\0' || empty == 0)
-	{
 		if (is_empty(empty, cmd) == FAILURE)
 			return (NULL);
-	}
 	if (!ft_strcmp(cmd, ".") || !ft_strcmp(cmd, ".."))
 		return (NULL);
 	if (is_path(cmd) == SUCCESS)
 	{
 		tmp = ft_strdup(cmd);
+		if (!tmp)
+			return (NULL);
 		return (tmp);
 	}
 	cmd_with_path = get_cmd_with_paths(paths, cmd);
