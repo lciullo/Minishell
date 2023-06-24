@@ -1,13 +1,75 @@
-include paths/headers_execution.mk
-include paths/headers_parsing.mk
-include paths/sources_execution.mk
-include paths/sources_parsing.mk
-
 # ====================== VARIABLES ====================== #
 
 # ---- Final executable ---- #
 
 NAME 			= minishell
+
+HEAD			=	header/exec.h \
+					header/parsing.h \
+					header/minishell.h
+
+SRC	=																	\
+		src/execution/execution.c 										\
+		src/execution/struct.c											\
+		src/execution/temporary/print_debug.c							\
+		src/execution/files/infiles.c									\
+		src/execution/files/outfiles.c									\
+		src/execution/files/heredoc.c									\
+		src/execution/files/heredoc_utils.c								\
+		src/execution/files/heredoc_child_process.c						\
+		src/execution/no_pipe/one_builtin_exec.c						\
+		src/execution/with_pipe/loop_list.c								\
+		src/execution/with_pipe/launch_exec.c							\
+		src/execution/with_pipe/begin_exec.c							\
+		src/execution/with_pipe/paths/check_access.c					\
+		src/execution/with_pipe/paths/is_executable.c					\
+		src/execution/with_pipe/paths/get_cmd_with_path.c				\
+		src/execution/with_pipe/execute_token.c							\
+		src/execution/with_pipe/dup_files.c 							\
+		src/execution/clear_exec/close_files.c 							\
+		src/execution/clear_exec/close_heredoc.c						\
+		src/execution/clear_exec/clear_cmds.c							\
+		src/execution/clear_exec/clear_heredoc.c						\
+		src/execution/clear_exec/clear_files.c							\
+		src/execution/clear_exec/clear_one_builtin_exec.c				\
+		src/builtin/builtin.c 											\
+		src/builtin/echo.c												\
+		src/builtin/cd/cd.c												\
+		src/builtin/cd/utils_cd.c										\
+		src/builtin/env/env.c											\
+		src/builtin/env/create_env_array.c								\
+		src/builtin/env/create_env_list.c								\
+		src/builtin/pwd.c												\
+		src/builtin/exit.c 												\
+		src/builtin/unset.c												\
+		src/builtin/export/export.c										\
+		src/builtin/export/check_is_valid.c								\
+		src/builtin/export/print_export.c								\
+		src/builtin/export/export_utils.c								\
+		src/builtin/export/parse_export.c								\
+		src/builtin/export/name_with_equal.c							\
+		src/builtin/export/check_name_by_name.c							\
+		src/builtin/export/clear_export.c								\
+		src/main.c														\
+		src/parsing/expand/expand.c										\
+		src/parsing/expand/is_there_a_dollar.c							\
+		src/parsing/expand/should_we_expand.c							\
+		src/parsing/expand/utils_expand.c								\
+		src/parsing/list/change_list/change_list.c						\
+		src/parsing/list/change_list/change_order.c						\
+		src/parsing/list/change_list/change_tab.c						\
+		src/parsing/list/change_list/del_delimiteur.c					\
+		src/parsing/list/change_list/delete_quote.c						\
+		src/parsing/list/change_list/add_space.c						\
+		src/parsing/list/create_list.c									\
+		src/parsing/list/prepare_list_creation.c						\
+		src/parsing/utils_parsing/ft_split_parsing.c					\
+		src/parsing/utils_parsing/ft_strjoin_parsing.c					\
+		src/parsing/utils_parsing/skip.c								\
+		src/parsing/utils_parsing/utils_parsing.c						\
+		src/parsing/check_error.c										\
+		src/parsing/parsing.c											\
+		src/parsing/print.c
 
 # ---- Directories ---- #
 

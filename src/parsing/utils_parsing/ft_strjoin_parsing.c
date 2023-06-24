@@ -6,11 +6,11 @@ char	*ft_strjoin_parsing(char *s1, char *s2)
 	int		j;
 	int		i;
 
+	j = 0;
+	i = 0;
 	if (!s1 || !s2)
 		return (NULL);
 	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	j = 0;
-	i = 0;
 	if (!str)
 		return (free(s1), NULL);
 	while (s1[i])
