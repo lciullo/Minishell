@@ -1,12 +1,9 @@
-
 #include "minishell.h"
 
+static int	check_current_directory_path(void);
 
 int	implement_pwd(char **cmd)
 {
-	char	*current_directory_path;
-
-	current_directory_path = NULL;
 	if (cmd[1])
 	{
 		if (cmd[1][0] == '-')
@@ -16,10 +13,19 @@ int	implement_pwd(char **cmd)
 			return (FAILURE);
 		}
 	}
+	return (check_current_directory_path());
+}
+
+static int	check_current_directory_path(void)
+{
+	char	*current_directory_path;
+
+	current_directory_path = NULL;
 	current_directory_path = getcwd(NULL, 0);
 	if (current_directory_path == NULL)
 	{
-		ft_dprintf(2, "pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
+		ft_dprintf(2, "pwd: error retrieving current directory: \
+		getcwd: cannot access parent directories: No such file or directory\n");
 		g_exit_status = 0;
 		return (errno);
 	}

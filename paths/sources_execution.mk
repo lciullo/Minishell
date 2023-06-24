@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    sources_execution.mk                               :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+         #
+#    By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/14 09:55:39 by lciullo           #+#    #+#              #
-#    Updated: 2023/06/22 14:33:13 by lciullo          ###   ########.fr        #
+#    Updated: 2023/06/24 15:13:00 by cllovio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,8 @@ SRC	=																	\
 		src/execution/clear_exec/clear_one_builtin_exec.c				\
 		src/builtin/builtin.c 											\
 		src/builtin/echo.c												\
-		src/builtin/cd.c												\
+		src/builtin/cd/cd.c												\
+		src/builtin/cd/utils_cd.c										\
 		src/builtin/env/env.c											\
 		src/builtin/env/create_env_array.c								\
 		src/builtin/env/create_env_list.c								\

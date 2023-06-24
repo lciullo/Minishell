@@ -83,11 +83,9 @@ static bool	check_pipe(char	*line)
 }
 
 //a mieux tester avec des caractere chelou
-
 static bool	check_redir(char *line, t_data *data)
 {
 	int		i;
-
 
 	i = 0;
 	while (line[i])
