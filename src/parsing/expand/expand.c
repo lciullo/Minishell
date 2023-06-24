@@ -23,7 +23,7 @@ char	*expand(t_expand *utils, int i, int start, int here_doc)
 		else if (if_check(0, utils->line, i) == true)
 		{
 			if (handle_dollar_sign(utils, &i, &start) == FAILURE)
-				return (free(utils->line), NULL);
+				return (free(utils->new_line), NULL);
 			start = i;
 		}
 		else if (utils->line[i])
@@ -33,7 +33,7 @@ char	*expand(t_expand *utils, int i, int start, int here_doc)
 	return (utils->new_line);
 }
 
-//a re checker
+// NULL CHECK
 static void	end_of_expand(t_expand *utils, int i, int start)
 {
 	char	*temp;
@@ -44,8 +44,7 @@ static void	end_of_expand(t_expand *utils, int i, int start)
 		utils->new_line = ft_strjoin_expand(utils->new_line, \
 		utils->line, start, i);
 		if (!utils->new_line)
-			free(utils->line);
-		free(temp);
+			free(temp);
 	}
 }
 
@@ -63,7 +62,7 @@ static int	handle_quotes(t_expand *utils, int *i, int *start, int here_doc)
 			if (if_check(1, utils->line, *i) == true)
 			{
 				if (handle_dollar_sign(utils, i, start) == FAILURE)
-					return (free(utils->line), FAILURE);
+					return (free(utils->new_line), FAILURE);
 				*start = *i;
 			}
 			else if (utils->line[*i])
@@ -83,19 +82,21 @@ static int	handle_dollar_sign(t_expand *utils, int *i, int *start)
 		utils->new_line = ft_strjoin_expand(utils->new_line, \
 		utils->line, *start, *i);
 		if (!(utils->new_line))
-			return (FAILURE);
+			return (free(temp), FAILURE);
 		free(temp);
 	}
 	if (utils->line[*i + 1] == '$' || utils->line[*i + 1] == '?')
 	{
+		temp = utils->new_line;
 		if (handle_special_case(utils, i) == FAILURE)
-			return (FAILURE);
+			return (free(temp), FAILURE);
 	}
 	else if (ft_isalpha(utils->line[*i + 1]) == 1 || utils->line[*i + 1] == '_')
 	{
+		temp = utils->new_line;
 		utils->new_line = get_var(utils, i);
 		if (!(utils->new_line))
-			return (FAILURE);
+			return (free(temp), FAILURE);
 	}
 	else
 		*i = *i + 2;
