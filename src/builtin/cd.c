@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 static char		*actualise_pwd(char *actual_path, t_env **lst);
@@ -40,7 +39,8 @@ int	implement_cd(char **cmd, t_env **lst)
 	{
 		if (chdir(cmd[1]) == -1)
 		{
-			ft_dprintf(2, "chdir: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
+			ft_dprintf(2, "chdir: error retrieving current directory: \
+			getcwd: cannot access parent directories: No such file or directory\n");
 			g_exit_status = 1;
 			return (FAILURE);
 		}
