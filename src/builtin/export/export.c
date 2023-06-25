@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/25 16:18:16 by lciullo           #+#    #+#             */
+/*   Updated: 2023/06/25 16:18:18 by lciullo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	loop_for_export_arguments(char **token, t_env **lst);
@@ -41,6 +53,11 @@ int	add_to_export(t_env **lst, char *name, char *value, t_export *stat)
 		if (stat->in_env == FALSE)
 		{
 			ft_lstadd_back_env(lst, ft_lstnew_env(name, value, 0));
+			if (!lst)
+			{
+				ft_lstclear_env(lst, free);
+				return (FAILURE);
+			}
 		}
 	}
 	return (SUCCESS);
@@ -50,7 +67,7 @@ int	check_only_equal(char *token)
 {
 	if (token[0] == '=')
 	{
-		ft_dprintf(2, "export %s : not a valid identifier\n", token);
+		write(2, "export : not a valid identifier\n", 32);
 		g_exit_status = 1;
 		return (FAILURE);
 	}

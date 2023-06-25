@@ -1,7 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_env_list.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/25 16:38:34 by lciullo           #+#    #+#             */
+/*   Updated: 2023/06/25 16:38:35 by lciullo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static t_env	*fill_list_env(char *row, t_env *lst);
 static t_env	*if_empty_env(t_env *lst);
+static t_env	*begin_empty_lst(t_env *lst);
 
 t_env	*creat_env(char **env)
 {
@@ -30,14 +43,44 @@ t_env	*creat_env(char **env)
 
 static t_env	*if_empty_env(t_env *lst)
 {
+	lst = begin_empty_lst(lst);
+	if (!lst)
+		return (NULL);
+	ft_lstadd_back_env(&lst, ft_lstnew_env(ft_strdup("_"), \
+			ft_strdup("/usr/bin/env"), 1));
+	if (!lst)
+	{
+		ft_lstclear_env(&lst, free);
+		return (NULL);
+	}
+	ft_lstadd_back_env(&lst, ft_lstnew_env(ft_strdup("OLDPWD"), NULL, 0));
+	if (!lst)
+	{
+		ft_lstclear_env(&lst, free);
+		return (NULL);
+	}
+	return (lst);
+}
+
+static t_env	*begin_empty_lst(t_env *lst)
+{
 	char	*pwd;
 
 	pwd = NULL;
 	pwd = getcwd(NULL, 0);
 	ft_lstadd_back_env(&lst, ft_lstnew_env(ft_strdup("PWD"), pwd, 1));
-	ft_lstadd_back_env(&lst, ft_lstnew_env(ft_strdup("SHLVL"), ft_strdup("1"), 1));
-	ft_lstadd_back_env(&lst, ft_lstnew_env(ft_strdup("_"), ft_strdup("/usr/bin/env"), 1));
-	ft_lstadd_back_env(&lst, ft_lstnew_env(ft_strdup("OLDPWD"), NULL, 0));
+	if (!lst)
+	{
+		ft_lstclear_env(&lst, free);
+		return (NULL);
+	}
+	ft_lstadd_back_env(&lst, ft_lstnew_env(ft_strdup("SHLVL"), \
+			ft_strdup("1"), 1));
+	if (!lst)
+	{
+		ft_lstclear_env(&lst, free);
+		return (NULL);
+	}
 	return (lst);
 }
 
@@ -59,6 +102,11 @@ static t_env	*fill_list_env(char *row, t_env *lst)
 	if (!value)
 		return (free(name), NULL);
 	ft_lstadd_back_env(&lst, ft_lstnew_env(name, value, 1));
+	if (!lst)
+	{
+		ft_lstclear_env(&lst, free);
+		return (NULL);
+	}
 	return (lst);
 }
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_is_valid.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/25 16:17:51 by lciullo           #+#    #+#             */
+/*   Updated: 2023/06/25 16:17:52 by lciullo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	first_char(char c)
@@ -48,7 +60,7 @@ int	is_valid_syntax(char *name)
 	{
 		if (is_valid_export(name[i]) == FAILURE)
 		{
-			ft_dprintf(2, "export '%s' : not a valid identifier\n", name);
+			write(2, "export : not a valid identifier\n", 32);
 			g_exit_status = 1;
 			return (FAILURE);
 		}

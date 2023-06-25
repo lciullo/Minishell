@@ -3,7 +3,6 @@
 # define PARSING_H
 
 # include "../libft/headers/libft.h"
-# include <stdbool.h>
 
 typedef struct s_data {
 	t_env	*lst_env;
@@ -21,7 +20,7 @@ typedef struct s_data {
 	int		end;
 }	t_data;
 
-typedef	struct s_expand {
+typedef struct s_expand {
 	t_env	*env;
 	char	*line;
 	char	*new_line;
@@ -68,7 +67,7 @@ char	*expand(t_expand *utils, int i, int start, int here_doc);
 char	**is_there_a_dollar(char **tab, t_env *env, int	*status_expand);
 
 /* ---- should_we_expand.c ----*/
-int	should_we_expand(t_list **list, t_env *env);
+int		should_we_expand(t_list **list, t_env *env);
 
 /* ---- utils_expand.c ----*/
 void	init_struct_expand(char *line, t_env *lst_env, t_expand *utils);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/25 16:19:23 by lciullo           #+#    #+#             */
+/*   Updated: 2023/06/25 16:19:24 by lciullo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	parse_unset(char *value);
@@ -72,18 +84,18 @@ static int	parse_unset(char *value)
 
 	i = 0;
 	if (!value || value[0] == '\0')
-		return (ft_dprintf(2, "unset : not a valid identifier\n"), 1);
+		return (write(2, "unset : not a valid identifier\n", 31), 1);
 	if (value[0] != '\0')
 	{
 		if (value[0] == '-')
-			return (ft_dprintf(2, "Invalid option, subject : unset with no options\n"), 2);
+			return (write(2, "subject : unset with no options\n", 33), 2);
 		if (first_char(value[0]) == FAILURE)
-			return (ft_dprintf(2, "unset %s : not a valid identifier\n", value), 1);
+			return (ft_dprintf(2, "unset : not a valid identifier\n", 31), 1);
 	}
 	while (value[i] != '\0')
 	{
 		if (is_valid(value[i]) == FAILURE)
-			return (ft_dprintf(2, "unset %s : not a valid identifier\n", value), 1);
+			return (write(2, "unset : not a valid identifier\n", 31), 1);
 		i++;
 	}
 	return (0);

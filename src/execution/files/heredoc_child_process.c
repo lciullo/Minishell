@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc_child_process.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/25 16:10:39 by lciullo           #+#    #+#             */
+/*   Updated: 2023/06/25 16:10:40 by lciullo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static void	init_heredoc_process(t_exec *data);
@@ -17,7 +29,6 @@ void	loop_in_child_heredoc(t_exec *data, char *delimiter, \
 	{
 		init_signals_heredoc();
 		line = readline("heredoc> ");
-		//signal(SIGINT, heredoc_new_line);
 		if (line)
 		{
 			if (not_empty_heredoc_line(data, delimiter, line, lst) == BREAK)
@@ -45,16 +56,22 @@ static int	not_empty_heredoc_line(t_exec *data, char *delimiter, \
 {
 	char		*temp;
 	t_expand	utils;
+
+	temp = NULL;
 	if (!ft_strcmp(line, delimiter))
 		return (BREAK);
 	if (ft_strchr(line, '$') != 0 && data->quote_here_doc == 0)
 	{
+		if (!lst)
+			return (free(line), FAILURE);
 		temp = line;
 		init_struct_expand(line, *lst, &utils);
 		if (!utils.new_line)
-			return (FAILURE);
+			return (free(line), FAILURE);
 		line = expand(&utils, 0, 0, 1);
 		free(temp);
+		if (!line)
+			return (FAILURE);
 	}
 	write(data->tmp_fd_heredoc[1], line, ft_strlen(line));
 	write(data->tmp_fd_heredoc[1], "\n", 1);

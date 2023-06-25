@@ -8,8 +8,6 @@ static int	handle_special_case(t_expand *utils, int *i);
 //je securise end_of_Expand 
 char	*expand(t_expand *utils, int i, int start, int here_doc)
 {
-	if (!utils->env)
-		return (NULL);
 	while (utils->line[i])
 	{
 		if (utils->line[i] == '\"' || utils->line[i] == '\'')
