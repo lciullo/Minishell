@@ -9,21 +9,21 @@ int g_exit_status;
 
 int	main(int ac, char **av, char **env)
 {
-	char		*prompt_name;
 	char		*line;
 	t_exec		data;
 	t_env		*lst;
+	char 		*prompt_name;
 
 	(void)ac;
 	(void)av;
 	line = NULL;
 	lst = NULL;
+	prompt_name = NULL;
 	lst = creat_env(env);
 	if (!lst)
 		perror("Issue to create env in linked list");
 	g_exit_status = 0;
 	data.end = 0;
-	prompt_name = "\001"BLUE"\002""doublechoc-> ""\001"END"\002";
 	loop_of_prompt(prompt_name, &data, lst, line);
 	return (g_exit_status);
 }
@@ -32,9 +32,16 @@ static	void	loop_of_prompt(char *prompt_name, t_exec *data, t_env *lst, char *li
 {
 	while (1)
 	{
+		prompt_name = ft_strdup("\001"BLUE"\002""doublechoc-> ""\001"END"\002");
+		if (!prompt_name)
+		{
+			print_error(MALLOC_ERR_MAIN);
+			break ;
+		}
 		if (data->end == 1)
 		{
 			ft_dprintf(1, "exit\n");
+			free(prompt_name);
 			if (lst)
 				ft_lstclear_env(&lst, free);
 			break ;
@@ -43,6 +50,7 @@ static	void	loop_of_prompt(char *prompt_name, t_exec *data, t_env *lst, char *li
 		signal(SIGQUIT, SIG_IGN);
 		line = readline(prompt_name);
 		signal(SIGINT, display_new_line);
+		free(prompt_name);
 		if (!line)
 		{
 			ft_dprintf(2, "exit\n");

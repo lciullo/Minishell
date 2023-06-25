@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   is_there_a_dollar.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/25 14:42:22 by cllovio           #+#    #+#             */
+/*   Updated: 2023/06/25 15:50:08 by cllovio          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	handle_tilde(char **tab, int i);
@@ -60,6 +72,8 @@ static int	launch_expand(t_env *env, char **tab, int i, int *status_expand)
 	char		*temp;
 	t_expand	utils;
 
+	if (!env)
+		return (FAILURE);
 	init_struct_expand(tab[i], env, &utils);
 	if (!utils.new_line)
 		return (FAILURE);
