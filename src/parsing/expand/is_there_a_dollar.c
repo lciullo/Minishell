@@ -33,7 +33,7 @@ static int	handle_tilde(char **tab, int i)
 {
 	char	*temp;
 
-	if (tab[i][0] == '~' && tab[i][1] == '\0')
+	if (tab[i][0] == '~' && (tab[i][1] == '\0'))
 	{	
 		temp = tab[i];
 		tab[i] = ft_strdup("$HOME");
@@ -44,15 +44,12 @@ static int	handle_tilde(char **tab, int i)
 		}
 		free(temp);
 	}
-	else if (tab[i][0] == '~' && tab[i][1] != '\0')
+	else if (tab[i][0] == '~' && tab[i][1] == '/')
 	{
 		temp = tab[i];
 		tab[i] = ft_strjoin_expand("$HOME", tab[i], 1, ft_strlen(tab[i]));
 		if (!tab[i])
-		{
-			tab[i] = temp;
 			return (FAILURE);
-		}
 		free(temp);
 	}
 	return (SUCCESS);

@@ -29,7 +29,6 @@ int	is_in_env(t_env *lst, char *name)
 
 int	add_to_export(t_env **lst, char *name, char *value, t_export *stat)
 {
-
 	if (stat->equal == TRUE)
 	{
 		if (stat->in_env == TRUE)

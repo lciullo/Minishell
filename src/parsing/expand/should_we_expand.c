@@ -17,7 +17,8 @@ int	should_we_expand(t_list **list, t_env *env)
 		{
 			if (expand_data(temp, env, &status_expand) == FAILURE)
 				return (ft_lstclear(list, free), FAILURE);
-			if (status_expand == 1 && (temp->data[1] != NULL || temp->data[0][0] != '\0'))
+			if (status_expand == 1 && (temp->data[1] != NULL \
+			|| temp->data[0][0] != '\0'))
 			{
 				if (process_expanded_data(temp) == FAILURE)
 					return (ft_lstclear(list, free), FAILURE);
@@ -64,7 +65,7 @@ static int	process_expanded_data(t_list *temp)
 		temp->data = temp_tab;
 		return (FAILURE);
 	}
-	free(temp_tab);
+	free_array(temp_tab);
 	change_tab(temp->data, 1);
 	return (SUCCESS);
 }

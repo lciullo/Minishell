@@ -200,6 +200,9 @@ void			implement_exit(char **cmd, t_exec *data);
 
 void			implement_unset(char **token, t_env **lst);
 
+size_t			get_nb_arguments(char **cmd);
+
+void			error_message_cd(int type);
 //# --- Environnement--- #
 
 void			implement_env(char **cmd, t_env *lst);

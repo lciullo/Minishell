@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static void	loop_of_prompt(char *prompt_name, t_exec *data, t_env *lst);
+static void	loop_of_prompt(char *prompt_name, t_exec *data, t_env *lst, char *line);
 static void	control_c_realod_prompt(int signal);
 static void	display_new_line(int signal);
 static void	core_of_program(char *line, t_exec *data, t_env **lst);
@@ -10,27 +10,26 @@ int g_exit_status;
 int	main(int ac, char **av, char **env)
 {
 	char		*prompt_name;
+	char		*line;
 	t_exec		data;
 	t_env		*lst;
 
+	(void)ac;
+	(void)av;
+	line = NULL;
 	lst = NULL;
 	lst = creat_env(env);
 	if (!lst)
 		perror("Issue to create env in linked list");
 	g_exit_status = 0;
-	(void)ac;
-	(void)av;
 	data.end = 0;
 	prompt_name = "\001"BLUE"\002""doublechoc-> ""\001"END"\002";
-	loop_of_prompt(prompt_name, &data, lst);
+	loop_of_prompt(prompt_name, &data, lst, line);
 	return (g_exit_status);
 }
 
-static	void	loop_of_prompt(char *prompt_name, t_exec *data, t_env *lst)
+static	void	loop_of_prompt(char *prompt_name, t_exec *data, t_env *lst, char *line)
 {
-	char	*line;
-
-	line = NULL;
 	while (1)
 	{
 		if (data->end == 1)
@@ -53,7 +52,6 @@ static	void	loop_of_prompt(char *prompt_name, t_exec *data, t_env *lst)
 		if (line[0])
 			add_history(line);
 		core_of_program(line, data, &lst);
-		//printf("exit status : %d\n", g_exit_status);
 	}
 }
 
@@ -70,12 +68,10 @@ static void	core_of_program(char *line, t_exec *data, t_env **lst)
 		free(line);
 		exit(1);
 	}
-	//list_print_env(lst);
 	list = parsing(line, &data_parsing, *lst);
 	free(line);
 	if (list == NULL)
 		return ;
-	//print_list(list);
 	execution(list, &data_parsing, data, lst);
 	if (list != NULL)
 		ft_lstclear(&data->head, free);

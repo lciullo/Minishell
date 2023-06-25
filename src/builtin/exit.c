@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 static int	ft_is_numeric(char *nb);
