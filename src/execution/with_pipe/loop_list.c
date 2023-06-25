@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:46:51 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/24 12:12:51 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/25 15:13:23 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static	int	wait_pids(t_exec *data)
 		if (WIFSIGNALED(status) && i == data->nb_block - 1)
 		{
 			if (WTERMSIG(status) == SIGQUIT)
-				write(2, "quit core dumped\n", 18);
+				write(2, "Quit core dumped\n", 18);
 			else if (WTERMSIG(status) == SIGINT)
 				write(2, "\n", 2);
 		}

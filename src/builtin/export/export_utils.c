@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/25 16:18:08 by lciullo           #+#    #+#             */
+/*   Updated: 2023/06/25 16:18:11 by lciullo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static	int	len_of_name(char *row, t_export *stat);
 static	int	len_according_cases(int len, t_export *stat);
 
 char	*remove_plus_in_name(char *name)
@@ -29,14 +40,14 @@ static	int	len_according_cases(int len, t_export *stat)
 	return (FAILURE);
 }
 
-static	int	len_of_name(char *row, t_export *stat)
+int	len_of_name(char *row, t_export *stat)
 {
 	int	len;
 
 	len = 0;
 	if (row[0] == '\0')
 	{
-		ft_dprintf(2, "export: not a valid identifier\n");
+		write(2, "export : not a valid identifier\n", 32);
 		g_exit_status = 1;
 		return (FAILURE);
 	}
@@ -48,40 +59,12 @@ static	int	len_of_name(char *row, t_export *stat)
 		stat->plus = TRUE;
 	if (stat->equal == FALSE && stat->plus == TRUE)
 	{
-		ft_dprintf(2, "export: not a valid identifier\n");
+		write(2, "export : not a valid identifier\n", 32);
 		g_exit_status = 1;
 		return (FAILURE);
 	}
 	len = len_according_cases(len, stat);
 	return (len);
-}
-
-char	*get_name_variable(char *row, t_export *stat)
-{
-	char		*name;
-	int			start;
-
-	name = NULL;
-	start = len_of_name(row, stat);
-	if (start == FAILURE)
-		return (NULL);
-	name = ft_strndup(name, row, start);
-	if (!name)
-		return (NULL);
-	return (name);
-}
-
-char	*get_value_variable(char *row)
-{
-	size_t		start;
-	char		*value;
-
-	value = NULL;
-	start = begin_of_name(row);
-	value = ft_strndup(value, &row[start + 1], ft_strlen(row));
-	if (!value)
-		return (NULL);
-	return (value);
 }
 
 void	change_equal_to_one(t_env **lst, char *name)

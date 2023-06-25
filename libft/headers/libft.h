@@ -6,7 +6,7 @@
 /*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:01:44 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/22 10:15:32 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/25 16:25:13 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdint.h>
 # include <stddef.h>
 # include <stdbool.h>
+# include <limits.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
@@ -84,8 +85,6 @@ int				ft_lstsize_env(t_env *lst);
 void			list_print(t_list *lst);
 void			list_print_env(t_env *lst);
 void			list_print_export(t_env *lst);
-void			print_utile_pipe(t_list *lst, int index);
-void			in_exec_print_list(t_list *lst);
 //=====================		VOIR SI ON LE GARDE =============//
 char			*ft_strcpy(char *dest, const char *src);
 //# ============ LIBRARY ============ #
@@ -125,7 +124,7 @@ char			*ft_substr(const char *s, unsigned int start, size_t len);
 int				ft_tolower(int c);
 int				ft_toupper(int c);
 size_t			nb_words(char const *s, char c);
-//char			*ft_strdup(const char *s);
+
 //# ---- free functions ---- #
 
 void			free_array(char **arr);
