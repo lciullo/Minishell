@@ -54,6 +54,7 @@ SRC	=																	\
 		src/parsing/expand/is_there_a_dollar.c							\
 		src/parsing/expand/should_we_expand.c							\
 		src/parsing/expand/utils_expand.c								\
+		src/parsing/expand/different_case_expand.c						\
 		src/parsing/list/change_list/change_list.c						\
 		src/parsing/list/change_list/change_order.c						\
 		src/parsing/list/change_list/change_tab.c						\
@@ -67,8 +68,7 @@ SRC	=																	\
 		src/parsing/utils_parsing/skip.c								\
 		src/parsing/utils_parsing/utils_parsing.c						\
 		src/parsing/check_error.c										\
-		src/parsing/parsing.c											\
-		src/parsing/print.c
+		src/parsing/parsing.c
 
 # ---- Directories ---- #
 
@@ -126,10 +126,10 @@ all :
 	${MAKE} lib
 	${MAKE} ${NAME}
 
-${NAME}: ${OBJS}
+${NAME}: ${OBJS} ${LIBRARY}
 	${CC} ${CFLAGS} $^ ${LIBRARY} -o $@ -lreadline
 
-${DIR_OBJS}/%.o: %.c ${HEAD} ${LIBRARY}
+${DIR_OBJS}/%.o: %.c ${HEAD}
 	@mkdir -p ${dir $@}
 	${CC} ${CFLAGS} -c $< -o $@
 

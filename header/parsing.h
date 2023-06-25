@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/25 14:40:16 by cllovio           #+#    #+#             */
+/*   Updated: 2023/06/25 16:24:30 by cllovio          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
@@ -28,14 +39,12 @@ typedef struct s_expand {
 }	t_expand;
 
 enum {
-	MALLOC_ERR,
-	HERE_DOC_ERR,
-	APPEND_ERR,
-	IN_ERR,
-	OUT_ERR,
+	MALLOC_ERR_PARS,
+	MALLOC_ERR_MAIN,
+	MALLOC_ERR_EXEC,
+	REDIR_ERR,
 	PIPE_ERR,
-	S_QUOTE_ERR,
-	D_QUOTE_ERR,
+	QUOTE_ERR,
 };
 
 enum {
@@ -74,6 +83,9 @@ void	init_struct_expand(char *line, t_env *lst_env, t_expand *utils);
 char	*get_var(t_expand *utils, int *i);
 void	change_quote(char *value, int type);
 
+/* ---- handle_different_case_expand.c ----*/
+int		handle_quotes(t_expand *utils, int *i, int *start, int here_doc);
+int		handle_dollar_sign(t_expand *utils, int *i, int *start, int here_doc);
 /*======================= UTILS_PARSING =======================*/
 
 /* ---- ft_split_parsing.c ----*/
@@ -124,7 +136,4 @@ void	del_delimiteur(t_list **list);
 /* ---- delete_quote.c ----*/
 char	*is_there_a_quote(char *row);
 
-void	print_list(t_list	*a);
-void	print_tab(char **tab);
-void	list_print(t_list *lst);
 #endif

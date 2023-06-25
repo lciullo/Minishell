@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_error.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/25 14:39:39 by cllovio           #+#    #+#             */
+/*   Updated: 2023/06/25 14:39:41 by cllovio          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static bool	check_quote(char *line);
@@ -31,10 +43,7 @@ static bool	check_quote(char *line)
 			quote = line[i];
 			if (nbr_quote(line, &i, line[i]) == 1)
 			{
-				if (quote == '\'')
-					print_error(S_QUOTE_ERR);
-				else
-					print_error(D_QUOTE_ERR);
+				print_error(QUOTE_ERR);
 				return (false);
 			}
 		}
@@ -82,7 +91,6 @@ static bool	check_pipe(char	*line)
 	return (true);
 }
 
-//a mieux tester avec des caractere chelou
 static bool	check_redir(char *line, t_data *data)
 {
 	int		i;
@@ -97,10 +105,10 @@ static bool	check_redir(char *line, t_data *data)
 		if (line[i] && (line[i] == '<' || line[i] == '>'))
 		{
 			if (skip_redir(line, &i, line[i], data) > 2)
-				return (ft_dprintf(2, "syntax error\n"), false);
+				return (print_error(REDIR_ERR), false);
 			if (if_check(2, line, i) == true || ((line[i] == '\0' || \
 			line[i] == '<' || line[i] == '>' || line[i] == '|')))
-				return (ft_dprintf(2, "syntax error\n"), false);
+				return (print_error(REDIR_ERR), false);
 		}
 		else
 			i++;
