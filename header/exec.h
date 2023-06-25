@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/25 16:38:55 by lciullo           #+#    #+#             */
+/*   Updated: 2023/06/25 16:39:33 by lciullo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
@@ -43,7 +54,6 @@ typedef struct s_export
 	int	plus;
 }	t_export;
 
-
 int				init_struct(t_list *list, t_env *lst, \
 							t_exec *data, t_data *parsing);
 
@@ -82,7 +92,8 @@ char			*check_cmd_access(char **paths, char *cmd, int empty);
 
 //# --- Check if is executable ---#
 
-int				is_executable(char *cmd, t_exec *data, t_list *list, t_env **lst);
+int				is_executable(char *cmd, t_exec *data, \
+					t_list *list, t_env **lst);
 
 //# --- Dup files ---#
 
@@ -130,7 +141,8 @@ void			close_all_fds(t_exec *data);
 
 void			clear_dup_issue(t_exec *data, t_list *list, t_env **lst);
 
-void			clear_dup_issue_builtin(t_exec *data, t_list *list, t_env **lst);
+void			clear_dup_issue_builtin(t_exec *data, \
+					t_list *list, t_env **lst);
 
 //# ==================== Without Pipe =================== #
 
@@ -138,7 +150,8 @@ void			clear_dup_issue_builtin(t_exec *data, t_list *list, t_env **lst);
 
 void			get_builtin_and_exec(t_list *list, t_exec *data, t_env **lst);
 
-int				one_builtin_exec(char **token, t_exec *data, t_env **lst, t_list *list);
+int				one_builtin_exec(char **token, t_exec *data, \
+					t_env **lst, t_list *list);
 
 void			clear_one_builtin_exec_files(t_exec *data);
 
@@ -154,23 +167,26 @@ void			heredoc_new_line(int signal);
 
 void			heredoc_signals(int signal);
 
-int				loop_for_heredoc(t_list *list, t_exec *data, t_data *parsing, t_env **lst);
+int				loop_for_heredoc(t_list *list, t_exec *data, \
+					t_data *parsing, t_env **lst);
 
-void			loop_in_child_heredoc(t_exec *data, char *delimiter, t_env **lst, t_list *list);
+void			loop_in_child_heredoc(t_exec *data, char *delimiter, \
+					t_env **lst, t_list *list);
 
 void			add_to_tab_heredoc(int *fd_heredoc, int fd);
 
-void 			init_signals_heredoc(void);
+void			init_signals_heredoc(void);
 
 //# === Clear heredoc  === #
 
 int				close_heredoc_list(t_list *list);
 
-void 			clear_store_heredoc_issue(t_exec *data);
+void			clear_store_heredoc_issue(t_exec *data);
 
 void			clear_heredoc_main_process(t_exec *data);
 
-void 			clear_heredoc_end(t_exec *data, t_env **lst, t_list *list, int fd[2]);
+void			clear_heredoc_end(t_exec *data, t_env **lst, \
+					t_list *list, int fd[2]);
 
 void			close_tab_heredoc(t_exec *data);
 
@@ -225,6 +241,8 @@ void			implement_export(char **token, t_env **lst);
 
 int				print_export(t_env *lst);
 
+int				len_of_name(char *row, t_export *stat);
+
 //# Export with arguments #
 
 char			*get_name_variable(char *row, t_export *stat);
@@ -250,11 +268,13 @@ void			clear_export_end_according_cases(t_export *stat, \
 
 //# Manage case with equal in name #
 
-int				search_and_replace_value(t_env *lst, char *name, char *value, t_export *stat);
+int				search_and_replace_value(t_env *lst, char *name, \
+						char *value, t_export *stat);
 
 t_env			*add_back_with_equal(t_env **lst, char *name, char *value);
 
-int				add_to_export(t_env **lst, char *name, char *value, t_export *stat);
+int				add_to_export(t_env **lst, char *name, \
+					char *value, t_export *stat);
 
 void			change_equal_to_one(t_env **lst, char *name);
 

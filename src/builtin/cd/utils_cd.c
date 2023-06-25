@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_cd.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/25 16:39:52 by lciullo           #+#    #+#             */
+/*   Updated: 2023/06/25 16:39:55 by lciullo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	error_message_cd(int type)
@@ -7,19 +19,16 @@ void	error_message_cd(int type)
 	if (type == 0)
 	{
 		g_exit_status = 2;
-		ft_dprintf(2, "Invalid option, subject : cd with no options\n");
+		write(2, "Invalid option, subject : cd with no options\n", 46);
 	}
 	else if (type == 1)
-		ft_dprintf(2, "minishell: cd: too many arguments\n");
+		write(2, "minishell: cd: too many arguments\n", 35);
 	else if (type == 2)
-		ft_dprintf(2, "subject: cd with only a relative or absolute path\n");
+		write(2, "subject: cd with only a relative or absolute path\n", 51);
 	else if (type == 3)
-		ft_dprintf(2, "subject: cd with only a relative or absolute path\n");
+		write(2, "subject: cd with only a relative or absolute path\n", 51);
 	else if (type == 4)
-	{
-		ft_dprintf(2, "chdir: error retrieving current directory: \
-		getcwd: cannot access parent directories: No such file or directory\n");
-	}
+		write(2, "chdir: error retrieving current directory \n", 44);
 }
 
 size_t	get_nb_arguments(char **cmd)
@@ -57,10 +66,7 @@ char	*find_old_path(char *actual_path, t_env **lst)
 	}
 	old_path = ft_strdup(actual_path);
 	if (!old_path)
-	{
-		ft_dprintf(2, "faillure in second strdup\n");
 		return (NULL);
-	}
 	return (old_path);
 }
 

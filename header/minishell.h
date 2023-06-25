@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 15:54:30 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/21 13:11:06 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/25 16:37:19 by lciullo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,11 @@
 # include "parsing.h"
 # include "exec.h"
 # include <sys/wait.h>
-# include <stdio.h>
 # include "../libft/headers/libft.h"
-# include <string.h>
-# include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
 # include <errno.h>
-# include <stdbool.h>
-# include <sys/types.h>
 # include <sys/stat.h>
 
 # define END "\033[0m"

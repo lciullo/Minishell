@@ -14,7 +14,6 @@
 # define PARSING_H
 
 # include "../libft/headers/libft.h"
-# include <stdbool.h>
 
 typedef struct s_data {
 	t_env	*lst_env;

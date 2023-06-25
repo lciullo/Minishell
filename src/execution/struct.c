@@ -1,5 +1,47 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   struct.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/25 14:40:43 by lciullo           #+#    #+#             */
+/*   Updated: 2023/06/25 15:03:07 by lciullo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
+
+static	int	initialize_integers(t_list *list, t_exec *data, t_data *parsing);
+static int	get_nb_total_of_cmd(t_list *list);
+static	int	get_nb_builtin(t_list *list);
+
+int	init_struct(t_list *list, t_env *lst, t_exec *data, t_data *parsing)
+{
+	data->exec_progress = 0;
+	data->nb_pids = 0;
+	data->infile = 0;
+	data->outfile = 0;
+	data->expand = 0;
+	data->old_fd[0] = 0;
+	data->old_fd[1] = 0;
+	data->new_fd[0] = 0;
+	data->new_fd[1] = 0;
+	data->tmp_fd_heredoc[0] = 0;
+	data->tmp_fd_heredoc[1] = 0;
+	if (initialize_integers(list, data, parsing) == -1)
+		return (FAILURE);
+	data->cmd_with_path = NULL;
+	data->cmd = NULL;
+	data->paths = NULL;
+	data->env_path = NULL;
+	data->head = list;
+	if (!lst)
+		data->env = NULL;
+	else
+		data->env = fill_env(lst);
+	return (SUCCESS);
+}
 
 static int	get_nb_total_of_cmd(t_list *list)
 {
@@ -43,17 +85,6 @@ void	free_struct(t_exec *data)
 
 static	int	initialize_integers(t_list *list, t_exec *data, t_data *parsing)
 {
-	data->exec_progress = 0;
-	data->nb_pids = 0;
-	data->infile = 0;
-	data->outfile = 0;
-	data->expand = 0;
-	data->old_fd[0] = 0;
-	data->old_fd[1] = 0;
-	data->new_fd[0] = 0;
-	data->new_fd[1] = 0;
-	data->tmp_fd_heredoc[0] = 0;
-	data->tmp_fd_heredoc[1] = 0;
 	data->in_dir = 0;
 	data->out_dir = 0;
 	data->nb_block = parsing->nbr_pipe + 1;
@@ -63,32 +94,12 @@ static	int	initialize_integers(t_list *list, t_exec *data, t_data *parsing)
 	data->nb_args = data->nb_cmd + parsing->nbr_redir;
 	data->pids = ft_calloc(data->nb_block, sizeof(pid_t));
 	if (!data->pids)
-		return (-1);
+		return (FAILURE);
 	data->fd_heredoc = ft_calloc(data->nb_heredoc, sizeof(int));
 	if (!data->fd_heredoc)
 	{
 		free(data->pids);
-		return (-1);
+		return (FAILURE);
 	}
-	return (0);
-}
-
-int	init_struct(t_list *list, t_env *lst, t_exec *data, t_data *parsing)
-{
-	if (initialize_integers(list, data, parsing) == -1)
-		return (-1);
-	data->cmd_with_path = NULL;
-	data->cmd = NULL;
-	data->paths = NULL;
-	data->env_path = NULL;
-	data->head = list;
-	if (!lst)
-		data->env = NULL;
-	else
-	{
-		data->env = fill_env(lst);
-		if (!data->env)
-			return (0);
-	}
-	return (0);
+	return (SUCCESS);
 }
