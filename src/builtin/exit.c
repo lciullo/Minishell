@@ -15,8 +15,7 @@ void	implement_exit(char **cmd, t_exec *data)
 	if (((ft_atoi_exit(cmd[1], &nb) == -1) || ft_is_numeric(cmd[1]) == -1))
 	{
 		g_exit_status = 2;
-		ft_dprintf(2, "exit\nminishell: %s: numeric argument is required\n",
-			cmd[1]);
+		write(2, "exit\nminishell: numeric argument is required\n", 45);
 		data->end = 1;
 		return ;
 	}
@@ -24,7 +23,7 @@ void	implement_exit(char **cmd, t_exec *data)
 	{
 		data->end = 0;
 		g_exit_status = 1;
-		ft_dprintf(2, "exit\nminishell: too many arguments\n");
+		write(2, "exit\nminishell: too many arguments\n", 35);
 		return ;
 	}
 	data->end = 1;

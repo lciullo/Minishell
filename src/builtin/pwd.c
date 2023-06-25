@@ -27,9 +27,9 @@ static int	check_current_directory_path(void)
 		ft_dprintf(2, "pwd: error retrieving current directory: \
 		getcwd: cannot access parent directories: No such file or directory\n");
 		g_exit_status = 0;
+		free(current_directory_path);
 		return (errno);
 	}
-	ft_dprintf(2, "getcwd return %s\n", current_directory_path);
 	if (current_directory_path)
 	{
 		ft_dprintf(1, "%s\n", current_directory_path);

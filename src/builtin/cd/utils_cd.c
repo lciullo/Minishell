@@ -33,3 +33,41 @@ size_t	get_nb_arguments(char **cmd)
 		i++;
 	return (i);
 }
+
+char	*find_old_path(char *actual_path, t_env **lst)
+{
+	t_env	*copy;
+	char	*old_path;
+
+	old_path = NULL;
+	copy = *lst;
+	while (copy != NULL)
+	{
+		if (ft_strcmp(copy->name, "PWD") == 0)
+		{
+			if (copy->value[0] != '\0')
+			{
+				old_path = ft_strdup(copy->value);
+				if (!old_path)
+					return (NULL);
+				return (old_path);
+			}
+		}
+		copy = copy->next;
+	}
+	old_path = ft_strdup(actual_path);
+	if (!old_path)
+	{
+		ft_dprintf(2, "faillure in second strdup\n");
+		return (NULL);
+	}
+	return (old_path);
+}
+
+void	clear_actualise_pwd(char *actual_path, char *old_path)
+{
+	if (actual_path)
+		free(actual_path);
+	if (old_path)
+		free(old_path);
+}

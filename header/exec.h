@@ -194,6 +194,10 @@ void			implement_echo(char **cmd);
 
 int				implement_cd(char **cmd, t_env **lst);
 
+char			*find_old_path(char *actual_path, t_env **lst);
+
+void			clear_actualise_pwd(char *actual_path, char *old_path);
+
 int				implement_pwd(char **cmd);
 
 void			implement_exit(char **cmd, t_exec *data);

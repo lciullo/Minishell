@@ -47,6 +47,8 @@ static	void	loop_of_prompt(char *prompt_name, t_exec *data, t_env *lst, char *li
 		{
 			ft_dprintf(2, "exit\n");
 			free(line);
+			if (lst)
+				ft_lstclear_env(&lst, free);
 			exit (1);
 		}
 		if (line[0])
