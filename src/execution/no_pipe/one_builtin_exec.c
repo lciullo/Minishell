@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 18:13:24 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/25 14:08:44 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/25 19:07:27 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	one_builtin_exec(char **token, t_exec *data, t_env **lst, t_list *list)
 		loop_for_builtin(token, data, lst);
 		ft_close(data->infile);
 		ft_close(data->outfile);
+		close_tab_heredoc(data);
 	}
 	return (SUCCESS);
 }

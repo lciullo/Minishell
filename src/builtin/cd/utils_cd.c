@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 16:39:52 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/25 16:39:55 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/25 19:26:17 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ void	error_message_cd(int type)
 	if (type == 0)
 	{
 		g_exit_status = 2;
-		write(2, "Invalid option, subject : cd with no options\n", 46);
+		ft_putstr_fd("Invalid option, subject : cd with no options\n", 2);
 	}
 	else if (type == 1)
-		write(2, "minishell: cd: too many arguments\n", 35);
+		ft_putstr_fd("minishell: cd: too many arguments\n", 2);
 	else if (type == 2)
-		write(2, "subject: cd with only a relative or absolute path\n", 51);
+		ft_putstr_fd("subject: cd with only a relative or absolute path\n", 2);
 	else if (type == 3)
-		write(2, "subject: cd with only a relative or absolute path\n", 51);
+		ft_putstr_fd("subject: cd with only a relative or absolute path\n", 2);
 	else if (type == 4)
-		write(2, "chdir: error retrieving current directory \n", 44);
+		ft_putstr_fd("chdir: error retrieving current directory \n", 2);
 }
 
 size_t	get_nb_arguments(char **cmd)

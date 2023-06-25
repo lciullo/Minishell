@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_cmds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 16:12:09 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/25 16:12:12 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/25 19:51:42 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	clear_execve_issue(t_exec *data, t_list *list, t_env **lst)
 	if (lst)
 		ft_lstclear_env(lst, free);
 	free_struct(data);
+	if (data->env)
+		free_array(data->env);
 	perror("execve");
 }
 

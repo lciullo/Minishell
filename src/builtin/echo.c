@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 16:19:00 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/25 16:19:01 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/25 19:34:09 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	implement_echo(char **cmd)
 	g_exit_status = 0;
 	if (!cmd[1] && cmd[0])
 	{
-		write(1, "\n", 1);
+		ft_putstr_fd("\n", 1);
 		return ;
 	}
 	if (cmd[1])
@@ -82,11 +82,11 @@ static void	write_in_echo(char **cmd, int i, int option)
 {
 	while (cmd && cmd[i] != NULL)
 	{
-		write(1, cmd[i], ft_strlen(cmd[i]));
+		ft_putstr_fd(cmd[i], 1);
 		if (cmd[i + 1])
-			write(1, " ", 1);
+			ft_putstr_fd(" ", 1);
 		i++;
 	}
 	if (option)
-		write(1, "\n", 1);
+		ft_putstr_fd("\n", 1);
 }

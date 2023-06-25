@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 09:10:18 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/23 14:20:50 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/25 20:32:24 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,3 @@ static void	handles_pipe_and_simple_redir(char *line, char *new_line, \
 		*i = *i + 1;
 	}
 }
-
-//'$USER'""'''|$USER'|"$USER"

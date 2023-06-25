@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   begin_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 17:44:33 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/22 18:29:00 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/25 18:12:17 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ static int	in_child_process(t_list *list, t_exec *data, t_env **lst)
 		clear_dup_issue(data, list, lst);
 		exit (1);
 	}
+	close_heredoc_list(list);
+	close_tab_heredoc(data);
 	ft_close(data->infile);
 	launch_exec(data, list, lst);
 	return (SUCCESS);

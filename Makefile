@@ -2,11 +2,9 @@
 
 # ---- Final executable ---- #
 
-NAME 			= minishell
+NAME 			= 	minishell
 
-HEAD			=	header/exec.h \
-					header/parsing.h \
-					header/minishell.h
+HEAD			=	header/minishell.h
 
 SRC	=																	\
 		src/execution/execution.c 										\
@@ -50,6 +48,7 @@ SRC	=																	\
 		src/builtin/export/check_name_by_name.c							\
 		src/builtin/export/clear_export.c								\
 		src/main.c														\
+		src/utils_main.c												\
 		src/parsing/expand/expand.c										\
 		src/parsing/expand/is_there_a_dollar.c							\
 		src/parsing/expand/should_we_expand.c							\
@@ -112,11 +111,7 @@ endif
 
 # ---- Leaks Compilation flags ---- #
 
-LEAKS			=	valgrind --suppressions=ignore_readline_reachable.txt --leak-check=full --show-leak-kinds=all --trace-children=yes
-
-#--track-fds=yes
-
-
+LEAKS			=	valgrind --suppressions=ignore_readline_reachable.txt --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes
 
 # ====================== RULES ====================== #
 

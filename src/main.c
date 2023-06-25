@@ -1,18 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/25 17:19:35 by cllovio           #+#    #+#             */
+/*   Updated: 2023/06/25 20:31:50 by cllovio          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static void	loop_of_prompt(char *prompt_name, t_exec *data, t_env *lst, char *line);
-static void	control_c_realod_prompt(int signal);
-static void	display_new_line(int signal);
+static void	loop_of_prompt(char *prompt_name, t_exec *data, \
+			t_env *lst, char *line);
 static void	core_of_program(char *line, t_exec *data, t_env **lst);
 
-int g_exit_status;
+int	g_exit_status;
 
 int	main(int ac, char **av, char **env)
 {
 	char		*line;
 	t_exec		data;
 	t_env		*lst;
-	char 		*prompt_name;
+	char		*prompt_name;
 
 	(void)ac;
 	(void)av;
@@ -28,7 +39,8 @@ int	main(int ac, char **av, char **env)
 	return (g_exit_status);
 }
 
-static	void	loop_of_prompt(char *prompt_name, t_exec *data, t_env *lst, char *line)
+static	void	loop_of_prompt(char *prompt_name, t_exec *data, \
+				t_env *lst, char *line)
 {
 	while (1)
 	{
@@ -46,19 +58,9 @@ static	void	loop_of_prompt(char *prompt_name, t_exec *data, t_env *lst, char *li
 				ft_lstclear_env(&lst, free);
 			break ;
 		}
-		signal(SIGINT, control_c_realod_prompt);
-		signal(SIGQUIT, SIG_IGN);
-		line = readline(prompt_name);
-		signal(SIGINT, display_new_line);
-		free(prompt_name);
+		line = get_line_and_init_signal(prompt_name);
 		if (!line)
-		{
-			ft_dprintf(2, "exit\n");
-			free(line);
-			if (lst)
-				ft_lstclear_env(&lst, free);
-			exit (1);
-		}
+			empty_line_prompt(line, lst);
 		if (line[0])
 			add_history(line);
 		core_of_program(line, data, &lst);
@@ -85,20 +87,4 @@ static void	core_of_program(char *line, t_exec *data, t_env **lst)
 	execution(list, &data_parsing, data, lst);
 	if (list != NULL)
 		ft_lstclear(&data->head, free);
-}
-
-static void	control_c_realod_prompt(int signal)
-{
-	(void)signal;
-	ft_dprintf(1, "\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-	return ;
-}
-
-static void	display_new_line(int signal)
-{
-	(void)signal;
-	ft_dprintf(1, "\n");
 }

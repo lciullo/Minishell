@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_executable.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 15:43:39 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/25 15:43:40 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/25 19:31:14 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@ int	is_executable(char *cmd, t_exec *data, t_list *list, t_env **lst)
 		if (!(info.st_mode & S_IXUSR))
 		{
 			g_exit_status = 126;
-			write(2, "Permission denied\n", 19);
+			ft_putstr_fd("Permission denied\n", 2);
 			return (FAILURE);
 		}
 		if (S_ISDIR(info.st_mode))
 		{
 			g_exit_status = 126;
-			write(2, "is a directory\n", 16);
+			ft_putstr_fd("is a directory\n", 2);
 			return (FAILURE);
 		}
 		return (SUCCESS);
 	}
-	write(2, "No such file or directory\n", 27);
+	ft_putstr_fd("No such file or directory\n", 2);
 	g_exit_status = 127;
 	clear_is_executable(data, list, lst);
 	return (FAILURE);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 16:19:15 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/25 16:19:16 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/25 20:31:35 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	implement_pwd(char **cmd)
 	{
 		if (cmd[1][0] == '-')
 		{
-			write(2, "Invalid option, subject : pwd with no options\n", 48);
+			ft_putstr_fd("Invalid option, subject : pwd with no options\n", 2);
 			g_exit_status = 2;
 			return (FAILURE);
 		}
@@ -36,7 +36,7 @@ static int	check_current_directory_path(void)
 	current_directory_path = getcwd(NULL, 0);
 	if (current_directory_path == NULL)
 	{
-		write(2, "pwd: error retrieving current directory: getcwd: error\n", 56);
+		ft_putstr_fd("pwd: error retrieving current directory\n", 2);
 		g_exit_status = 0;
 		free(current_directory_path);
 		return (errno);
