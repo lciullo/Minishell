@@ -53,7 +53,7 @@ void			free_struct(t_exec *data);
 
 //# ======================= EXECUTION ======================= #
 
-int				execution(t_list *t_list, t_data *parsing, \
+void			execution(t_list *t_list, t_data *parsing, \
 								t_exec *data, t_env **lst);
 
 int				execution_core(t_list *list, t_exec *data, t_env **lst);
@@ -92,7 +92,7 @@ int				dup_files(t_exec *data);
 
 //# --- Command not found --- #
 
-void			clear_cmd_not_found(t_exec *data, t_list *list, t_env **lst);
+void			clear_cmd_not_found(t_exec *data);
 
 void			close_cmd_not_found(t_exec *data);
 
@@ -190,22 +190,22 @@ int				loop_for_outfile(t_list *list, t_exec *data);
 
 void			loop_for_builtin(char **token, t_exec *data, t_env **lst);
 
-int				implement_echo(char **cmd);
+void			implement_echo(char **cmd);
 
 int				implement_cd(char **cmd, t_env **lst);
 
 int				implement_pwd(char **cmd);
 
-int				implement_exit(char **cmd, t_exec *data);
+void			implement_exit(char **cmd, t_exec *data);
 
-int				implement_unset(char **token, t_env **lst);
+void			implement_unset(char **token, t_env **lst);
 
 size_t			get_nb_arguments(char **cmd);
 
 void			error_message_cd(int type);
 //# --- Environnement--- #
 
-int				implement_env(char **cmd, t_env *lst);
+void			implement_env(char **cmd, t_env *lst);
 
 size_t			begin_of_name(char *path);
 
@@ -215,7 +215,7 @@ t_env			*creat_env(char **env);
 
 //# --- Export --- #
 
-int				implement_export(char **token, t_env **lst);
+void			implement_export(char **token, t_env **lst);
 
 //# Export without arguments #
 
@@ -259,11 +259,5 @@ int				check_name_by_name(char *token, t_env **lst, t_export *stat);
 int				check_only_equal(char *token);
 
 int				is_in_env(t_env *lst, char *name);
-
-//# ======================= TEMPORARY ======================= #
-
-//# --- Print debug --- #
-
-void			exec_print_list(t_list *lst);
 
 #endif

@@ -113,7 +113,9 @@ endif
 
 # ---- Leaks Compilation flags ---- #
 
-LEAKS			=	valgrind --suppressions=ignore_readline_reachable.txt --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes
+LEAKS			=	valgrind --suppressions=ignore_readline_reachable.txt --leak-check=full --show-leak-kinds=all --trace-children=yes
+
+#--track-fds=yes
 
 
 

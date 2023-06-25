@@ -18,7 +18,7 @@ int	execution_of_token(t_exec *data, t_list *list, t_env **lst)
 	}
 	close_tab_heredoc(data);
 	if (data->cmd_with_path != NULL && \
-		is_executable(data->cmd_with_path, data, list, lst) == 0)
+		is_executable(data->cmd_with_path, data, list, lst) == SUCCESS)
 	{
 		g_exit_status = 1;
 		execve(data->cmd_with_path, get_command(list), data->env);
@@ -29,7 +29,7 @@ int	execution_of_token(t_exec *data, t_list *list, t_env **lst)
 	if (data->cmd_with_path)
 		free(data->cmd_with_path);
 	exit (g_exit_status);
-	return (0);
+	return (SUCCESS);
 }
 
 static int	get_empty_type(t_list *list)
@@ -63,9 +63,14 @@ static	int	finish_by_cmd_not_found(t_exec *data, t_list *list, \
 {
 	if (empty != 0)
 		g_exit_status = 127;
-	clear_cmd_not_found(data, list, lst);
+	clear_cmd_not_found(data);
 	close_tab_heredoc(data);
+	if (list)
+		ft_lstclear(&data->head, free);
+	if (lst)
+		ft_lstclear_env(lst, free);
 	if (data->env)
 		free_array(data->env);
+	free_struct(data);
 	return (g_exit_status);
 }

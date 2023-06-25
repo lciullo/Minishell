@@ -1,14 +1,19 @@
 #include "minishell.h"
 
-void	clear_cmd_not_found(t_exec *data, t_list *list, t_env **lst)
+void	clear_cmd_not_found(t_exec *data)
 {
-	ft_dprintf(2, "%s: command not found\n", data->cmd);
+	char	*str;
+
+	str = NULL;
 	close_cmd_not_found(data);
-	if (list)
-		ft_lstclear(&data->head, free);
-	if (lst)
-		ft_lstclear_env(lst, free);
-	free_struct(data);
+	str = ft_strjoin(data->cmd, " : command not found\n");
+	if (!str)
+	{
+		perror("Malloc failed in command not found ft_strjoin");
+		return ;
+	}
+	write(2, str, ft_strlen(str));
+	free(str);
 }
 
 void	clear_only_redir(t_exec *data, t_list *list, t_env **lst)

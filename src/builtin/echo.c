@@ -5,7 +5,7 @@ static int	is_valid_option(char *arg);
 static int	parse_option(char *arg);
 static void	write_in_echo(char **cmd, int i, int option);
 
-int	implement_echo(char **cmd)
+void	implement_echo(char **cmd)
 {
 	int	i;
 	int	option;
@@ -15,15 +15,15 @@ int	implement_echo(char **cmd)
 	g_exit_status = 0;
 	if (!cmd[1] && cmd[0])
 	{
-		ft_dprintf(1, "\n");
-		return (0);
+		write(1, "\n", 1);
+		return ;
 	}
 	if (cmd[1])
 		option = parse_option(cmd[1]);
 	while (cmd && cmd[i] != NULL && parse_option(cmd[i]) == 0)
 		i++;
 	write_in_echo(cmd, i, option);
-	return (SUCCESS);
+	return ;
 }
 
 static	int	parse_option(char *arg)
@@ -70,11 +70,11 @@ static void	write_in_echo(char **cmd, int i, int option)
 {
 	while (cmd && cmd[i] != NULL)
 	{
-		ft_dprintf(1, "%s", cmd[i]);
+		write(1, cmd[i], ft_strlen(cmd[i]));
 		if (cmd[i + 1])
-			ft_dprintf(1, " ");
+			write(1, " ", 1);
 		i++;
 	}
 	if (option)
-		ft_dprintf(1, "\n");
+		write(1, "\n", 1);
 }

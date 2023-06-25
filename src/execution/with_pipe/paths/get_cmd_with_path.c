@@ -8,15 +8,15 @@ int	get_path_env(t_exec *data)
 	if (!data->paths)
 	{
 		perror("Environment path not found");
-		return (0);
+		return (SUCCESS);
 	}
 	data->env_path = ft_split(data->paths, ':');
 	if (!data->env_path)
 	{
 		perror("issue in split to find environnement");
-		return (-1);
+		return (FAILURE);
 	}
-	return (0);
+	return (SUCCESS);
 }
 
 static char	*find_path(char **env)

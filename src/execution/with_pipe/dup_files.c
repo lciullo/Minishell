@@ -6,13 +6,12 @@
 /*   By: lisa <lisa@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:34:32 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/21 17:39:49 by lisa             ###   ########.fr       */
+/*   Updated: 2023/06/24 13:19:19 by lisa             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//ft_dprintf(2, "infile %d\n outfile %d\n new fd[0] %d\n new fd [1] %d\n old fd [0] %d\n old fd [1] %d\n", data->infile, data->outfile, data->new_fd[0], data->new_fd[1], data->old_fd[0], data->old_fd[1]);
 static int	dup_infiles(t_exec *data);
 static int	dup_outfiles(t_exec *data);
 
