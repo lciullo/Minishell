@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 12:56:18 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/22 10:46:41 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/25 18:19:43 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	clear_heredoc_end(t_exec *data, t_env **lst, t_list *list, int fd[2])
 	if (lst)
 		ft_lstclear_env(lst, free);
 	if (list)
-		ft_lstclear(&list, free);
+		ft_lstclear(&data->head, free);
 	if (data->env)
 		free_array(data->env);
 	if (data->pids)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 16:17:31 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/25 16:17:32 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/25 18:03:23 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	execution(t_list *list, t_data *parsing, t_exec *data, t_env **lst)
 	}
 	if (sort_cmd(list, parsing, data, lst) == FAILURE)
 		return ;
+	close_tab_heredoc(data);
 	clear_after_execution(data);
 	return ;
 }

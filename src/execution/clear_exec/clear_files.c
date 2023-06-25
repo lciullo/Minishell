@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_files.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 10:12:14 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/22 10:44:50 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/25 18:19:32 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	clear_exec_files_issue(t_list *list, t_env **lst, t_exec *data)
 	close_tab_heredoc(data);
 	free_struct(data);
 	if (list)
-		ft_lstclear(&list, free);
+		ft_lstclear(&data->head, free);
 	if (lst)
 		ft_lstclear_env(lst, free);
 	if (data->env)
