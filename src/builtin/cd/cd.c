@@ -1,8 +1,10 @@
 #include "minishell.h"
 
-static char		*actualise_pwd(char *actual_path, t_env **lst);
-static	int		get_old_pwd(char *old_pwd, t_env **lst);
+static	int		get_old_path_in_list(char *old_path, t_env **lst);
 static int		check_nb_arg(int nb_arg, char **cmd, t_env **lst);
+static int		get_actual_path_in_list(char *actual_path, t_env **lst);
+static int		actualise_pwd(char *actual_path, \
+					char *old_path, t_env **lst);
 
 int	implement_cd(char **cmd, t_env **lst)
 {
@@ -23,9 +25,9 @@ int	implement_cd(char **cmd, t_env **lst)
 static int	check_nb_arg(int nb_arg, char **cmd, t_env **lst)
 {
 	char	*actual_path;
-	char	*old_pwd;
+	char	*old_path;
 
-	old_pwd = NULL;
+	old_path = NULL;
 	actual_path = NULL;
 	if (nb_arg > 2)
 		return (error_message_cd(1), FAILURE);
@@ -35,41 +37,41 @@ static int	check_nb_arg(int nb_arg, char **cmd, t_env **lst)
 	{
 		if (chdir(cmd[1]) == -1)
 			return (error_message_cd(3), FAILURE);
-		actual_path = getcwd(NULL, 0);
-		if (actual_path == NULL)
-			return (error_message_cd(4), FAILURE);
-		old_pwd = actualise_pwd(actual_path, lst);
-		get_old_pwd(old_pwd, lst);
-		free(actual_path);
+		if (actualise_pwd(actual_path, old_path, lst) == FAILURE)
+			return (FAILURE);
 		g_exit_status = 0;
 		return (FAILURE);
 	}
 	return (SUCCESS);
 }
 
-static	char	*actualise_pwd(char *actual_path, t_env **lst)
+static	int	actualise_pwd(char *actual_path, char *old_path, t_env **lst)
 {
-	t_env	*copy;
-	char	*old_pwd;
-
-	old_pwd = NULL;
-	copy = *lst;
-	while (copy != NULL)
+	actual_path = getcwd(NULL, 0);
+	if (actual_path == NULL)
+		return (error_message_cd(4), FAILURE);
+	old_path = find_old_path(actual_path, lst);
+	if (old_path == NULL)
 	{
-		if (ft_strcmp(copy->name, "PWD") == 0)
-		{
-			if (copy->value[0] != '\0')
-				old_pwd = ft_strdup(copy->value);
-			else
-				copy->value = ft_strdup(actual_path);
-			return (old_pwd);
-		}
-		copy = copy->next;
+		if (actual_path)
+			free(actual_path);
+		return (FAILURE);
 	}
-	return (NULL);
+	if (get_old_path_in_list(old_path, lst) == FAILURE)
+	{
+		clear_actualise_pwd(actual_path, old_path);
+		return (FAILURE);
+	}
+	if (get_actual_path_in_list(actual_path, lst) == FAILURE)
+	{
+		if (actual_path)
+			free(actual_path);
+		return (FAILURE);
+	}
+	return (SUCCESS);
 }
 
-static	int	get_old_pwd(char *old_pwd, t_env **lst)
+static	int	get_old_path_in_list(char *old_path, t_env **lst)
 {
 	t_env	*copy;
 
@@ -80,7 +82,27 @@ static	int	get_old_pwd(char *old_pwd, t_env **lst)
 		{
 			if (copy->value)
 				free(copy->value);
-			copy->value = old_pwd;
+			copy->value = old_path;
+			copy->equal = 1;
+			return (SUCCESS);
+		}
+		copy = copy->next;
+	}
+	return (FAILURE);
+}
+
+static	int	get_actual_path_in_list(char *actual_path, t_env **lst)
+{
+	t_env	*copy;
+
+	copy = *lst;
+	while (copy != NULL)
+	{
+		if (ft_strcmp(copy->name, "PWD") == 0)
+		{
+			if (copy->value)
+				free(copy->value);
+			copy->value = actual_path;
 			copy->equal = 1;
 			return (SUCCESS);
 		}

@@ -20,8 +20,7 @@ int	loop_for_heredoc(t_list *list, t_exec *data, t_data *parsing, t_env **lst)
 		{
 			data->quote_here_doc = copy->quote_here_doc;
 			g_exit_status = manage_heredoc(&copy->data[0], data, lst, list);
-			if (g_exit_status == -1 || g_exit_status == 131 \
-					|| g_exit_status == 130)
+			if (g_exit_status == -1 || g_exit_status == 130)
 				return (g_exit_status);
 		}
 		close_before_last++;
