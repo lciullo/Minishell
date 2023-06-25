@@ -11,7 +11,6 @@ HEAD			=	header/exec.h \
 SRC	=																	\
 		src/execution/execution.c 										\
 		src/execution/struct.c											\
-		src/execution/temporary/print_debug.c							\
 		src/execution/files/infiles.c									\
 		src/execution/files/outfiles.c									\
 		src/execution/files/heredoc.c									\
