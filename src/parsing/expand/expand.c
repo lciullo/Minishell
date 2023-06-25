@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static void	end_of_expand(t_expand *utils, int i, int start);
+static int	end_of_expand(t_expand *utils, int i, int start);
 static int	handle_quotes(t_expand *utils, int *i, int *start, int here_doc);
 static int	handle_dollar_sign(t_expand *utils, int *i, int *start);
 static int	handle_special_case(t_expand *utils, int *i);
@@ -23,18 +23,19 @@ char	*expand(t_expand *utils, int i, int start, int here_doc)
 		else if (if_check(0, utils->line, i) == true)
 		{
 			if (handle_dollar_sign(utils, &i, &start) == FAILURE)
-				return (free(utils->new_line), NULL);
+				return (NULL);
 			start = i;
 		}
 		else if (utils->line[i])
 			i++;
 	}
-	end_of_expand(utils, i, start);
+	if (end_of_expand(utils, i, start) == FAILURE)
+		return (NULL);
 	return (utils->new_line);
 }
 
 // NULL CHECK
-static void	end_of_expand(t_expand *utils, int i, int start)
+static int	end_of_expand(t_expand *utils, int i, int start)
 {
 	char	*temp;
 
@@ -43,9 +44,11 @@ static void	end_of_expand(t_expand *utils, int i, int start)
 		temp = utils->new_line;
 		utils->new_line = ft_strjoin_expand(utils->new_line, \
 		utils->line, start, i);
+		free(temp);
 		if (!utils->new_line)
-			free(temp);
+			return (FAILURE);
 	}
+	return (SUCCESS);
 }
 
 static int	handle_quotes(t_expand *utils, int *i, int *start, int here_doc)
@@ -62,7 +65,7 @@ static int	handle_quotes(t_expand *utils, int *i, int *start, int here_doc)
 			if (if_check(1, utils->line, *i) == true)
 			{
 				if (handle_dollar_sign(utils, i, start) == FAILURE)
-					return (free(utils->new_line), FAILURE);
+					return (FAILURE);
 				*start = *i;
 			}
 			else if (utils->line[*i])
