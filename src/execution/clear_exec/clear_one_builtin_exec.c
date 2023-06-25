@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_one_builtin_exec.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 16:16:10 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/25 16:16:11 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/25 19:05:20 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	clear_in_child(t_exec *data, t_env **lst, t_list *list)
 {
 	ft_close(data->infile);
 	ft_close(data->outfile);
+	close_tab_heredoc(data);
 	if (list)
 		ft_lstclear(&data->head, free);
 	if (lst)

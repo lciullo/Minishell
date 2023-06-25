@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 16:18:16 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/25 16:18:18 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/25 20:31:14 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	check_only_equal(char *token)
 {
 	if (token[0] == '=')
 	{
-		write(2, "export : not a valid identifier\n", 32);
+		ft_putstr_fd("export : not a valid identifier\n", 2);
 		g_exit_status = 1;
 		return (FAILURE);
 	}
@@ -83,11 +83,12 @@ static int	loop_for_export_arguments(char **token, t_env **lst)
 	stat.in_env = 0;
 	stat.plus = 0;
 	i = 1;
+	g_exit_status = 0;
 	while (token[i])
 	{
 		if (token[i][0] == '-')
 		{
-			write(2, "Invalid option, subject : export with no options\n", 50);
+			ft_putstr_fd("subject : export with no options\n", 2);
 			g_exit_status = 2;
 		}
 		else

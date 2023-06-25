@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 15:01:44 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/25 16:25:13 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/25 20:32:50 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,9 @@ t_list			*ft_lstnew(char **token, int type);
 t_env			*ft_lstnew_env(char *name, char *value, int equal);
 int				ft_lstsize(t_list *lst);
 int				ft_lstsize_env(t_env *lst);
-//=====================		VOIR SI ON LE GARDE =============//
 void			list_print(t_list *lst);
 void			list_print_env(t_env *lst);
 void			list_print_export(t_env *lst);
-//=====================		VOIR SI ON LE GARDE =============//
 char			*ft_strcpy(char *dest, const char *src);
 //# ============ LIBRARY ============ #
 int				ft_atoi_exit(char *str, int *nb);

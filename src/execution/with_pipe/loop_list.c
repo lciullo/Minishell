@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 15:46:51 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/25 15:13:23 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/25 20:30:43 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static	int		get_next_pipe(t_list *list);
 static	t_list	*list_increment(t_list **list, int len_between_pipe);
-static	int		wait_pids(t_exec *data);
+static	int		wait_pids(t_exec *data, int i, int status);
 
 int	loop_pipe_by_pipe(t_list *list, t_exec	*data, t_env **lst)
 {
@@ -31,7 +31,7 @@ int	loop_pipe_by_pipe(t_list *list, t_exec	*data, t_env **lst)
 	}
 	close_all_fds(data);
 	close_between_commands(data);
-	wait_pids(data);
+	wait_pids(data, 0, 0);
 	data->nb_pids = 0;
 	return (SUCCESS);
 }
@@ -59,13 +59,8 @@ static	t_list	*list_increment(t_list **list, int len_between_pipe)
 	return (*list);
 }
 
-static	int	wait_pids(t_exec *data)
+static	int	wait_pids(t_exec *data, int i, int status)
 {
-	int	i;
-	int	status;
-
-	i = 0;
-	status = 0;
 	while (i < data->nb_block)
 	{
 		if (waitpid(data->pids[i], &status, 0) == FAILURE)
@@ -75,9 +70,15 @@ static	int	wait_pids(t_exec *data)
 		if (WIFSIGNALED(status) && i == data->nb_block - 1)
 		{
 			if (WTERMSIG(status) == SIGQUIT)
-				write(2, "Quit core dumped\n", 18);
+			{
+				g_exit_status = 131;
+				ft_putstr_fd("Quit core dumped\n", 2);
+			}
 			else if (WTERMSIG(status) == SIGINT)
-				write(2, "\n", 2);
+			{
+				g_exit_status = 130;
+				ft_putstr_fd("\n", 2);
+			}
 		}
 		ft_close(data->new_fd[0]);
 		i++;

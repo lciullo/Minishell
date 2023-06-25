@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:28:39 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/25 17:30:40 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/25 20:07:28 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ char	*get_line_and_init_signal(char *prompt_name)
 
 static void	control_c_realod_prompt(int signal)
 {
+	g_exit_status = 130;
 	(void)signal;
 	ft_dprintf(1, "\n");
 	rl_on_new_line();

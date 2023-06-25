@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_token.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 16:17:14 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/25 16:17:15 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/25 19:52:35 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	execution_of_token(t_exec *data, t_list *list, t_env **lst)
 		g_exit_status = 1;
 		execve(data->cmd_with_path, get_command(list), data->env);
 		clear_execve_issue(data, list, lst);
+		exit(g_exit_status);
 	}
 	if (data->env)
 		free_array(data->env);

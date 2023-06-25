@@ -6,7 +6,7 @@
 /*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 14:39:47 by cllovio           #+#    #+#             */
-/*   Updated: 2023/06/25 14:48:41 by cllovio          ###   ########.fr       */
+/*   Updated: 2023/06/25 19:36:41 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,5 @@ void	print_error(int error_code)
 	else if (error_code == PIPE_ERR)
 		ft_dprintf(2, "minishell : syntax error near unexpected token \'|\'\n");
 	else if (error_code == QUOTE_ERR)
-		ft_dprintf(2, "minishell : syntax error : unlosed quote\n");
+		ft_dprintf(2, "minishell : syntax error : unclosed quote\n");
 }

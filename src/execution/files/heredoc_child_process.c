@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_child_process.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 16:10:39 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/25 16:10:40 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/25 19:32:51 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	not_empty_heredoc_line(t_exec *data, char *delimiter, \
 			return (FAILURE);
 	}
 	write(data->tmp_fd_heredoc[1], line, ft_strlen(line));
-	write(data->tmp_fd_heredoc[1], "\n", 1);
+	ft_putstr_fd("\n", data->tmp_fd_heredoc[1]);
 	free(line);
 	return (SUCCESS);
 }
@@ -84,12 +84,13 @@ static int	empty_line_heredoc(t_exec *data, t_env **lst, \
 {
 	if (g_exit_status == 130)
 	{
+		close_tab_heredoc(data);
 		clear_heredoc_end(data, lst, list, data->tmp_fd_heredoc);
 		exit (g_exit_status);
 	}
 	ft_putstr_fd("here-document at line delimited by end-of-file\n", 2);
 	free(line);
-	g_exit_status = 131;
+	g_exit_status = 0;
 	clear_heredoc_end(data, lst, list, data->tmp_fd_heredoc);
 	return (g_exit_status);
 }

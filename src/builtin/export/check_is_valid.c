@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_is_valid.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lciullo <lciullo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cllovio <cllovio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 16:17:51 by lciullo           #+#    #+#             */
-/*   Updated: 2023/06/25 16:17:52 by lciullo          ###   ########.fr       */
+/*   Updated: 2023/06/25 19:34:32 by cllovio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	is_valid_syntax(char *name)
 	{
 		if (is_valid_export(name[i]) == FAILURE)
 		{
-			write(2, "export : not a valid identifier\n", 32);
+			ft_putstr_fd("export : not a valid identifier\n", 2);
 			g_exit_status = 1;
 			return (FAILURE);
 		}
