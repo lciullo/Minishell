@@ -34,9 +34,6 @@ int	search_and_replace_value(t_env *lst, char *name, \
 
 static int	add_value(t_env *lst, char *value, t_export *stat)
 {
-	char	*tmp;
-
-	tmp = NULL;
 	if (stat->plus == FALSE)
 	{
 		free(lst->value);

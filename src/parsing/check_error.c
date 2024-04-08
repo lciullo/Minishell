@@ -33,14 +33,12 @@ bool	check_error(t_data *data)
 static bool	check_quote(char *line)
 {
 	int		i;
-	char	quote;
 
 	i = 0;
 	while (line[i])
 	{
 		if (line[i] == '\'' || line[i] == '\"')
 		{
-			quote = line[i];
 			if (nbr_quote(line, &i, line[i]) == 1)
 			{
 				print_error(QUOTE_ERR);

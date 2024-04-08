@@ -15,9 +15,7 @@
 int	is_executable(char *cmd, t_exec *data, t_list *list, t_env **lst)
 {
 	struct stat	info;
-	char		*str;
 
-	str = NULL;
 	if (stat(cmd, &info) == 0)
 	{
 		if (!(info.st_mode & S_IXUSR))
