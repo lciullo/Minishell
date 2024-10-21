@@ -70,7 +70,7 @@ make
 
 ## 🤝 Contributors
 
-- **Lisa Ciullo** - [@lciullo](https://github.com/YOUR_USERNAME)
+- **Lisa Ciullo** - [@lciullo](https://github.com/lciullo)
 - **Clémence Llovio** - [@clemllovio](https://github.com/clemllovio)
 
 ## 🧠 Learning Outcomes
